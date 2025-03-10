@@ -1,0 +1,13 @@
+{
+    "id": "picubedsjokers",
+    "name": "pi_cubeds_jokers",
+    "author": ["pi_cubed"],
+    "description": "A collection of vanilla-friendly Jokers made by yours truly. Follow me on bluesky at @picubed.bsky.social!",
+    "prefix": "picubed",
+    "main_file": "picubedsjokers.lua",
+    "badge_colour": "34CEB1",
+    "dependencies": [
+        "Steamodded (>=1.0.0~BETA-0301b)"
+    ],
+    "version": "1.0.0~BETA"
+}
