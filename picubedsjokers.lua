@@ -1112,9 +1112,9 @@ SMODS.Joker { --Pear Tree
       local rank_list = {0}
       for i=1, #G.hand.cards do
         for j=1, #rank_list do
-          if i == 1 then
+          if i == 1 and not SMODS.has_enhancement(G.hand.cards[i], 'm_stone') then
             rank_list[i] = G.hand.cards[i].base.value
-          elseif rank_list[1] ~= "PAIR!" then
+          elseif rank_list[1] ~= "PAIR!" and not SMODS.has_enhancement(G.hand.cards[i], 'm_stone') then
             --print(tostring(G.hand.cards[i].base.value).." "..tostring(rank_list[j]))
             if tostring(G.hand.cards[i].base.value) == tostring(rank_list[j]) then
               rank_list[1] = "PAIR!"
@@ -1355,15 +1355,36 @@ SMODS.Joker { --Bisexual Flag
   end,
   calculate = function(self, card, context)
     if context.joker_main then
-      local suit_list = {}
-      local num_suits = 0
-      for k, v in ipairs(context.scoring_hand) do
-          suit_list[tostring(v.base.suit)] = 1
+      local suit_list = {
+        ['Hearts'] = 0,
+        ['Diamonds'] = 0,
+        ['Spades'] = 0,
+        ['Clubs'] = 0
+      }
+      for k, v in ipairs(context.scoring_hand) do --checking for all non-wild cards
+        if not SMODS.has_any_suit(v) then
+          if v:is_suit('Hearts') and suit_list["Hearts"] ~= 1 then suit_list["Hearts"] = 1
+          elseif v:is_suit('Diamonds') and suit_list["Diamonds"] ~= 1  then suit_list["Diamonds"] = 1
+          elseif v:is_suit('Spades') and suit_list["Spades"] ~= 1  then suit_list["Spades"] = 1
+          elseif v:is_suit('Clubs') and suit_list["Clubs"]~= 1  then suit_list["Clubs"] = 1
+          end
+        end
       end
-      for i in pairs(suit_list) do
-        num_suits = num_suits + 1
+      for k, v in ipairs(context.scoring_hand) do --checking for all wild cards
+        if SMODS.has_any_suit(v) then
+          if v:is_suit('Hearts') and suit_list["Hearts"] ~= 1 then suit_list["Hearts"] = 1
+          elseif v:is_suit('Diamonds') and suit_list["Diamonds"] ~= 1  then suit_list["Diamonds"] = 1
+          elseif v:is_suit('Spades') and suit_list["Spades"] ~= 1  then suits["Spades"] = 1
+          elseif v:is_suit('Clubs') and suit_list["Clubs"]~= 1  then suit_list["Clubs"] = 1
+          end
+        end
       end
-      if next(context.poker_hands["Straight"]) and num_suits >= 4 then
+      print(tprint(suit_list))
+      if next(context.poker_hands["Straight"]) and 
+      suit_list["Hearts"] > 0 and
+      suit_list["Diamonds"] > 0 and
+      suit_list["Spades"] > 0 and
+      suit_list["Clubs"] > 0 then
           local card_type = 'Tarot'
           G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 3
           G.E_MANAGER:add_event(Event({
@@ -1381,7 +1402,7 @@ SMODS.Joker { --Bisexual Flag
           return {
               message = localize('k_plus_tarot'),
               colour = G.C.SECONDARY_SET.Tarot,
-              card = self
+              card = card
           }
       end
     end
