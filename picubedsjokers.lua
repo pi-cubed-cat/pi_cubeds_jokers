@@ -1399,7 +1399,7 @@ SMODS.Joker { --Bisexual Flag
                   return true
               end)}))
           return {
-              message = localize('k_plus_tarot'),
+              message = "Pride!",
               colour = G.C.SECONDARY_SET.Tarot,
               card = card
           }
