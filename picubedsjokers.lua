@@ -1379,7 +1379,6 @@ SMODS.Joker { --Bisexual Flag
           end
         end
       end
-      print(tprint(suit_list))
       if next(context.poker_hands["Straight"]) and 
       suit_list["Hearts"] > 0 and
       suit_list["Diamonds"] > 0 and
