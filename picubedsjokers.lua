@@ -635,7 +635,7 @@ SMODS.Joker { --7 8 9
     text = {
       "If played hand contains a {C:attention}scoring",
       "{C:attention}7 {}and {C:attention}9{}, {C:attention}destroy{} all scored {C:attention}9s{},",
-      "and {X:mult,C:white}X#1#{} Mult per 9 scored",
+      "and gain {X:mult,C:white}X#1#{} Mult per 9 scored",
       "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)"
     }
   },
