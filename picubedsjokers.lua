@@ -128,9 +128,9 @@ SMODS.Joker { --Word Search
   loc_txt = {
     name = 'Word Search',
     text = {
-      "Played {C:attention}#1#{} cards add {C:mult}+#2#{} Mult",
-      "to this Joker when scored",
-      "{s:0.8}Rank changes at end of round",
+      "This Joker gains {C:mult}+#2#{} Mult",
+      "per scoring {C:attention}#1#{} card,",
+      "{s:0.8}Rank changes every round",
       "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
     }
   },
@@ -250,10 +250,10 @@ SMODS.Joker { --Chisel
   loc_txt = {
     name = 'Chisel',
     text = {
-      "If hand is a single", 
-      "{C:attention}Stone{} card, {C:attention}remove{} the",
-      "enhancement and add {C:chips}+#1#",
-      "{C:attention}bonus chips{} to the card"
+      "If {c:attention}first{} played card",
+      "is a {C:attention}Stone{} card, {C:attention}remove{}", 
+      "the enhancement and add",
+      "{C:chips}+#1# {C:attention}bonus{} {C:attention}chips{} to the card"
     }
   },
   config = { extra = { big_bonus = 50 } },
@@ -274,18 +274,16 @@ SMODS.Joker { --Chisel
   end,
   
   calculate = function(self, card, context)
-    if context.cardarea == G.play and #context.full_hand == 1 and context.individual and not context.blueprint then
-      if SMODS.has_enhancement(context.other_card, 'm_stone') then
-        for k, v in ipairs(context.scoring_hand) do
-          if not v.debuff then 
-            v:set_ability(G.P_CENTERS.c_base, nil, true)
-            v.ability.perma_bonus = v.ability.perma_bonus or 0 --initialises a permanent chips value
-            v.ability.perma_bonus = v.ability.perma_bonus + card.ability.extra.big_bonus --add permanent chips to playing card
-            return {
-                  message = "Chisel!",
-                  colour = G.C.CHIPS
-            }
-          end
+    if context.cardarea == G.play and context.individual and not context.blueprint then
+      if context.other_card == context.scoring_hand[1] and SMODS.has_enhancement(context.other_card, 'm_stone') then
+        if not context.other_card.debuff then 
+          context.other_card:set_ability(G.P_CENTERS.c_base, nil, true)
+          context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0 --initialises a permanent chips value
+          context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.big_bonus --add permanent chips to playing card
+          return {
+                message = "Chisel!",
+                colour = G.C.CHIPS
+          }
         end
       end
     end
@@ -637,7 +635,7 @@ SMODS.Joker { --7 8 9
     text = {
       "If played hand contains a {C:attention}scoring",
       "{C:attention}7 {}and {C:attention}9{}, {C:attention}destroy{} all scored {C:attention}9s{},",
-      "and {X:mult,C:white}X#1#{} Mult per 9 scored",
+      "and gain {X:mult,C:white}X#1#{} Mult per 9 scored",
       "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)"
     }
   },
@@ -812,9 +810,6 @@ SMODS.Joker { --Super Wrathful Joker
           if v:is_suit("Spades") then
             v:juice_up()
             assert(SMODS.change_base(v, nil, 'King'))
-          elseif v.base.value == '9' then
-            v:juice_up()
-            assert(SMODS.change_base(v, nil, 'King'))
           end
         end
       end
@@ -900,9 +895,7 @@ SMODS.Joker { --Advanced Skipping
     end
   end
 }
-
---[[Echolocation rework plan
-SMODS.Joker { --Echolocation
+--[[SMODS.Joker { --Echolocation rework plan
   key = 'echolocation',
   loc_txt = {
     name = 'Echolocation',
@@ -1213,15 +1206,20 @@ SMODS.Joker { --Siphon
   end
 }
 
+function are_consm_slots_filled(consm)
+  return (#G.consumeables.cards < G.consumeables.config.card_limit)
+end
+
 SMODS.Joker { --Inkjet Printer
-  key = 'inkjetprinter',
+   key = 'inkjetprinter',
   loc_txt = {
     name = 'Inkjet Printer',
     text = {
       "{C:attention}Consumables{} have a {C:green}#1# in #2#",
       "chance to be {C:attention}recreated{} on use,",
       "this card has a {C:green}#1# in #3#{} chance to",
-      "be {C:attention}destroyed{} after activating"
+      "be {C:attention}destroyed{} after activating",
+      "{C:inactive}(Must have room){}"
     }
   },
   rarity = 2,
@@ -1239,42 +1237,50 @@ SMODS.Joker { --Inkjet Printer
   calculate = function(self, card, context)
     if context.using_consumeable and not context.blueprint then
       if pseudorandom(pseudoseed('inkjetprinter'..G.SEED)) < G.GAME.probabilities.normal / card.ability.extra.copy_odds then
+        local has_activated = false
+        local has_destroyed = false
         G.E_MANAGER:add_event(Event({
           func = function()
-            local card = copy_card(context.consumeable, nil)
-            card:add_to_deck()
-            G.consumeables:emplace(card)
+            if are_consm_slots_filled(context.consumeable) then
+              local copied_card = copy_card(context.consumeable, nil)
+              copied_card:add_to_deck()
+              G.consumeables:emplace(copied_card)
+              has_activated = true
+              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+                { message = "Print!" })
+            end
             return true
           end
         }))
-        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
-          { message = "Print!" })
+
         if pseudorandom(pseudoseed('inkjetprinter'..G.SEED)) < G.GAME.probabilities.normal / card.ability.extra.destroy_odds then
           G.E_MANAGER:add_event(Event({
 					func = function()
-						play_sound('tarot1')
-						card.T.r = -0.2
-						card:juice_up(0.3, 0.4)
-						card.states.drag.is = true
-						card.children.center.pinch.x = true
-						-- This part destroys the card.
-						G.E_MANAGER:add_event(Event({
-							trigger = 'after',
-							delay = 0.3,
-							blockable = false,
-							func = function()
-								G.jokers:remove_card(card)
-								card:remove()
-								card = nil
-								return true;
-							end
-						}))
-						return true
-					end
+						if has_activated then
+              has_destroyed = true
+              play_sound('tarot1')
+                card.T.r = -0.2
+                card:juice_up(0.3, 0.4)
+                card.states.drag.is = true
+                card.children.center.pinch.x = true
+                -- This part destroys the card.
+                G.E_MANAGER:add_event(Event({
+                  trigger = 'after',
+                  delay = 0.3,
+                  blockable = false,
+                  func = function()
+                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+                      { message = "Error!" })
+                    G.jokers:remove_card(card)
+                    card:remove()
+                    card = nil
+                    return true;
+                  end
+                }))
+            end
+            return true
+          end
           }))
-          return {
-					message = 'Error!'
-          }
         end
       end
     end
@@ -1306,18 +1312,21 @@ SMODS.Joker { --Black Joker
     return { vars = { card.ability.extra.sum_rank, card.ability.extra.money_cap } }
   end,
   calculate = function(self, card, context)
-    if context.individual and context.cardarea == G.play then
-      if SMODS.has_enhancement(context.other_card, 'm_stone') then --stone (rankless) cards
-        card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0
-      elseif context.other_card:get_id() > 10 then --face cards, aces
-        if context.other_card:get_id() < 14 then --face cards
-          card.ability.extra.sum_rank = card.ability.extra.sum_rank + 10
-        else --aces
-          card.ability.extra.sum_rank = card.ability.extra.sum_rank + 1
-        end
-      else --numbered cards
-        card.ability.extra.sum_rank = card.ability.extra.sum_rank + context.other_card:get_id()
-      end 
+    
+    if context.cardarea == G.jokers and context.before and not context.blueprint then
+      for k,v in ipairs(context.scoring_hand) do
+        if SMODS.has_enhancement(v, 'm_stone') then --stone (rankless) cards
+          card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0
+        elseif v:get_id() > 10 then --face cards or aces
+          if v:get_id() < 14 then --face cards
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 10
+          else --aces
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 1
+          end
+        else --numbered cards
+          card.ability.extra.sum_rank = card.ability.extra.sum_rank + v:get_id()
+        end 
+      end
     end
   end,
   calc_dollar_bonus = function(self, card)
@@ -1363,23 +1372,23 @@ SMODS.Joker { --Bisexual Flag
       }
       for k, v in ipairs(context.scoring_hand) do --checking for all non-wild cards
         if not SMODS.has_any_suit(v) then
-          if v:is_suit('Hearts') and suit_list["Hearts"] ~= 1 then suit_list["Hearts"] = 1
-          elseif v:is_suit('Diamonds') and suit_list["Diamonds"] ~= 1  then suit_list["Diamonds"] = 1
-          elseif v:is_suit('Spades') and suit_list["Spades"] ~= 1  then suit_list["Spades"] = 1
-          elseif v:is_suit('Clubs') and suit_list["Clubs"]~= 1  then suit_list["Clubs"] = 1
+          if v:is_suit('Hearts', true) and suit_list["Hearts"] ~= 1 then suit_list["Hearts"] = 1
+          elseif v:is_suit('Diamonds', true) and suit_list["Diamonds"] ~= 1  then suit_list["Diamonds"] = 1
+          elseif v:is_suit('Spades', true) and suit_list["Spades"] ~= 1  then suit_list["Spades"] = 1
+          elseif v:is_suit('Clubs', true) and suit_list["Clubs"]~= 1  then suit_list["Clubs"] = 1
           end
         end
       end
       for k, v in ipairs(context.scoring_hand) do --checking for all wild cards
         if SMODS.has_any_suit(v) then
-          if v:is_suit('Hearts') and suit_list["Hearts"] ~= 1 then suit_list["Hearts"] = 1
-          elseif v:is_suit('Diamonds') and suit_list["Diamonds"] ~= 1  then suit_list["Diamonds"] = 1
-          elseif v:is_suit('Spades') and suit_list["Spades"] ~= 1  then suits["Spades"] = 1
-          elseif v:is_suit('Clubs') and suit_list["Clubs"]~= 1  then suit_list["Clubs"] = 1
+          if v:is_suit('Hearts', true) and suit_list["Hearts"] ~= 1 then suit_list["Hearts"] = 1
+          elseif v:is_suit('Diamonds', true) and suit_list["Diamonds"] ~= 1  then suit_list["Diamonds"] = 1
+          elseif v:is_suit('Spades', true) and suit_list["Spades"] ~= 1  then suits["Spades"] = 1
+          elseif v:is_suit('Clubs', true) and suit_list["Clubs"]~= 1  then suit_list["Clubs"] = 1
           end
         end
       end
-      if next(context.poker_hands["Straight"]) and 
+      if (next(context.poker_hands["Straight"]) or next(context.poker_hands["Straight Flush"])) and 
       suit_list["Hearts"] > 0 and
       suit_list["Diamonds"] > 0 and
       suit_list["Spades"] > 0 and
@@ -1540,7 +1549,36 @@ SMODS.Joker { --All In
     return { vars = { card.ability.extra.repetitions } }
   end,
   calculate = function(self, card, context)
-    print("hi")
+    print("hello")
   end
 }
 ]]
+
+--[[SMODS.Joker { --The Debuffer (Test Joker)
+  key = 'the_debuffer',
+  loc_txt = {
+    name = 'The Debuffer',
+    text = {
+      "{C:attention}Debuffs{} all jokers and", 
+      "playing cards when sold"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 9, y = 3 },
+  cost = 1,
+  discovered = true,
+  blueprint_compat = false,
+  eternal_compat = false,
+
+  calculate = function(self, card, context)
+    if not context.blueprint and context.selling_self then
+      for k, v in ipairs(G.jokers.cards) do
+        SMODS.debuff_card(v, true, 'test')
+      end
+      for k, v in ipairs(G.hand.cards) do
+       SMODS.debuff_card(v, true, 'test')
+      end
+    end
+  end
+}]]--
