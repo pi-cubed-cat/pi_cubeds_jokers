@@ -1576,9 +1576,9 @@ SMODS.Joker { --All In
 
   calculate = function(self, card, context)
     if not context.blueprint and context.selling_self then
-      --[[for k, v in ipairs(G.jokers.cards) do
+      for k, v in ipairs(G.jokers.cards) do
         SMODS.debuff_card(v, true, 'test')
-      end]]
+      end
       for k, v in ipairs(G.hand.cards) do
        SMODS.debuff_card(v, true, 'test')
       end
