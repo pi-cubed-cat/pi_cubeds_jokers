@@ -376,6 +376,7 @@ SMODS.Joker { --Prime 7
   rarity = 3,
   atlas = 'PiCubedsJokers',
   pos = { x = 7, y = 0 },
+  soul_pos = { x = 3, y = 3},
   cost = 7,
   discovered = true,
   blueprint_compat = false,
@@ -393,12 +394,15 @@ SMODS.Joker { --Prime 7
       if #context.full_hand == 1 then
         for k, v in ipairs(context.scoring_hand) do
           if not v.debuff and v.base.value == '7' then 
-            return {
-              v:juice_up(),
-              colour = G.C.PURPLE,
-              message = "Prime!",
-              v:set_edition('e_negative', false, true)
-            }
+            G.E_MANAGER:add_event(Event({
+              func = function()
+                  v:juice_up()
+                  colour = G.C.PURPLE
+                  message = "Prime!"
+                  v:set_edition('e_negative', false, true)
+                  return true
+              end
+            }))
           end
         end
       end
@@ -411,7 +415,8 @@ SMODS.Joker { --Landslide
   loc_txt = {
     name = 'Landslide',
     text = {
-      "Add a {C:attention}Stone Card{} to deck",
+      "A random card held in hand",
+      "becomes a {C:attention}Stone Card{}",
       "if {C:chips}Chips{} exceeds {C:mult}Mult",
       "after scoring"
     }
@@ -433,27 +438,27 @@ SMODS.Joker { --Landslide
   
   calculate = function(self, card, context)
 		if context.cardarea == G.jokers and context.after then 
-      if hand_chips > mult then
-        G.E_MANAGER:add_event(Event({
-          func = function() 
-              local front = pseudorandom_element(G.P_CARDS, pseudoseed('landslide' .. G.SEED))
-              G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-              local card = Card(G.play.T.x + G.play.T.w/2, G.play.T.y, G.CARD_W, G.CARD_H, front, G.P_CENTERS.m_stone, {playing_card = G.playing_card})
-              card:start_materialize({G.C.SECONDARY_SET.Enhanced})
-              G.deck:emplace(card)
-              table.insert(G.playing_cards, card)
-              return true
-          end}))
-
-        G.E_MANAGER:add_event(Event({
-          func = function() 
-              G.deck.config.card_limit = G.deck.config.card_limit + 1
-              return true
-          end}))
-        return {
-              playing_cards_created = {true},
-              message = "Tumble!"
+      if hand_chips > mult and #G.hand.cards >= 1 then
+        local rndcard = pseudorandom_element(G.hand.cards, pseudoseed('Landslide'..G.SEED))
+        if not SMODS.has_enhancement(rndcard, 'm_stone') then
+          rndcard:set_ability(G.P_CENTERS.m_stone, nil, true)
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  rndcard:juice_up()
+                  return true
+              end
+          }))
+          return {
+            message = "Tumble!"
             }
+        else
+          G.E_MANAGER:add_event(Event({
+              func = function()
+                  rndcard:juice_up()
+                  return true
+              end
+          }))
+        end
       end
     end
 	end
@@ -497,8 +502,7 @@ SMODS.Joker { --Ooo! Shiny!
   loc_txt = {
     name = 'Ooo! Shiny!',
     text = {
-      "{C:attention}Gold Sealed{} cards with the",
-      "{C:attention}Gold{} enhancement or {C:dark_edition}Polychrome",
+      "{C:dark_edition}Polychrome{} cards",
       "give {C:money}$10{} when scored"
     }
   },
@@ -512,8 +516,6 @@ SMODS.Joker { --Ooo! Shiny!
   perishable_compat = true,
   eternal_compat = true,
   loc_vars = function(self, info_queue, card)
-    info_queue[#info_queue+1] = G.P_SEALS.Gold
-    info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     return {
       vars = { card.ability.extra.money, card.ability.max_highlighted }
@@ -521,13 +523,12 @@ SMODS.Joker { --Ooo! Shiny!
   end,
   calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
-      if context.other_card.seal == "Gold" and (not context.other_card.debuff) then
-        if SMODS.has_enhancement(context.other_card, 'm_gold') or (context.other_card.edition and context.other_card.edition.key == 'e_polychrome') then
-          return {
-            dollars = card.ability.extra.money,
-            card = card
-          }
-        end
+      if context.other_card.edition and context.other_card.edition.key == 'e_polychrome' 
+      and (not context.other_card.debuff) then
+        return {
+          dollars = card.ability.extra.money,
+          card = card
+        }
       end
 		end
 	end
@@ -761,7 +762,7 @@ SMODS.Joker { --Ambigram
       "Played {C:attention}9s{} become {C:attention}6s{}"
     }
   },
-  rarity = 2,
+  rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 5, y = 1 },
   cost = 6,
@@ -1246,7 +1247,7 @@ SMODS.Joker { --Inkjet Printer
               copied_card:add_to_deck()
               G.consumeables:emplace(copied_card)
               has_activated = true
-              card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+              card_eval_status_text(card, 'extra', nil, nil, nil,
                 { message = "Print!" })
             end
             return true
@@ -1269,16 +1270,21 @@ SMODS.Joker { --Inkjet Printer
                   delay = 0.3,
                   blockable = false,
                   func = function()
-                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+                    card_eval_status_text(card, 'extra', nil, nil, nil,
                       { message = "Error!" })
+                    local mpcard = create_card('Joker', G.jokers, nil, 0, nil, nil, 'j_misprint', 'pri')
+                    mpcard:set_edition(card.edition, false, true)
+                    mpcard:add_to_deck()
+                    G.jokers:emplace(mpcard)
+                    mpcard:start_materialize()
                     G.jokers:remove_card(card)
                     card:remove()
                     card = nil
                     return true;
                   end
                 }))
-            end
-            return true
+              end
+          return true
           end
           }))
         end
@@ -1292,7 +1298,7 @@ SMODS.Joker { --Black Joker
   loc_txt = {
     name = 'Black Joker',
     text = {
-      "If the {C:attention}sum rank{} of all {C:attention}played",
+      "If the {C:attention}sum rank{} of all {C:attention}scoring",
       "{C:attention}cards{} this round is {C:attention}#2# or less{},",
       "receive {C:money}${} equal to sum rank",
       "at end of round",
