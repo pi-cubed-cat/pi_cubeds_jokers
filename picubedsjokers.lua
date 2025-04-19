@@ -908,7 +908,7 @@ SMODS.Joker { --Advanced Skipping
     end
   end
 }
---[[SMODS.Joker { --Echolocation rework plan
+SMODS.Joker { --Echolocation
   key = 'echolocation',
   loc_txt = {
     name = 'Echolocation',
@@ -940,27 +940,17 @@ SMODS.Joker { --Advanced Skipping
 	end,
   
   calculate = function(self, card, context)
-    if context.play_cards then
-        card.ability.extra.card_list = {}
-        for i = 1, #G.hand.highlighted do
-            if G.hand.highlighted[i].facing == 'back' then
-                table.insert(card.ability.extra.card_list, G.hand.highlighted[i])
-            end
-        end
-    end
-    if context.before and not context.blueprint then --should activate right before individual cards are added to deck (like The Wheel)
-      for k, v in ipairs(G.hand.cards) do 
+    if not context.blueprint then
+      if context.stay_flipped then
         if pseudorandom(pseudoseed('echolocation'..G.SEED)) < G.GAME.probabilities.normal / card.ability.extra.odds then
-          if v.facing ~= 'back' then
-            v:flip()
-          end
+          return { stay_flipped = true }
         end
       end
     end
   end
-}]]
+}
 
-SMODS.Joker { --Echolocation
+--[[SMODS.Joker { --Echolocation ("old")
   key = 'echolocation',
   loc_txt = {
     name = 'Echolocation',
@@ -1001,7 +991,7 @@ SMODS.Joker { --Echolocation
       end
     end
   end
-}
+}]]
 
 SMODS.Joker { --Shopping Trolley
   key = 'shoppingtrolley',
@@ -1159,7 +1149,7 @@ SMODS.Joker { --Spectral Joker
   loc_vars = function(self, info_queue, card)
       info_queue[#info_queue+1] = G.P_TAGS['tag_ethereal']
     return {
-      vars = { card.ability.max_highlighted, card.ability.extra.can_tag }
+      vars = { card.ability.max_highlighted }
     }
   end,
   
@@ -1512,6 +1502,59 @@ SMODS.Joker { --Apartment Complex
 				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
 				Xmult_mod = card.ability.extra.Xmult
 			}
+    end
+  end
+}
+
+SMODS.Consumable { --Commander (Spectral card)
+  set = "Spectral",
+  key = "commander",
+  loc_txt = {
+    name = 'Commander',
+    text = {
+      "{C:attention}Destroy{} #1# random",
+      "Consumable if slots are",
+      "filled, add {C:dark_edition}Negative{}",
+      "to all others"
+    }
+  },
+  discovered = true,
+  config = { 
+    extra = { num = 1 }
+  },
+  atlas = 'PiCubedsJokers',
+  pos = { x = 9, y = 3 },
+  cost = 4,
+  loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue + 1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = G.P_CENTERS['e_negative'].config.card_limit} }
+    return { vars = { card.ability.extra.num } }
+  end,
+  can_use = function(self, card)
+    return #G.consumeables.cards >= 1
+  end,
+  use = function(self, card, area, copier)
+    if (#G.consumeables.cards >= G.consumeables.config.card_limit) or (card.edition and card.edition.key == 'e_negative' and #G.consumeables.cards + 1 >= G.consumeables.config.card_limit) then
+      local rndcard = pseudorandom_element(G.consumeables.cards, pseudoseed('Commander'..G.SEED))
+      if rndcard ~= nil then
+        --This event bit taken from Extra Credit's Toby the Corgi
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            play_sound('tarot1')
+            rndcard.T.r = -0.2
+            rndcard:juice_up(0.3, 0.4)
+            rndcard.states.drag.is = true
+            rndcard.children.center.pinch.x = true
+            rndcard:start_dissolve()
+            rndcard = nil
+            delay(0.3)
+            return true
+          end
+        }))
+      end
+    end
+    for k, v in ipairs(G.consumeables.cards) do
+      v:set_edition('e_negative', false, true)
+      v:juice_up()
     end
   end
 }
