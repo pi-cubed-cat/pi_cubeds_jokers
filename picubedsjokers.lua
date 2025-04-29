@@ -112,7 +112,7 @@ SMODS.Joker { --D2
       "to give {C:mult}+#1#{} Mult"
     }
   },
-  config = { extra = { mult = 15, odds = 2 } },
+  config = { extra = { mult = 20, odds = 2 } },
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 1, y = 0 },
@@ -170,7 +170,7 @@ SMODS.Joker { --Word Search
       "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
     }
   },
-  config = { extra = { mult = 0, mult_mod = 2, target_rank = '14' }},
+  config = { extra = { mult = 0, mult_mod = 1, target_rank = '14' }},
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 2, y = 0 },
@@ -299,7 +299,7 @@ SMODS.Joker { --Chisel
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 4, y = 0 },
-  cost = 5,
+  cost = 4,
   discovered = true,
   blueprint_compat = false,
   perishable_compat = true,
@@ -465,7 +465,7 @@ SMODS.Joker { --Landslide
   },
   atlas = 'PiCubedsJokers',
   pos = { x = 8, y = 0 },
-  cost = 6,
+  cost = 5,
   rarity = 1,
   discovered = true,
   blueprint_compat = true,
@@ -545,10 +545,10 @@ SMODS.Joker { --Ooo! Shiny!
     name = 'Ooo! Shiny!',
     text = {
       "{C:dark_edition}Polychrome{} cards",
-      "give {C:money}$10{} when scored"
+      "give {C:money}$#1#{} when scored"
     }
   },
-  config = { extra = { money = 10 } },
+  config = { extra = { money = 8 } },
   atlas = 'PiCubedsJokers',
   pos = { x = 0, y = 1 },
   cost = 8,
@@ -568,6 +568,15 @@ SMODS.Joker { --Ooo! Shiny!
 		if context.individual and context.cardarea == G.play then
       if context.other_card.edition and context.other_card.edition.key == 'e_polychrome' 
       and (not context.other_card.debuff) then
+        return {
+          dollars = card.ability.extra.money,
+          card = card
+        }
+      end
+		end
+    if context.other_joker and context.other_joker.edition then
+			if context.other_joker.edition.key == 'e_polychrome'
+			and (not context.other_joker.debuff) then
         return {
           dollars = card.ability.extra.money,
           card = card
@@ -634,10 +643,9 @@ SMODS.Joker { --Snake Eyes
   loc_txt = {
     name = 'Snake Eyes',
     text = {
-      "When this card is {C:attention}sold{},",
-      "Joker to the {C:attention}left{} has",
-      "its listed {E:1,C:green}probabilities",
-      "{C:attention}guaranteed",
+      "When this card is {C:attention}sold{}, Joker",
+      "to the {C:attention}left{} has its listed ",
+      "{E:1,C:green}probabilities {C:attention}guaranteed",
       "{C:inactive}(ex: {C:green}1 in 6 {C:inactive}-> {C:green}1 in 1{C:inactive})"
       
     }
@@ -645,7 +653,7 @@ SMODS.Joker { --Snake Eyes
   rarity = 2,
   atlas = 'PiCubedsJokers',
   pos = { x = 2, y = 1 },
-  cost = 4,
+  cost = 6,
   discovered = true,
   blueprint_compat = false,
   perishable_compat = true,
@@ -700,7 +708,7 @@ SMODS.Joker { --7 8 9
   atlas = 'PiCubedsJokers',
   pos = { x = 3, y = 1 },
   cost = 7,
-  config = { extra = { Xmult_mod = 0.5, Xmult = 1 } },
+  config = { extra = { Xmult_mod = 0.3, Xmult = 1 } },
   discovered = true,
   blueprint_compat = true,
   perishable_compat = false,
@@ -764,7 +772,7 @@ SMODS.Joker { --Hidden Gem
       "{C:inactive}(Must have room)"
     }
   },
-  rarity = 2,
+  rarity = 3,
   atlas = 'PiCubedsJokers',
   pos = { x = 4, y = 1 },
   cost = 8,
@@ -814,8 +822,10 @@ SMODS.Joker { --Ambigram
   loc_txt = {
     name = 'Ambigram',
     text = {
-      "Played {C:attention}6s{} become {C:attention}9s{},",
-      "Played {C:attention}9s{} become {C:attention}6s{}"
+      "Played unenhanced {C:attention}6s{}",
+      "become {C:attention}9s{},",
+      "Played unenhanced {C:attention}9s{}",
+      "become {C:attention}6s{}"
     }
   },
   rarity = 1,
@@ -830,10 +840,10 @@ SMODS.Joker { --Ambigram
     if context.before and context.cardarea == G.jokers and not context.blueprint then
       for k, v in ipairs(context.scoring_hand) do
         if not v.debuff then
-          if v.base.value == '6' then
+          if v.base.value == '6' and v.config.center == G.P_CENTERS.c_base then
             v:juice_up()
             assert(SMODS.change_base(v, nil, '9'))
-          elseif v.base.value == '9' then
+          elseif v.base.value == '9' and v.config.center == G.P_CENTERS.c_base then
             v:juice_up()
             assert(SMODS.change_base(v, nil, '6'))
           end
@@ -880,7 +890,7 @@ SMODS.Joker { --Ace Comedian
     name = 'Ace Comedian',
     text = {
       "Retrigger each played",
-      "{C:attention}Ace{}, {C:attention}10{}, and{C:attention} 9{}"
+      "{C:attention}Ace{}, {C:attention}10{}, {C:attention}9{}, and {C:attention}8{}"
     }
   },
   rarity = 2,
@@ -895,6 +905,7 @@ SMODS.Joker { --Ace Comedian
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.repetition and not context.repetition_only then
       if 
+      context.other_card:get_id() == 8 or
       context.other_card:get_id() == 9 or
       context.other_card:get_id() == 10 or
       context.other_card:get_id() == 14 then
@@ -923,8 +934,8 @@ SMODS.Joker { --Advanced Skipping
   pos = { x = 8, y = 1 },
   cost = 5,
   discovered = true,
-  blueprint_compat = false,
-  perishable_compat = false,
+  blueprint_compat = true,
+  perishable_compat = true,
   eternal_compat = true,
   config = { extra = { add_tags = 1, add_tags_mod = 1} },
   loc_vars = function(self, info_queue, card)
@@ -1228,7 +1239,7 @@ SMODS.Joker { --Siphon
   blueprint_compat = true,
   perishable_compat = false,
   eternal_compat = true,
-  config = { extra = { chips_mod = 20, chips = 0 } },
+  config = { extra = { chips_mod = 8, chips = 0 } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
   end,
@@ -1272,7 +1283,7 @@ SMODS.Joker { --Inkjet Printer
   rarity = 2,
   atlas = 'PiCubedsJokers',
   pos = { x = 5, y = 2 },
-  cost = 8,
+  cost = 6,
   discovered = true,
   blueprint_compat = false,
   perishable_compat = true,
@@ -1346,8 +1357,8 @@ SMODS.Joker { --Black Joker
     text = {
       "If the {C:attention}sum rank{} of all {C:attention}scoring",
       "{C:attention}cards{} this round is {C:attention}#2# or less{},",
-      "receive {C:money}${} equal to sum rank",
-      "at end of round",
+      "receive {C:money}${} equal to half sum",
+      "rank at end of round",
       "{C:inactive}(Currently{} {C:attention}#1#{C:inactive})"
     }
   },
@@ -1373,7 +1384,7 @@ SMODS.Joker { --Black Joker
           if v:get_id() < 14 then --face cards
             card.ability.extra.sum_rank = card.ability.extra.sum_rank + 10
           else --aces
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 1
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 11
           end
         else --numbered cards
           card.ability.extra.sum_rank = card.ability.extra.sum_rank + v:get_id()
@@ -1385,7 +1396,7 @@ SMODS.Joker { --Black Joker
     local bonus = card.ability.extra.sum_rank
     card.ability.extra.sum_rank = 0
     if bonus > 0 and bonus <= 21 then 
-      return bonus 
+      return math.ceil(bonus/2)
     end
   end
 }
@@ -1518,7 +1529,7 @@ SMODS.Joker { --Apartment Complex
       "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)"
     }
   },
-  rarity = 2,
+  rarity = 3,
   atlas = 'PiCubedsJokers',
   pos = { x = 9, y = 2 },
   cost = 6,
@@ -1527,7 +1538,7 @@ SMODS.Joker { --Apartment Complex
   perishable_compat = false,
   eternal_compat = true,
   picubeds_apartmentcomplex_gate = true,
-  config = { extra = { Xmult_mod = 1, Xmult = 1 } },
+  config = { extra = { Xmult_mod = 0.75, Xmult = 1 } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
   end,
@@ -1760,9 +1771,9 @@ SMODS.Joker { --Extra Limb
     name = 'Extra Limb',
     text = {
       "{C:attention}+#1#{} Consumable Slots,",
-      "{C:chips}+#2#{} Chips per held",
+      "{C:mult}+#2#{} Mult per held",
       "Consumable",
-      "{C:inactive}(Currently {C:chips}+#3# {C:inactive}Chips)"
+      "{C:inactive}(Currently {C:mult}+#3# {C:inactive}Mult)"
     }
   },
   rarity = 1,
@@ -1773,12 +1784,12 @@ SMODS.Joker { --Extra Limb
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
-  config = { extra = { card_limit = 1, chips_mod = 10 } },
+  config = { extra = { card_limit = 1, mult_mod = 6 } },
   loc_vars = function(self, info_queue, card)
     if G.OVERLAY_MENU then
-      return { vars = { card.ability.extra.card_limit, card.ability.extra.chips_mod, 0 } }
+      return { vars = { card.ability.extra.card_limit, card.ability.extra.mult_mod, 0 } }
     else
-      return { vars = { card.ability.extra.card_limit, card.ability.extra.chips_mod, card.ability.extra.chips_mod * #G.consumeables.cards } }
+      return { vars = { card.ability.extra.card_limit, card.ability.extra.mult_mod, card.ability.extra.mult_mod * #G.consumeables.cards } }
     end
   end,
   --add & remove taken from Extra Credit's Forklift
@@ -1795,8 +1806,8 @@ SMODS.Joker { --Extra Limb
   calculate = function(self, card, context)
     if context.joker_main and #G.consumeables.cards ~= 0 then
       return {
-        chip_mod = card.ability.extra.chips_mod * #G.consumeables.cards,
-        message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips_mod * #G.consumeables.cards } }
+        mult_mod = card.ability.extra.mult_mod * #G.consumeables.cards,
+        message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult_mod * #G.consumeables.cards } }
       }
     end
   end
@@ -1869,7 +1880,7 @@ SMODS.Joker { --Explosher
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 2, y = 4 },
-  cost = 5,
+  cost = 4,
   discovered = true,
   blueprint_compat = true,
   perishable_compat = true,
@@ -1880,8 +1891,19 @@ SMODS.Joker { --Explosher
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.jokers and context.after then
-      local chosen_suit = pseudorandom_element({'Spades', 'Hearts', 'Clubs', 'Diamonds'}, pseudoseed('Explosher'..G.SEED))
+      local suit_list = {'Hearts', 'Diamonds', 'Spades', 'Clubs'}
       if #G.hand.cards > 0 and #G.hand.cards <= card.ability.extra.num then
+        for k,v in ipairs(G.hand.cards) do
+          for i=#suit_list,1,-1 do
+            if v.base.suit == suit_list[i] then
+              table.remove(suit_list, i)
+            end
+          end
+        end
+        if #suit_list == 0 then
+          suit_list = {'Hearts', 'Diamonds', 'Spades', 'Clubs'}
+        end
+        local chosen_suit = pseudorandom_element(suit_list, pseudoseed('Explosher'..G.SEED))
         for k,v in ipairs(G.hand.cards) do
           G.E_MANAGER:add_event(Event({func = function()
             v:change_suit(chosen_suit)
@@ -1903,6 +1925,17 @@ SMODS.Joker { --Explosher
       elseif #G.hand.cards > 0 then
         local card_list = {}
         local hit_list = {}
+        for k,v in ipairs(G.hand.cards) do
+          for i=#suit_list,1,-1 do
+            if v.base.suit == suit_list[i] then
+              table.remove(suit_list, i)
+            end
+          end
+        end
+        if #suit_list == 0 then
+          suit_list = {'Hearts', 'Diamonds', 'Spades', 'Clubs'}
+        end
+        local chosen_suit = pseudorandom_element(suit_list, pseudoseed('Explosher'..G.SEED))
         for i=1,#G.hand.cards do
           card_list[i] = G.hand.cards[i]
         end
@@ -2182,7 +2215,7 @@ SMODS.Joker { --Water Bottle
   blueprint_compat = true,
   perishable_compat = false,
   eternal_compat = true,
-  config = { extra = { chips_mod = 30, chips = 0} },
+  config = { extra = { chips_mod = 15, chips = 0} },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
   end,
