@@ -1526,6 +1526,7 @@ SMODS.Joker { --Apartment Complex
   blueprint_compat = true,
   perishable_compat = false,
   eternal_compat = true,
+  picubeds_apartmentcomplex_gate = true,
   config = { extra = { Xmult_mod = 1, Xmult = 1 } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }

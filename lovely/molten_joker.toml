@@ -33,5 +33,10 @@ elseif v.picubeds_oooshiny_gate then
             end
         end
     end      
+elseif v.picubeds_apartmentcomplex_gate then
+    add = nil
+    if G.GAME.hands["Flush House"].played ~= 0 then
+        add = true
+    end
 '''
 match_indent = true
