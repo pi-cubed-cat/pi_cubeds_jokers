@@ -13,6 +13,37 @@ SMODS.current_mod.optional_features = function()
   return { retrigger_joker = true }
 end
 
+--CONFIGS
+picubed_config = SMODS.current_mod.config
+
+SMODS.current_mod.config_tab = function()
+    return {
+      n = G.UIT.ROOT,
+      config = {
+        align = "cm",
+        padding = 0.05,
+        colour = G.C.CLEAR,
+      },
+      nodes = {
+        create_toggle({
+            label = "New Spectral Cards (restart required)",
+            ref_table = picubed_config,
+            ref_value = "spectrals",
+        }),
+        create_toggle({
+            label = "Preorder Bonus' hook (disable for better compatibility, restart required)",
+            ref_table = picubed_config,
+            ref_value = "preorderbonus_hook",
+        }),
+        create_toggle({
+            label = "Custom Sound Effects (restart required)",
+            ref_table = picubed_config,
+            ref_value = "custom_sound_effects",
+        }),
+      },
+    }
+end
+
 SMODS.Atlas {
   key = 'modicon',
   path = 'picubedsicon.png',
@@ -30,7 +61,7 @@ SMODS.Atlas {
   py = 95
 }
 
-SMODS.Joker { --Ceiling Joker
+SMODS.Joker { --It Says "Joker" on the Ceiling
   key = 'ceiling_joker',
   loc_txt = {
     name = 'It Says "Joker" on the Ceiling',
@@ -219,7 +250,7 @@ SMODS.Joker { --Molten Joker
   cost = 5,
   discovered = true,
   blueprint_compat = true,
-
+  picubeds_moltenjoker_gate = true,
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
@@ -273,7 +304,7 @@ SMODS.Joker { --Chisel
   blueprint_compat = false,
   perishable_compat = true,
   eternal_compat = true,
-
+  enhancement_gate = 'm_stone',
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     return {
@@ -398,19 +429,22 @@ SMODS.Joker { --Prime 7
   end,
   
   calculate = function(self, card, context)
-		if not context.blueprint and context.cardarea == G.jokers and context.before then 
+		if not context.blueprint and context.before then 
       if #context.full_hand == 1 then
         for k, v in ipairs(context.scoring_hand) do
           if not v.debuff and v.base.value == '7' then 
+            v:set_edition('e_negative', false, true)
             G.E_MANAGER:add_event(Event({
               func = function()
                   v:juice_up()
-                  colour = G.C.PURPLE
-                  message = "Prime!"
-                  v:set_edition('e_negative', false, true)
                   return true
               end
             }))
+            return {
+              colour = G.C.PURPLE,
+              message = "Prime!",
+              card = card
+            }
           end
         end
       end
@@ -523,6 +557,7 @@ SMODS.Joker { --Ooo! Shiny!
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
+  picubeds_oooshiny_gate = true,
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     return {
@@ -563,6 +598,7 @@ SMODS.Joker { --Stonemason
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
+  enhancement_gate = 'm_stone',
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     return {
@@ -1514,6 +1550,7 @@ SMODS.Joker { --Apartment Complex
   end
 }
 
+if picubed_config.spectrals then
 SMODS.Consumable { --Commander (Spectral card)
   set = "Spectral",
   key = "commander",
@@ -1566,6 +1603,7 @@ SMODS.Consumable { --Commander (Spectral card)
     end
   end
 }
+end
 
 --[[SMODS.Joker { --The Debuffer (Test Joker)
   key = 'the_debuffer',
@@ -1850,12 +1888,17 @@ SMODS.Joker { --Explosher
             card:juice_up()
           return true end }))
         end
-        return {
-          message = "Slosh!",
-          volume = 0.5,
-          sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.SEED))
-        }
-      
+        if picubed_config.custom_sound_effects then
+          return {
+            message = "Slosh!",
+            volume = 0.5,
+            sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.SEED))
+          }
+        else
+          return {
+            message = "Slosh!",
+          }
+        end
       elseif #G.hand.cards > 0 then
         local card_list = {}
         local hit_list = {}
@@ -1877,11 +1920,17 @@ SMODS.Joker { --Explosher
             card:juice_up()
           return true end }))
         end
-        return {
-          message = "Slosh!",
-          volume = 0.5,
-          sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.SEED))
-        }
+        if picubed_config.custom_sound_effects then
+          return {
+            message = "Slosh!",
+            volume = 0.5,
+            sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.SEED))
+          }
+        else
+          return {
+            message = "Slosh!",
+          }
+        end
       end
     end
   end
@@ -1920,16 +1969,26 @@ SMODS.Joker { --Rhythmic Joker
   end,
   calculate = function(self, card, context)
     if context.joker_main and G.GAME.current_round.hands_left % 2 == 0 then
-      return {
-        message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
-        mult_mod = card.ability.extra.mult, 
-        colour = G.C.MULT,
-        volume = 0.4,
-        sound = "picubed_rhythm2"
-      }
+      if picubed_config.custom_sound_effects then
+        return {
+          message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
+          mult_mod = card.ability.extra.mult, 
+          colour = G.C.MULT,
+          volume = 0.4,
+          sound = "picubed_rhythm2"
+        }
+      else
+        return {
+          message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
+          mult_mod = card.ability.extra.mult, 
+          colour = G.C.MULT,
+        }
+      end
     end
     if context.hand_drawn and G.GAME.current_round.hands_left % 2 ~= 0 then
-      play_sound('picubed_rhythm1', 0.7, 0.7)
+        
+      
+      if picubed_config.custom_sound_effects then play_sound('picubed_rhythm1', 0.7, 0.7) end
       card:juice_up()
     end
   end
@@ -2000,6 +2059,7 @@ SMODS.Joker { --Golden Pancakes
   end
 }
 
+if picubed_config.preorderbonus_hook then
 --Booster Pack hook (for Preorder Bonus)
 local set_cost_old = set_cost
 function Card:set_cost()
@@ -2031,7 +2091,7 @@ function Card:set_cost()
   return set_cost_old
 end
 
-SMODS.Joker { --Preorder Bonus
+SMODS.Joker { --Preorder Bonus (with hook)
   key = 'preorderbonus',
   loc_txt = {
     name = 'Preorder Bonus',
@@ -2068,6 +2128,40 @@ SMODS.Joker { --Preorder Bonus
     return true end }))
   end
 }
+else
+SMODS.Joker { --Preorder Bonus (without hook)
+  key = 'preorderbonus',
+  loc_txt = {
+    name = 'Preorder Bonus',
+    text = {
+      "After opening a",
+      "Booster Pack, refund",
+      "{C:attention}#1#%{} of the cost"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 5, y = 4 },
+  cost = 3,
+  discovered = true,
+  blueprint_compat = false,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { discount = 0.5 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { (card.ability.extra.discount) * 100 } }
+  end,
+  calculate = function(self, card, context)
+    if context.open_booster then
+      local price_refund = card.ability.extra.discount * context.card.cost
+      return {
+        dollars = price_refund,
+        card = card
+      }
+    end
+  end
+}
+end
 
 SMODS.Joker { --Water Bottle
   key = 'waterbottle',
