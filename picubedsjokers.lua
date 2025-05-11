@@ -26,17 +26,17 @@ SMODS.current_mod.config_tab = function()
       },
       nodes = {
         create_toggle({
-            label = "New Spectral Cards (restart required)",
+            label = localize("config_picubeds_newspectrals"),
             ref_table = picubed_config,
             ref_value = "spectrals",
         }),
         create_toggle({
-            label = "Preorder Bonus' hook (disable for better compatibility, restart required)",
+            label = localize("config_picubeds_preorderhook"),
             ref_table = picubed_config,
             ref_value = "preorderbonus_hook",
         }),
         create_toggle({
-            label = "Custom Sound Effects (restart required)",
+            label = localize("config_picubeds_customsfx"),
             ref_table = picubed_config,
             ref_value = "custom_sound_effects",
         }),
@@ -62,12 +62,12 @@ SMODS.Atlas {
 }
 
 SMODS.Joker { --It Says "Joker" on the Ceiling
-  key = 'ceiling_joker',
+  key = 'itsaysjokerontheceiling',
   loc_txt = {
     name = 'It Says "Joker" on the Ceiling',
     text = {
-      "Round {C:chips}Chips{} to the next 100,", 
-      "Round {C:mult}Mult{} to the next 10"
+      "Round {C:chips}Chips{} to the next #1#,", 
+      "Round {C:mult}Mult{} to the next #2#"
     }
   },
   config = { extra = { chips = 0, mult = 0 } },
@@ -78,23 +78,24 @@ SMODS.Joker { --It Says "Joker" on the Ceiling
   discovered = true,
   blueprint_compat = true,
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
+    return { vars = { card.ability.extra.chips_ceil, card.ability.extra.mult_ceil } }
   end,
+  config = { extra = { chips = 0, mult = 0, chips_ceil = 100, mult_ceil = 10 } },
   calculate = function(self, card, context)
     local mult_ceil = 0
     local chips_ceil = 0
     if context.joker_main then
       if mult < to_big(1e+308) then
-        mult_ceil = math.ceil(to_number(mult) / 10) * 10
+        mult_ceil = math.ceil(to_number(mult) / card.ability.extra.mult_ceil) * card.ability.extra.mult_ceil
         card.ability.extra.mult = mult_ceil - to_number(mult)
       end 
       if hand_chips < to_big(1e+308) then
-        chips_ceil = math.ceil(to_number(hand_chips) / 100) * 100
+        chips_ceil = math.ceil(to_number(hand_chips) / card.ability.extra.chips_ceil) * card.ability.extra.chips_ceil
         card.ability.extra.chips = chips_ceil - to_number(hand_chips)
       end
       return {
         colour = G.C.PURPLE,
-        message = "Gullible!",
+        message = localize("k_picubeds_gullible"),
         remove_default_message = true,
         chips = card.ability.extra.chips,
         mult = card.ability.extra.mult
@@ -165,7 +166,7 @@ SMODS.Joker { --Word Search
     name = 'Word Search',
     text = {
       "This Joker gains {C:mult}+#2#{} Mult",
-      "per scoring {C:attention}#1#{} card,",
+      "per scoring {C:attention}#1#{} card",
       "{s:0.8}Rank changes every round",
       "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
     }
@@ -250,7 +251,14 @@ SMODS.Joker { --Molten Joker
   cost = 5,
   discovered = true,
   blueprint_compat = true,
-  picubeds_moltenjoker_gate = true,
+  in_pool = function(self, args)
+    for kk, vv in pairs(G.playing_cards or {}) do
+        if SMODS.has_enhancement(vv, 'm_stone') or SMODS.has_enhancement(vv, 'm_gold') or SMODS.has_enhancement(vv, 'm_steel') then
+            return true
+        end
+    end
+    return false
+  end,
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.m_gold
     info_queue[#info_queue+1] = G.P_CENTERS.m_steel
@@ -320,7 +328,7 @@ SMODS.Joker { --Chisel
           context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0 --initialises a permanent chips value
           context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.big_bonus --add permanent chips to playing card
           return {
-                message = "Chisel!",
+                message = localize("k_picubeds_chisel"),
                 colour = G.C.CHIPS
           }
         end
@@ -442,7 +450,7 @@ SMODS.Joker { --Prime 7
             }))
             return {
               colour = G.C.PURPLE,
-              message = "Prime!",
+              message = localize("k_picubeds_prime"),
               card = card
             }
           end
@@ -491,7 +499,7 @@ SMODS.Joker { --Landslide
               end
           }))
           return {
-            message = "Tumble!"
+            message = localize("k_picubeds_tumble")
             }
         else
           G.E_MANAGER:add_event(Event({
@@ -557,7 +565,23 @@ SMODS.Joker { --Ooo! Shiny!
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
-  picubeds_oooshiny_gate = true,
+  in_pool = function(self, args)
+    for kk, vv in pairs(G.playing_cards or {}) do
+        if vv.edition then
+            if vv.edition.key == 'e_polychrome' then
+                return true
+            end
+        end
+    end 
+    for kk, vv in pairs(G.jokers.cards or {}) do
+        if vv.edition then
+            if vv.edition.key == 'e_polychrome' then
+                return true
+            end
+        end
+    end
+    return false
+  end,
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
     return {
@@ -620,7 +644,7 @@ SMODS.Joker { --Stonemason
         context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 1 
         context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult +     card.ability.extra.Xmult_bonus
         return {
-          message = "Upgrade!",
+          message = localize("k_upgrade_ex"),
           colour = G.C.MULT,
           card = card
         }
@@ -658,6 +682,7 @@ SMODS.Joker { --Snake Eyes
   blueprint_compat = false,
   perishable_compat = true,
   eternal_compat = false,
+  pools = { ["Meme"] = true },
   calculate = function(self, card, context)
     if #G.jokers.cards ~= 1 and not context.blueprint and context.selling_self then
       local joker_left = joker_left or 0
@@ -672,20 +697,20 @@ SMODS.Joker { --Snake Eyes
           joker_left.ability.extra.copy_odds = 1
           joker_left.ability.extra.destroy_odds = 1
           return {
-            message = "Snake Eyes!",
+            message = localize("k_picubeds_snakeeyes"),
             card = card
           }
         else
           joker_left.ability.extra.odds = 1
           return {
-            message = "Snake Eyes!",
+            message = localize("k_picubeds_snakeeyes"),
             card = card
           }
         end
       elseif joker_left ~= 0 and type(joker_left.ability.extra) == 'number' then --this may cause funny shit to happen
         joker_left.ability.extra = 1
         return {
-            message = "Snake Eyes!",
+            message = localize("k_picubeds_snakeeyes"),
             card = card
         }
       end
@@ -1067,6 +1092,7 @@ SMODS.Joker { --Shopping Trolley
   perishable_compat = true,
   eternal_compat = true,
   config = { extra = { odds = 4, hand_increase = 5, trolley_success = 0 } },
+  pools = { ["Meme"] = true },
   loc_vars = function(self, info_queue, card)
     return { vars = { (G.GAME.probabilities.normal or 1)*3, card.ability.extra.odds, card.ability.extra.hand_increase} }
   end,
@@ -1124,6 +1150,7 @@ SMODS.Joker { --Extra Pockets
   end,
   
   calculate = function(self, card, context)
+    card.ability.extra.hand_increase_mod = math.ceil(card.ability.extra.hand_increase_mod)
     card.ability.extra.hand_increase = #G.consumeables.cards * card.ability.extra.hand_increase_mod
     while card.ability.extra.hand_increase > card.ability.extra.hand_diff do
       card.ability.extra.hand_diff = card.ability.extra.hand_diff + 1
@@ -1305,7 +1332,7 @@ SMODS.Joker { --Inkjet Printer
               G.consumeables:emplace(copied_card)
               has_activated = true
               card_eval_status_text(card, 'extra', nil, nil, nil,
-                { message = "Print!" })
+                { message = localize("k_picubeds_print") })
             end
             return true
           end
@@ -1328,7 +1355,7 @@ SMODS.Joker { --Inkjet Printer
                   blockable = false,
                   func = function()
                     card_eval_status_text(card, 'extra', nil, nil, nil,
-                      { message = "Error!" })
+                      { message = localize("k_picubeds_error") })
                     local mpcard = create_card('Joker', G.jokers, nil, 0, nil, nil, 'j_misprint', 'pri')
                     mpcard:set_edition(card.edition, false, true)
                     mpcard:add_to_deck()
@@ -1386,7 +1413,7 @@ SMODS.Joker { --Black Joker
           else --aces
             card.ability.extra.sum_rank = card.ability.extra.sum_rank + 11
           end
-        else --numbered cards
+        elseif v:get_id() <= 10 and v:get_id() >= 2 then --numbered cards (vanilla only)
           card.ability.extra.sum_rank = card.ability.extra.sum_rank + v:get_id()
         end 
       end
@@ -1395,13 +1422,95 @@ SMODS.Joker { --Black Joker
   calc_dollar_bonus = function(self, card)
     local bonus = card.ability.extra.sum_rank
     card.ability.extra.sum_rank = 0
-    if bonus > 0 and bonus <= 21 then 
+    if bonus > 0 and bonus <= card.ability.extra.money_cap then 
       return math.ceil(bonus/2)
     end
   end
 }
 
-SMODS.Joker { --Bisexual Flag
+if next(SMODS.find_mod('Bunco')) or next(SMODS.find_mod('Paperback')) or next(SMODS.find_mod('Six Suits')) or next(SMODS.find_mod('bunco')) or next(SMODS.find_mod('paperback')) or next(SMODS.find_mod('SixSuits')) then
+SMODS.Joker { --Bisexual Flag (with Spectrum)
+  key = 'bisexualflag_spectrums',
+  loc_txt = {
+    name = 'Bisexual Flag',
+    text = {
+      "If {C:attention}played hand{} contains either",
+      "a {C:attention}Straight{} and {C:attention}all four default{}",
+      "{C:attention}suits{}, or a {C:attention}Straight Spectrum{},",
+      "create 3 {C:dark_edition}Negative {C:purple}Tarot{} cards",
+    }
+  },
+  rarity = 3,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 7, y = 2 },
+  cost = 8,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  loc_vars = function(self, info_queue, card)
+      info_queue[#info_queue + 1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
+    return {
+      vars = { card.ability.max_highlighted }
+    }
+  end,
+  calculate = function(self, card, context)
+    if context.joker_main then
+      local suit_list = {
+        ['Hearts'] = 0,
+        ['Diamonds'] = 0,
+        ['Spades'] = 0,
+        ['Clubs'] = 0
+      }
+      for k, v in ipairs(context.scoring_hand) do --checking for all non-wild cards
+        if not SMODS.has_any_suit(v) then
+          if v:is_suit('Hearts', true) and suit_list["Hearts"] ~= 1 then suit_list["Hearts"] = 1
+          elseif v:is_suit('Diamonds', true) and suit_list["Diamonds"] ~= 1  then suit_list["Diamonds"] = 1
+          elseif v:is_suit('Spades', true) and suit_list["Spades"] ~= 1  then suit_list["Spades"] = 1
+          elseif v:is_suit('Clubs', true) and suit_list["Clubs"]~= 1  then suit_list["Clubs"] = 1
+          end
+        end
+      end
+      for k, v in ipairs(context.scoring_hand) do --checking for all wild cards
+        if SMODS.has_any_suit(v) then
+          if v:is_suit('Hearts', true) and suit_list["Hearts"] ~= 1 then suit_list["Hearts"] = 1
+          elseif v:is_suit('Diamonds', true) and suit_list["Diamonds"] ~= 1  then suit_list["Diamonds"] = 1
+          elseif v:is_suit('Spades', true) and suit_list["Spades"] ~= 1  then suit_list["Spades"] = 1
+          elseif v:is_suit('Clubs', true) and suit_list["Clubs"]~= 1  then suit_list["Clubs"] = 1
+          end
+        end
+      end
+      if (context.scoring_name == "paperback_Straight Spectrum") or (context.scoring_name == "bunco_Straight Spectrum") or (context.scoring_name == "six_Straight Spectrum") or ((next(context.poker_hands["Straight"]) or next(context.poker_hands["Straight Flush"])) and 
+      suit_list["Hearts"] > 0 and
+      suit_list["Diamonds"] > 0 and
+      suit_list["Spades"] > 0 and
+      suit_list["Clubs"] > 0) then
+          local card_type = 'Tarot'
+          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 3
+          G.E_MANAGER:add_event(Event({
+              trigger = 'before',
+              func = (function()
+                      for i=1,3 do
+                        local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                        card:set_edition('e_negative', true)
+                        card:add_to_deck()
+                        G.consumeables:emplace(card)
+                        G.GAME.consumeable_buffer = 0
+                      end
+                  return true
+              end)}))
+          return {
+              message = localize("k_picubeds_pride"),
+              colour = G.C.SECONDARY_SET.Tarot,
+              card = card
+          }
+      end
+    end
+  end
+}
+
+else
+SMODS.Joker { --Bisexual Flag (without Spectrum)
   key = 'bisexualflag',
   loc_txt = {
     name = 'Bisexual Flag',
@@ -1446,7 +1555,7 @@ SMODS.Joker { --Bisexual Flag
         if SMODS.has_any_suit(v) then
           if v:is_suit('Hearts', true) and suit_list["Hearts"] ~= 1 then suit_list["Hearts"] = 1
           elseif v:is_suit('Diamonds', true) and suit_list["Diamonds"] ~= 1  then suit_list["Diamonds"] = 1
-          elseif v:is_suit('Spades', true) and suit_list["Spades"] ~= 1  then suits["Spades"] = 1
+          elseif v:is_suit('Spades', true) and suit_list["Spades"] ~= 1  then suit_list["Spades"] = 1
           elseif v:is_suit('Clubs', true) and suit_list["Clubs"]~= 1  then suit_list["Clubs"] = 1
           end
         end
@@ -1479,6 +1588,7 @@ SMODS.Joker { --Bisexual Flag
     end
   end
 }
+end
 
 SMODS.Joker { --Trade-in
   key = 'tradein',
@@ -1537,7 +1647,12 @@ SMODS.Joker { --Apartment Complex
   blueprint_compat = true,
   perishable_compat = false,
   eternal_compat = true,
-  picubeds_apartmentcomplex_gate = true,
+  in_pool = function(self, args)
+    if G.GAME.hands["Flush House"].played ~= 0 then
+        return true
+    end
+    return false
+  end,
   config = { extra = { Xmult_mod = 0.75, Xmult = 1 } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
@@ -1913,13 +2028,13 @@ SMODS.Joker { --Explosher
         end
         if picubed_config.custom_sound_effects then
           return {
-            message = "Slosh!",
+            message = localize("k_picubeds_slosh"),
             volume = 0.5,
             sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.SEED))
           }
         else
           return {
-            message = "Slosh!",
+            message = localize("k_picubeds_slosh"),
           }
         end
       elseif #G.hand.cards > 0 then
@@ -1956,13 +2071,13 @@ SMODS.Joker { --Explosher
         end
         if picubed_config.custom_sound_effects then
           return {
-            message = "Slosh!",
+            message = localize("k_picubeds_slosh"),
             volume = 0.5,
             sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.SEED))
           }
         else
           return {
-            message = "Slosh!",
+            message = localize("k_picubeds_slosh"),
           }
         end
       end
@@ -2051,6 +2166,7 @@ SMODS.Joker { --Golden Pancakes
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.money, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
   end,
+  pools = { ["Food"] = true },
   calculate = function(self, card, context)
     if context.after then
 			return {
@@ -2082,11 +2198,11 @@ SMODS.Joker { --Golden Pancakes
 					end
 				}))
 				return {
-					message = 'Eaten!'
+					message = localize("k_eaten_ex")
 				}
 			else
 				return {
-					message = 'Safe!'
+					message = localize("k_safe_ex")
 				}
 			end
 		end
@@ -2109,7 +2225,15 @@ function Card:set_cost()
     end
     local preorder_bonus_discount = 1 --IMPORTANT LINES START HERE
     if self.ability.set == 'Booster' and #find_joker('j_picubed_preorderbonus') > 0 then 
-      preorder_bonus_discount = 0.5^(#find_joker('j_picubed_preorderbonus'))
+      --preorder_bonus_discount = 0.5^(#find_joker('j_picubed_preorderbonus'))
+      for k, v in ipairs(G.jokers.cards) do
+        if v.ability.name == 'j_picubed_preorderbonus' then
+          preorder_bonus_discount = preorder_bonus_discount - v.ability.extra.discount
+        end
+      end
+      if preorder_bonus_discount <= 0 then
+        preorder_bonus_discount = 0
+      end
     end
     self.cost = math.max(1, math.floor((self.base_cost + self.extra_cost + 0.5)*preorder_bonus_discount*(100-G.GAME.discount_percent)/100)) --IMPORTANT LINES END HERE
     if self.ability.set == 'Booster' and G.GAME.modifiers.booster_ante_scaling then self.cost = self.cost + G.GAME.round_resets.ante - 1 end
@@ -2164,7 +2288,7 @@ SMODS.Joker { --Preorder Bonus (with hook)
 }
 else
 SMODS.Joker { --Preorder Bonus (without hook)
-  key = 'preorderbonus',
+  key = 'preorderbonus_hookless',
   loc_txt = {
     name = 'Preorder Bonus',
     text = {
@@ -2216,6 +2340,7 @@ SMODS.Joker { --Water Bottle
   perishable_compat = false,
   eternal_compat = true,
   config = { extra = { chips_mod = 15, chips = 0} },
+  pools = { ["Food"] = true },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
   end,
@@ -2299,6 +2424,7 @@ SMODS.Joker { --Arrogant Joker
   perishable_compat = true,
   eternal_compat = true,
   config = { extra = { Xmult = 2 } },
+  pools = { ["Meme"] = true },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.Xmult } }
   end,
@@ -2329,9 +2455,9 @@ SMODS.Joker { --Fusion Magic
   loc_txt = {
     name = 'Fusion Magic',
     text = {
-      "After {C:attention}selling #1#{} {C:tarot}Tarot{} cards,",
+      "After {C:attention}selling #1#{} {C:inactive}[#2#]{} {C:tarot}Tarot{} cards,",
       "create a {C:spectral}Spectral {}card",
-      "{C:inactive}#2# Remaining"
+      "{C:inactive}(Must have room)"
     }
   },
   rarity = 3,
@@ -2493,3 +2619,470 @@ SMODS.Joker { --Pi
     end
   end
 }
+
+--[[
+SMODS.Joker { --On-beat
+  key = 'onbeat',
+  loc_txt = {
+    name = 'On-beat',
+    text = {
+      "Retrigger the {C:attention}1st{}, {C:attention}3rd{},",
+      "and {C:attention}5th{} cards played",
+      "{s:0.8}After hand is played,",
+      "{s:0.8}becomes {s:0.8,C:attention}Off-beat{}"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 0, y = 5 },
+  cost = 6,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { repetitions = 1 } },
+  loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.j_picubed_offbeat
+    return { vars = { card.ability.max_highlighted } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Off-beat
+  key = 'offbeat',
+  loc_txt = {
+    name = 'Off-beat',
+    text = {
+      "Retrigger the {C:attention}2nd{}",
+      "and {C:attention}4th{} cards played",
+      "{s:0.8}After hand is played,",
+      "{s:0.8}becomes {s:0.8,C:attention}On-beat{}"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 1, y = 5 },
+  cost = 6,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { repetitions = 1 } },
+  --loc_vars = function(self, info_queue, card)
+    --info_queue[#info_queue+1] = G.P_CENTERS.j_picubed.onbeat
+    --return { vars = { card.ability.max_highlighted } }
+  --end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Polyrhythm
+  key = 'polyrhythm',
+  loc_txt = {
+    name = 'Polyrhythm',
+    text = {
+      "Receive {C:money}$#1#{} every {C:attention}#2#{} {C:inactive}[#4#]{}",
+      "discards, create a {C:tarot}Tarot{}",
+      "card every {C:attention}#3#{} {C:inactive}[#5#]{} hands played",
+      "{C:inactive}(Must have room){}"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 2, y = 5 },
+  cost = 1,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { money = 3, money_req = 3, tarot_req = 4, money_count = 3, tarot_count = 4 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.money, card.ability.extra.money_req, card.ability.extra.tarot_req,card.ability.extra.money_count, card.ability.extra.tarot_count } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Pot
+  key = 'pot',
+  loc_txt = {
+    name = 'Pot',
+    text = {
+      "Before Play, has a {C:green}#1# in #2#{}",
+      "chance to become {C:attention}Active{}, ",
+      "gives {X:mult,C:white}X#3#{} Mult to next",
+      "hand after becoming Active",
+      "{C:inactive}Currently #4#{}"
+    }
+  },
+  rarity = 3,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 3, y = 5 },
+  soul_pos = { x = 7, y = 6 },
+  cost = 7,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { odds = 3, X_mult = 4, is_active = "Inactive" } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { (G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.X_mult, card.ability.extra.is_active } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Super Gluttonous Joker
+  key = 'supergluttonousjoker',
+  loc_txt = {
+    name = 'Super Gluttonous Joker',
+    text = {
+      "When a {C:clubs}Club{} card is",
+      "drawn to hand, draw an",
+      "{C:attention}additional{} card to hand"
+    }
+  },
+  rarity = 3,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 4, y = 5 },
+  cost = 9,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Mount Joker
+  key = 'mountjoker',
+  loc_txt = {
+    name = 'Mount Joker',
+    text = {
+      "If played hand has at",
+      "least 4 {C:attention}Stone{} cards,",
+      "poker hand is your",
+      "{C:attention}most played poker hand{}"
+    }
+  },
+  rarity = 2,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 7, y = 5 },
+  cost = 5,
+  discovered = true,
+  blueprint_compat = false,
+  perishable_compat = true,
+  eternal_compat = true,
+  loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    return {
+      vars = { card.ability.max_highlighted}
+    }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Ox Plow
+  key = 'oxplow',
+  loc_txt = {
+    name = 'Ox Plow',
+    text = {
+      "Earn {C:money}$#1#{} if played",
+      "hand is {C:attention}not{} your {C:attention}most{}",
+      "{C:attention}played poker hand{}"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 8, y = 5 },
+  cost = 6,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { money = 2 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.money } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Off the Hook
+  key = 'offthehook',
+  loc_txt = {
+    name = 'Off the Hook',
+    text = {
+      "Discard all {C:attention}unenhanced{}",
+      "cards held in hand",
+      "after play"
+    }
+  },
+  rarity = 2,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 9, y = 5 },
+  cost = 5,
+  discovered = true,
+  blueprint_compat = false,
+  perishable_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Eye Patch
+  key = 'eyepatch',
+  loc_txt = {
+    name = 'Eye Patch',
+    text = {
+      "{X:mult,C:white}X#1#{} Mult if {C:attention}poker{}",
+      "{C:attention}hand{} has {C:attention}not{} been",
+      "played this round"
+    }
+  },
+  rarity = 2,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 2, y = 6 },
+  cost = 6,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { X_mult = 2 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.X_mult } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Timid Joker
+  key = 'timidjoker',
+  loc_txt = {
+    name = 'Timid Joker',
+    text = {
+      "{C:mult}+#1#{} Mult if this Joker",
+      "is the {C:attention}right-most{} Joker"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 3, y = 6 },
+  display_size = { w = 0.9 * 71, h = 0.9 * 95 },
+  cost = 6,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { mult = 20 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.mult } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Rushed Joker
+  key = 'rushedjoker',
+  loc_txt = {
+    name = 'Rushed Joker',
+    text = {
+      "{C:attention}First{} card played gives",
+      "{C:mult}+#1#{} Mult when scored"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 5, y = 5 },
+  cost = 5,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { mult = 5 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.mult } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Tyre Dumpyard
+  key = 'tyredumpyard',
+  loc_txt = {
+    name = 'Tyre Dumpyard',
+    text = {
+      "When {C:attention}Boss Blind{} is selected,",
+      "fill all Consumable slots",
+      "with {C:attention}The Wheel of Fortune{}",
+      "{C:inactive}(Must have room){}"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 5, y = 6 },
+  cost = 5,
+  discovered = true,
+  blueprint_compat = false,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { mult = 5 } },
+  loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.c_wheel_of_fortune
+    return { vars = { card.ability.max_highlighted } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Acorn Tree
+  key = 'acorntree',
+  loc_txt = {
+    name = 'Acorn Tree',
+    text = {
+      "When {C:attention}Blind{} is selected, all",
+      "Jokers are flipped {C:attention}face down{}",
+      "{C:attention}and shuffled{}, earn {C:money}$#1#{} per Joker",
+      "affected, excluding this one"
+    }
+  },
+  rarity = 1,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 6, y = 6 },
+  cost = 5,
+  discovered = true,
+  blueprint_compat = false,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { money = 2 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.money } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Forgery
+  key = 'forgery',
+  loc_txt = {
+    name = 'Forgery',
+    text = {
+      "When {C:attention}Blind{} is selected,",
+      "{C:attention}destroy{} 1 random card in",
+      "{C:attention}deck{}, and add half its",
+      "{C:chips}Chips{} to this Joker as {C:mult}Mult",
+      "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
+    }
+  },
+  rarity = 2,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 6, y = 5 },
+  cost = 7,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = false,
+  eternal_compat = true,
+  config = { extra = { mult = 0 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.mult } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+
+SMODS.Joker { --Yawning Cat
+  key = 'yawningcat',
+  loc_txt = {
+    name = 'Yawning Cat',
+    text = {
+      "If {C:attention}played hand{} contains",
+      "at least {C:attention}#1#{} scoring",
+      "cards, {C:attention}retrigger{} playing",
+      "cards {C:attention}#2# additional times{}"
+    }
+  },
+  rarity = 4,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 8, y = 6 },
+  soul_pos = { x = 9, y = 6 },
+  cost = 20,
+  discovered = true,
+  blueprint_compat = true,
+  perishable_compat = true,
+  eternal_compat = true,
+  config = { extra = { num = 3, retriggers = 2 } },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.num, card.ability.extra.retriggers } }
+  end,
+  calculate = function(self, card, context)
+    print("Coming Soon!")
+  end
+}
+]]
+
+--[[
+--Snooze hooks
+local rb = reset_blinds
+function reset_blinds()
+    rb()
+    if #find_joker('j_picubed_snooze') > 0 then
+      G.GAME.round_resets.blind_states.Small = 'Hide'
+      print("hello")
+    end
+end
+
+local blindselectref = create_UIBox_blind_select
+function create_UIBox_blind_select()
+  blindselectref()
+  
+  local t = {n=G.UIT.ROOT, config = {align = 'tm',minw = width, r = 0.15, colour = G.C.CLEAR}, nodes={
+    {n=G.UIT.R, config={align = "cm", padding = 0.5}, nodes={
+      G.GAME.round_resets.blind_states['Small'] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts.small}} or nil,
+      G.GAME.round_resets.blind_states['Big'] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts.big}} or nil,
+      G.GAME.round_resets.blind_states['Boss'] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts.boss}} or nil,
+      G.GAME.round_resets.blind_states[4] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts["4"]}} or nil,
+    }}
+  }}
+  return t
+end
+
+SMODS.Joker { --Snooze
+  key = 'snooze',
+  loc_txt = {
+    name = 'Snooze',
+    text = {
+      "After Boss Blind is",
+      "defeated, add an extra",
+      "{C:attention}Small Blind{} to Ante"
+    }
+  },
+  rarity = 3,
+  atlas = 'PiCubedsJokers',
+  pos = { x = 0, y = 0 },
+  cost = 7,
+  discovered = true,
+  blueprint_compat = false,
+  perishable_compat = true,
+  eternal_compat = true,
+  calculate = function(self, card, context)
+    if not context.blueprint and context.end_of_round and G.GAME.blind.boss and context.cardarea == G.jokers then
+      print("hi!")
+    end
+  end
+}]]
