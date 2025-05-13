@@ -154,7 +154,7 @@ function get_valid_card_from_deck(seed)
       local target_card = pseudorandom_element(valid_cards, pseudoseed(seed or 'validcard'..G.GAME.round_resets.ante))
 		
       res_suit = target_card.base.suit
-		res_rank = target_card.base.value
+      res_rank = target_card.base.value
     end
 	
 	return {suit = res_suit, rank = res_rank}
@@ -361,7 +361,7 @@ SMODS.Joker { --Upgraded Joker
 	end,
   calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
-      if context.other_card.config.center ~= G.P_CENTERS.c_base and not context.other_card.debuff then
+      if (context.other_card.config.center ~= G.P_CENTERS.c_base or SMODS.get_enhancements(context.other_card)["m_lucky"] == true) and not context.other_card.debuff then
         return {
           chips = card.ability.extra.chips,
 					mult = card.ability.extra.mult,
@@ -396,7 +396,7 @@ SMODS.Joker { --Jokin' Hood
 	end,
   calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
-      if not context.other_card:is_face() and not context.other_card.debuff then
+      if ((not context.other_card:is_face()) or #find_joker('j_ortalab_hypercalculia') > 0) and not context.other_card.debuff then
         return {
 					dollars = card.ability.extra.num_money,
           card = card
@@ -1190,18 +1190,18 @@ SMODS.Joker { --Pear Tree
       local rank_list = {0}
       for i=1, #G.hand.cards do
         for j=1, #rank_list do
-          if i == 1 and not SMODS.has_enhancement(G.hand.cards[i], 'm_stone') then
-            rank_list[i] = G.hand.cards[i].base.value
-          elseif rank_list[1] ~= "PAIR!" and not SMODS.has_enhancement(G.hand.cards[i], 'm_stone') then
+          if i == 1 and not SMODS.has_no_rank(G.hand.cards[i]) then
+            rank_list[i] = G.hand.cards[i]:get_id()
+          elseif rank_list[1] ~= "PAIR!" and not SMODS.has_no_rank(G.hand.cards[i]) then
             --print(tostring(G.hand.cards[i].base.value).." "..tostring(rank_list[j]))
-            if tostring(G.hand.cards[i].base.value) == tostring(rank_list[j]) then
+            if tostring(G.hand.cards[i]:get_id()) == tostring(rank_list[j]) then
               rank_list[1] = "PAIR!"
               return {
                 mult_mod = card.ability.extra.mult,
                 message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
               }
             else 
-              rank_list[i] = G.hand.cards[i].base.value
+              rank_list[i] = G.hand.cards[i]:get_id()
             end
           end
         end
@@ -1402,11 +1402,38 @@ SMODS.Joker { --Black Joker
     return { vars = { card.ability.extra.sum_rank, card.ability.extra.money_cap } }
   end,
   calculate = function(self, card, context)
-    
     if context.cardarea == G.jokers and context.before and not context.blueprint then
       for k,v in ipairs(context.scoring_hand) do
-        if SMODS.has_enhancement(v, 'm_stone') then --stone (rankless) cards
+        if SMODS.has_no_rank(v) then -- rankless cards
           card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0
+        elseif v:get_id() > 14 then --UnStable ranks 
+          if v:get_id() == 15 then -- 0 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0
+          elseif v:get_id() == 16 then -- 0.5 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0.5
+          elseif v:get_id() == 17 then -- 1 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 1
+          elseif v:get_id() == 18 then -- sqrt 2 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 1.41
+          elseif v:get_id() == 19 then -- e rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 2.72
+          elseif v:get_id() == 20 then -- pi rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 3.14
+          elseif v:get_id() == 21 then -- ??? rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + pseudorandom('???') * 11
+          elseif v:get_id() == 22 then -- 21 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 21
+          elseif v:get_id() == 23 then -- 11 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 11
+          elseif v:get_id() == 24 then -- 12 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 12
+          elseif v:get_id() == 25 then -- 13 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 13
+          elseif v:get_id() == 26 then -- 25 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 25
+          elseif v:get_id() == 27 then -- 161 rank
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 161
+          end
         elseif v:get_id() > 10 then --face cards or aces
           if v:get_id() < 14 then --face cards
             card.ability.extra.sum_rank = card.ability.extra.sum_rank + 10
@@ -1480,7 +1507,7 @@ SMODS.Joker { --Bisexual Flag (with Spectrum)
           end
         end
       end
-      if (context.scoring_name == "paperback_Straight Spectrum") or (context.scoring_name == "bunco_Straight Spectrum") or (context.scoring_name == "six_Straight Spectrum") or ((next(context.poker_hands["Straight"]) or next(context.poker_hands["Straight Flush"])) and 
+      if string.find(context.scoring_name, "Straight Spectrum") or ((next(context.poker_hands["Straight"]) or next(context.poker_hands["Straight Flush"])) and 
       suit_list["Hearts"] > 0 and
       suit_list["Diamonds"] > 0 and
       suit_list["Spades"] > 0 and
@@ -1580,7 +1607,7 @@ SMODS.Joker { --Bisexual Flag (without Spectrum)
                   return true
               end)}))
           return {
-              message = "Pride!",
+              message = localize("k_picubeds_pride"),
               colour = G.C.SECONDARY_SET.Tarot,
               card = card
           }
@@ -1953,7 +1980,7 @@ SMODS.Joker { --Perfect Score
     if context.joker_main then
       local has_10 = false
       for k, v in ipairs(context.scoring_hand) do
-        if v.base.value == '10' and not SMODS.has_enhancement(v, 'm_stone') then
+        if v.base.value == '10' then
           has_10 = true
         end
       end
