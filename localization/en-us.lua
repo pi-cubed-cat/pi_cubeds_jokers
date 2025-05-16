@@ -31,7 +31,7 @@ return {
                   "and {C:attention}Stone{} cards"
                 }
             },
-            j_chisel = {
+            j_picubed_chisel = {
                 name = 'Chisel',
                 text = {
                   "If {C:attention}first{} played card",
@@ -77,20 +77,6 @@ return {
                 text = {
                   "{X:mult,C:white}X#1#{} Mult on {C:attention}second{}",
                   "hand of round"
-                }
-            },
-            j_picubed_oooshiny = {
-                name = 'Ooo! Shiny!',
-                text = {
-                  "{C:dark_edition}Polychrome{} cards",
-                  "give {C:money}$#1#{} when scored"
-                }
-            },
-            j_picubed_oooshiny = {
-                name = 'Ooo! Shiny!',
-                text = {
-                  "{C:dark_edition}Polychrome{} cards",
-                  "give {C:money}$#1#{} when scored"
                 }
             },
             j_picubed_oooshiny = {
@@ -158,6 +144,22 @@ return {
                 text = {
                   "Retrigger each played",
                   "{C:attention}Ace{}, {C:attention}10{}, {C:attention}9{}, and {C:attention}8{}"
+                }
+            },
+            j_picubed_advancedskipping = {
+                name = 'Advanced Skipping',
+                text = {
+                  "Receive {C:attention}#1#{} additional random {C:attention}tags",
+                  "when blind is {C:attention}skipped{},",
+                  "{C:attention}+#2# tag{} after each skip"
+                }
+            },
+            j_picubed_echolocation = {
+                name = 'Echolocation',
+                text = {
+                  "{C:attention}+#3#{} hand size,",
+                  "{C:green}#1# in #2#{} playing cards",
+                  "are drawn {C:attention}face down"
                 }
             },
             j_picubed_shoppingtrolley = {
@@ -309,7 +311,7 @@ return {
                   "remaining is {C:attention}even"
                 }
             },
-            j_picubed_goldenjoker = {
+            j_picubed_goldenpancakes = {
                 name = 'Golden Pancakes',
                 text = {
                   "Earn {C:money}$#1#{} after hand is",
@@ -325,12 +327,20 @@ return {
                   "cost {C:attention}#1#% less{}"
                 }
             },
-              j_picubed_preorderbonus_hookless = {
+            j_picubed_preorderbonus_hookless = {
                 name = 'Preorder Bonus',
                 text = {
                   "After opening a",
                   "Booster Pack, refund",
                   "{C:attention}#1#%{} of the cost"
+                }
+            },
+            j_picubed_waterbottle = {
+                name = 'Water Bottle',
+                text = {
+                  "{C:chips}+#1#{} Chips for each",
+                  "Consumable used this {C:attention}Ante{}",
+                  "{C:inactive}(Currently {C:chips}+#2# {C:inactive}Chips)"
                 }
             },
             j_picubed_currencyexchange = {
@@ -371,24 +381,26 @@ return {
                 }
             },
         },
+        Spectral = {
+            c_picubed_commander = {
+                name = 'Commander',
+                text = {
+                  "{C:attention}Destroy{} #1# random",
+                  "Consumable if slots are",
+                  "filled, add {C:dark_edition}Negative{}",
+                  "to all others"
+                }
+            },
+        },
         Mod = {
             picubedsjokers = {
                 name = "pi_cubed's Jokers",
                 text = {
-                    "A collection of vanilla-friendly Jokers made by yours truly. Follow me on bluesky at @picubed.bsky.social!"
+                    "A collection of vanilla-friendly Jokers made by yours truly.",
+                    "Follow me on bluesky at @picubed.bsky.social!",
+                    "Thanks franderman123 for Español (México) localization!"
                 }
-            }
-        },
-    },
-    Spectral = {
-        c_picubed_commander = {
-            name = 'Commander',
-            text = {
-              "{C:attention}Destroy{} #1# random",
-              "Consumable if slots are",
-              "filled, add {C:dark_edition}Negative{}",
-              "to all others"
-            }
+            },
         },
     },
     misc = {
@@ -405,6 +417,6 @@ return {
             config_picubeds_newspectrals = "New Spectral Cards (restart required)",
             config_picubeds_preorderhook = "Preorder Bonus' hook (disable for better compatibility, restart required)",
             config_picubeds_customsfx = "Custom Sound Effects (restart required)"
-            }
         }
+    }
 }
