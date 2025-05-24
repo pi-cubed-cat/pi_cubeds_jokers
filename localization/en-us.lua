@@ -126,10 +126,10 @@ return {
             j_picubed_ambigram = {
                 name = 'Ambigram',
                 text = {
-                  "Played unenhanced {C:attention}6s{}",
-                  "become {C:attention}9s{},",
-                  "Played unenhanced {C:attention}9s{}",
-                  "become {C:attention}6s{}"
+                  "If this Joker is the {C:attention}left-most{},",
+                  "played {C:attention}6s{} become {C:attention}9s{},",
+                  "If this Joker is the {C:attention}right-most{},",
+                  "Played {C:attention}9s{} become {C:attention}6s{}"
                 }
             },
             j_picubed_superwrathfuljoker = {
@@ -215,11 +215,9 @@ return {
             j_picubed_blackjoker = {
                 name = 'Black Joker',
                 text = {
-                  "If the {C:attention}sum rank{} of all {C:attention}scoring",
-                  "{C:attention}cards{} this round is {C:attention}#2# or less{},",
-                  "receive {C:money}${} equal to half sum",
-                  "rank at end of round",
-                  "{C:inactive}(Currently{} {C:attention}#1#{C:inactive})"
+                  "If the {C:attention}sum rank{} of",
+                  "{C:attention}first{} played or discarded",
+                  "cards is {C:attention}#2#{}, earn {C:money}$#3#{}",
                 }
             },
             j_picubed_bisexualflag_spectrums = {

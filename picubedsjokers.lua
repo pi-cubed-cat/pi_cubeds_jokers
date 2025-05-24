@@ -137,29 +137,6 @@ card.ability.extra.odds } }
   end
 }
 
--- WORDSEARCH JOKER SELECTION FUNCTIONALITY
---Code below from Unstable mod
-function get_valid_card_from_deck(seed)
-    
-	local res_suit = 'Spades'
-	local res_rank = '14'
-	
-    local valid_cards = {}
-    for k, v in ipairs(G.playing_cards) do
-      if not v.config.center.replace_base_card  then --Excludes all cards with replace_base_card enhancements
-            valid_cards[#valid_cards+1] = v
-      end
-    end
-    if valid_cards[1] then 
-      local target_card = pseudorandom_element(valid_cards, pseudoseed(seed or 'validcard'..G.GAME.round_resets.ante))
-		
-      res_suit = target_card.base.suit
-      res_rank = target_card.base.value
-    end
-	
-	return {suit = res_suit, rank = res_rank}
-end
--------------------------------------------
 SMODS.Joker { --Word Search
   key = 'wordsearch',
   loc_txt = {
@@ -171,45 +148,27 @@ SMODS.Joker { --Word Search
       "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
     }
   },
-  config = { extra = { mult = 0, mult_mod = 1, target_rank = '14' }},
+  config = { extra = { mult = 0, mult_mod = 1 }},
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 2, y = 0 },
-  cost = 5,
+  cost = 4,
   discovered = true,
   blueprint_compat = true,
   perishable_compat = false,
   eternal_compat = true,
   
   loc_vars = function(self, info_queue, card)
-    local loc_rank = 'Ace'
-    if G.OVERLAY_MENU then
-      return { vars = { 
-        'Ace', card.ability.extra.mult_mod, card.ability.extra.mult 
-      }
-    }
-    else
-      loc_rank = localize(card.ability.extra.target_rank, 'ranks')
-      return { vars = { 
-        loc_rank, card.ability.extra.mult_mod, card.ability.extra.mult 
-      }
-    }
-    end
-  end,
-  
-  set_ability = function(self, card, initial, delay_sprites)
-    local rank = '14'
-    if G.playing_cards then
-      rank = get_valid_card_from_deck('wordsearch'..G.SEED).rank
-    end
-    card.ability.extra.target_rank = rank
+    return { vars = { 
+      localize((G.GAME.current_round.picubed_wordsearch_card or {}).rank or 'Ace', 'ranks'), card.ability.extra.mult_mod, card.ability.extra.mult 
+    } }
   end,
   
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play and not 
     SMODS.has_no_rank(context.other_card) then
       if 
-        context.other_card.base.value == card.ability.extra.target_rank
+        context.other_card:get_id() == G.GAME.current_round.picubed_wordsearch_card.id
         and not context.blueprint 
         and not context.other_card.debuff then
           card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
@@ -222,18 +181,34 @@ SMODS.Joker { --Word Search
     end
     if context.joker_main and card.ability.extra.mult > 0 then
       return {
-        message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
+        message = localize{type='variable', key='a_mult', vars = {card.ability.extra.mult} },
         mult_mod = card.ability.extra.mult, 
         colour = G.C.MULT
       }
     end
-    if context.end_of_round and not context.other_card 
-    and not context.repetition and not context.game_over 
-    and not context.blueprint then
-      card.ability.extra.target_rank = get_valid_card_from_deck('wordsearch'..G.SEED).rank
-    end
   end
 }
+
+-- WORDSEARCH RANK SELECTION FUNCTIONALITY
+--Code below from Vanilla Remade mod
+local function reset_wordsearch_rank()
+  G.GAME.current_round.picubed_wordsearch_card = { rank = 'Ace' }
+    local valid_wordsearch_cards = {}
+    for _, playing_card in ipairs(G.playing_cards) do
+        if not SMODS.has_no_rank(playing_card) then
+            valid_wordsearch_cards[#valid_wordsearch_cards + 1] = playing_card
+        end
+    end
+    local wordsearch_card = pseudorandom_element(valid_wordsearch_cards, pseudoseed('picubed_wordsearch' .. G.GAME.round_resets.ante))
+    if wordsearch_card then
+        G.GAME.current_round.picubed_wordsearch_card.rank = wordsearch_card.base.value
+        G.GAME.current_round.picubed_wordsearch_card.id = wordsearch_card.base.id
+    end
+end
+
+function SMODS.current_mod.reset_game_globals(run_start)
+    reset_wordsearch_rank() 
+end
 
 SMODS.Joker { --Molten Joker
   key = 'moltenjoker',
@@ -556,11 +531,11 @@ SMODS.Joker { --Ooo! Shiny!
       "give {C:money}$#1#{} when scored"
     }
   },
-  config = { extra = { money = 8 } },
+  config = { extra = { money = 7 } },
   atlas = 'PiCubedsJokers',
   pos = { x = 0, y = 1 },
-  cost = 8,
-  rarity = 3,
+  cost = 7,
+  rarity = 2,
   discovered = true,
   blueprint_compat = true,
   perishable_compat = true,
@@ -847,16 +822,16 @@ SMODS.Joker { --Ambigram
   loc_txt = {
     name = 'Ambigram',
     text = {
-      "Played unenhanced {C:attention}6s{}",
-      "become {C:attention}9s{},",
-      "Played unenhanced {C:attention}9s{}",
-      "become {C:attention}6s{}"
+      "If this Joker is the {C:attention}left-most{},",
+      "played {C:attention}6s{} become {C:attention}9s{},",
+      "If this Joker is the {C:attention}right-most{},",
+      "Played {C:attention}9s{} become {C:attention}6s{}"
     }
   },
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 5, y = 1 },
-  cost = 6,
+  cost = 5,
   discovered = true,
   blueprint_compat = false,
   perishable_compat = true,
@@ -865,10 +840,10 @@ SMODS.Joker { --Ambigram
     if context.before and context.cardarea == G.jokers and not context.blueprint then
       for k, v in ipairs(context.scoring_hand) do
         if not v.debuff then
-          if v.base.value == '6' and v.config.center == G.P_CENTERS.c_base then
+          if v.base.value == '6' and G.jokers.cards[1] == card then
             v:juice_up()
             assert(SMODS.change_base(v, nil, '9'))
-          elseif v.base.value == '9' and v.config.center == G.P_CENTERS.c_base then
+          elseif v.base.value == '9' and G.jokers.cards[#G.jokers.cards] == card then
             v:juice_up()
             assert(SMODS.change_base(v, nil, '6'))
           end
@@ -1024,6 +999,13 @@ SMODS.Joker { --Echolocation
       if context.stay_flipped then
         if pseudorandom(pseudoseed('echolocation'..G.SEED)) < G.GAME.probabilities.normal / card.ability.extra.odds then
           return { stay_flipped = true }
+        end
+      end
+    end
+    if context.cardarea == G.jokers and context.before then
+      for k, v in ipairs(context.full_hand) do
+        if v.facing == 'back' then
+          v:flip()
         end
       end
     end
@@ -1382,75 +1364,97 @@ SMODS.Joker { --Black Joker
   loc_txt = {
     name = 'Black Joker',
     text = {
-      "If the {C:attention}sum rank{} of all {C:attention}scoring",
-      "{C:attention}cards{} this round is {C:attention}#2# or less{},",
-      "receive {C:money}${} equal to half sum",
-      "rank at end of round",
-      "{C:inactive}(Currently{} {C:attention}#1#{C:inactive})"
+      "If the {C:attention}sum rank{} of",
+      "{C:attention}first{} played or discarded",
+      "cards is {C:attention}#2#{}, earn {C:money}$#3#{}",
     }
   },
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 6, y = 2 },
-  cost = 6,
+  cost = 5,
   discovered = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
-  config = { extra = { sum_rank = 0, money_cap = 21 } },
+  config = { extra = { sum_rank = 0, cap = 21, money = 13, has_decimal = false, ace_count = 0 } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.sum_rank, card.ability.extra.money_cap } }
+    return { vars = { card.ability.extra.sum_rank, card.ability.extra.cap, card.ability.extra.money } }
   end,
   calculate = function(self, card, context)
-    if context.cardarea == G.jokers and context.before and not context.blueprint then
-      for k,v in ipairs(context.scoring_hand) do
-        if SMODS.has_no_rank(v) then -- rankless cards
-          card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0
-        elseif v:get_id() > 14 then --UnStable ranks 
-          if v:get_id() == 15 then -- 0 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0
-          elseif v:get_id() == 16 then -- 0.5 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0.5
-          elseif v:get_id() == 17 then -- 1 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 1
-          elseif v:get_id() == 18 then -- sqrt 2 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 1.41
-          elseif v:get_id() == 19 then -- e rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 2.72
-          elseif v:get_id() == 20 then -- pi rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 3.14
-          elseif v:get_id() == 21 then -- ??? rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + pseudorandom('???') * 11
-          elseif v:get_id() == 22 then -- 21 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 21
-          elseif v:get_id() == 23 then -- 11 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 11
-          elseif v:get_id() == 24 then -- 12 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 12
-          elseif v:get_id() == 25 then -- 13 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 13
-          elseif v:get_id() == 26 then -- 25 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 25
-          elseif v:get_id() == 27 then -- 161 rank
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 161
-          end
-        elseif v:get_id() > 10 then --face cards or aces
-          if v:get_id() < 14 then --face cards
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 10
-          else --aces
-            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 11
-          end
-        elseif v:get_id() <= 10 and v:get_id() >= 2 then --numbered cards (vanilla only)
-          card.ability.extra.sum_rank = card.ability.extra.sum_rank + v:get_id()
-        end 
-      end
+    if context.first_hand_drawn then
+      local eval = function() return G.GAME.current_round.discards_used == 0 and G.GAME.current_round.hands_played == 0 and not G.RESET_JIGGLES end
+      juice_card_until(card, eval, true)
     end
-  end,
-  calc_dollar_bonus = function(self, card)
-    local bonus = card.ability.extra.sum_rank
-    card.ability.extra.sum_rank = 0
-    if bonus > 0 and bonus <= card.ability.extra.money_cap then 
-      return math.ceil(bonus/2)
+    if ((context.cardarea == G.jokers and context.before) or context.pre_discard) and (G.GAME.current_round.discards_used <= 0 and G.GAME.current_round.hands_played <= 0) then
+      card.ability.extra.sum_rank = 0
+      if not context.blueprint then
+        card.ability.extra.has_decimal = false
+        card.ability.extra.ace_count = 0
+        for k,v in ipairs(context.full_hand) do
+          if SMODS.has_no_rank(v) then -- rankless cards
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0
+          elseif v:get_id() > 14 then --UnStable ranks 
+            if v:get_id() == 15 then -- 0 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0
+            elseif v:get_id() == 16 then -- 0.5 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 0.5
+              card.ability.extra.has_decimal = true
+            elseif v:get_id() == 17 then -- 1 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 1
+            elseif v:get_id() == 18 then -- sqrt 2 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 1.41
+              card.ability.extra.has_decimal = true
+            elseif v:get_id() == 19 then -- e rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 2.72
+              card.ability.extra.has_decimal = true
+            elseif v:get_id() == 20 then -- pi rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 3.14
+              card.ability.extra.has_decimal = true
+            elseif v:get_id() == 21 then -- ??? rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + pseudorandom('???') * 11
+              card.ability.extra.has_decimal = true
+            elseif v:get_id() == 22 then -- 21 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 21
+            elseif v:get_id() == 23 then -- 11 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 11
+            elseif v:get_id() == 24 then -- 12 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 12
+            elseif v:get_id() == 25 then -- 13 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 13
+            elseif v:get_id() == 26 then -- 25 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 25
+            elseif v:get_id() == 27 then -- 161 rank
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 161
+            end
+          elseif v:get_id() > 10 then --face cards or aces
+            if v:get_id() < 14 then --face cards
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 10
+            else --aces
+              card.ability.extra.sum_rank = card.ability.extra.sum_rank + 11
+              card.ability.extra.ace_count = card.ability.extra.ace_count + 1
+            end
+          elseif v:get_id() <= 10 and v:get_id() >= 2 then --numbered cards (vanilla only)
+            card.ability.extra.sum_rank = card.ability.extra.sum_rank + v:get_id()
+          end
+          --return { message = tostring(card.ability.extra.sum_rank), card = card }
+        end
+      end
+      while card.ability.extra.sum_rank >= card.ability.extra.cap + 1 and card.ability.extra.ace_count > 0 do
+        card.ability.extra.sum_rank = card.ability.extra.sum_rank - 10
+        card.ability.extra.ace_count = card.ability.extra.ace_count - 1
+      end
+      if card.ability.extra.sum_rank == card.ability.extra.cap or (card.ability.extra.has_decimal == true and card.ability.extra.sum_rank < card.ability.extra.cap + 1 and card.ability.extra.sum_rank > card.ability.extra.cap - 1) then
+        return {
+          dollars = card.ability.extra.money,
+          card = card
+        }
+      else
+        return {
+          message = tostring(card.ability.extra.sum_rank),
+          card = card
+        }
+      end
     end
   end
 }
@@ -1669,13 +1673,16 @@ SMODS.Joker { --Apartment Complex
   rarity = 3,
   atlas = 'PiCubedsJokers',
   pos = { x = 9, y = 2 },
-  cost = 6,
+  cost = 7,
   discovered = true,
   blueprint_compat = true,
   perishable_compat = false,
   eternal_compat = true,
   in_pool = function(self, args)
     if G.GAME.hands["Flush House"].played ~= 0 then
+        return true
+    end
+    if G.GAME.hands["Flush"].played >= 2 and G.GAME.hands["Full House"].played >= 2 then
         return true
     end
     return false
@@ -1817,9 +1824,16 @@ SMODS.Joker { --Incomplete Survey
           card = card
       }
     end
-    if context.stay_flipped then    
+    if context.stay_flipped and not (context.cardarea == G.play and context.before) then    
       if G.hand.config.card_limit - 1 <= (#G.hand.cards) then
         return { stay_flipped = true }
+      end
+    end
+    if context.cardarea == G.jokers and context.before then
+      for k, v in ipairs(context.full_hand) do
+        if v.facing == 'back' then
+          v:flip()
+        end
       end
     end
   end
@@ -1844,19 +1858,49 @@ SMODS.Joker { --All In
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
-  config = { extra = { repetitions = 2 } },
+  config = { extra = { repetitions = 2, face_down_cards = {} } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.repetitions } }
   end,
-  calculate = function(self, card, context)
+  calculate = function(self, card, context) --don't base your joker ideas on face-down cards.
+    if G.hand and #G.hand.highlighted and context.press_play then
+      for i = 1, #G.hand.highlighted do
+        if G.hand.highlighted[i].facing == 'back' then
+          --print("kys")
+          card.ability.extra.face_down_cards[i] = true
+          --print(i)
+          --print(card.ability.extra.face_down_cards[i])
+        else
+          --print("hi!")
+          card.ability.extra.face_down_cards[i] = false
+          --print(i)
+          --print(card.ability.extra.face_down_cards[i])
+        end
+      --print(#(card.ability.extra.face_down_cards or {6,6,6,6,6,6}))
+      end
+    end
     if context.cardarea == G.play and context.repetition and not context.repetition_only then
-      if context.other_card.facing == 'back' then
-				return {
-          repetitions = card.ability.extra.repetitions,
-          card = card
-				}
-			end
+        --print(card.ability.extra.face_down_cards)
+        local card_pos = 1
+        for i = 1, #context.full_hand do
+          if context.full_hand[i] == context.other_card then
+            card_pos = i
+            --print(i)
+          end
+        end
+        --print(card.ability.extra.face_down_cards[card_pos])
+        if card.ability.extra.face_down_cards[card_pos] == true or context.other_card.facing == 'back' then
+          --print(tostring(card_pos).."FACE DOWN!")
+          return {
+            repetitions = card.ability.extra.repetitions,
+            card = card
+          }
+        end
 		end
+    if context.final_scoring_step and context.cardarea == G.play then
+      card.ability.extra.face_down_cards = {}
+      print("hi")
+    end
     if context.cardarea == G.hand and context.repetition and not context.repetition_only then
       if context.other_card.facing == 'back' then
 				return {
@@ -2134,12 +2178,12 @@ SMODS.Joker { --Rhythmic Joker
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 3, y = 4 },
-  cost = 4,
+  cost = 5,
   discovered = true,
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
-  config = { extra = { mult = 10 } },
+  config = { extra = { mult = 12 } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.mult } }
   end,
@@ -2647,7 +2691,6 @@ SMODS.Joker { --Pi
   end
 }
 
---[[
 SMODS.Joker { --On-beat
   key = 'onbeat',
   loc_txt = {
@@ -2668,6 +2711,9 @@ SMODS.Joker { --On-beat
   perishable_compat = true,
   eternal_compat = true,
   config = { extra = { repetitions = 1 } },
+  in_pool = function(self, args)
+    return false
+  end,
   loc_vars = function(self, info_queue, card)
     info_queue[#info_queue+1] = G.P_CENTERS.j_picubed_offbeat
     return { vars = { card.ability.max_highlighted } }
@@ -2712,8 +2758,8 @@ SMODS.Joker { --Polyrhythm
     name = 'Polyrhythm',
     text = {
       "Receive {C:money}$#1#{} every {C:attention}#2#{} {C:inactive}[#4#]{}",
-      "discards, create a {C:tarot}Tarot{}",
-      "card every {C:attention}#3#{} {C:inactive}[#5#]{} hands played",
+      "hands played, create a {C:tarot}Tarot{}",
+      "card every {C:attention}#3#{} {C:inactive}[#5#]{} discards",
       "{C:inactive}(Must have room){}"
     }
   },
@@ -2741,8 +2787,8 @@ SMODS.Joker { --Pot
     text = {
       "Before Play, has a {C:green}#1# in #2#{}",
       "chance to become {C:attention}Active{}, ",
-      "gives {X:mult,C:white}X#3#{} Mult to next",
-      "hand after becoming Active",
+      "{X:mult,C:white}X#3#{} Mult for next hand",
+      "after becoming Active",
       "{C:inactive}Currently #4#{}"
     }
   },
@@ -2849,9 +2895,10 @@ SMODS.Joker { --Off the Hook
   loc_txt = {
     name = 'Off the Hook',
     text = {
-      "Discard all {C:attention}unenhanced{}",
-      "cards held in hand",
-      "after play"
+      "After play, all",
+      "{C:attention}unenhanced{} cards held",
+      "in hand are discarded",
+      "{C:chips}+1{} Hand"
     }
   },
   rarity = 2,
@@ -2872,22 +2919,24 @@ SMODS.Joker { --Eye Patch
   loc_txt = {
     name = 'Eye Patch',
     text = {
-      "{X:mult,C:white}X#1#{} Mult if {C:attention}poker{}",
-      "{C:attention}hand{} has {C:attention}not{} been",
-      "played this round"
+      "This Joker gains {X:mult,C:white}X#2#{} Mult",
+      "if {C:attention}poker hand{} has {C:attention}not{}",
+      "been played this {C:attention}Ante{}, resets",
+      "when {C:attention}Boss Blind{} is defeated",
+      "{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}"
     }
   },
   rarity = 2,
   atlas = 'PiCubedsJokers',
   pos = { x = 2, y = 6 },
-  cost = 6,
+  cost = 7,
   discovered = true,
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
-  config = { extra = { X_mult = 2 } },
+  config = { extra = { X_mult = 1, X_mult_mod = 1/3 } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.X_mult } }
+    return { vars = { card.ability.extra.X_mult, card.ability.extra.X_mult_mod } }
   end,
   calculate = function(self, card, context)
     print("Coming Soon!")
@@ -3061,32 +3110,19 @@ SMODS.Joker { --Yawning Cat
     print("Coming Soon!")
   end
 }
-]]
 
---[[
+--[[if SMODS.find_mod('Ultimate Antes') then
 --Snooze hooks
 local rb = reset_blinds
 function reset_blinds()
-    rb()
-    if #find_joker('j_picubed_snooze') > 0 then
-      G.GAME.round_resets.blind_states.Small = 'Hide'
-      print("hello")
+  if #find_joker('j_picubed_snooze') > 0 then
+      ULTIM_ANTE.blind_count = 4
+      ULTIM_ANTE.get_new_blind['Small'] = function() return 'bl_small' end
+      ULTIM_ANTE.get_new_blind['Big']   = function() return 'bl_small' end
+      ULTIM_ANTE.get_new_blind['Boss']  = function() return 'bl_big' end
+      ULTIM_ANTE.get_new_blind[4]       = function() return get_new_boss() end
     end
-end
-
-local blindselectref = create_UIBox_blind_select
-function create_UIBox_blind_select()
-  blindselectref()
-  
-  local t = {n=G.UIT.ROOT, config = {align = 'tm',minw = width, r = 0.15, colour = G.C.CLEAR}, nodes={
-    {n=G.UIT.R, config={align = "cm", padding = 0.5}, nodes={
-      G.GAME.round_resets.blind_states['Small'] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts.small}} or nil,
-      G.GAME.round_resets.blind_states['Big'] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts.big}} or nil,
-      G.GAME.round_resets.blind_states['Boss'] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts.boss}} or nil,
-      G.GAME.round_resets.blind_states[4] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts["4"]}} or nil,
-    }}
-  }}
-  return t
+    rb()
 end
 
 SMODS.Joker { --Snooze
@@ -3108,8 +3144,15 @@ SMODS.Joker { --Snooze
   perishable_compat = true,
   eternal_compat = true,
   calculate = function(self, card, context)
-    if not context.blueprint and context.end_of_round and G.GAME.blind.boss and context.cardarea == G.jokers then
-      print("hi!")
-    end
+    --if not context.blueprint and context.end_of_round and G.GAME.blind.boss and context.cardarea == G.jokers then
+      ULTIM_ANTE.blind_count = 4
+      ULTIM_ANTE.get_new_blind[4]       = function() return get_new_boss() end
+      G.GAME.round_resets.blind_choices['Small'] = 'bl_small'
+      G.GAME.round_resets.blind_choices['Big'] = 'bl_small'
+      ULTIM_ANTE.get_new_blind['Big']   = function() return 'bl_big' end
+      G.GAME.round_resets.blind_choices['Boss'] = 'bl_big'
+      G.GAME.round_resets.blind_choices[4] = 'bl_big'
+    --end
   end
-}]]
+}
+end]]

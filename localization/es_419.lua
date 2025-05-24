@@ -137,14 +137,14 @@ return {
                   "{C:inactive}(Debe haber espacio)"
                 }
             },
-            j_picubed_ambigram = {
+            j_picubed_ambigram = { --needs updating!
                 name = 'Ambigrama',
-                text = {
+                --[[text = {
                   "Cada {C:attention}6{} no mejorado jugado",
                   "se convierte en {C:attention}9{},",
                    "Cada {C:attention}9{} no mejorado jugado",
                   "se convierte en {C:attention}6{},",
-                }
+                }]]
             },
             j_picubed_superwrathfuljoker = {
                 name = 'Comodín super vengativo',
@@ -225,15 +225,15 @@ return {
                   "{C:inactive}(Debe haber espacio){}"
                 }
             },
-            j_picubed_blackjoker = {
+            j_picubed_blackjoker = { --needs updating!
                 name = 'Comodín negro',
-                text = {
+                --[[text = {
                   "Si la {C:attention}suma de categoría{} de todas las",
                   "{C:attention}cartas anotadas{} esta ronda es {C:attention}#2# o menos{},",
                   "recibes la mitad de la suma como {C:money}${}",
                   "al final de la ronda",
                   "{C:inactive}(Actual{} {C:attention}#1#{C:inactive})"
-                }
+                }]]
             },
             j_picubed_bisexualflag_spectrums = {
                 name = 'Bandera bisexual',
