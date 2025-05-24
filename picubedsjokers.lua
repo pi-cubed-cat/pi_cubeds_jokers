@@ -1899,7 +1899,6 @@ SMODS.Joker { --All In
 		end
     if context.final_scoring_step and context.cardarea == G.play then
       card.ability.extra.face_down_cards = {}
-      print("hi")
     end
     if context.cardarea == G.hand and context.repetition and not context.repetition_only then
       if context.other_card.facing == 'back' then
