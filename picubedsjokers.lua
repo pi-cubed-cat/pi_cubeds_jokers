@@ -838,7 +838,7 @@ SMODS.Joker { --Ambigram
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and not context.blueprint then
-      for k, v in ipairs(context.scoring_hand) do
+      for k, v in ipairs(context.full_hand) do
         if not v.debuff then
           if v.base.value == '6' and G.jokers.cards[1] == card then
             v:juice_up()
@@ -2690,7 +2690,7 @@ SMODS.Joker { --Pi
     end
   end
 }
-
+--[[
 SMODS.Joker { --On-beat
   key = 'onbeat',
   loc_txt = {
@@ -3110,6 +3110,7 @@ SMODS.Joker { --Yawning Cat
     print("Coming Soon!")
   end
 }
+]]
 
 --[[if SMODS.find_mod('Ultimate Antes') then
 --Snooze hooks

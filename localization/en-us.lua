@@ -127,9 +127,9 @@ return {
                 name = 'Ambigram',
                 text = {
                   "If this Joker is the {C:attention}left-most{},",
-                  "played {C:attention}6s{} become {C:attention}9s{},",
+                  "played {C:attention}6s{} become {C:attention}9s{}",
                   "If this Joker is the {C:attention}right-most{},",
-                  "Played {C:attention}9s{} become {C:attention}6s{}"
+                  "played {C:attention}9s{} become {C:attention}6s{}"
                 }
             },
             j_picubed_superwrathfuljoker = {
