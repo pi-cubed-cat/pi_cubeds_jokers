@@ -151,7 +151,8 @@ return {
                 text = {
                   "Receive {C:attention}#1#{} additional random {C:attention}tags",
                   "when blind is {C:attention}skipped{},",
-                  "{C:attention}+#2# tag{} after each skip"
+                  "{C:attention}+#2# tag{} after each skip",
+                  "{C:inactive}(Capped at current {}{C:attention}Ante{}{C:inactive}){}"
                 }
             },
             j_picubed_echolocation = {
@@ -406,7 +407,7 @@ return {
             k_picubeds_gullible = "Gullible!",
             k_picubeds_chisel = "Chisel!",
             k_picubeds_prime = "Prime!",
-            k_picubeds_landslide = "Tumble!",
+            k_picubeds_tumble = "Tumble!",
             k_picubeds_snakeeyes = "Snake Eyes!",
             k_picubeds_print = "Print!",
             k_picubeds_error = "Error!",

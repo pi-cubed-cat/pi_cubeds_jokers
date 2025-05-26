@@ -926,7 +926,8 @@ SMODS.Joker { --Advanced Skipping
     text = {
       "Receive {C:attention}#1#{} additional random {C:attention}tags",
       "when blind is {C:attention}skipped{},",
-      "{C:attention}+#2# tag{} after each skip"
+      "{C:attention}+#2# tag{} after each skip",
+      "{C:inactive}(Capped at current {}{C:attention}Ante{}{C:inactive}){}"
     }
   },
   rarity = 2,
@@ -959,7 +960,13 @@ SMODS.Joker { --Advanced Skipping
         end
       end
       card:juice_up()
-      card.ability.extra.add_tags = card.ability.extra.add_tags + card.ability.extra.add_tags_mod
+      if G.GAME.round_resets.ante > card.ability.extra.add_tags then
+        card.ability.extra.add_tags = card.ability.extra.add_tags + card.ability.extra.add_tags_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          card = card
+        }
+      end
     end
   end
 }
@@ -1377,7 +1384,7 @@ SMODS.Joker { --Black Joker
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
-  config = { extra = { sum_rank = 0, cap = 21, money = 13, has_decimal = false, ace_count = 0 } },
+  config = { extra = { sum_rank = 0, cap = 21, money = 7, has_decimal = false, ace_count = 0 } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.sum_rank, card.ability.extra.cap, card.ability.extra.money } }
   end,
@@ -1899,6 +1906,7 @@ SMODS.Joker { --All In
 		end
     if context.final_scoring_step and context.cardarea == G.play then
       card.ability.extra.face_down_cards = {}
+      print("hi")
     end
     if context.cardarea == G.hand and context.repetition and not context.repetition_only then
       if context.other_card.facing == 'back' then

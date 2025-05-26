@@ -166,6 +166,7 @@ return {
                   "Recibe {C:attention}#1#{} {C:attention}etiqueta{} adicional aleatoria",
                   "cuando se {C:attention}omite{} una ciega,",
                   "{C:attention}+#2# etiqueta{} por cada ciega omitida"
+                  "{C:inactive}(Capped at current {}{C:attention}Ante{}{C:inactive}){}" --needs updating!
                 }
             },
             j_picubed_echolocation = {
@@ -421,7 +422,7 @@ return {
             k_picubeds_gullible = "¡Crédulo!",
             k_picubeds_chisel = "¡Cincelado!",
             k_picubeds_prime = "¡Prime!",
-            k_picubeds_landslide = "¡Caido!",
+            k_picubeds_tumble = "¡Caido!",
             k_picubeds_snakeeyes = "¡Ojos de serpiente!",
             k_picubeds_print = "¡Impreso!",
             k_picubeds_error = "¡Error!",
