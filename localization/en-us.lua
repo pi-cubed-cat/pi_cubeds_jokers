@@ -379,6 +379,139 @@ return {
                   "give {X:mult,C:white}X#1#{} Mult"
                 }
             },
+            j_picubed_onbeat = {
+                name = 'On-beat',
+                text = {
+                  "Retrigger the {C:attention}1st{}, {C:attention}3rd{},",
+                  "and {C:attention}5th{} cards played",
+                  "{s:0.8}After hand is played,",
+                  "{s:0.8}becomes {s:0.8,C:attention}Off-beat{}"
+                }
+            },
+            j_picubed_offbeat = {
+                name = 'Off-beat',
+                text = {
+                  "Retrigger the {C:attention}2nd{}",
+                  "and {C:attention}4th{} cards played",
+                  "{s:0.8}After hand is played,",
+                  "{s:0.8}becomes {s:0.8,C:attention}On-beat{}"
+                }
+            },
+            j_picubed_polyrhythm = {
+                name = 'Polyrhythm',
+                text = {
+                  "Receive {C:money}$#1#{} every {C:attention}#2#{} {C:inactive}[#4#]{}",
+                  "hands played, create a {C:tarot}Tarot{}",
+                  "card every {C:attention}#3#{} {C:inactive}[#5#]{} discards",
+                  "{C:inactive}(Must have room){}"
+                }
+            },
+            j_picubed_pot = {
+                name = 'Pot',
+                text = {
+                  "{C:green}#1# in #2#{} chance for {X:mult,C:white}X#3#{} Mult,",
+                  "gives a {C:attention}cue{} if this Joker",
+                  "will activate for played hand",
+                  "{C:inactive}Currently #4#{}"
+                }
+            },
+            j_picubed_supergluttonousjoker = {
+                name = 'Super Gluttonous Joker',
+                text = {
+                  "When a {C:clubs}Club{} card is",
+                  "drawn to hand, draw an",
+                  "{C:attention}additional{} card to hand"
+                }
+            },
+            j_picubed_mountjoker = {
+                name = 'Mount Joker',
+                text = {
+                  "If played hand has at",
+                  "least 4 {C:attention}Stone{} cards,",
+                  "poker hand is your",
+                  "{C:attention}most played poker hand{}"
+                }
+            },
+            j_picubed_oxplow = {
+                name = 'Ox Plow',
+                text = {
+                  "Earn {C:money}$#1#{} if played",
+                  "hand is {C:attention}not{} your {C:attention}most{}",
+                  "{C:attention}played poker hand{}"
+                }
+            },
+            j_picubed_offthehook = {
+                name = 'Off the Hook',
+                text = {
+                  "After play, all",
+                  "{C:attention}unenhanced{} cards held",
+                  "in hand are discarded",
+                  "{C:chips}+#1#{} Hand"
+                }
+            },
+            j_picubed_eyepatch = {
+                name = 'Eye Patch',
+                text = {
+                  "This Joker gains {X:mult,C:white}X#2#{} Mult",
+                  "if {C:attention}poker hand{} has {C:attention}not{}",
+                  "been played this {C:attention}Ante{}, resets",
+                  "when {C:attention}Boss Blind{} is defeated",
+                  "{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}",
+                  "{s:0.8}#3#{}"
+                }
+            },
+            j_picubed_timidjoker = {
+                name = 'Timid Joker',
+                text = {
+                  "{C:mult}+#1#{} Mult if this Joker",
+                  "is the {C:attention}right-most{} Joker"
+                }
+            },
+            j_picubed_rushedjoker = {
+                name = 'Rushed Joker',
+                text = {
+                  "{C:attention}First{} card played",
+                  "gives {C:mult}+#1#{} Mult",
+                  "when scored"
+                }
+            },
+            j_picubed_tyredumpyard = {
+                name = 'Tyre Dumpyard',
+                text = {
+                  "When {C:attention}Boss Blind{} is selected,",
+                  "fill all Consumable slots",
+                  "with {C:attention}The Wheel of Fortune{}",
+                  "{C:inactive}(Must have room){}"
+                }
+            },
+            j_picubed_acorntree = {
+                name = 'Acorn Tree',
+                text = {
+                  "When {C:attention}Blind{} is selected, all",
+                  "Jokers are {C:attention}flipped and{}",
+                  "{C:attention}shuffled{}, and earn {C:money}$#1#{} for",
+                  "each other Joker affected"
+                }
+            },
+            j_picubed_forgery = {
+                name = 'Forgery',
+                text = {
+                  "When {C:attention}Blind{} is selected,",
+                  "{C:attention}destroy{} 1 random card in",
+                  "{C:attention}deck{}, and add half its",
+                  "{C:chips}Chips{} to this Joker as {C:mult}Mult",
+                  "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
+                }
+            },
+            j_picubed_yawningcat = {
+                name = 'Yawning Cat',
+                text = {
+                  "If {C:attention}played hand{} contains",
+                  "at least {C:attention}#1#{} scoring",
+                  "cards, {C:attention}retrigger{} playing",
+                  "cards {C:attention}#2# additional times{}"
+                }
+            },
         },
         Spectral = {
             c_picubed_commander = {
@@ -388,6 +521,42 @@ return {
                   "Consumable if slots are",
                   "filled, add {C:dark_edition}Negative{}",
                   "to all others"
+                }
+            },
+        },
+        Partner = {
+            pnr_picubed_roof = {
+                name = "Roof",
+                text = {
+                  "{C:green}#2# in #3#{} chance to",
+                  "round {C:money}${} to the next {C:money}$#1#{},", 
+                  "before end of round"
+                },
+            },
+            pnr_picubed_refine = {
+                name = "Refine",
+                text = {
+                  "{C:attention}Enhanced{} cards gain",
+                  "{C:mult}+#1#{} when scored", 
+                },
+            },
+            pnr_picubed_copy = {
+                name = "Copy",
+                text = {
+                  "{C:attention}Consumables{} have a {C:green}#1# in #2#",
+                  "chance to be {C:attention}recreated{} on use,",
+                  "this card has a {C:green}#1# in #3#{} chance to",
+                  "be {C:attention}disabled{} for this Ante",
+                  "after activating",
+                  "{C:inactive}(Must have room){}"
+                }
+            },
+            pnr_picubed_polymelia = {
+                name = "Polymelia",
+                text = {
+                  "{C:attention}+#1#{} Consumable Slots,",
+                  "held Consumables give",
+                  "{C:chips}+#2#{} Chips",
                 }
             },
         },
@@ -403,6 +572,10 @@ return {
         },
     },
     misc = {
+        v_dictionary = {
+            k_picubeds_pot_active = "Active!",
+            k_picubeds_pot_inactive = "Inactive",
+        },
         dictionary = {
             k_picubeds_gullible = "Gullible!",
             k_picubeds_chisel = "Chisel!",
@@ -413,6 +586,14 @@ return {
             k_picubeds_error = "Error!",
             k_picubeds_pride = "Pride!",
             k_picubeds_slosh = "Slosh!",
+            k_picubeds_swap = "Swap!",
+            k_picubeds_pot_ready = "Ready?",
+            k_picubeds_pot_hit = "Hit!",
+            k_picubeds_pot_miss = "Miss...",
+            k_picubeds_club = "Club!",
+            k_picubeds_spade = "Spade!",
+            k_picubeds_diamond = "Diamond!",
+            k_picubeds_offthehook = "Hooked!",
             config_picubeds_newspectrals = "New Spectral Cards (restart required)",
             config_picubeds_preorderhook = "Preorder Bonus' hook (disable for better compatibility, restart required)",
             config_picubeds_customsfx = "Custom Sound Effects (restart required)"
