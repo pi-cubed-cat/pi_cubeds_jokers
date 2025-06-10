@@ -2926,7 +2926,7 @@ SMODS.Joker { --Polyrhythm
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 2, y = 5 },
-  cost = 1,
+  cost = 5,
   discovered = true,
   blueprint_compat = true,
   perishable_compat = true,
