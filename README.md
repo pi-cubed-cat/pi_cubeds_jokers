@@ -10,6 +10,10 @@ Discord discussion thread: https://discord.com/channels/1116389027176787968/1348
 pi_cubed's Jokers is a lightweight mod with no lovely patching and minimal hooks. As a result, there should be minimal crashes due to conflicts with other mods.
 
 ## Recommended Mods
+### Partner by baimao
+pi_cubed's Jokers adds 4 new Partners!
+https://github.com/Icecanno/Partner-API
+
 ### Opandora's Box by opan 
 A Joker pack I really enjoy with some interesting synergies, and stellar music.  
 https://github.com/ohpahn/opandoras-box
