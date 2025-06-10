@@ -39,7 +39,7 @@ A game restart is required for Config options to take effect.
 As of writing, this option simply enables or disables Commander from appearing. In future, this will also affect any additional Spectral cards I plan to add.
 
 ### Preorder Bonus' Hook  
-Turn this option off to rework the Joker's mechanics very slightly to remove its hook that I (very jankily) implemented. This option may be useful if you're experiencing conflicts regarding setting the cost of Booster Packs. A run restart is also required if you have this Joker.
+Turn this option off to rework the Joker's mechanics very slightly to remove its hook that I (very jankily) implemented. This option may be useful if you're experiencing conflicts regarding setting the cost of Booster Packs.
 
 ### Custom Sound Effects  
 Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, and Pot.
