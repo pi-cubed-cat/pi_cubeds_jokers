@@ -1,5 +1,5 @@
 ![Mod Logo](https://i.imgur.com/WgRA0cT.png)
-Requires Steamodded 1.0.0~BETA-0531a or newer
+Requires Steamodded 1.0.0~BETA-0530b or newer
 
 List of Jokers (Modded Wiki Page): https://balatromods.miraheze.org/wiki/Pi_cubed's_Jokers/Jokers
 
