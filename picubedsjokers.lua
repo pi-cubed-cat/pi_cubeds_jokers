@@ -1,3 +1,6 @@
+--[[if JokerDisplay then
+    SMODS.load_file("crossmod/joker_display_definitions.lua")()
+end]]
 
 --TALISMAN FUNCTIONS
 to_big = to_big or function(x)
@@ -1561,6 +1564,7 @@ SMODS.Joker { --Bisexual Flag (without Spectrum FALLBACK)
   atlas = 'PiCubedsJokers',
   pos = { x = 7, y = 2 },
   no_collection = true,
+  discovered = true,
   in_pool = function(self, args) return false end,
   update = function(self, card, dt)
     card:set_ability(G.P_CENTERS["j_picubed_bisexualflag_spectrums"])
@@ -1655,6 +1659,7 @@ SMODS.Joker { --Bisexual Flag (with Spectrum FALLBACK)
   atlas = 'PiCubedsJokers',
   pos = { x = 7, y = 2 },
   no_collection = true,
+  discovered = true,
   in_pool = function(self, args) return false end,
   update = function(self, card, dt)
     card:set_ability(G.P_CENTERS["j_picubed_bisexualflag"])
@@ -2404,6 +2409,7 @@ SMODS.Joker { --Preorder Bonus (without hook FALLBACK)
   pos = { x = 5, y = 4 },
   atlas = 'PiCubedsJokers',
   no_collection = true,
+  discovered = true,
   in_pool = function(self, args) return false end,
   update = function(self, card, dt)
     card:set_ability(G.P_CENTERS["j_picubed_preorderbonus"])
@@ -2451,6 +2457,7 @@ SMODS.Joker { --Preorder Bonus (with hook FALLBACK)
   pos = { x = 5, y = 4 },
   atlas = 'PiCubedsJokers',
   no_collection = true,
+  discovered = true,
   in_pool = function(self, args) return false end,
   update = function(self, card, dt)
     card:set_ability(G.P_CENTERS["j_picubed_preorderbonus_hookless"])
@@ -3731,6 +3738,7 @@ if Partner_API then
         discovered = true,
         pos = {x = 0, y = 0},
         config = {extra = {related_card = "j_picubed_itsaysjokerontheceiling", money_ceil = 10, odds = 2, has_triggered = false }},
+        link_config = {j_picubed_itsaysjokerontheceiling = 1},
         loc_vars = function(self, info_queue, card)
           return { vars = { card.ability.extra.money_ceil * (2 ^ #SMODS.find_card("j_picubed_itsaysjokerontheceiling") or 0), (G.GAME.probabilities.normal or 1), card.ability.extra.odds } } 
         end,
@@ -3771,6 +3779,7 @@ if Partner_API then
         discovered = true,
         pos = {x = 1, y = 0},
         config = {extra = {related_card = "j_picubed_stonemason", mult_bonus = 2 }},
+        link_config = {j_picubed_stonemason = 1},
         loc_vars = function(self, info_queue, card)
           return { vars = { card.ability.extra.mult_bonus ^ (1 + (#SMODS.find_card("j_picubed_stonemason") or 0))  } } 
         end,
@@ -3799,6 +3808,7 @@ if Partner_API then
         discovered = true,
         pos = {x = 2, y = 0},
         config = {extra = {related_card = "j_picubed_inkjetprinter", copy_odds = 4, destroy_odds = 2, is_disabled = false }},
+        link_config = {j_picubed_inkjetprinter = 1},
         loc_vars = function(self, info_queue, card)
           return { vars = { (G.GAME.probabilities.normal or 1), card.ability.extra.copy_odds,  card.ability.extra.destroy_odds ^ (1 + (#SMODS.find_card("j_picubed_inkjetprinter") or 0))  } } 
         end,
@@ -3867,6 +3877,7 @@ if Partner_API then
         discovered = true,
         pos = {x = 3, y = 0},
         config = {extra = {card_limit_mod = 1, related_card = "j_picubed_extralimb", chips_mod = 10, card_limit_total = 0, consm_diff = 0 }},
+        link_config = {j_picubed_extralimb = 1},
         loc_vars = function(self, info_queue, card)
           return { vars = { card.ability.extra.card_limit_mod * (1 + (#SMODS.find_card("j_picubed_extralimb") or 0)), card.ability.extra.chips_mod * (1 + 4 *(#SMODS.find_card("j_picubed_extralimb") or 0))  } } 
         end,
@@ -3888,21 +3899,23 @@ if Partner_API then
                 G.consumeables.config.card_limit = G.consumeables.config.card_limit - 1
               end
             end
-            --[[if context.other_consumeable or context.partner_other_consumeable then
-              print("hi")
-              local chips_c = card.ability.extra.chips_mod * (1 + 9 *((#SMODS.find_card("j_picubed_extralimb") or 0)))
+            if context.other_consumeable or context.partner_other_consumeable then
+              --print("hi")
+              local chips_c = card.ability.extra.chips_mod * (1 + 4 *((#SMODS.find_card("j_picubed_extralimb") or 0)))
               return {
                 chip_mod = chips_c,
+                --message_card = context.other_consumable
+                message = localize { type = 'variable', key = 'a_chips', colour = G.C.CHIPS, vars = { chips_c } }
               }
-            end]]
-            if (context.joker_main or context.partner_main) and #G.consumeables.cards > 0 then
+            end
+            --[[if (context.joker_main or context.partner_main) and #G.consumeables.cards > 0 then
               local chips_c = #G.consumeables.cards * card.ability.extra.chips_mod * (1 + 9 *((#SMODS.find_card("j_picubed_extralimb") or 0)))
               return {
                 message = localize{type = "variable", key = "a_chips", vars = {chips_c}},
                 chip_mod = chips_c,
                 colour = G.C.CHIPS
               }
-            end
+            end]]
         end,
     }
 end
