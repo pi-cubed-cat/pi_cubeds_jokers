@@ -29,7 +29,7 @@ The Bisexual Flag Joker is compatible with additional suits.
 https://github.com/GitNether/paperback
 
 ### Cryptid by MathIsFun_ & many more  
-I've put a big focus on making sure the Misprint Deck behaves properly with all Jokers!  
+There's some hidden content that requires Cryptid. In addition, I've put a big focus on making sure the changing value mechanics and Misprintize behave properly with all Jokers!
 https://github.com/SpectralPack/Cryptid
 
 ## Config Options
