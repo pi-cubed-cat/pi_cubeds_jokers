@@ -837,14 +837,25 @@ SMODS.Joker { --Ambigram
   eternal_compat = true,
   calculate = function(self, card, context)
     if context.before and context.cardarea == G.jokers and not context.blueprint then
+      local has_69 = false
       for k, v in ipairs(context.full_hand) do
         if not v.debuff then
           if v.base.value == '6' and G.jokers.cards[1] == card then
             v:juice_up()
+            has_69 = true
             assert(SMODS.change_base(v, nil, '9'))
           elseif v.base.value == '9' and G.jokers.cards[#G.jokers.cards] == card then
             v:juice_up()
+            has_69 = true
             assert(SMODS.change_base(v, nil, '6'))
+          end
+        end
+      end
+      if has_69 then
+        has_69 = false
+        if G.GAME.blind.config.blind.key == ("bl_pillar") then
+          for k, v in ipairs(context.scoring_hand) do
+            v.debuff = false
           end
         end
       end
@@ -883,6 +894,11 @@ SMODS.Joker { --Super Wrathful Joker
       end
       if has_spades then
         has_spades = false
+        if G.GAME.blind.config.blind.key == ("bl_pillar") then
+          for k, v in ipairs(context.scoring_hand) do
+            v.debuff = false
+          end
+        end
         return {
             message = localize("k_picubeds_spade"),
             card = card,
@@ -1148,13 +1164,13 @@ SMODS.Joker { --Extra Pockets
   end,
   
   calculate = function(self, card, context)
-    card.ability.extra.hand_increase_mod = math.ceil(card.ability.extra.hand_increase_mod)
+    --card.ability.extra.hand_increase_mod = math.ceil(card.ability.extra.hand_increase_mod)
     card.ability.extra.hand_increase = #G.consumeables.cards * card.ability.extra.hand_increase_mod
-    while card.ability.extra.hand_increase > card.ability.extra.hand_diff do
+    while math.ceil(card.ability.extra.hand_increase) > math.ceil(card.ability.extra.hand_diff) do
       card.ability.extra.hand_diff = card.ability.extra.hand_diff + 1
       G.hand:change_size(1)
     end
-    while card.ability.extra.hand_increase < card.ability.extra.hand_diff do
+    while math.ceil(card.ability.extra.hand_increase) < math.ceil(card.ability.extra.hand_diff) do
       card.ability.extra.hand_diff = card.ability.extra.hand_diff - 1
       G.hand:change_size(-1)
     end
@@ -3965,3 +3981,134 @@ SMODS.Joker { --Snooze
   end
 }
 end]]
+
+if SMODS.find_mod("Cryptid") and SMODS.find_mod("MoreFluff") then
+SMODS.Atlas {
+  key = "mrsjankman",
+  path = "mrsjankman.png",
+  px = 71,
+  py = 95
+}
+
+SMODS.Joker { -- Mrs. Jankman (Cryptid & MoreFluff)
+  key = 'mrsjankman_joker',
+  loc_txt = {
+    name = 'Mrs. Jankman',
+    text = {
+      "All Jokers with a", 
+      "{C:attention}modded Edition{}",
+      "give {X:chips,C:white}X#1#{} Chips",
+      "{s:0.8,C:inactive,E:2}Heteronormative Jank!"
+      
+    }
+  },
+  config = { extra = { x_chips = 27.41 } },
+  rarity = 4,
+  atlas = 'mrsjankman',
+  pos = { x = 0, y = 0 },
+  soul_pos = { x = 1, y = 0 },
+  cost = 20,
+  discovered = true,
+  blueprint_compat = true,
+  pools = { ["Meme"] = true },
+  in_pool = function(self, args)
+    return (#find_joker("j_mf_jankman") > 0)
+  end,
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.x_chips } }
+  end,
+  
+  calculate = function(self, card, context)
+    if context.other_joker and context.other_joker.edition then
+      if context.other_joker.edition.key ~= 'e_polychrome' then
+        if context.other_joker.edition.key ~= 'e_foil' then
+          if context.other_joker.edition.key ~= 'e_holographic' then
+            if context.other_joker.edition.key ~= 'e_negative' then
+              if (not context.other_joker.debuff) then
+                return {
+                  xchips = card.ability.extra.x_chips,
+                  card = card
+                }
+              end
+            end
+          end
+        end
+      end
+		end
+  end
+}
+end
+
+if SMODS.find_mod("Cryptid") then
+SMODS.Atlas {
+  key = "picubed_tags",
+  path = "picubedstag.png",
+  px = 34,
+  py = 34
+}
+
+SMODS.Tag { -- Jolly Top-up Tag (Cryptid)
+  key = 'jollytopup',
+  loc_txt = {
+    name = "Jolly Top-up Tag",
+    text = {
+      "Create #1# {C:attention}Jolly Jokers",
+      "{C:inactive}(Does not require room){}"
+    }
+  },
+  config = { extra = { spawn_jokers = 5 } },
+  atlas = "picubed_tags",
+  pos = { x = 0, y = 0 },
+  discovered = true,
+  min_ante = 2,
+  loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.j_jolly
+    return { vars = { card.config.extra.spawn_jokers } }
+  end,
+  apply = function(self, tag, context)
+    if context.type == "immediate" then
+      tag:yep("+", G.C.RED, function()
+          for i = 1, tag.config.extra.spawn_jokers do
+            SMODS.add_card({set = 'Joker', area = G.jokers, key = 'j_jolly'})
+          end
+        return true
+        end)
+      tag.triggered = true
+      return true
+    end
+  end
+}
+
+SMODS.Tag { -- gaT pu-poT ylloJ (Cryptid)
+  key = 'jollytopup_negative',
+  loc_txt = {
+    name = "gaT pu-poT ylloJ",
+    text = {
+      "Create #1# {C:dark_edition}Negative{}",
+      "{C:attention}Jolly Jokers"
+    }
+  },
+  config = { extra = { spawn_jokers = 2 } },
+  atlas = "picubed_tags",
+  pos = { x = 1, y = 0 },
+  discovered = true,
+  min_ante = 2,
+  loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = G.P_CENTERS.j_jolly
+    info_queue[#info_queue+1] = G.P_CENTERS.e_negative
+    return { vars = { card.config.extra.spawn_jokers } }
+  end,
+  apply = function(self, tag, context)
+    if context.type == "immediate" then
+      tag:yep("+", G.C.RED, function()
+          for i = 1, tag.config.extra.spawn_jokers do
+            SMODS.add_card({set = 'Joker', area = G.jokers, key = 'j_jolly', edition = "e_negative"})
+          end
+        return true
+        end)
+      tag.triggered = true
+      return true
+    end
+  end
+}
+end
