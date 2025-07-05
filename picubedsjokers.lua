@@ -3982,7 +3982,7 @@ SMODS.Joker { --Snooze
 }
 end]]
 
-if SMODS.find_mod("Cryptid") and SMODS.find_mod("MoreFluff") then
+if next(SMODS.find_mod("Cryptid")) and next(SMODS.find_mod("MoreFluff")) then
 SMODS.Atlas {
   key = "mrsjankman",
   path = "mrsjankman.png",
@@ -4039,7 +4039,7 @@ SMODS.Joker { -- Mrs. Jankman (Cryptid & MoreFluff)
 }
 end
 
-if SMODS.find_mod("Cryptid") then
+if next(SMODS.find_mod("Cryptid")) then
 SMODS.Atlas {
   key = "picubed_tags",
   path = "picubedstag.png",
