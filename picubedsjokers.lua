@@ -3805,7 +3805,7 @@ if Partner_API then
                   local me = (#SMODS.find_card("j_picubed_stonemason") or 0)
                   local mult_b = card.ability.extra.mult_bonus ^ (me + 1)
                   context.other_card.ability.perma_mult = context.other_card.ability.perma_mult or 1 
-                  context.other_card.ability.perma_mult = context.other_card.ability.perma_mult + mult_bonus
+                  context.other_card.ability.perma_mult = context.other_card.ability.perma_mult + card.ability.extra.mult_bonus
                   return {
                     message = localize("k_upgrade_ex"),
                     colour = G.C.MULT,
