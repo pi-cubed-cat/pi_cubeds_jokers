@@ -3804,8 +3804,8 @@ if Partner_API then
                 if (context.other_card.config.center ~= G.P_CENTERS.c_base or SMODS.get_enhancements(context.other_card)["m_lucky"] == true) and not context.other_card.debuff then
                   local me = (#SMODS.find_card("j_picubed_stonemason") or 0)
                   local mult_b = card.ability.extra.mult_bonus ^ (me + 1)
-                  context.other_card.ability.perma_mult = context.other_card.ability.perma_x_mult or 1 
-                  context.other_card.ability.perma_mult = context.other_card.ability.perma_x_mult + mult_b
+                  context.other_card.ability.perma_mult = context.other_card.ability.perma_mult or 1 
+                  context.other_card.ability.perma_mult = context.other_card.ability.perma_mult + mult_bonus
                   return {
                     message = localize("k_upgrade_ex"),
                     colour = G.C.MULT,
