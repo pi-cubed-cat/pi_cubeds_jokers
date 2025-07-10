@@ -36,10 +36,10 @@ https://github.com/SpectralPack/Cryptid
 A game restart is required for Config options to take effect.
 
 ### New Spectral Cards  
-As of writing, this option simply enables or disables Commander from appearing. In future, this will also affect any additional Spectral cards I plan to add.
+This option enables or disables the Spectral Cards Commander, Rupture, and Extinction from appearing.
 
 ### Preorder Bonus' Hook  
 Turn this option off to rework the Joker's mechanics very slightly to remove its hook that I (very jankily) implemented. This option may be useful if you're experiencing conflicts regarding setting the cost of Booster Packs.
 
 ### Custom Sound Effects  
-Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, and Pot.
+Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, and Talking Flower.
