@@ -133,7 +133,7 @@ card.ability.extra.odds } }
   end,
   calculate = function(self, card, context)
     if context.joker_main then
-      if pseudorandom('D2'..G.SEED) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+      if pseudorandom('D2'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
         return {
           mult_mod = card.ability.extra.mult,
           message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
@@ -470,7 +470,7 @@ SMODS.Joker { --Landslide
   calculate = function(self, card, context)
 		if context.cardarea == G.jokers and context.after then 
       if hand_chips > mult and #G.hand.cards >= 1 then
-        local rndcard = pseudorandom_element(G.hand.cards, pseudoseed('Landslide'..G.SEED))
+        local rndcard = pseudorandom_element(G.hand.cards, pseudoseed('Landslide'..G.GAME.round_resets.ante))
         if not SMODS.has_enhancement(rndcard, 'm_stone') then
           rndcard:set_ability(G.P_CENTERS.m_stone, nil, true)
           G.E_MANAGER:add_event(Event({
@@ -633,7 +633,7 @@ SMODS.Joker { --Stonemason
     end
     if context.destroying_card and context.cardarea == G.play and not context.blueprint then
       if SMODS.has_enhancement(context.destroying_card, 'm_stone') then
-        if pseudorandom('stonemason'..G.SEED) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+        if pseudorandom('stonemason'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
           return {
             remove = true
           }
@@ -801,7 +801,7 @@ SMODS.Joker { --Hidden Gem
   calculate = function(self, card, context)
     if context.discard then
       if not context.other_card.debuff and not context.blueprint then
-        if pseudorandom('hiddengem'..G.SEED) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+        if pseudorandom('hiddengem'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
             G.E_MANAGER:add_event(Event({
@@ -987,11 +987,11 @@ SMODS.Joker { --Advanced Skipping
       --code below taken from Ortalab's Recycled Enhancement
       local tag_pool = get_current_pool('Tag')
       for i=1,card.ability.extra.add_tags do     
-        local selected_tag = pseudorandom_element(tag_pool, pseudoseed('advancedskipping'..G.SEED))
+        local selected_tag = pseudorandom_element(tag_pool, pseudoseed('advancedskipping'..G.GAME.round_resets.ante))
         local it = 1
         while selected_tag == 'UNAVAILABLE' do
             it = it + 1
-            selected_tag = pseudorandom_element(tag_pool, pseudoseed('advancedskipping'..it..G.SEED))
+            selected_tag = pseudorandom_element(tag_pool, pseudoseed('advancedskipping'..it..G.GAME.round_resets.ante))
         end
         if selected_tag ~= 'tag_orbital' then
           add_tag(Tag(selected_tag))
@@ -1044,7 +1044,7 @@ SMODS.Joker { --Echolocation
   calculate = function(self, card, context)
     if not context.blueprint then
       if context.stay_flipped then
-        if pseudorandom(pseudoseed('echolocation'..G.SEED)) < G.GAME.probabilities.normal / card.ability.extra.odds then
+        if pseudorandom(pseudoseed('echolocation'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.odds then
           return { stay_flipped = true }
         end
         -- else return { stay_flipped = false }
@@ -1090,7 +1090,7 @@ SMODS.Joker { --Shopping Trolley
         card.ability.extra.trolley_success = 0
         G.hand:change_size(-card.ability.extra.hand_increase)
       end
-      if pseudorandom(pseudoseed('shoppingtrolley'..G.SEED)) < G.GAME.probabilities.normal*3 / card.ability.extra.odds then
+      if pseudorandom(pseudoseed('shoppingtrolley'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal*3 / card.ability.extra.odds then
         card.ability.extra.trolley_success = 1
         G.hand:change_size(card.ability.extra.hand_increase)
         card:juice_up()
@@ -1311,7 +1311,7 @@ SMODS.Joker { --Inkjet Printer
   end,
   calculate = function(self, card, context)
     if context.using_consumeable and not context.blueprint then
-      if pseudorandom(pseudoseed('inkjetprinter'..G.SEED)) < G.GAME.probabilities.normal / card.ability.extra.copy_odds then
+      if pseudorandom(pseudoseed('inkjetprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.copy_odds then
         local has_activated = false
         local has_destroyed = false
         G.E_MANAGER:add_event(Event({
@@ -1328,7 +1328,7 @@ SMODS.Joker { --Inkjet Printer
           end
         }))
 
-        if pseudorandom(pseudoseed('inkjetprinter'..G.SEED)) < G.GAME.probabilities.normal / card.ability.extra.destroy_odds then
+        if pseudorandom(pseudoseed('inkjetprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.destroy_odds then
           G.E_MANAGER:add_event(Event({
 					func = function()
 						if has_activated then
@@ -1784,7 +1784,7 @@ SMODS.Consumable { --Commander (Spectral card)
   end,
   use = function(self, card, area, copier)
     if (#G.consumeables.cards >= G.consumeables.config.card_limit) or (card.edition and card.edition.key == 'e_negative' and #G.consumeables.cards + 1 >= G.consumeables.config.card_limit) then
-      local rndcard = pseudorandom_element(G.consumeables.cards, pseudoseed('Commander'..G.SEED))
+      local rndcard = pseudorandom_element(G.consumeables.cards, pseudoseed('Commander'..G.GAME.round_resets.ante))
       if rndcard ~= nil then
         --This event bit taken from Extra Credit's Toby the Corgi
         G.E_MANAGER:add_event(Event({
@@ -2241,7 +2241,7 @@ SMODS.Joker { --Explosher
         if #suit_list == 0 then
           suit_list = {'Hearts', 'Diamonds', 'Spades', 'Clubs'}
         end
-        local chosen_suit = pseudorandom_element(suit_list, pseudoseed('Explosher'..G.SEED))
+        local chosen_suit = pseudorandom_element(suit_list, pseudoseed('Explosher'..G.GAME.round_resets.ante))
         for k,v in ipairs(G.hand.cards) do
           G.E_MANAGER:add_event(Event({func = function()
             v:change_suit(chosen_suit)
@@ -2253,7 +2253,7 @@ SMODS.Joker { --Explosher
           return {
             message = localize("k_picubeds_slosh"),
             volume = 0.5,
-            sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.SEED))
+            sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.GAME.round_resets.ante))
           }
         else
           return {
@@ -2273,12 +2273,12 @@ SMODS.Joker { --Explosher
         if #suit_list == 0 then
           suit_list = {'Hearts', 'Diamonds', 'Spades', 'Clubs'}
         end
-        local chosen_suit = pseudorandom_element(suit_list, pseudoseed('Explosher'..G.SEED))
+        local chosen_suit = pseudorandom_element(suit_list, pseudoseed('Explosher'..G.GAME.round_resets.ante))
         for i=1,#G.hand.cards do
           card_list[i] = G.hand.cards[i]
         end
         for i=1,card.ability.extra.num do
-          hit_list[i] = pseudorandom_element(card_list, pseudoseed('Explosher'..i..G.SEED))
+          hit_list[i] = pseudorandom_element(card_list, pseudoseed('Explosher'..i..G.GAME.round_resets.ante))
           for j=1,#card_list do
             if hit_list[i] == card_list[j] then
               table.remove(card_list, j)
@@ -2296,7 +2296,7 @@ SMODS.Joker { --Explosher
           return {
             message = localize("k_picubeds_slosh"),
             volume = 0.5,
-            sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.SEED))
+            sound = "picubed_explo"..pseudorandom_element({'1', '2', '3'}, pseudoseed('Explosher1'..G.GAME.round_resets.ante))
           }
         else
           return {
@@ -2396,7 +2396,7 @@ SMODS.Joker { --Golden Pancakes
       }
 		end
     if context.end_of_round and not context.repetition and context.game_over == false and not context.blueprint then
-			if pseudorandom('goldenpancakes'..G.SEED) < G.GAME.probabilities.normal / card.ability.extra.odds then
+			if pseudorandom('goldenpancakes'..G.GAME.round_resets.ante) < G.GAME.probabilities.normal / card.ability.extra.odds then
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						play_sound('tarot1')
@@ -2802,7 +2802,7 @@ SMODS.Joker { --Super Greedy Joker
             end
           }))
           
-        elseif context.other_card:is_suit("Diamonds") and pseudorandom('supergreedyjoker'..G.SEED) < 1/30 then 
+        elseif context.other_card:is_suit("Diamonds") and pseudorandom('supergreedyjoker'..G.GAME.round_resets.ante) < 1/30 then 
           SMODS.calculate_effect({ message = localize('k_picubeds_diamond'), colour = G.C.SUITS["Diamonds"] },
               context.blueprint_card or card)
           G.E_MANAGER:add_event(Event({
@@ -3175,7 +3175,7 @@ SMODS.Joker { --Pot
   end,
   calculate = function(self, card, context)
     if (context.first_hand_drawn or context.hand_drawn) and not context.blueprint then
-      if pseudorandom('D2'..G.SEED) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+      if pseudorandom('D2'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
         card.ability.extra.is_active = true
         local eval = function() return card.ability.extra.is_active and not G.RESET_JIGGLES end
         juice_card_until(card, eval, true)
@@ -3724,7 +3724,7 @@ SMODS.Joker { --Forgery
   end,
   calculate = function(self, card, context)
     if context.setting_blind and not context.blueprint then
-      local card_is_kil = pseudorandom_element(G.playing_cards, pseudoseed('forgery'..G.SEED))
+      local card_is_kil = pseudorandom_element(G.playing_cards, pseudoseed('forgery'..G.GAME.round_resets.ante))
       local card_mult = 0
       if SMODS.has_no_rank(card_is_kil) then -- rankless cards
         card_mult = card_mult + 0
@@ -4668,7 +4668,7 @@ end
 
 function Card:tf_say(key, prob)
   prob = prob or 1
-  if pseudorandom(tostring(key)..G.SEED) < (1 / prob) then
+  if pseudorandom(tostring(key)..G.GAME.round_resets.ante) < (1 / prob) then
     G.E_MANAGER:add_event(Event({ func = function() 
       self:add_tf_speech_bubble(key)
       self:tf_say_stuff(5)
@@ -5107,7 +5107,7 @@ if Partner_API then
             end
             if context.end_of_round and tonumber(G.GAME.dollars) < 1e308 and card.ability.extra.has_triggered then
                 card.ability.extra.has_triggered = false
-                if pseudorandom('roof'..G.SEED) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+                if pseudorandom('roof'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
                   local ceil = 10
                   local money = tonumber(G.GAME.dollars)
                   local me = (#SMODS.find_card("j_picubed_itsaysjokerontheceiling") or 0)
@@ -5180,7 +5180,7 @@ if Partner_API then
         end,
         calculate = function(self, card, context)
             if context.using_consumeable and not card.ability.extra.is_disabled then
-                if pseudorandom(pseudoseed('copy'..G.SEED)) < G.GAME.probabilities.normal / card.ability.extra.copy_odds then
+                if pseudorandom(pseudoseed('copy'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.copy_odds then
                   local has_activated = false
                   local has_destroyed = false
                   G.E_MANAGER:add_event(Event({
@@ -5197,7 +5197,7 @@ if Partner_API then
                     end
                   }))
 
-                  if pseudorandom(pseudoseed('inkjetprinter'..G.SEED)) < G.GAME.probabilities.normal / card.ability.extra.destroy_odds ^ (1 + (#SMODS.find_card("j_picubed_inkjetprinter") or 0)) then
+                  if pseudorandom(pseudoseed('inkjetprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.destroy_odds ^ (1 + (#SMODS.find_card("j_picubed_inkjetprinter") or 0)) then
                     G.E_MANAGER:add_event(Event({
                     func = function()
                       if has_activated then
@@ -5326,12 +5326,6 @@ SMODS.Joker { --Snooze
 end]]
 
 if next(SMODS.find_mod("Cryptid")) and next(SMODS.find_mod("MoreFluff")) then
-SMODS.Atlas {
-  key = "mrsjankman",
-  path = "mrsjankman.png",
-  px = 71,
-  py = 95
-}
 
 SMODS.Joker { -- Mrs. Jankman (Cryptid & MoreFluff)
   key = 'mrsjankman_joker',
@@ -5347,9 +5341,9 @@ SMODS.Joker { -- Mrs. Jankman (Cryptid & MoreFluff)
   },
   config = { extra = { x_chips = 27.41 } },
   rarity = 4,
-  atlas = 'mrsjankman',
-  pos = { x = 0, y = 0 },
-  soul_pos = { x = 1, y = 0 },
+  atlas = 'PiCubedsJokers',
+  pos = { x = 2, y = 7 },
+  soul_pos = { x = 3, y = 7 },
   cost = 20,
   discovered = true,
   blueprint_compat = true,
