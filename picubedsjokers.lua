@@ -4827,7 +4827,7 @@ SMODS.Joker { --Super Lusty Joker
   rarity = 3,
   atlas = 'PiCubedsJokers',
   pos = { x = 7, y = 3 },
-  cost = 6,
+  cost = 9,
   discovered = true,
   blueprint_compat = true,
   perishable_compat = true,
