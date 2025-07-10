@@ -1,5 +1,43 @@
 return {
     descriptions = {
+        Back = {
+            b_picubed_wonderfuldeck = {
+                name = "Wonderful Deck",
+                text = {
+                    "Start with a",
+                    "{C:attention}Talking Flower{}",
+                },
+            },
+            b_picubed_myepicdeck = {
+                name = "my epic deck by pi_cubed",
+                text = {
+                    "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{} are",
+                    "{C:attention}3x{} more likely to appear",
+                },
+            },
+            b_picubed_rejuvinationdeck = {
+                name = "Rejuvination Deck",
+                text = {
+                    "Start with {C:attention}#1#{} Joker slots,",
+                    "{C:attention}+#2#{} slot after Boss Blind",
+                    "is defeated",
+                },
+            },
+            b_picubed_covetousdeck = {
+                name = "Covetous Deck",
+                text = {
+                    "Start with a {C:attention}#1#{},",
+                    "{C:attention}#2#{}, and {C:attention}#3#{}",
+                },
+            },
+            b_picubed_collectorsdeck = {
+                name = "Collector's Deck",
+                text = {
+                    "Start with a {C:attention}#1#{},",
+                    "{C:attention}#2#{}, and {C:attention}#3#{}",
+                },
+            },
+        },
         Joker = {
             j_picubed_itsaysjokerontheceiling = {
                 name = 'It Says "Joker" on the Ceiling',
@@ -512,6 +550,141 @@ return {
                   "cards {C:attention}#2# additional times{}"
                 }
             },
+            j_picubed_weemini = {
+                name = 'Wee Mini',
+                text = {
+                  "If played hand or cards held",
+                  "in hand contain a {C:attention}2{},",
+                  "played hand contains a",
+                  "{C:attention}Two Pair{} and apply {C:attention}Splash{}"
+                }
+            },
+            j_picubed_lowballdraw = {
+                name = 'Lowball Draw',
+                text = {
+                  "If scoring hand",
+                  "contains a {C:attention}2{}",
+                  "and a {C:attention}7{}, earn {C:money}$#1#{}"
+                }
+            },
+            j_picubed_chickenjoker = {
+                name = 'Chicken Joker!',
+                text = {
+                  "If scoring hand contains",
+                  "a {C:attention}Stone{} card or a {C:attention}Steel{}",
+                  "card, {C:attention}fill{} empty Joker",
+                  "slots with {C:dark_edition}Editioned{} {C:attention}Popcorn{}"
+                }
+            },
+            j_picubed_shrapnel = {
+                name = 'Shrapnel',
+                text = {
+                  "When a {C:attention}Consumable card{} is",
+                  "used, all playing cards in hand",
+                  "receive a {C:attention}permanent{} {C:mult}+#1#{} Mult",
+                }
+            },
+            j_picubed_victimcard = {
+                name = 'Victim Card',
+                text = {
+                  "This Joker gains {X:mult,C:white}X#1#{} Mult if",
+                  "played hand does {C:attention}not beat{} the",
+                  "blind, this Joker is {C:attention}destroyed{}",
+                  "after reaching {X:mult,C:white}X#2#{} Mult",
+                  "{C:inactive}(Currently{} {X:mult,C:white}X#3#{} {C:inactive}Mult){}",
+                }
+            },
+            j_picubed_translucentjoker = {
+                name = 'Translucent Joker',
+                text = {
+                  "After {C:attention}#1#{} rounds,",
+                  "sell this card to",
+                  "create an {C:attention}Invisible Joker{}",
+                  "{C:inactive}(Currently {}{C:attention}#2#{}{C:inactive}/#1# rounds){}",
+                }
+            },
+            j_picubed_cyclone = {
+                name = 'Cyclone',
+                text = {
+                  "Scored cards with a {C:attention}Seal{}",
+                  "create the {C:planet}Planet{} card of",
+                  "played {C:attention}poker hand{}",
+                }
+            },
+            j_picubed_missingfinger = {
+                name = 'Missing Finger',
+                text = {
+                  "{X:mult,C:white}X#1#{} Mult, {C:attention}#2#{} playing",
+                  "card {C:attention}selection limit{}",
+                  --"for {C:blue}playing{} and {C:red}discarding{}",
+                }
+            },
+            j_picubed_roundabout = {
+                name = 'Round-a-bout',
+                text = {
+                  "Allows {C:attention}Straights{} to",
+                  "be made with both",
+                  "{C:attention}high and low ranks{}",
+                  "{C:inactive}(ex:{} {C:attention}3 2 A K Q{}{C:inactive}){}",
+                }
+            },
+            j_picubed_hypemoments = {
+                name = 'Hype Moments',
+                text = {
+                  "When {C:attention}Boss Blind{} is selected,",
+                  "create an {C:attention}Aura{}",
+                  "{C:inactive}(Must have room){}",
+                }
+            },
+            j_picubed_panicfire = {
+                name = 'Panic Fire',
+                text = {
+                  "After Blind is selected, if a card",
+                  "is {C:attention}sold{} before play or discard,",
+                  "{X:mult,C:white}X#1#{} Mult for {C:attention}this round{}",
+                  "{C:inactive}(Currently #2#){}",
+                }
+            },
+            j_picubed_nightvision = {
+                name = 'Night Vision',
+                text = {
+                  "After Play, {C:attention}flip{} all cards in hand,",
+                  "earn {C:money}$#1#{} per card flipped",
+                  "{C:attention}face up{} by this Joker",
+                }
+            },
+            j_picubed_talkingflower = {
+                name = 'Talking Flower',
+                text = {
+                  "{C:dark_edition}+#1#{} Joker Slot,",
+                  "{C:mult}+#2#{} Mult"
+                }
+            },
+            j_picubed_superlustyjoker = {
+                name = 'Super Lusty Joker',
+                text = {
+                  "{C:attention}Retrigger{} played {C:hearts}Heart{} cards,",
+                  "{C:green}#2# in #3#{} chance to retrigger",
+                  "them {C:attention}#1#{} additional time",
+                }
+            },
+            j_picubed_laserprinter = {
+                name = 'Laser Printer',
+                text = {
+                  "{C:attention}Consumables{} have a {C:green}#1# in #2#{} chance",
+                  "to be {C:attention}recreated{} on use and a",
+                  "{C:green}#1# in #4#{} chance to be made {C:dark_edition}Negative{},",
+                  "this card has a {C:green}#1# in #3#{} ",
+                  "chance to be {C:attention}disabled{} for",
+                  "this Ante after activating",
+                  "{C:inactive}(Must have room){}"
+                },
+                unlock = {
+                  "Allow an",
+                  "{C:attention}Inkjet Printer{}",
+                  "to destroy itself",
+                },
+            },
         },
         Spectral = {
             c_picubed_commander = {
@@ -521,6 +694,22 @@ return {
                   "Consumable if slots are",
                   "filled, add {C:dark_edition}Negative{}",
                   "to all others"
+                }
+            },
+            c_picubed_rupture = {
+                name = 'Rupture',
+                text = {
+                  "{C:attention}Destroy{} left-most Joker,",
+                  "create {C:attention}#1#{} random",
+                  "{C:spectral}Spectral{} cards"
+                }
+            },
+            c_picubed_extinction = {
+                name = 'Extinction',
+                text = {
+                  "{C:attention}Destroy{} all cards of",
+                  "a {C:attention}random rank{}",
+                  "from your deck"
                 }
             },
         },
@@ -572,6 +761,60 @@ return {
         },
     },
     misc = {
+        quips = {
+            tf_bye1 = {
+              "Bye...",
+            },
+            tf_bye2 = {
+              "Bye-bye!",
+            },
+            tf_bye3 = {
+              "So long!",
+            },
+            tf_hi1 = {
+              "Hey!",
+            },
+            tf_hi2 = {
+              "Heya!",
+            },
+            tf_hi3 = {
+              "Hey there!",
+            },
+            tf_hi4 = {
+              "Heyyyyy!",
+            },
+            tf_hi5 = {
+              "Hiiiii!",
+            },
+            tf_onward = {
+              "Onward and upward!",
+            },
+            tf_shop_high1 = {
+              "What'cha gonna pick?",
+            },
+            tf_shop_high2 = {
+              "What'll it be?",
+            },
+            tf_shop_high3 = {
+              "Why not take both?",
+            },
+            tf_shop_low1 = {
+              "Tough choice!",
+            },
+            tf_shop_low2 = {
+              "What'cha gonna go with?",
+            },
+            tf_shop_low3 = {
+              "Don't spend it all",
+              "in one place!",
+            },
+            tf_wee1 = {
+              "Weee!",
+            },
+            tf_wee2 = {
+              "Weeeee...",
+            },
+        },
         v_dictionary = {
             k_picubeds_pot_active = "Active!",
             k_picubeds_pot_inactive = "Inactive",
@@ -594,6 +837,11 @@ return {
             k_picubeds_spade = "Spade!",
             k_picubeds_diamond = "Diamond!",
             k_picubeds_offthehook = "Hooked!",
+            k_picubeds_victimcard = "Revoked!",
+            k_picubeds_panicfire_ready = "Ready!",
+            k_picubeds_fixed = "Fixed!",
+            k_picubeds_active = "Active!",
+            k_picubeds_inactive = "Inactive",
             config_picubeds_newspectrals = "New Spectral Cards (restart required)",
             config_picubeds_preorderhook = "Preorder Bonus' hook (disable for better compatibility, restart required)",
             config_picubeds_customsfx = "Custom Sound Effects (restart required)"
