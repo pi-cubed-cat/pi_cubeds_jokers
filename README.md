@@ -7,7 +7,7 @@ Documentation spreadsheet (Planned content, patch notes, & more info): https://d
 
 Discord discussion thread: https://discord.com/channels/1116389027176787968/1348621804696240201
 
-pi_cubed's Jokers is a lightweight mod with no lovely patching and minimal hooks. As a result, there should be minimal crashes due to conflicts with other mods.
+pi_cubed's Jokers is a lightweight mod with minimal lovely patching and hooks. As a result, there should be few crashes due to conflicts with other mods.
 
 ## Recommended Mods
 ### Partner by baimao  
