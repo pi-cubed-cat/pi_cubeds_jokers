@@ -4598,7 +4598,7 @@ SMODS.Joker { --Night Vision
 -- can buy with full slots (from MoreFluff)
 local old_g_funcs_check_for_buy_space = G.FUNCS.check_for_buy_space
 G.FUNCS.check_for_buy_space = function(card)
-  if card.ability.name == "j_talkingflower_talkingflower" and card.ability.extra.slots >= 1 then
+  if card.ability.name == "j_picubed_talkingflower" and card.ability.extra.slots >= 1 then
     return true
   end
   return old_g_funcs_check_for_buy_space(card)
