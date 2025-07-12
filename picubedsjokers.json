@@ -10,4 +10,5 @@
         "Steamodded (>=1.0.0~BETA-0530b)"
     ],
     "version": "1.3.0~BETA"
+    "allow_redistribution": true
 }
