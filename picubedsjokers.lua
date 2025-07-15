@@ -4163,8 +4163,6 @@ SMODS.Joker { --Chicken Joker!
         local joker_limit_buffer = 0
         for i=1, (G.jokers.config.card_limit) do
           if (#G.jokers.cards - joker_limit_buffer) < G.jokers.config.card_limit then
-            print(#G.jokers.cards)
-            print(G.jokers.config.card_limit)
             local polled_edition = poll_edition('iamsteve'..G.GAME.round_resets.ante, 1, false, true)
             if polled_edition ~= 'e_negative' then joker_limit_buffer = joker_limit_buffer - 1 end
             G.E_MANAGER:add_event(Event({
