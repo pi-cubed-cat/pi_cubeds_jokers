@@ -5,7 +5,7 @@ return {
                 name = "Wonderful Deck",
                 text = {
                     "Start with a",
-                    "{C:attention}Talking Flower{}",
+                    "{C:attention,T:j_picubed_talkingflower}Talking Flower{}",
                 },
             },
             b_picubed_myepicdeck = {
@@ -16,7 +16,7 @@ return {
                 },
             },
             b_picubed_rejuvinationdeck = {
-                name = "Rejuvination Deck",
+                name = "Rejuvenation Deck",
                 text = {
                     "Start with {C:attention}#1#{} Joker slots,",
                     "{C:attention}+#2#{} slot after Boss Blind",
@@ -26,15 +26,15 @@ return {
             b_picubed_covetousdeck = {
                 name = "Covetous Deck",
                 text = {
-                    "Start with a {C:attention}#1#{},",
-                    "{C:attention}#2#{}, and {C:attention}#3#{}",
+                    "Start with a {C:attention,T:j_picubed_shoppingtrolley}#1#{},",
+                    "{C:attention,T:j_picubed_preorderbonus}#2#{}, and {C:attention,T:v_seed_money}#3#{}",
                 },
             },
             b_picubed_collectorsdeck = {
                 name = "Collector's Deck",
                 text = {
-                    "Start with a {C:attention}#1#{},",
-                    "{C:attention}#2#{}, and {C:attention}#3#{}",
+                    "Start with a {C:attention,T:v_magic_trick}#1#{},",
+                    "{C:attention,T:v_illusion}#2#{}, and {C:attention,T:v_overstock_norm}#3#{}",
                 },
             },
         },
@@ -265,7 +265,7 @@ return {
                   "If {C:attention}played hand{} contains either",
                   "a {C:attention}Straight{} and {C:attention}all four default{}",
                   "{C:attention}suits{}, or a {C:attention}Straight Spectrum{},",
-                  "create 3 {C:dark_edition}Negative {C:purple}Tarot{} cards",
+                  "create #1# {C:dark_edition}Negative {C:purple}Tarot{} cards",
                 }
             },
             j_picubed_bisexualflag = {
@@ -273,7 +273,7 @@ return {
                 text = {
                   "If {C:attention}played hand{} contains a",
                   "{C:attention}Straight{} and {C:attention}all four suits{},",
-                  "create 3 {C:dark_edition}Negative {C:purple}Tarot{} cards",
+                  "create #1# {C:dark_edition}Negative {C:purple}Tarot{} cards",
                 }
             },
             j_picubed_tradein = {

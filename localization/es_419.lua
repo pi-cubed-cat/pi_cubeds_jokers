@@ -5,7 +5,7 @@ return {
                 name = "Wonderful Deck",
                 text = {
                     "Start with a",
-                    "{C:attention}Talking Flower{}",
+                    "{C:attention,T:j_picubed_talkingflower}Talking Flower{}",
                 },
             },
             b_picubed_myepicdeck = {
@@ -16,7 +16,7 @@ return {
                 },
             },
             b_picubed_rejuvinationdeck = {
-                name = "Rejuvination Deck",
+                name = "Rejuvenation Deck",
                 text = {
                     "Start with {C:attention}#1#{} Joker slots,",
                     "{C:attention}+#2#{} slot after Boss Blind",
@@ -26,15 +26,15 @@ return {
             b_picubed_covetousdeck = {
                 name = "Covetous Deck",
                 text = {
-                    "Start with a {C:attention}#1#{},",
-                    "{C:attention}#2#{}, and {C:attention}#3#{}",
+                    "Start with a {C:attention,T:j_picubed_shoppingtrolley}#1#{},",
+                    "{C:attention,T:j_picubed_preorderbonus}#2#{}, and {C:attention,T:v_seed_money}#3#{}",
                 },
             },
             b_picubed_collectorsdeck = {
                 name = "Collector's Deck",
                 text = {
-                    "Start with a {C:attention}#1#{},",
-                    "{C:attention}#2#{}, and {C:attention}#3#{}",
+                    "Start with a {C:attention,T:j_picubed_shoppingtrolley}#1#{},",
+                    "{C:attention,T:j_picubed_preorderbonus}#2#{}, and {C:attention,T:v_seed_money}#3#{}",
                 },
             },
         },]]
@@ -280,7 +280,7 @@ return {
                   "Si la {C:attention}mano jugada{} tiene",
                   "una {C:attention}Escalera{} y {C:attention}los cuatro{}",
                   "{C:attention}palos predeterminados{}, o una {C:attention}Escalera espectro{},",
-                  "crea 3 cartas de {C:purple}Tarot{} {C:dark_edition}Negativas {C:purple}Tarot{}"
+                  "crea #1# cartas de {C:purple}Tarot{} {C:dark_edition}Negativas {C:purple}Tarot{}"
                 }
             },
             j_picubed_bisexualflag = {

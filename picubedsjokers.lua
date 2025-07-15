@@ -1396,8 +1396,9 @@ SMODS.Joker { --Black Joker
       juice_card_until(card, eval, true)
     end
     if ((context.cardarea == G.jokers and context.before) or context.pre_discard) and (G.GAME.current_round.discards_used <= 0 and G.GAME.current_round.hands_played <= 0) then
+      print(card.config.center.key)
       card.ability.extra.sum_rank = 0
-      if not context.blueprint then
+      --if not context.blueprint then
         card.ability.extra.has_decimal = false
         card.ability.extra.ace_count = 0
         if card.ability.extra.cap ~= 21 then card.ability.extra.has_decimal = true end
@@ -1449,7 +1450,7 @@ SMODS.Joker { --Black Joker
           end
           --return { message = tostring(card.ability.extra.sum_rank), card = card }
         end
-      end
+      --endm
       while card.ability.extra.sum_rank >= card.ability.extra.cap + 1 and card.ability.extra.ace_count > 0 do
         card.ability.extra.sum_rank = card.ability.extra.sum_rank - 10
         card.ability.extra.ace_count = card.ability.extra.ace_count - 1
@@ -1478,7 +1479,7 @@ SMODS.Joker { --Bisexual Flag (with Spectrum)
       "If {C:attention}played hand{} contains either",
       "a {C:attention}Straight{} and {C:attention}all four default{}",
       "{C:attention}suits{}, or a {C:attention}Straight Spectrum{},",
-      "create 3 {C:dark_edition}Negative {C:purple}Tarot{} cards",
+      "create #1# {C:dark_edition}Negative {C:purple}Tarot{} cards",
     }
   },
   rarity = 3,
@@ -1489,10 +1490,11 @@ SMODS.Joker { --Bisexual Flag (with Spectrum)
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
+  config = { extra = { tarots = 3 } },
   loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     return {
-      vars = { card.ability.max_highlighted }
+      vars = { card.ability.extra.tarots }
     }
   end,
   --[[in_pool = function(self, args)
@@ -1530,24 +1532,22 @@ SMODS.Joker { --Bisexual Flag (with Spectrum)
       suit_list["Spades"] > 0 and
       suit_list["Clubs"] > 0) then
           local card_type = 'Tarot'
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 3
-          G.E_MANAGER:add_event(Event({
-              trigger = 'before',
-              func = (function()
-                      for i=1,3 do
-                        local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
-                        card:set_edition('e_negative', true)
-                        card:add_to_deck()
-                        G.consumeables:emplace(card)
-                        G.GAME.consumeable_buffer = 0
-                      end
-                  return true
-              end)}))
-          return {
-              message = localize("k_picubeds_pride"),
-              colour = G.C.SECONDARY_SET.Tarot,
-              card = card
-          }
+          for i=1,card.ability.extra.tarots do
+              G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+              G.E_MANAGER:add_event(Event({
+                  trigger = 'before',
+                  delay = 0.0,
+                  func = (function()
+                      local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                      card:set_edition('e_negative', true)
+                      card:add_to_deck()
+                      G.consumeables:emplace(card)
+                      G.GAME.consumeable_buffer = 0
+                      return true
+                  end
+              )}))
+              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_pride"), colour = G.C.PURPLE})
+          end
       end
     end
   end
@@ -1573,13 +1573,14 @@ SMODS.Joker { --Bisexual Flag (without Spectrum)
     text = {
       "If {C:attention}played hand{} contains a",
       "{C:attention}Straight{} and {C:attention}all four suits{},",
-      "create 3 {C:dark_edition}Negative {C:purple}Tarot{} cards",
+      "create #1# {C:dark_edition}Negative {C:purple}Tarot{} cards",
     }
   },
   rarity = 3,
   atlas = 'PiCubedsJokers',
   pos = { x = 7, y = 2 },
   cost = 8,
+  config = { extra = { tarots = 3 } },
   discovered = true,
   blueprint_compat = true,
   perishable_compat = true,
@@ -1587,7 +1588,7 @@ SMODS.Joker { --Bisexual Flag (without Spectrum)
   loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
     return {
-      vars = { card.ability.max_highlighted }
+      vars = { card.ability.extra.tarots }
     }
   end,
   --[[in_pool = function(self, args)
@@ -1625,24 +1626,22 @@ SMODS.Joker { --Bisexual Flag (without Spectrum)
       suit_list["Spades"] > 0 and
       suit_list["Clubs"] > 0 then
           local card_type = 'Tarot'
-          G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 3
-          G.E_MANAGER:add_event(Event({
-              trigger = 'before',
-              func = (function()
-                      for i=1,3 do
-                        local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
-                        card:set_edition('e_negative', true)
-                        card:add_to_deck()
-                        G.consumeables:emplace(card)
-                        G.GAME.consumeable_buffer = 0
-                      end
-                  return true
-              end)}))
-          return {
-              message = localize("k_picubeds_pride"),
-              colour = G.C.SECONDARY_SET.Tarot,
-              card = card
-          }
+          for i=1,card.ability.extra.tarots do
+              G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+              G.E_MANAGER:add_event(Event({
+                  trigger = 'before',
+                  delay = 0.0,
+                  func = (function()
+                      local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                      card:set_edition('e_negative', true)
+                      card:add_to_deck()
+                      G.consumeables:emplace(card)
+                      G.GAME.consumeable_buffer = 0
+                      return true
+                  end
+              )}))
+              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_pride"), colour = G.C.PURPLE})
+          end
       end
     end
   end
@@ -4154,7 +4153,7 @@ SMODS.Joker { --Chicken Joker!
   calculate = function(self, card, context)
     if context.before and context.main_eval and not context.blueprint then
       local has_flint_or_steel = false
-      for kk, vv in pairs(G.playing_cards or {}) do
+      for kk, vv in ipairs(context.scoring_hand) do
         if SMODS.has_enhancement(vv, 'm_stone') or SMODS.has_enhancement(vv, 'm_steel') then
             has_flint_or_steel = true
         end
@@ -4967,7 +4966,7 @@ SMODS.Back({ -- Wonderful Deck
         name = "Wonderful Deck",
         text = {
         "Start with a",
-        "{C:attention}Talking Flower{}",
+        "{C:attention,T:j_picubed_talkingflower}Talking Flower{}",
         },
     },
     pos = { x = 0, y = 0 },
@@ -4997,11 +4996,11 @@ SMODS.Back({ -- my epic deck by pi_cubed
     unlocked = true,
 })
 
-SMODS.Back({ -- Rejuvination Deck
-    name = "Rejuvination Deck",
+SMODS.Back({ -- Rejuvenation Deck (Rejuvination)
+    name = "Rejuvenation Deck",
     key = "rejuvinationdeck",
     loc_txt = {
-        name = "Rejuvination Deck",
+        name = "Rejuvenation Deck",
         text = {
         "Start with {C:attention}#1#{} Joker slots,",
         "{C:attention}+#2#{} slot after Boss Blind",
@@ -5033,8 +5032,8 @@ SMODS.Back({ -- Covetous Deck
     loc_txt = {
         name = "Covetous Deck",
         text = {
-        "Start with a {C:attention}#1#{},",
-        "{C:attention}#2#{}, and {C:attention}#3#{}",
+        "Start with a {C:attention,T:j_picubed_shoppingtrolley}#1#{},",
+        "{C:attention,T:j_picubed_preorderbonus}#2#{}, and {C:attention,T:v_seed_money}#3#{}",
         },
     },
     pos = { x = 3, y = 0 },
@@ -5059,8 +5058,8 @@ SMODS.Back({ -- Collector's Deck
     loc_txt = {
         name = "Collector's Deck",
         text = {
-        "Start with a {C:attention}#1#{},",
-        "{C:attention}#2#{}, and {C:attention}#3#{}",
+        "Start with a {C:attention,T:v_magic_trick}#1#{},",
+        "{C:attention,T:v_illusion}#2#{}, and {C:attention,T:v_overstock_norm}#3#{}",
         },
     },
     pos = { x = 4, y = 0 },
