@@ -4897,11 +4897,11 @@ SMODS.Joker { --Laser Printer
       card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize("k_picubeds_fixed") })
     end
     if context.using_consumeable and not context.blueprint and not card.ability.extra.is_disabled then
-      if pseudorandom(pseudoseed('laserprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.negative_odds then
+      if pseudorandom(pseudoseed('laserprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.copy_odds then
         local has_activated = false
         local has_destroyed = false
         local is_negative = false
-      if pseudorandom("laserprinters"..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.negative_odds) then
+      if pseudorandom(pseudoseed("laserprinters"..G.GAME.round_resets.ante)) < (G.GAME.probabilities.normal / card.ability.extra.negative_odds) then
         is_negative = true
       end
         G.E_MANAGER:add_event(Event({
