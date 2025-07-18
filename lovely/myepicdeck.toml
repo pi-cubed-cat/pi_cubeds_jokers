@@ -18,3 +18,15 @@ payload = '''
       end
     end
 '''
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/overrides.lua"]'''
+pattern = "return G.P_CENTERS['p_buffoon_normal_'..(math.random(1, 2))]"
+position = "before"
+match_indent = true
+payload = '''
+if G.GAME.selected_back_key.key == 'b_picubed_rejuvinationdeck' then
+    return G.P_CENTERS['p_celestial_mega_'..(math.random(1, 2))]
+end
+'''

@@ -458,5 +458,12 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
 				card.joker_display_values.x_mult = (card.ability.extra.is_active and card.ability.extra.Xmult) or 1
 			end,
 		}
+    jd_def["j_picubed_roundabout"] = { -- Round-a-bout
+        text = {
+            { text = "+" },
+            { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
+        },
+        text_config = { colour = G.C.MULT },
+    }
   end
 end

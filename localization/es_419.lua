@@ -18,9 +18,9 @@ return {
             b_picubed_rejuvinationdeck = {
                 name = "Rejuvenation Deck",
                 text = {
-                    "Start with {C:attention}#1#{} Joker slots,",
-                    "{C:attention}+#2#{} slot after Boss Blind",
-                    "is defeated",
+                    "Start with {C:money}+$#1#{} and ",
+                    "{C:attention}#2#{} Joker slots, {C:attention}+#3#{} slot after",
+                    "Boss Blind is defeated",
                 },
             },
             b_picubed_covetousdeck = {
@@ -250,7 +250,7 @@ return {
                 text = {
                   "Este comodín obtiene {C:chips}+#1#{} fichas",
                   "cuando se {C:attention}vende{} otro comodín",
-                  --"or {C:attention}destroyed",
+                  --[["or {C:attention}destroyed",]]
                   "{C:inactive}(Actual {C:chips}+#2#{C:inactive} fichas)"
                 }
             },
@@ -259,7 +259,7 @@ return {
                 text = {
                   "Los {C:attention}consumibles{} tienen {C:green}#1# en #2#",
                   "probabilidades de ser {C:attention}reobtenidos{} al usarse,",
-                  "Esta carta tiene {C:green}#1# en #3#{} probabilidades de",
+                  "Esta carta tiene {C:green}#3# in #4#{} probabilidades de",
                   "ser {C:attention}destruidas{} luego de activarse",
                   "{C:inactive}(Debe haber espacio){}"
                 }
@@ -637,10 +637,11 @@ return {
             j_picubed_roundabout = {
                 name = 'Round-a-bout',
                 text = {
-                  "Allows {C:attention}Straights{} to",
-                  "be made with both",
-                  "{C:attention}high and low ranks{}",
-                  "{C:inactive}(ex:{} {C:attention}3 2 A K Q{}{C:inactive}){}",
+                  "Allows {C:attention}Straights{} to be",
+                  "made with {C:attention}Wrap-around Straights{},",
+                  "this Joker gains {C:mult}+#1#{} Mult per",
+                  "played {C:attention}Wrap-around Straight{}",
+                  "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                 }
             },
             j_picubed_hypemoments = {
@@ -688,8 +689,8 @@ return {
                 text = {
                   "{C:attention}Consumables{} have a {C:green}#1# in #2#{} chance",
                   "to be {C:attention}recreated{} on use and a",
-                  "{C:green}#1# in #4#{} chance to be made {C:dark_edition}Negative{},",
-                  "this card has a {C:green}#1# in #3#{} ",
+                  "{C:green}#5# in #6#{} chance to be made {C:dark_edition}Negative{},",
+                  "this card has a {C:green}#3# in #4#{} ",
                   "chance to be {C:attention}disabled{} for",
                   "this Ante after activating",
                   "{C:inactive}(Must have room){}"
@@ -749,7 +750,7 @@ return {
                 text = {
                   "{C:attention}Consumables{} have a {C:green}#1# in #2#",
                   "chance to be {C:attention}recreated{} on use,",
-                  "this card has a {C:green}#1# in #3#{} chance to",
+                  "this card has a {C:green}#3# in #4#{} chance to",
                   "be {C:attention}disabled{} for this Ante",
                   "after activating",
                   "{C:inactive}(Must have room){}"
@@ -776,6 +777,16 @@ return {
         },
     },
     misc = {
+        --[[tooltips = {
+            wraparound = {
+                name = "Wrap-around Straight",
+                text = {
+                    "A non-standard Straight containing",
+                    "both {C:attention}high and low{} ranks",
+                    "{C:inactive}(ex:{} {C:attention}3 2 A K Q{}{C:inactive}){}",
+                }
+            },
+        },]]
         --[[quips = {
             tf_bye1 = {
               "Bye...",

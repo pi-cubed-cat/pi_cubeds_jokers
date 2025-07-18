@@ -127,13 +127,14 @@ SMODS.Joker { --D2
   discovered = true,
   blueprint_compat = true,
   loc_vars = function(self, info_queue, card)
+    local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_d2')
     return { vars = { card.ability.extra.mult, 
-        (G.GAME.probabilities.normal or 1), 
-card.ability.extra.odds } }
+        numerator, denominator } 
+    }
   end,
   calculate = function(self, card, context)
     if context.joker_main then
-      if pseudorandom('D2'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+      if SMODS.pseudorandom_probability(card, 'picubed_d2', 1, card.ability.extra.odds) then
         return {
           mult_mod = card.ability.extra.mult,
           message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
@@ -614,9 +615,10 @@ SMODS.Joker { --Stonemason
   eternal_compat = true,
   enhancement_gate = 'm_stone',
   loc_vars = function(self, info_queue, card)
+    local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_stonemason')
     info_queue[#info_queue+1] = G.P_CENTERS.m_stone
     return {
-      vars = { card.ability.extra.Xmult_bonus, (G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.max_highlighted }
+      vars = { card.ability.extra.Xmult_bonus, numerator, denominator, card.ability.max_highlighted }
     }
   end,
   calculate = function(self, card, context)
@@ -633,7 +635,7 @@ SMODS.Joker { --Stonemason
     end
     if context.destroying_card and context.cardarea == G.play and not context.blueprint then
       if SMODS.has_enhancement(context.destroying_card, 'm_stone') then
-        if pseudorandom('stonemason'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+        if SMODS.pseudorandom_probability(card, 'picubed_stonemason', 1, card.ability.extra.odds) then
           return {
             remove = true
           }
@@ -674,23 +676,14 @@ SMODS.Joker { --Snake Eyes
       end
       
       if joker_left ~= 0 and type(joker_left.ability.extra) == 'table' then
-        if joker_left.ability.name == 'j_picubed_inkjetprinter' then -- Exception for Inkjet Printer (insert other Jokers with multiple probabilities here)
-          joker_left.ability.extra.copy_odds = 1
-          joker_left.ability.extra.destroy_odds = 1
-          return {
-            message = localize("k_picubeds_snakeeyes"),
-            card = card
-          }
-        elseif joker_left.ability.name == 'j_picubed_laserprinter' then -- Exception for Laser Printer
-          joker_left.ability.extra.copy_odds = 1
-          joker_left.ability.extra.destroy_odds = 1
-          joker_left.ability.extra.negative_odds = 1
-          return {
-            message = localize("k_picubeds_snakeeyes"),
-            card = card
-          }
-        elseif joker_left.ability.extra.odds then
-          joker_left.ability.extra.odds = 1
+        local odds_count = 0
+        for k, v in pairs(joker_left.ability.extra) do
+          if string.match(k, "odds") then
+            joker_left.ability.extra[k] = 1
+            odds_count = 1
+          end
+        end
+        if odds_count > 0 then
           return {
             message = localize("k_picubeds_snakeeyes"),
             card = card
@@ -796,12 +789,13 @@ SMODS.Joker { --Hidden Gem
   perishable_compat = true,
   eternal_compat = true,
   loc_vars = function(self, info_queue, card)
-    return { vars = { (G.GAME.probabilities.normal or 1), card.ability.extra.odds} }
+    local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_hiddengem')
+    return { vars = { numerator, denominator } }
   end,
   calculate = function(self, card, context)
     if context.discard then
       if not context.other_card.debuff and not context.blueprint then
-        if pseudorandom('hiddengem'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+        if SMODS.pseudorandom_probability(card, 'picubed_hiddengem', 1, card.ability.extra.odds) then
           if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
             G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
             G.E_MANAGER:add_event(Event({
@@ -1030,7 +1024,8 @@ SMODS.Joker { --Echolocation
   eternal_compat = true,
   config = { extra = { odds = 5, hand_increase = 2 } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { (G.GAME.probabilities.normal or 1), card.ability.extra.odds, card.ability.extra.hand_increase} }
+    local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_echolocation')
+    return { vars = { numerator, denominator, card.ability.extra.hand_increase} }
   end,
   
   add_to_deck = function(self, card, from_debuff)
@@ -1044,7 +1039,7 @@ SMODS.Joker { --Echolocation
   calculate = function(self, card, context)
     if not context.blueprint then
       if context.stay_flipped then
-        if pseudorandom(pseudoseed('echolocation'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.odds then
+        if SMODS.pseudorandom_probability(card, 'picubed_echolocation', 1, card.ability.extra.odds) then
           return { stay_flipped = true }
         end
         -- else return { stay_flipped = false }
@@ -1081,7 +1076,8 @@ SMODS.Joker { --Shopping Trolley
   config = { extra = { odds = 4, hand_increase = 5, trolley_success = 0 } },
   pools = { ["Meme"] = true },
   loc_vars = function(self, info_queue, card)
-    return { vars = { (G.GAME.probabilities.normal or 1)*3, card.ability.extra.odds, card.ability.extra.hand_increase} }
+    local numerator, denominator = SMODS.get_probability_vars(card, 3, card.ability.extra.odds, 'picubed_shoppingtrolley')
+    return { vars = { numerator, denominator, card.ability.extra.hand_increase} }
   end,
   
   calculate = function(self, card, context)
@@ -1090,7 +1086,7 @@ SMODS.Joker { --Shopping Trolley
         card.ability.extra.trolley_success = 0
         G.hand:change_size(-card.ability.extra.hand_increase)
       end
-      if pseudorandom(pseudoseed('shoppingtrolley'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal*3 / card.ability.extra.odds then
+      if SMODS.pseudorandom_probability(card, 'picubed_shoppingtrolley', 1, card.ability.extra.odds) then
         card.ability.extra.trolley_success = 1
         G.hand:change_size(card.ability.extra.hand_increase)
         card:juice_up()
@@ -1241,7 +1237,7 @@ SMODS.Joker { --Siphon
     text = {
       "This Joker gains {C:chips}+#1#{} Chips",
       "when another Joker is {C:attention}sold",
-      --"or {C:attention}destroyed",
+      "or {C:attention}destroyed{}",
       "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
     }
   },
@@ -1258,6 +1254,22 @@ SMODS.Joker { --Siphon
     return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
   end,
   calculate = function(self, card, context)
+    --[[if context.joker_type_destroyed and context.card.ability.set == 'Joker' and not context.blueprint then
+      print("hi")
+      local num_destroy = 0
+      for k,v in ipairs(context.card) do
+        num_destroy = num_destroy + 1
+      end
+      if num_destroy > 0 then
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod * num_destroy
+        return {
+            selling_self = false,
+            message = localize('k_upgrade_ex'),
+            colour = G.C.CHIPS,
+            card = card
+          }
+      end
+    end]]
     if not context.selling_self then
       if context.selling_card and context.card.ability.set == 'Joker' and not context.blueprint then
         card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
@@ -1289,7 +1301,7 @@ SMODS.Joker { --Inkjet Printer
     text = {
       "{C:attention}Consumables{} have a {C:green}#1# in #2#",
       "chance to be {C:attention}recreated{} on use,",
-      "this card has a {C:green}#1# in #3#{} chance to",
+      "this card has a {C:green}#3# in #4#{} chance to",
       "be {C:attention}destroyed{} after activating",
       "{C:inactive}(Must have room){}"
     }
@@ -1304,14 +1316,16 @@ SMODS.Joker { --Inkjet Printer
   eternal_compat = false,
   config = { extra = { copy_odds = 2, destroy_odds = 4, copied = {} } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { (G.GAME.probabilities.normal or 1), card.ability.extra.copy_odds, card.ability.extra.destroy_odds } }
+    local numerator_copy, denominator_copy = SMODS.get_probability_vars(card, 1, card.ability.extra.copy_odds, 'picubed_inkjetprinter_copy')
+    local numerator_destroy, denominator_destroy = SMODS.get_probability_vars(card, 1, card.ability.extra.destroy_odds, 'picubed_inkjetprinter_destroy')
+    return { vars = { numerator_copy, denominator_copy, numerator_destroy, denominator_destroy } }
   end,
   in_pool = function(self, args)
       return #SMODS.find_card('j_picubed_laserprinter') < 1
   end,
   calculate = function(self, card, context)
     if context.using_consumeable and not context.blueprint then
-      if pseudorandom(pseudoseed('inkjetprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.copy_odds then
+      if SMODS.pseudorandom_probability(card, 'picubed_inkjetprinter_copy', 1, card.ability.extra.copy_odds) then
         local has_activated = false
         local has_destroyed = false
         G.E_MANAGER:add_event(Event({
@@ -1328,7 +1342,7 @@ SMODS.Joker { --Inkjet Printer
           end
         }))
 
-        if pseudorandom(pseudoseed('inkjetprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.destroy_odds then
+        if SMODS.pseudorandom_probability(card, 'picubed_inkjetprinter_destroy', 1, card.ability.extra.destroy_odds) then
           G.E_MANAGER:add_event(Event({
 					func = function()
 						if has_activated then
@@ -1704,9 +1718,8 @@ SMODS.Joker { --Apartment Complex
   loc_txt = {
     name = 'Apartment Complex',
     text = {
-      "This Joker gains {X:mult,C:white}X#1#{} Mult",
-      "if {C:attention}played hand{} is a",
-      "{C:attention}Flush House{}",
+      "This Joker gains {X:mult,C:white}X#1#{} Mult if",
+      "{C:attention}played hand{} is a {C:attention}Flush House{}",
       "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)"
     }
   },
@@ -1830,7 +1843,7 @@ SMODS.Consumable { --Rupture (Spectral card)
     return { vars = { card.ability.extra.num } }
   end,
   can_use = function(self, card)
-      return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit
+      return true
   end,
   use = function(self, card, area, copier)
     if G.jokers.cards then
@@ -2384,7 +2397,8 @@ SMODS.Joker { --Golden Pancakes
   eternal_compat = false,
   config = { extra = { money = 2, odds = 6 } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.money, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_goldenpancakes')
+    return { vars = { card.ability.extra.money, numerator, denominator } }
   end,
   pools = { ["Food"] = true },
   calculate = function(self, card, context)
@@ -2395,7 +2409,7 @@ SMODS.Joker { --Golden Pancakes
       }
 		end
     if context.end_of_round and not context.repetition and context.game_over == false and not context.blueprint then
-			if pseudorandom('goldenpancakes'..G.GAME.round_resets.ante) < G.GAME.probabilities.normal / card.ability.extra.odds then
+			if SMODS.pseudorandom_probability(card, 'picubed_goldenpancakes', 1, card.ability.extra.odds) then
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						play_sound('tarot1')
@@ -2913,7 +2927,7 @@ SMODS.Joker { --On-beat
   eternal_compat = true,
   config = { extra = { repetitions = 1, odds = 50, secret_art = false } },
   loc_vars = function(self, info_queue, card)
-    info_queue[#info_queue+1] = G.P_CENTERS.j_picubed_offbeat
+    info_queue[#info_queue+1] = {key = "offbeat_tooltip", set = 'Other'}
     return { vars = { card.ability.max_highlighted } }
   end,
   update = function(self, card, dt)
@@ -2993,10 +3007,10 @@ SMODS.Joker { --Off-beat
   eternal_compat = true,
   in_pool = function(self, args) return false end,
   config = { extra = { repetitions = 1, odds = 50, secret_art = false } },
-  --loc_vars = function(self, info_queue, card)
-    --info_queue[#info_queue+1] = {key = "k_picubeds_onbeat_titl", set = 'Other'}
-    --return { vars = { card.ability.max_highlighted } }
-  --end,
+  loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue+1] = {key = "onbeat_tooltip", set = 'Other'}
+    return { vars = { card.ability.max_highlighted } }
+  end,
   update = function(self, card, dt)
     if card.ability.extra.secret_art then
       card.children.center:set_sprite_pos({ x = 1, y = 6 })
@@ -3163,10 +3177,11 @@ SMODS.Joker { --Pot
   eternal_compat = true,
   config = { extra = { odds = 3, Xmult = 4, is_active = false } },
   loc_vars = function(self, info_queue, card)
+    local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_pot')
     return { 
       vars = { 
-        (G.GAME.probabilities.normal or 1), 
-        card.ability.extra.odds, 
+        numerator, 
+        denominator, 
         card.ability.extra.Xmult, 
         localize { type = 'variable', key = ((card.ability.extra.is_active and 'k_picubeds_pot_active') or 'k_picubeds_pot_inactive'), vars = { card.ability.extra.is_active } } 
       } 
@@ -3174,7 +3189,7 @@ SMODS.Joker { --Pot
   end,
   calculate = function(self, card, context)
     if (context.first_hand_drawn or context.hand_drawn) and not context.blueprint then
-      if pseudorandom('D2'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+      if SMODS.pseudorandom_probability(card, 'picubed_pot', 1, card.ability.extra.odds) then
         card.ability.extra.is_active = true
         local eval = function() return card.ability.extra.is_active and not G.RESET_JIGGLES end
         juice_card_until(card, eval, true)
@@ -3989,7 +4004,7 @@ function evaluate_poker_hand(hand)
             end
         end
     end
-end
+  end
   if next(SMODS.find_card("j_picubed_weemini")) then
     local count_2 = 0
     for k,v in ipairs(G.hand.highlighted) do
@@ -4317,7 +4332,7 @@ SMODS.Joker { --Translucent Joker
   eternal_compat = false,
   config = { extra = { rounds_total = 2, rounds = 0 } },
   loc_vars = function(self, info_queue, card)
-    info_queue[#info_queue+1] = G.P_CENTERS.j_invisible
+    info_queue[#info_queue+1] = { key = "invisiblejoker_tooltip", set = "Other" }
     return { vars = { card.ability.extra.rounds_total, card.ability.extra.rounds } }
   end,
   calculate = function(self, card, context)
@@ -4439,20 +4454,82 @@ SMODS.Joker { --Round-a-bout
   loc_txt = {
     name = 'Round-a-bout',
     text = {
-      "Allows {C:attention}Straights{} to",
-      "be made with both",
-      "{C:attention}high and low ranks{}",
-      "{C:inactive}(ex:{} {C:attention}3 2 A K Q{}{C:inactive}){}",
+      "Allows {C:attention}Straights{} to be",
+      "made with {C:attention}Wrap-around Straights{},",
+      "this Joker gains {C:mult}+#1#{} Mult per",
+      "played {C:attention}Wrap-around Straight{}",
+      "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
     }
   },
-  rarity = 1,
+  rarity = 2,
   atlas = 'PiCubedsJokers',
   pos = { x = 5, y = 8 },
-  cost = 3,
+  cost = 6,
   discovered = true,
-  blueprint_compat = false,
+  blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
+  config = { extra = { mult = 0, mult_mod = 8 }},
+  loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue + 1] = { key = "wraparound", set = "Other" }
+    return { 
+      vars = { card.ability.extra.mult_mod, card.ability.extra.mult } 
+    }
+  end,
+  calculate = function(self, card, context)
+    if context.evaluate_poker_hand and next(context.poker_hands['Straight']) then
+      local has_low = false
+      local has_high = false
+      local has_flush = false
+      if next(context.poker_hands['Straight Flush']) or next(context.poker_hands['Flush']) then
+        has_flush = true
+      end
+      for k, v in ipairs(context.scoring_hand) do
+        if v:get_id() == 2 or v:get_id() == 3 then
+          has_low = true
+        elseif v:get_id() == 12 or v:get_id() == 13 then
+          has_high = true
+        end
+      end
+      if has_low and has_high then
+        if has_flush then
+          return {
+              replace_display_name = "Wrap-a-Straight Flush",
+          }
+        else
+          return {
+              replace_display_name = "Wrap-around Straight",
+          }
+        end
+      end
+    end
+    if context.before and context.main_eval and not context.blueprint and next(context.poker_hands['Straight']) then
+      local has_low = false
+      local has_high = false
+      for k, v in ipairs(context.scoring_hand) do
+        if v:get_id() == 2 or v:get_id() == 3 then
+          has_low = true
+        elseif v:get_id() == 12 or v:get_id() == 13 then
+          has_high = true
+        end
+      end
+      if has_low and has_high then
+        card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.MULT,
+          card = card
+        }
+      end
+    end
+    if context.joker_main and card.ability.extra.mult > 0 then
+      return {
+        message = localize{type='variable', key='a_mult', vars = {card.ability.extra.mult} },
+        mult_mod = card.ability.extra.mult, 
+        colour = G.C.MULT
+      }
+    end
+  end
 }
 
 SMODS.Joker { --Hype Moments
@@ -4645,7 +4722,7 @@ function Card:tf_say_stuff(n, not_first)
         if n <= 0 then self.talking = false; return end
         --play_sound("voice"..math.random(1, 11), G.SPEEDFACTOR*(math.random()*0.2+1), 0.5)
         self:juice_up()
-        G.E_MANAGER:add_event(Event({trigger = "after", blockable = false, blocking = false, delay = 0.13, func = function()
+        G.E_MANAGER:add_event(Event({trigger = "after", blockable = false, blocking = false, delay = 0.13*((G.SETTINGS.GAMESPEED*2) or 2), func = function()
             self:tf_say_stuff(n-1, true)
         return true end}))
     end
@@ -4664,7 +4741,7 @@ function Card:remove_tf_speech_bubble()
 end
 
 function Card:tf_say(key, prob)
-  prob = prob or 1
+  prob = #SMODS.find_card('j_picubed_talkingflower')
   if pseudorandom(tostring(key)..G.GAME.round_resets.ante) < (1 / prob) then
     G.E_MANAGER:add_event(Event({ func = function() 
       self:add_tf_speech_bubble(key)
@@ -4789,6 +4866,7 @@ SMODS.Joker { --Talking Flower
       if context.card.ability.name == 'Wee Joker' or context.card.ability.name == 'j_picubed_weemini' then
         local tfnum = pseudorandom_element({1,2}, pseudoseed("talkingflower"..G.GAME.round_resets.ante))
         card:tf_say("tf_wee"..tfnum)
+        --print("Weeeee!")
       end
     end
     if context.starting_shop then
@@ -4831,12 +4909,13 @@ SMODS.Joker { --Super Lusty Joker
   eternal_compat = true,
   config = { extra = { repetitions = 1, odds = 2 } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.repetitions, (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
+    local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_superlustyjoker')
+    return { vars = { card.ability.extra.repetitions, numerator, denominator } }
   end,
   calculate = function(self, card, context)
     if context.cardarea == G.play and context.repetition and not context.repetition_only then
       local bonus_retrigger = 0
-      if pseudorandom("superlustyjoker"..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+      if SMODS.pseudorandom_probability(card, 'picubed_superlustyjoker', 1, card.ability.extra.odds) then
         bonus_retrigger = 1
       end
       if context.other_card:is_suit("Hearts") then
@@ -4858,8 +4937,8 @@ SMODS.Joker { --Laser Printer
     text = {
       "{C:attention}Consumables{} have a {C:green}#1# in #2#{} chance",
       "to be {C:attention}recreated{} on use and a",
-      "{C:green}#1# in #4#{} chance to be made {C:dark_edition}Negative{},",
-      "this card has a {C:green}#1# in #3#{} ",
+      "{C:green}#5# in #6#{} chance to be made {C:dark_edition}Negative{},",
+      "this card has a {C:green}#3# in #4#{} ",
       "chance to be {C:attention}disabled{} for",
       "this Ante after activating",
       "{C:inactive}(Must have room){}"
@@ -4877,7 +4956,10 @@ SMODS.Joker { --Laser Printer
   eternal_compat = false,
   config = { extra = { copy_odds = 2, destroy_odds = 4, copied = {}, negative_odds = 2, is_disabled = false } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { (G.GAME.probabilities.normal or 1), card.ability.extra.copy_odds, card.ability.extra.destroy_odds, card.ability.extra.negative_odds } }
+    local numerator_copy, denominator_copy = SMODS.get_probability_vars(card, 1, card.ability.extra.copy_odds, 'picubed_laserprinter_copy')
+    local numerator_destroy, denominator_destroy = SMODS.get_probability_vars(card, 1, card.ability.extra.destroy_odds, 'picubed_laserprinter_destroy')
+    local numerator_neg, denominator_neg = SMODS.get_probability_vars(card, 1, card.ability.extra.negative_odds, 'picubed_laserprinter_neg')
+    return { vars = { numerator_copy, denominator_copy, numerator_destroy, denominator_destroy, numerator_neg, denominator_neg } }
   end,
   in_pool = function(self, args)
       return G.GAME.pool_flags.picubed_printer_error and #SMODS.find_card('j_picubed_inkjetprinter') < 1
@@ -4897,11 +4979,11 @@ SMODS.Joker { --Laser Printer
       card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize("k_picubeds_fixed") })
     end
     if context.using_consumeable and not context.blueprint and not card.ability.extra.is_disabled then
-      if pseudorandom(pseudoseed('laserprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.copy_odds then
+      if SMODS.pseudorandom_probability(card, 'picubed_laserprinter_copy', 1, card.ability.extra.copy_odds) then
         local has_activated = false
         local has_destroyed = false
         local is_negative = false
-      if pseudorandom(pseudoseed("laserprinters"..G.GAME.round_resets.ante)) < (G.GAME.probabilities.normal / card.ability.extra.negative_odds) then
+      if SMODS.pseudorandom_probability(card, 'picubed_laserprinter_neg', 1, card.ability.extra.negative_odds) then
         is_negative = true
       end
         G.E_MANAGER:add_event(Event({
@@ -4932,7 +5014,7 @@ SMODS.Joker { --Laser Printer
           end
         }))
 
-        if pseudorandom(pseudoseed('laserprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.destroy_odds then
+        if SMODS.pseudorandom_probability(card, 'picubed_laserprinter_destroy', 1, card.ability.extra.destroy_odds) then
           G.E_MANAGER:add_event(Event({
 					func = function()
 						if has_activated then
@@ -4958,74 +5040,6 @@ SMODS.Joker { --Laser Printer
     end
   end
 }
-
-SMODS.Back({ -- Wonderful Deck
-    name = "Wonderful Deck",
-    key = "wonderfuldeck",
-    loc_txt = {
-        name = "Wonderful Deck",
-        text = {
-        "Start with a",
-        "{C:attention,T:j_picubed_talkingflower}Talking Flower{}",
-        },
-    },
-    pos = { x = 0, y = 0 },
-    atlas = "picubedsdeck",
-    unlocked = true,
-    apply = function(self)
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                SMODS.add_card({set = 'Joker', area = G.jokers, skip_materialize = true, key = "j_picubed_talkingflower", no_edition = true})
-            return true end
-        }))
-    end
-})
-
-SMODS.Back({ -- my epic deck by pi_cubed
-    name = "my epic deck by pi_cubed",
-    key = "myepicdeck",
-    loc_txt = {
-        name = "my epic deck by pi_cubed",
-        text = {
-        "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{} are",
-        "{C:attention}3x{} more likely to appear",
-        },
-    },
-    pos = { x = 1, y = 0 },
-    atlas = "picubedsdeck",
-    unlocked = true,
-})
-
-SMODS.Back({ -- Rejuvenation Deck (Rejuvination)
-    name = "Rejuvenation Deck",
-    key = "rejuvinationdeck",
-    loc_txt = {
-        name = "Rejuvenation Deck",
-        text = {
-        "Start with {C:attention}#1#{} Joker slots,",
-        "{C:attention}+#2#{} slot after Boss Blind",
-        "is defeated",
-        },
-    },
-    pos = { x = 2, y = 0 },
-    atlas = "picubedsdeck",
-    unlocked = true,
-    config = {joker_slot = -5, joker_slot_mod = 1},
-    loc_vars = function(self, info_queue, card)
-        return {vars = {self.config.joker_slot + 5, self.config.joker_slot_mod}}
-    end,
-    calculate = function(self, back, context)
-      if context.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss then
-          G.E_MANAGER:add_event(Event({
-            func = function()
-              G.jokers.config.card_limit = G.jokers.config.card_limit + self.config.joker_slot_mod
-              return true
-            end
-          }))
-      end
-    end
-})
-
 SMODS.Back({ -- Covetous Deck
     name = "Covetous Deck",
     key = "covetousdeck",
@@ -5050,6 +5064,43 @@ SMODS.Back({ -- Covetous Deck
           localize { type = 'name_text', set = 'Voucher', key = self.config.vouchers[1] },
       } }
     end,
+})
+
+SMODS.Back({ -- my epic deck by pi_cubed
+    name = "my epic deck by pi_cubed",
+    key = "myepicdeck",
+    loc_txt = {
+        name = "my epic deck by pi_cubed",
+        text = {
+        "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{} are",
+        "{C:attention}3x{} more likely to appear",
+        },
+    },
+    pos = { x = 1, y = 0 },
+    atlas = "picubedsdeck",
+    unlocked = true,
+})
+
+SMODS.Back({ -- Wonderful Deck
+    name = "Wonderful Deck",
+    key = "wonderfuldeck",
+    loc_txt = {
+        name = "Wonderful Deck",
+        text = {
+        "Start with a",
+        "{C:attention,T:j_picubed_talkingflower}Talking Flower{}",
+        },
+    },
+    pos = { x = 0, y = 0 },
+    atlas = "picubedsdeck",
+    unlocked = true,
+    apply = function(self)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                SMODS.add_card({set = 'Joker', area = G.jokers, skip_materialize = true, key = "j_picubed_talkingflower", no_edition = true})
+            return true end
+        }))
+    end
 })
 
 SMODS.Back({ -- Collector's Deck
@@ -5077,6 +5128,36 @@ SMODS.Back({ -- Collector's Deck
     end,
 })
 
+SMODS.Back({ -- Rejuvenation Deck (Rejuvination)
+    name = "Rejuvenation Deck",
+    key = "rejuvinationdeck",
+    loc_txt = {
+        name = "Rejuvenation Deck",
+        text = {
+        "Start with {C:money}+$#1#{} and ",
+        "{C:attention}#2#{} Joker slots, {C:attention}+#3#{} slot after",
+        "Boss Blind is defeated",
+        },
+    },
+    pos = { x = 2, y = 0 },
+    atlas = "picubedsdeck",
+    unlocked = true,
+    config = { dollars = 4, joker_slot = -5, joker_slot_mod = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {self.config.dollars, self.config.joker_slot + 5, self.config.joker_slot_mod}}
+    end,
+    calculate = function(self, back, context)
+      if context.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss then
+          G.E_MANAGER:add_event(Event({
+            func = function()
+              G.jokers.config.card_limit = G.jokers.config.card_limit + self.config.joker_slot_mod
+              return true
+            end
+          }))
+      end
+    end
+})
+
 if Partner_API then
         
     SMODS.Atlas {
@@ -5096,7 +5177,8 @@ if Partner_API then
         config = {extra = {related_card = "j_picubed_itsaysjokerontheceiling", money_ceil = 10, odds = 2, has_triggered = false }},
         link_config = {j_picubed_itsaysjokerontheceiling = 1},
         loc_vars = function(self, info_queue, card)
-          return { vars = { card.ability.extra.money_ceil * (2 ^ #SMODS.find_card("j_picubed_itsaysjokerontheceiling") or 0), (G.GAME.probabilities.normal or 1), card.ability.extra.odds } } 
+          local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_roof')
+          return { vars = { card.ability.extra.money_ceil * (2 ^ #SMODS.find_card("j_picubed_itsaysjokerontheceiling") or 0), numerator, denominator } } 
         end,
         calculate = function(self, card, context)
             if context.setting_blind then
@@ -5104,7 +5186,7 @@ if Partner_API then
             end
             if context.end_of_round and tonumber(G.GAME.dollars) < 1e308 and card.ability.extra.has_triggered then
                 card.ability.extra.has_triggered = false
-                if pseudorandom('roof'..G.GAME.round_resets.ante) < (G.GAME.probabilities.normal / card.ability.extra.odds) then
+                if SMODS.pseudorandom_probability(card, 'picubed_roof', 1, card.ability.extra.odds) then
                   local ceil = 10
                   local money = tonumber(G.GAME.dollars)
                   local me = (#SMODS.find_card("j_picubed_itsaysjokerontheceiling") or 0)
@@ -5166,7 +5248,9 @@ if Partner_API then
         config = {extra = {related_card = "j_picubed_inkjetprinter", copy_odds = 4, destroy_odds = 2, is_disabled = false }},
         link_config = {j_picubed_inkjetprinter = 1},
         loc_vars = function(self, info_queue, card)
-          return { vars = { (G.GAME.probabilities.normal or 1), card.ability.extra.copy_odds,  card.ability.extra.destroy_odds ^ (1 + (#SMODS.find_card("j_picubed_inkjetprinter") or 0))  } } 
+          local numerator_copy, denominator_copy = SMODS.get_probability_vars(card, 1, card.ability.extra.copy_odds, 'picubed_copy_copy')
+          local numerator_destroy, denominator_destroy = SMODS.get_probability_vars(card, 1, card.ability.extra.destroy_odds ^ (1 + (#SMODS.find_card("j_picubed_inkjetprinter") or 0)), 'picubed_copy_destroy')
+          return { vars = { numerator_copy, denominator_copy, numerator_destroy, denominator_destroy } } 
         end,
         update = function(self, card, dt)
           if not card.ability.extra.is_disabled then
@@ -5177,7 +5261,7 @@ if Partner_API then
         end,
         calculate = function(self, card, context)
             if context.using_consumeable and not card.ability.extra.is_disabled then
-                if pseudorandom(pseudoseed('copy'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.copy_odds then
+                if SMODS.pseudorandom_probability(card, 'picubed_copy_copy', 1, card.ability.extra.copy_odds) then
                   local has_activated = false
                   local has_destroyed = false
                   G.E_MANAGER:add_event(Event({
@@ -5194,7 +5278,7 @@ if Partner_API then
                     end
                   }))
 
-                  if pseudorandom(pseudoseed('inkjetprinter'..G.GAME.round_resets.ante)) < G.GAME.probabilities.normal / card.ability.extra.destroy_odds ^ (1 + (#SMODS.find_card("j_picubed_inkjetprinter") or 0)) then
+                  if SMODS.pseudorandom_probability(card, 'picubed_copy_destroy', 1, card.ability.extra.destroy_odds ^ (1 + (#SMODS.find_card("j_picubed_inkjetprinter") or 0))) then
                     G.E_MANAGER:add_event(Event({
                     func = function()
                       if has_activated then

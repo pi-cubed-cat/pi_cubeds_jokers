@@ -18,9 +18,9 @@ return {
             b_picubed_rejuvinationdeck = {
                 name = "Rejuvenation Deck",
                 text = {
-                    "Start with {C:attention}#1#{} Joker slots,",
-                    "{C:attention}+#2#{} slot after Boss Blind",
-                    "is defeated",
+                    "Start with {C:money}+$#1#{} and ",
+                    "{C:attention}#2#{} Joker slots, {C:attention}+#3#{} slot after",
+                    "Boss Blind is defeated",
                 },
             },
             b_picubed_covetousdeck = {
@@ -237,7 +237,7 @@ return {
                 text = {
                   "This Joker gains {C:chips}+#1#{} Chips",
                   "when another Joker is {C:attention}sold",
-                  --"or {C:attention}destroyed",
+                  --[["or {C:attention}destroyed",]]
                   "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
                 }
             },
@@ -246,7 +246,7 @@ return {
                 text = {
                   "{C:attention}Consumables{} have a {C:green}#1# in #2#",
                   "chance to be {C:attention}recreated{} on use,",
-                  "this card has a {C:green}#1# in #3#{} chance to",
+                  "this card has a {C:green}#3# in #4#{} chance to",
                   "be {C:attention}destroyed{} after activating",
                   "{C:inactive}(Must have room){}"
                 }
@@ -287,9 +287,8 @@ return {
             j_picubed_apartmentcomplex = {
                 name = 'Apartment Complex',
                 text = {
-                  "This Joker gains {X:mult,C:white}X#1#{} Mult",
-                  "if {C:attention}played hand{} is a",
-                  "{C:attention}Flush House{}",
+                  "This Joker gains {X:mult,C:white}X#1#{} Mult if",
+                  "{C:attention}played hand{} is a {C:attention}Flush House{}",
                   "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)"
                 }
             },
@@ -622,10 +621,11 @@ return {
             j_picubed_roundabout = {
                 name = 'Round-a-bout',
                 text = {
-                  "Allows {C:attention}Straights{} to",
-                  "be made with both",
-                  "{C:attention}high and low ranks{}",
-                  "{C:inactive}(ex:{} {C:attention}3 2 A K Q{}{C:inactive}){}",
+                  "Allows {C:attention}Straights{} to be",
+                  "made with {C:attention}Wrap-around Straights{},",
+                  "this Joker gains {C:mult}+#1#{} Mult per",
+                  "played {C:attention}Wrap-around Straight{}",
+                  "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
                 }
             },
             j_picubed_hypemoments = {
@@ -673,8 +673,8 @@ return {
                 text = {
                   "{C:attention}Consumables{} have a {C:green}#1# in #2#{} chance",
                   "to be {C:attention}recreated{} on use and a",
-                  "{C:green}#1# in #4#{} chance to be made {C:dark_edition}Negative{},",
-                  "this card has a {C:green}#1# in #3#{} ",
+                  "{C:green}#5# in #6#{} chance to be made {C:dark_edition}Negative{},",
+                  "this card has a {C:green}#3# in #4#{} ",
                   "chance to be {C:attention}disabled{} for",
                   "this Ante after activating",
                   "{C:inactive}(Must have room){}"
@@ -734,7 +734,7 @@ return {
                 text = {
                   "{C:attention}Consumables{} have a {C:green}#1# in #2#",
                   "chance to be {C:attention}recreated{} on use,",
-                  "this card has a {C:green}#1# in #3#{} chance to",
+                  "this card has a {C:green}#3# in #4#{} chance to",
                   "be {C:attention}disabled{} for this Ante",
                   "after activating",
                   "{C:inactive}(Must have room){}"
@@ -757,6 +757,44 @@ return {
                     "Follow me on bluesky at @picubed.bsky.social!",
                     "Thanks franderman123 for Español (México) localization!"
                 }
+            },
+        },
+        Other = {
+            wraparound = {
+                name = "Wrap-around Straight",
+                text = {
+                    "A non-standard Straight",
+                    "containing both",
+                    "{C:attention}high and low{} ranks",
+                    "{C:inactive}(ex:{} {C:attention}3 2 A K Q{}{C:inactive}){}",
+                }
+            },
+            onbeat_tooltip = {
+                name = "On-beat",
+                text = {
+                    "Retrigger the {C:attention}1st{}, {C:attention}3rd{},",
+                    "and {C:attention}5th{} cards played",
+                    "{s:0.8}After hand is played,",
+                    "{s:0.8}becomes {s:0.8,C:attention}Off-beat{}"
+                }
+            },
+            offbeat_tooltip = {
+                name = 'Off-beat',
+                text = {
+                    "Retrigger the {C:attention}2nd{}",
+                    "and {C:attention}4th{} cards played",
+                    "{s:0.8}After hand is played,",
+                    "{s:0.8}becomes {s:0.8,C:attention}On-beat{}"
+                }
+            },
+            invisiblejoker_tooltip = {
+                name = "Invisible Joker",
+                text = {
+                    "After {C:attention}2{} rounds,",
+                    "sell this card to",
+                    "{C:attention}Duplicate{} a random Joker",
+                    "{C:inactive}(Currently {C:attention}0{C:inactive}/2)",
+                },
             },
         },
     },
