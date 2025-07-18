@@ -1,6 +1,5 @@
 ![Mod Logo](https://i.imgur.com/WgRA0cT.png)
 VERY IMPORTANT NOTE: Due to the probability changes, Steamodded **[1.0.0-beta-0711a](https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-0711a)** or later is now required!
-Recommended version: https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-0614a
 
 List of Jokers (Modded Wiki Page): https://balatromods.miraheze.org/wiki/Pi_cubed's_Jokers/Jokers
 
