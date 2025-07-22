@@ -18,9 +18,9 @@ return {
             b_picubed_rejuvinationdeck = {
                 name = "Rejuvenation Deck",
                 text = {
-                    "Start with {C:money}+$#1#{} and ",
-                    "{C:attention}#2#{} Joker slots, {C:attention}+#3#{} slot after",
-                    "Boss Blind is defeated",
+                    "Start with {C:attention}#1#{} Joker slots,",
+                    "{C:attention}+#2#{} slot for every",
+                    "other Boss Blind defeated",
                 },
             },
             b_picubed_covetousdeck = {
@@ -413,6 +413,7 @@ return {
                 name = 'Pi',
                 text = {
                   "Cards with an {C:attention}edition{}",
+                  "have a {C:green}#2# in #3#{} chance to",
                   "give {X:mult,C:white}X#1#{} Mult"
                 }
             },
@@ -561,9 +562,9 @@ return {
             j_picubed_lowballdraw = {
                 name = 'Lowball Draw',
                 text = {
-                  "If scoring hand",
-                  "contains a {C:attention}2{}",
-                  "and a {C:attention}7{}, earn {C:money}$#1#{}"
+                  "Earn {C:money}$#1#{} when a",
+                  "{C:attention}2{} or {C:attention}7{} is drawn",
+                  "to hand during Blind",
                 }
             },
             j_picubed_chickenjoker = {
@@ -856,6 +857,13 @@ return {
         v_dictionary = {
             k_picubeds_pot_active = "Active!",
             k_picubeds_pot_inactive = "Inactive",
+            k_picubeds_pi = "pi",
+        },
+        challenge_names = {
+            c_picubed_nostalgicrejuvinationdeck = "Nostalgic Rejuvination Deck",
+        },
+        v_text = {
+            ch_c_picubed_slots_gain = { "{C:attention}+1{} Joker slot after Boss Blind is defeated" },
         },
         dictionary = {
             k_picubeds_gullible = "Gullible!",

@@ -1065,15 +1065,15 @@ SMODS.Joker { --Shopping Trolley
       "in {C:attention}Booster Packs"
     }
   },
-  rarity = 1,
+  rarity = 2,
   atlas = 'PiCubedsJokers',
   pos = { x = 0, y = 2 },
-  cost = 3,
+  cost = 4,
   discovered = true,
   blueprint_compat = false,
   perishable_compat = true,
   eternal_compat = true,
-  config = { extra = { odds = 4, hand_increase = 5, trolley_success = 0 } },
+  config = { extra = { odds = 4, hand_increase = 10, trolley_success = 0 } },
   pools = { ["Meme"] = true },
   loc_vars = function(self, info_queue, card)
     local numerator, denominator = SMODS.get_probability_vars(card, 3, card.ability.extra.odds, 'picubed_shoppingtrolley')
@@ -1086,7 +1086,7 @@ SMODS.Joker { --Shopping Trolley
         card.ability.extra.trolley_success = 0
         G.hand:change_size(-card.ability.extra.hand_increase)
       end
-      if SMODS.pseudorandom_probability(card, 'picubed_shoppingtrolley', 1, card.ability.extra.odds) then
+      if SMODS.pseudorandom_probability(card, 'picubed_shoppingtrolley', 3, card.ability.extra.odds) then
         card.ability.extra.trolley_success = 1
         G.hand:change_size(card.ability.extra.hand_increase)
         card:juice_up()
@@ -2847,7 +2847,8 @@ SMODS.Joker { --Pi
     name = 'Pi',
     text = {
       "Cards with an {C:attention}edition{}",
-      "give {X:mult,C:white}X#1#{} Mult"
+      "have a {C:green}#2# in #3#{} chance to",
+      "give {X:mult,C:white}X#1#{} Mult",
     }
   },
   rarity = 4,
@@ -2859,40 +2860,53 @@ SMODS.Joker { --Pi
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
-  config = { extra = { Xmult = 1.5 } },
+  config = { extra = { Xmult = 3.14, odds = 3 } },
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.Xmult } }
+    local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_pi')
+    return { vars = { 
+        localize { type = 'variable', key = ((card.ability.extra.Xmult == 3.14 and 'k_picubeds_pi') or card.ability.extra.Xmult), vars = { card.ability.extra.Xmult } },
+        numerator, denominator
+    } }
   end,
   calculate = function(self, card, context)
+    
     if context.other_joker then
-      if context.other_joker.edition then
+      if context.other_joker.edition and SMODS.pseudorandom_probability(card, 'picubed_pi', 1, card.ability.extra.odds) then
         return {
           message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = card.ability.extra.Xmult,
+          card = context.other_joker,
         }
       end
+    
     elseif context.other_consumeable then
-      if context.other_consumeable.edition then
+      if context.other_consumeable.edition and SMODS.pseudorandom_probability(card, 'picubed_pi', 1, card.ability.extra.odds) then
         return {
           message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = card.ability.extra.Xmult,
+          card = context.other_consumeable, --does jack :(
         }
       end
+    
     elseif context.individual and context.cardarea == G.play then
-      if context.other_card.edition then
+      if context.other_card.edition and SMODS.pseudorandom_probability(card, 'picubed_pi', 1, card.ability.extra.odds) then
         return {
           message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = card.ability.extra.Xmult,
+          card = context.other_card,
         }
       end
+    
     elseif context.individual and context.cardarea == G.hand and not context.end_of_round then
-      if context.other_card.edition then
+      if context.other_card.edition and SMODS.pseudorandom_probability(card, 'picubed_pi', 1, card.ability.extra.odds) then
         return {
           message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
-          Xmult_mod = card.ability.extra.Xmult
+          Xmult_mod = card.ability.extra.Xmult,
+          card = context.other_card,
         }
       end
     end
+    
   end
 }
 
@@ -4093,39 +4107,37 @@ SMODS.Joker { --Lowball Draw
   loc_txt = {
     name = 'Lowball Draw',
     text = {
-      "If scoring hand",
-      "contains a {C:attention}2{}",
-      "and a {C:attention}7{}, earn {C:money}$#1#{}"
+      "Earn {C:money}$#1#{} when a",
+      "{C:attention}2{} or {C:attention}7{} is drawn",
+      "to hand during Blind",
     }
   },
   rarity = 1,
   atlas = 'PiCubedsJokers',
   pos = { x = 9, y = 7 },
-  cost = 3,
+  cost = 6,
   discovered = true,
   blueprint_compat = true,
   perishable_compat = true,
   eternal_compat = true,
-  config = { extra = { money = 5 } },
+  config = { extra = { money = 1 } },
   loc_vars = function(self, info_queue, card)
     return { vars = { card.ability.extra.money } }
   end,
   calculate = function(self, card, context)
-    if context.before then
-      local has_2 = false
-      local has_7 = false
-      for k,v in ipairs(context.scoring_hand) do
-        if v:get_id() == 2 then
-          has_2 = true
-        end
-        if v:get_id() == 7 then
-          has_7 = true
+    local low_count = 0
+    if (context.first_hand_drawn or context.hand_drawn) and G.GAME.blind.in_blind then
+      for k,v in ipairs(context.hand_drawn) do
+        if v:get_id() == 2 or v:get_id() == 7 then
+          low_count = low_count + 1
         end
       end
-      if has_7 and has_2 then
+      if low_count > 0 then
+        local low_low_count = low_count
+        low_count = 0
         return {
-          dollars = card.ability.extra.money,
-          card = card
+            dollars = card.ability.extra.money * low_low_count,
+            card = card
         }
       end
     end
@@ -5134,29 +5146,61 @@ SMODS.Back({ -- Rejuvenation Deck (Rejuvination)
     loc_txt = {
         name = "Rejuvenation Deck",
         text = {
-        "Start with {C:money}+$#1#{} and ",
-        "{C:attention}#2#{} Joker slots, {C:attention}+#3#{} slot after",
-        "Boss Blind is defeated",
+        "Start with {C:attention}#1#{} Joker slots,",
+        "{C:attention}+#2#{} slot for every",
+        "other Boss Blind defeated",
         },
     },
     pos = { x = 2, y = 0 },
     atlas = "picubedsdeck",
     unlocked = true,
-    config = { dollars = 4, joker_slot = -5, joker_slot_mod = 1 },
+    config = {joker_slot = -2, joker_slot_mod = 1, second_boss = false },
     loc_vars = function(self, info_queue, card)
-        return {vars = {self.config.dollars, self.config.joker_slot + 5, self.config.joker_slot_mod}}
+        return {vars = {self.config.joker_slot + 5, self.config.joker_slot_mod}}
     end,
     calculate = function(self, back, context)
       if context.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss then
           G.E_MANAGER:add_event(Event({
             func = function()
-              G.jokers.config.card_limit = G.jokers.config.card_limit + self.config.joker_slot_mod
+              if self.config.second_boss then
+                self.config.second_boss = false
+                G.jokers.config.card_limit = G.jokers.config.card_limit + self.config.joker_slot_mod
+              else
+                self.config.second_boss = true
+              end
               return true
             end
           }))
       end
     end
 })
+
+local old_g_draw_from_hand_to_discard = G.FUNCS.draw_from_hand_to_discard
+G.FUNCS.draw_from_hand_to_discard = function(card)
+  if G.GAME.modifiers.slots_gain and G.GAME.blind:get_type() == 'Boss' then
+    G.E_MANAGER:add_event(Event({
+      trigger = 'after',
+      delay = 0.3,
+      func = function()
+        G.jokers.config.card_limit = G.jokers.config.card_limit + G.GAME.modifiers.slots_gain
+      return true end
+    }))
+  end
+  return old_g_draw_from_hand_to_discard(card)
+end
+
+SMODS.Challenge { -- Nostalgic Rejuvination Deck Challenge Deck
+    key = 'nostalgicrejuvinationdeck',
+    rules = {
+        custom = {
+            { id = 'picubed_slots_gain' },
+        },
+        modifiers = {
+            { id = 'joker_slots', value = 0 },
+            { id = 'dollars',  value = 8 },
+        }
+    },
+}
 
 if Partner_API then
         
