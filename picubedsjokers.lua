@@ -1410,7 +1410,6 @@ SMODS.Joker { --Black Joker
       juice_card_until(card, eval, true)
     end
     if ((context.cardarea == G.jokers and context.before) or context.pre_discard) and (G.GAME.current_round.discards_used <= 0 and G.GAME.current_round.hands_played <= 0) then
-      print(card.config.center.key)
       card.ability.extra.sum_rank = 0
       --if not context.blueprint then
         card.ability.extra.has_decimal = false
