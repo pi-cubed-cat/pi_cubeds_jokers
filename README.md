@@ -14,6 +14,10 @@ pi_cubed's Jokers is a lightweight mod with minimal lovely patching and hooks. A
 pi_cubed's Jokers adds 4 new Partners!  
 https://github.com/Icecanno/Partner-API  
 
+### JokerDisplay by nh6574  
+Many of the Jokers added are compatible, and some provide very useful QOL for Jokers like Black Joker and Eye Patch!  
+https://github.com/nh6574/JokerDisplay  
+
 ### Opandora's Box by opan 
 A Joker pack I really enjoy with some interesting synergies, and stellar music.  
 https://github.com/ohpahn/opandoras-box
