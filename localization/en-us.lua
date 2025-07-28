@@ -164,10 +164,8 @@ return {
             j_picubed_ambigram = {
                 name = 'Ambigram',
                 text = {
-                  "If this Joker is the {C:attention}left-most{},",
-                  "played {C:attention}6s{} become {C:attention}9s{}",
-                  "If this Joker is the {C:attention}right-most{},",
-                  "played {C:attention}9s{} become {C:attention}6s{}"
+                  "{C:attention}6s{} and {C:attention}9s{} can",
+                  "{C:attention}swap ranks{} anytime"
                 }
             },
             j_picubed_superwrathfuljoker = {
@@ -495,7 +493,6 @@ return {
                   "been played this {C:attention}Ante{}, resets",
                   "when {C:attention}Boss Blind{} is defeated",
                   "{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}",
-                  "{s:0.8}#3#{}"
                 }
             },
             j_picubed_timidjoker = {
@@ -888,6 +885,7 @@ return {
             k_picubeds_fixed = "Fixed!",
             k_picubeds_active = "Active!",
             k_picubeds_inactive = "Inactive",
+            k_picubeds_plusjokerslot = "+1 Joker Slot",
             config_picubeds_newspectrals = "New Spectral Cards (restart required)",
             config_picubeds_preorderhook = "Preorder Bonus' hook (disable for better compatibility, restart required)",
             config_picubeds_customsfx = "Custom Sound Effects (restart required)"

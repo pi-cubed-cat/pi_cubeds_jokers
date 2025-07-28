@@ -830,10 +830,8 @@ SMODS.Joker { --Ambigram
   loc_txt = {
     name = 'Ambigram',
     text = {
-      "If this Joker is the {C:attention}left-most{},",
-      "played {C:attention}6s{} become {C:attention}9s{},",
-      "If this Joker is the {C:attention}right-most{},",
-      "Played {C:attention}9s{} become {C:attention}6s{}"
+      "{C:attention}6s{} and {C:attention}9s{} can",
+      "{C:attention}swap ranks{} anytime"
     }
   },
   rarity = 1,
@@ -844,33 +842,97 @@ SMODS.Joker { --Ambigram
   blueprint_compat = false,
   perishable_compat = true,
   eternal_compat = true,
-  calculate = function(self, card, context)
-    if context.before and context.cardarea == G.jokers and not context.blueprint then
-      local has_69 = false
-      for k, v in ipairs(context.full_hand) do
-        if not v.debuff then
-          if v.base.value == '6' and G.jokers.cards[1] == card then
-            v:juice_up()
-            has_69 = true
-            assert(SMODS.change_base(v, nil, '9'))
-          elseif v.base.value == '9' and G.jokers.cards[#G.jokers.cards] == card then
-            v:juice_up()
-            has_69 = true
-            assert(SMODS.change_base(v, nil, '6'))
-          end
-        end
-      end
-      if has_69 then
-        has_69 = false
-        if G.GAME.blind.config.blind.key == ("bl_pillar") then
-          for k, v in ipairs(context.scoring_hand) do
-            v.debuff = false
-          end
-        end
-      end
-    end
-  end
 }
+
+local card_highlight = Card.highlight -- code based on Ortalab's Index Cards
+function Card:highlight(highlighted)
+    card_highlight(self, highlighted)
+    if next(SMODS.find_card('j_picubed_ambigram')) and highlighted and (self.base.id == 6 or self.base.id == 9) and not SMODS.has_no_rank(self) and self.area == G.hand and #G.hand.highlighted == 1 and not G.booster_pack then
+        self.children.use_button = UIBox{
+            definition = G.UIDEF.use_ambigram_button(self), 
+            config = {align = 'cl', offset = {x=0.35, y=0.4}, parent = self, id = 'picubed_ambigram_swap'}
+        }
+    elseif self.area and #self.area.highlighted > 0 and not G.booster_pack then
+        for _, card in ipairs(self.area.highlighted) do
+            if next(SMODS.find_card('j_picubed_ambigram')) and (self.base.id == 6 or self.base.id == 9) and not SMODS.has_no_rank(self) then
+                card.children.use_button = #self.area.highlighted == 1 and UIBox{
+                    definition = G.UIDEF.use_ambigram_button(card), 
+                    config = {align = 'cl', offset = {x=0.35, y=0.4}, parent = card}
+                } or nil
+            end
+        end
+    end
+    if highlighted and self.children.use_button and self.children.use_button.config.id == 'picubed_ambigram_swap' and not ((self.base.id == 6 or self.base.id == 9) and not SMODS.has_no_rank(self)) then
+        self.children.use_button:remove()
+    end
+end
+
+function G.UIDEF.use_ambigram_button(card)
+    local swap = nil
+
+    swap = {n=G.UIT.C, config={align = "cl"}, nodes={
+            {n=G.UIT.C, config={ref_table = card, align = "cl",maxw = 1.25, padding = 0.1, r=0.08, minw = 0.9, minh = 0.9, hover = true, colour = G.C.GREEN, button = 'do_ambigram_swap' }, nodes={
+                {n=G.UIT.T, config={text = 'Swap!', colour = G.C.UI.TEXT_LIGHT, scale = 0.35, shadow = true}}
+            }}
+        }}
+
+    local t = {n=G.UIT.ROOT, config = {padding = 0, colour = G.C.CLEAR}, nodes={
+        {n=G.UIT.C, config={padding = 0.15, align = 'cl'}, nodes={
+        {n=G.UIT.R, config={align = 'cl'}, nodes={
+            swap
+        }},
+        }},
+    }}
+    return t
+  end
+
+G.FUNCS.do_ambigram_swap = function(e)
+    stop_use()
+    e.config.button = nil
+    G.hand:unhighlight_all()
+    local card = e.config.ref_table
+    if card.base.id == 6 then 
+        G.E_MANAGER:add_event(Event({
+          trigger = 'before',
+          delay = 0.7,
+          func = function() 
+            card:flip()
+            play_sound('tarot1', 0.9)
+            return true
+          end
+        }))
+        G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.7,
+          func = function() 
+            SMODS.change_base(card, nil, "9")
+            card:flip()
+            play_sound('tarot1', 1.0)
+            return true
+          end
+        }))
+    elseif card.base.id == 9 then 
+        G.E_MANAGER:add_event(Event({
+          trigger = 'before',
+          delay = 0.7,
+          func = function() 
+            card:flip()
+            play_sound('tarot1', 1.0)
+            return true
+          end
+        }))
+        G.E_MANAGER:add_event(Event({
+          trigger = 'after',
+          delay = 0.7,
+          func = function() 
+            SMODS.change_base(card, nil, "6")
+            card:flip()
+            play_sound('tarot1', 0.9)
+            return true
+          end
+        }))
+    end
+end
 
 SMODS.Joker { --Super Wrathful Joker
   key = 'superwrathfuljoker',
@@ -1343,6 +1405,8 @@ SMODS.Joker { --Inkjet Printer
         }))
 
         if SMODS.pseudorandom_probability(card, 'picubed_inkjetprinter_destroy', 1, card.ability.extra.destroy_odds) then
+          card_eval_status_text(card, 'extra', nil, nil, nil,
+            { message = localize("k_picubeds_error"), sound = 'tarot1', colour = G.C.RED })
           G.E_MANAGER:add_event(Event({
 					func = function()
 						if has_activated then
@@ -1358,8 +1422,6 @@ SMODS.Joker { --Inkjet Printer
                   delay = 0.3,
                   blockable = false,
                   func = function()
-                    card_eval_status_text(card, 'extra', nil, nil, nil,
-                      { message = localize("k_picubeds_error") })
                     local mpcard = create_card('Joker', G.jokers, nil, 0, nil, nil, 'j_misprint', 'pri')
                     mpcard:set_edition(card.edition, false, true)
                     mpcard:add_to_deck()
@@ -3478,7 +3540,6 @@ SMODS.Joker { --Eye Patch
       "been played this {C:attention}Ante{}, resets",
       "when {C:attention}Boss Blind{} is defeated",
       "{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}",
-      "{s:0.8}#3#{}"
     }
   },
   rarity = 2,
@@ -3491,11 +3552,21 @@ SMODS.Joker { --Eye Patch
   eternal_compat = true,
   config = { extra = { Xmult = 1, Xmult_mod = 1/3, hand_list = {}, displ_list = {} } },
   loc_vars = function(self, info_queue, card)
+    if #card.ability.extra.displ_list > 0 then
+        main_end = {
+            {n=G.UIT.C, config={align = "bm", padding = 0.02}, nodes={
+                {n=G.UIT.C, config={align = "m", colour = G.C.CHIPS, r = 0.05, padding = 0.05}, nodes={
+                    {n=G.UIT.T, config={text = table.concat(card.ability.extra.displ_list or {}, ", "), colour = G.C.UI.TEXT_LIGHT, scale = 0.3, shadow = true}},
+                }}
+            }}
+        }
+    else
+        main_end = nil
+    end
     return { vars = { 
         card.ability.extra.Xmult, 
         card.ability.extra.Xmult_mod,
-        table.concat(card.ability.extra.displ_list or {}, ", ")
-      } 
+      }, main_end = main_end 
     }
   end,
   add_to_deck = function(self, card, from_debuff)
@@ -4355,7 +4426,7 @@ SMODS.Joker { --Translucent Joker
     end
     if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
         card.ability.extra.rounds = card.ability.extra.rounds + 1
-        if card.ability.extra.invis_rounds == card.ability.extra.rounds_total then
+        if card.ability.extra.rounds == card.ability.extra.rounds_total then
             local eval = function(card) return not card.REMOVED end
             juice_card_until(card, eval, true)
         end
@@ -4983,6 +5054,13 @@ SMODS.Joker { --Laser Printer
       if G.GAME.pool_flags.picubed_printer_error then return true end
       return false
   end,
+  update = function(self, card, dt)
+    if not card.ability.extra.is_disabled then
+      card.children.floating_sprite:set_sprite_pos({ x = 10, y = 7 }) -- no soul
+    else
+      card.children.floating_sprite:set_sprite_pos({ x = 1, y = 7 })
+    end
+  end,
   calculate = function(self, card, context)
     if context.end_of_round and G.GAME.blind.boss and context.cardarea == G.jokers and card.ability.extra.is_disabled then
       card.ability.extra.is_disabled = false
@@ -5026,6 +5104,8 @@ SMODS.Joker { --Laser Printer
         }))
 
         if SMODS.pseudorandom_probability(card, 'picubed_laserprinter_destroy', 1, card.ability.extra.destroy_odds) then
+          card_eval_status_text(card, 'extra', nil, nil, nil,
+                      { message = localize("k_picubeds_error"), sound = 'tarot1', colour = G.C.RED })
           G.E_MANAGER:add_event(Event({
 					func = function()
 						if has_activated then
@@ -5035,8 +5115,6 @@ SMODS.Joker { --Laser Printer
                   delay = 0.3,
                   blockable = false,
                   func = function()
-                    card_eval_status_text(card, 'extra', nil, nil, nil,
-                      { message = localize("k_picubeds_error") })
                     card.ability.extra.is_disabled = true
                     card.children.floating_sprite:set_sprite_pos({ x = 1, y = 7 })
                     return true;
@@ -5160,10 +5238,12 @@ SMODS.Back({ -- Rejuvenation Deck (Rejuvination)
     calculate = function(self, back, context)
       if context.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss then
           G.E_MANAGER:add_event(Event({
+            trigger = 'before',
             func = function()
               if self.config.second_boss then
                 self.config.second_boss = false
                 G.jokers.config.card_limit = G.jokers.config.card_limit + self.config.joker_slot_mod
+                card_eval_status_text(self, 'extra', nil, nil, nil, { message = localize("k_picubeds_plusjokerslot"), no_juice = true }) -- message looks jank but i give up
               else
                 self.config.second_boss = true
               end
@@ -5334,6 +5414,7 @@ if Partner_API then
                             delay = 0.3,
                             blockable = false,
                             func = function()
+                              play_sound('tarot1')
                               card.ability.extra.is_disabled = true
                               return true;
                             end

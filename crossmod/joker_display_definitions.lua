@@ -148,7 +148,7 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
 				card.joker_display_values.x_mult = card.ability.extra.Xmult or 1
 			end,
 		}
-    jd_def["j_picubed_ambigram"] = { -- Ambigram
+    --[[jd_def["j_picubed_ambigram"] = { -- Ambigram (old)
       extra = {
           {
               { text = "(" },
@@ -165,7 +165,7 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
           end
           card.joker_display_values.pos = position
       end
-    } 
+    } ]]
     jd_def["j_picubed_advancedskipping"] = { -- Advanced Skipping
       extra = {
           {
