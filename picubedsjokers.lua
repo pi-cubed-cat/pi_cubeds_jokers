@@ -96,13 +96,14 @@ SMODS.Sound({
 	path = "rhythm2.ogg",
 })
 
--- poker hand modification for Mount Joker and Wee Mini
+-- conflict with Mount Joker, Wee Mini, and Round-a-bout due to Paperback and friends :(
 function can_do_pokerhand_changer_jokers()
     if next(SMODS.find_mod("Paperback")) or picubed_config.pokerhand_changer_jokers == false then
         return false
     else return true end
 end
 
+-- poker hand modification for Mount Joker and Wee Mini
 if can_do_pokerhand_changer_jokers() then
     local evaluate_poker_hand_ref = evaluate_poker_hand
     function evaluate_poker_hand(hand)

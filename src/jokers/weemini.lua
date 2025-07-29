@@ -18,7 +18,7 @@ SMODS.Joker { --Wee Mini
 	perishable_compat = true,
 	eternal_compat = true,
 	in_pool = function(self, args)
-		can_do_pokerhand_changer_jokers()
+		return can_do_pokerhand_changer_jokers()
 	end,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS.j_splash

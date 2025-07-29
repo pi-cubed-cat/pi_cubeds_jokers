@@ -24,6 +24,9 @@ SMODS.Joker { --Round-a-bout
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { mult = 0, mult_mod = 8 }},
+	in_pool = function(self, args)
+		return can_do_pokerhand_changer_jokers()
+	end,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue + 1] = { key = "wraparound", set = "Other" }
 		return { 
@@ -31,6 +34,9 @@ SMODS.Joker { --Round-a-bout
 		}
 	end,
 	calculate = function(self, card, context)
+		if not can_do_pokerhand_changer_jokers() then
+			print("Round-a-bout has limited functionality due to a mod conflict, or the 'Hand type-affecting Jokers' config option being disabled.")
+		end
 		if context.evaluate_poker_hand and next(context.poker_hands['Straight']) then
 			local has_low = false
 			local has_high = false

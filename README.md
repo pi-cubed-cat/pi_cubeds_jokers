@@ -19,7 +19,7 @@ This option enables or disables the Spectral Cards Commander, Rupture, and Extin
 Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, and Talking Flower.
 
 ### Hand type-affecting Jokers
-Enables or disables any Jokers that directly change your hand and what poker hands it contains. Certain mods that tinker with poker hands can cause crashes or game closures when these Jokers activate. This option is automatically disabled if Paperback is installed. Currently, this affects Mount Joker and Wee Mini. 
+Enables or disables any Jokers that directly change your hand and what poker hands it contains. Certain mods that tinker with poker hands can cause crashes or game closures when these Jokers activate. This option is automatically disabled if Paperback is installed. Currently, this affects Mount Joker, Wee Mini, and Round-a-bout. 
 
 ## Recommended Mods
 ### Partner by baimao  
