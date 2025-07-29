@@ -257,20 +257,11 @@ return {
                   "cards is {C:attention}#2#{}, earn {C:money}$#3#{}",
                 }
             },
-            j_picubed_bisexualflag_spectrums = {
-                name = 'Bisexual Flag',
-                text = {
-                  "If {C:attention}played hand{} contains either",
-                  "a {C:attention}Straight{} and {C:attention}all four default{}",
-                  "{C:attention}suits{}, or a {C:attention}Straight Spectrum{},",
-                  "create #1# {C:dark_edition}Negative {C:purple}Tarot{} cards",
-                }
-            },
             j_picubed_bisexualflag = {
                 name = 'Bisexual Flag',
                 text = {
                   "If {C:attention}played hand{} contains a",
-                  "{C:attention}Straight{} and {C:attention}all four suits{},",
+                  "{C:attention}Straight{} and {C:attention}four suits{},",
                   "create #1# {C:dark_edition}Negative {C:purple}Tarot{} cards",
                 }
             },
@@ -359,14 +350,6 @@ return {
                 text = {
                   "Booster Packs",
                   "cost {C:attention}#1#% less{}"
-                }
-            },
-            j_picubed_preorderbonus_hookless = {
-                name = 'Preorder Bonus',
-                text = {
-                  "After opening a",
-                  "Booster Pack, refund",
-                  "{C:attention}#1#%{} of the cost"
                 }
             },
             j_picubed_waterbottle = {
@@ -724,7 +707,7 @@ return {
                 name = "Refine",
                 text = {
                   "{C:attention}Enhanced{} cards gain",
-                  "{C:mult}+#1#{} when scored", 
+                  "{C:mult}+#1#{} Mult when scored", 
                 },
             },
             pnr_picubed_copy = {
@@ -751,8 +734,8 @@ return {
             picubedsjokers = {
                 name = "pi_cubed's Jokers",
                 text = {
-                    "A collection of vanilla-friendly Jokers made by yours truly.",
-                    "Follow me on bluesky at @picubed.bsky.social!",
+                    "A collection of vanilla-friendly Jokers (and more) made by",
+                    "yours truly. Follow me on bluesky at @picubed.bsky.social!",
                     "Thanks franderman123 for Español (México) localization!"
                 }
             },
@@ -887,8 +870,8 @@ return {
             k_picubeds_inactive = "Inactive",
             k_picubeds_plusjokerslot = "+1 Joker Slot",
             config_picubeds_newspectrals = "New Spectral Cards (restart required)",
-            config_picubeds_preorderhook = "Preorder Bonus' hook (disable for better compatibility, restart required)",
-            config_picubeds_customsfx = "Custom Sound Effects (restart required)"
+            config_picubeds_customsfx = "Custom Sound Effects (restart required)",
+            config_picubeds_pokerhandchangers = "Hand type-affecting Jokers (restart required)",
         }
     }
 }

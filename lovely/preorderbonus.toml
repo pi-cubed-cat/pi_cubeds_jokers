@@ -1,0 +1,25 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.ability.set == 'Booster' and G.GAME.modifiers.booster_ante_scaling then self.cost = self.cost + G.GAME.round_resets.ante - 1 end"
+position = "before"
+match_indent = true
+payload = '''
+local preorder_bonus_discount = 1
+if self.ability.set == 'Booster' and #find_joker('j_picubed_preorderbonus') > 0 then 
+    for k, v in ipairs(G.jokers.cards) do
+    if v.ability.name == 'j_picubed_preorderbonus' then
+        preorder_bonus_discount = preorder_bonus_discount * v.ability.extra.discount
+    end
+    end
+    if preorder_bonus_discount <= 0 then
+    preorder_bonus_discount = 0
+    end
+end
+self.cost = math.max(1, math.floor(self.cost*preorder_bonus_discount))
+'''

@@ -7,7 +7,19 @@ Documentation spreadsheet (Planned content, patch notes, & more info): https://d
 
 Discord discussion thread: https://discord.com/channels/1116389027176787968/1348621804696240201
 
-pi_cubed's Jokers is a lightweight mod with minimal lovely patching and hooks. As a result, there should be few crashes due to conflicts with other mods.
+pi_cubed's Jokers is a relatively lightweight mod with minimal lovely patching and hooks. As a result, there should be few crashes due to conflicts with other mods.
+
+## Config Options
+A game restart is required for Config options to take effect.
+
+### New Spectral Cards  
+This option enables or disables the Spectral Cards Commander, Rupture, and Extinction from appearing.
+
+### Custom Sound Effects  
+Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, and Talking Flower.
+
+### Hand type-affecting Jokers
+Enables or disables any Jokers that directly change your hand and what poker hands it contains. Certain mods that tinker with poker hands can cause crashes or game closures when these Jokers activate. This option is automatically disabled if Paperback is installed. Currently, this affects Mount Joker and Wee Mini. 
 
 ## Recommended Mods
 ### Partner by baimao  
@@ -28,22 +40,6 @@ https://github.com/GuilloryCraft/ExtraCredit
 ### Neato Jokers by NEATO  
 https://github.com/neatoqueen/NeatoJokers
 
-### Paperback by PaperMoon, OppositeWolf770, srockw, GitNether, Victin, BBBalatroMod, & more  
-The Bisexual Flag Joker is compatible with additional suits.  
-https://github.com/GitNether/paperback
-
 ### Cryptid by MathIsFun_ & many more  
 There's some hidden content that requires Cryptid. In addition, I've put a big focus on making sure the changing value mechanics and Misprintize behave properly with all Jokers!  
 https://github.com/SpectralPack/Cryptid
-
-## Config Options
-A game restart is required for Config options to take effect.
-
-### New Spectral Cards  
-This option enables or disables the Spectral Cards Commander, Rupture, and Extinction from appearing.
-
-### Preorder Bonus' Hook  
-Turn this option off to rework the Joker's mechanics very slightly to remove its hook that I (very jankily) implemented. This option may be useful if you're experiencing conflicts regarding setting the cost of Booster Packs.
-
-### Custom Sound Effects  
-Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, and Talking Flower.

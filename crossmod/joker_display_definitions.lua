@@ -255,48 +255,11 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
             for k,v in ipairs(G.hand.highlighted) do
               if SMODS.has_no_rank(v) then -- rankless cards
                 sum_rank = sum_rank + 0
-              elseif v:get_id() > 14 then --UnStable ranks 
-                if v:get_id() == 15 then -- 0 rank
-                  sum_rank = sum_rank + 0
-                elseif v:get_id() == 16 then -- 0.5 rank
-                  sum_rank = sum_rank + 0.5
-                  has_decimal = true
-                elseif v:get_id() == 17 then -- 1 rank
-                  sum_rank = sum_rank + 1
-                elseif v:get_id() == 18 then -- sqrt 2 rank
-                  sum_rank = sum_rank + 1.41
-                  has_decimal = true
-                elseif v:get_id() == 19 then -- e rank
-                  sum_rank = sum_rank + 2.72
-                  has_decimal = true
-                elseif v:get_id() == 20 then -- pi rank
-                  sum_rank = sum_rank + 3.14
-                  has_decimal = true
-                elseif v:get_id() == 21 then -- ??? rank
-                  sum_rank = sum_rank + pseudorandom('???') * 11
-                  has_decimal = true
-                elseif v:get_id() == 22 then -- 21 rank
-                  sum_rank = sum_rank + 21
-                elseif v:get_id() == 23 then -- 11 rank
-                  sum_rank = sum_rank + 11
-                elseif v:get_id() == 24 then -- 12 rank
-                  sum_rank = sum_rank + 12
-                elseif v:get_id() == 25 then -- 13 rank
-                  sum_rank = sum_rank + 13
-                elseif v:get_id() == 26 then -- 25 rank
-                  sum_rank = sum_rank + 25
-                elseif v:get_id() == 27 then -- 161 rank
-                  sum_rank = sum_rank + 161
-                end
-              elseif v:get_id() > 10 then --face cards or aces
-                if v:get_id() < 14 then --face cards
-                  sum_rank = sum_rank + 10
-                else --aces
-                  sum_rank = sum_rank + 11
-                  ace_count = ace_count + 1
-                end
-              elseif v:get_id() <= 10 and v:get_id() >= 2 then --numbered cards (vanilla only)
-                sum_rank = sum_rank + v:get_id()
+              elseif v:get_id() == 14 then --aces
+                sum_rank = sum_rank + 11
+                ace_count = ace_count + 1
+              else 
+                sum_rank = sum_rank + (v.base.nominal or 0)
               end
               --return { message = tostring(card.ability.extra.sum_rank), card = card }
             end
@@ -304,7 +267,7 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
               sum_rank = sum_rank - 10
               ace_count = ace_count - 1
             end
-            if sum_rank == card.ability.extra.cap or (has_decimal == true and sum_rank < card.ability.extra.cap + 1 and sum_rank > card.ability.extra.cap - 1) then
+            if sum_rank < card.ability.extra.cap + 1 and sum_rank > card.ability.extra.cap - 1 then
               is_success = 1
             end
           
