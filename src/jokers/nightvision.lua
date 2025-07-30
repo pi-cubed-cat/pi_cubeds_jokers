@@ -29,7 +29,7 @@ SMODS.Joker { --Night Vision
 				end
 				v:flip()
 			end
-			if not flip_count == 0 then
+			if flip_count > 0 then
 				return {
                     dollars = card.ability.extra.money * flip_count,
                     card = card
