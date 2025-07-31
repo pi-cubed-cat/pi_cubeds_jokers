@@ -31,7 +31,7 @@ SMODS.Joker { --Explosher
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
-    config = { extra = { num = 3 } },
+    config = { extra = { num = 5 } },
  loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.num } }
     end,

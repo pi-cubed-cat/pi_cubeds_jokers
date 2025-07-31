@@ -3,13 +3,13 @@ SMODS.Joker { --Golden Pancakes
 	loc_txt = {
 		name = 'Golden Pancakes',
 		text = {
-			"Earn {C:money}$#1#{} after hand is",
-			"played, {C:green}#2# in #3#{} chance",
-			"to be {C:attention}destroyed",
+			"Scoring cards earn {C:money}$#1#{}",
+			"{C:green}#2# in #3#{} chance this",
+			"card is {C:attention}destroyed",
 			"at end of round"
 		}
 	},
-	rarity = 1,
+	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 4, y = 4 },
 	cost = 5,
@@ -17,19 +17,27 @@ SMODS.Joker { --Golden Pancakes
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = false,
-	config = { extra = { money = 2, odds = 6 } },
+	config = { extra = { money = 1, odds = 6 } },
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_goldenpancakes')
 		return { vars = { card.ability.extra.money, numerator, denominator } }
 	end,
 	pools = { ["Food"] = true },
 	calculate = function(self, card, context)
-		if context.after then
-			return {
-				dollars = card.ability.extra.money,
-				card = card
-			}
-		end
+		if context.individual and context.cardarea == G.play then
+            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+            return {
+                dollars = card.ability.extra.money,
+                func = function()
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.GAME.dollar_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            }
+        end
 		if context.end_of_round and not context.repetition and context.game_over == false and not context.blueprint then
 			if SMODS.pseudorandom_probability(card, 'picubed_goldenpancakes', 1, card.ability.extra.odds) then
 				G.E_MANAGER:add_event(Event({

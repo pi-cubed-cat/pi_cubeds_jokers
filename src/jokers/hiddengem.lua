@@ -12,7 +12,7 @@ SMODS.Joker { --Hidden Gem
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 4, y = 1 },
-    cost = 8,
+    cost = 9,
     config = { extra = { odds = 15 } },
     discovered = true,
     blueprint_compat = false,

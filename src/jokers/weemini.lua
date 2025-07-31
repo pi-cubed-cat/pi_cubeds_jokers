@@ -12,7 +12,7 @@ SMODS.Joker { --Wee Mini
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 2, y = 8 },
-	cost = 3,
+	cost = 2,
 	discovered = true,
 	blueprint_compat = false,
 	perishable_compat = true,

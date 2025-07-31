@@ -11,7 +11,7 @@ SMODS.Joker { --Fusion Magic
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 9, y = 4 },
-	cost = 7,
+	cost = 8,
 	discovered = true,
 	blueprint_compat = false,
 	perishable_compat = true,

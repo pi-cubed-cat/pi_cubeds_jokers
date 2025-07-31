@@ -4,8 +4,10 @@ SMODS.Back({ -- Covetous Deck
     loc_txt = {
         name = "Covetous Deck",
         text = {
-        "Start with a {C:attention,T:j_picubed_shoppingtrolley}#1#{},",
-        "{C:attention,T:j_picubed_preorderbonus}#2#{}, and {C:attention,T:v_seed_money}#3#{}",
+        "Start with a",
+        "{C:attention,T:j_picubed_shoppingtrolley}#1#{},",
+        "{C:attention,T:j_picubed_preorderbonus}#2#{},",
+        "and {C:attention,T:v_seed_money}#3#{}",
         },
     },
     pos = { x = 3, y = 0 },
@@ -31,13 +33,18 @@ SMODS.Back({ -- my epic deck by pi_cubed
     loc_txt = {
         name = "my epic deck by pi_cubed",
         text = {
-        "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{} are",
-        "{C:attention}3x{} more likely to appear",
+        "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{}",
+        "are {C:attention}3x{} more likely to appear,",
+        "Start with an extra {C:money}$#1#",
         },
     },
     pos = { x = 1, y = 0 },
     atlas = "picubedsdeck",
     unlocked = true,
+    config = { dollars = 6 },
+    loc_vars = function(self, info_queue, back)
+        return { vars = { self.config.dollars } }
+    end,
 })
 
 -- relies on additional functions present in lovely/myepicdeck.toml
@@ -50,7 +57,7 @@ SMODS.Back({ -- Wonderful Deck
         name = "Wonderful Deck",
         text = {
         "Start with a",
-        "{C:attention,T:j_picubed_talkingflower}Talking Flower{}",
+        "{C:dark_edition,T:e_foil}Foil{} {C:attention,T:j_picubed_talkingflower}Talking Flower{}",
         },
     },
     pos = { x = 0, y = 0 },
@@ -59,7 +66,7 @@ SMODS.Back({ -- Wonderful Deck
     apply = function(self)
         G.E_MANAGER:add_event(Event({
             func = function()
-                SMODS.add_card({set = 'Joker', area = G.jokers, skip_materialize = true, key = "j_picubed_talkingflower", no_edition = true})
+                SMODS.add_card({set = 'Joker', area = G.jokers, skip_materialize = true, key = "j_picubed_talkingflower", edition = 'e_foil'})
             return true end
         }))
     end

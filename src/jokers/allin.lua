@@ -5,7 +5,7 @@ SMODS.Joker { --All In
         text = {
             "All {C:attention}face down{} cards and",
             "Jokers are retriggered",
-            "{C:attention}#1#{} additional times",
+            "{C:attention}#1#{} additional time(s)",
             "{C:inactive}(except All In)"
         }
     },
@@ -17,7 +17,7 @@ SMODS.Joker { --All In
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
-    config = { extra = { repetitions = 2, face_down_cards = {} } },
+    config = { extra = { repetitions = 1, face_down_cards = {} } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.repetitions } }
     end,

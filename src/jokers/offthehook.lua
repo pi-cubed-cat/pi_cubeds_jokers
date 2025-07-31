@@ -3,10 +3,10 @@ SMODS.Joker { --Off the Hook
 	loc_txt = {
 		name = 'Off the Hook',
 		text = {
-			"After play, all",
-			"{C:attention}unenhanced{} cards held",
-			"in hand are discarded",
-			"{C:chips}+#1#{} Hand"
+			"After play, all {C:attention}unenhanced{}",
+			"cards held in hand are",
+			"{C:attention}discarded{}, {C:chips}+#1#{} Hands",
+			"when Blind is selected"
 		}
 	},
 	rarity = 2,
@@ -14,22 +14,26 @@ SMODS.Joker { --Off the Hook
 	pos = { x = 9, y = 5 },
 	cost = 5,
 	discovered = true,
-	blueprint_compat = false,
+	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { h_plays = 1 } },
+	config = { extra = { h_plays = 2 } },
 	loc_vars = function(self, info_queue, card)
 			return { vars = { card.ability.extra.h_plays } }
 	end,
-	add_to_deck = function(self, card, from_debuff)
-			G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.h_plays
-			ease_hands_played(card.ability.extra.h_plays)
-	end,
-	remove_from_deck = function(self, card, from_debuff)
-			G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.h_plays
-			ease_hands_played(-card.ability.extra.h_plays)
-	end,
 	calculate = function(self, card, context)
+		if context.setting_blind then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    ease_hands_played(card.ability.extra.h_plays)
+                    SMODS.calculate_effect(
+                        { message = localize { type = 'variable', key = 'a_hands', vars = { card.ability.extra.h_plays } } },
+                        context.blueprint_card or card)
+                    return true
+                end
+            }))
+            return nil, true
+        end
 		if context.press_play and not context.blueprint and not (G.GAME.blind.config.blind.key == ("bl_hook" or "bl_cry_obsidian_orb" or "b_bunc_bulwark")) then
 			local saved_highlight = G.hand.config.highlighted_limit
 			G.hand.config.highlighted_limit = 31415

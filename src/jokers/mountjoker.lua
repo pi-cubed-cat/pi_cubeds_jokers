@@ -6,13 +6,13 @@ SMODS.Joker { --Mount Joker
 			"If played hand has at",
 			"least 4 {C:attention}Stone{} cards,",
 			"poker hand is your",
-			"{C:attention}most played poker hand{}"
+			"{C:attention}highest level poker hand{}"
 		}
 	},
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 7, y = 5 },
-	cost = 5,
+	cost = 4,
 	discovered = true,
 	blueprint_compat = false,
 	perishable_compat = true,

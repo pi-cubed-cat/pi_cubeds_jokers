@@ -5,14 +5,15 @@ return {
                 name = "Wonderful Deck",
                 text = {
                     "Start with a",
-                    "{C:attention,T:j_picubed_talkingflower}Talking Flower{}",
+                    "{C:dark_edition,T:e_foil}Foil{} {C:attention,T:j_picubed_talkingflower}Talking Flower{}",
                 },
             },
             b_picubed_myepicdeck = {
                 name = "my epic deck by pi_cubed",
                 text = {
-                    "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{} are",
-                    "{C:attention}3x{} more likely to appear",
+                    "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{}",
+                    "are {C:attention}3x{} more likely to appear,",
+                    "Start with an extra {C:money}$#1#",
                 },
             },
             b_picubed_rejuvinationdeck = {
@@ -26,8 +27,10 @@ return {
             b_picubed_covetousdeck = {
                 name = "Covetous Deck",
                 text = {
-                    "Start with a {C:attention,T:j_picubed_shoppingtrolley}#1#{},",
-                    "{C:attention,T:j_picubed_preorderbonus}#2#{}, and {C:attention,T:v_seed_money}#3#{}",
+                    "Start with a",
+                    "{C:attention,T:j_picubed_shoppingtrolley}#1#{},",
+                    "{C:attention,T:j_picubed_preorderbonus}#2#{},",
+                    "and {C:attention,T:v_seed_money}#3#{}",
                 },
             },
             b_picubed_collectorsdeck = {
@@ -294,7 +297,7 @@ return {
                 text = {
                   "All {C:attention}face down{} cards and",
                   "Jokers are retriggered",
-                  "{C:attention}#1#{} additional times",
+                  "{C:attention}#1#{} additional time(s)",
                   "{C:inactive}(except All In)"
                 }
             },
@@ -339,9 +342,9 @@ return {
             j_picubed_goldenpancakes = {
                 name = 'Golden Pancakes',
                 text = {
-                  "Earn {C:money}$#1#{} after hand is",
-                  "played, {C:green}#2# in #3#{} chance",
-                  "to be {C:attention}destroyed",
+                  "Scoring cards earn {C:money}$#1#{}",
+                  "{C:green}#2# in #3#{} chance this",
+                  "card is {C:attention}destroyed",
                   "at end of round"
                 }
             },
@@ -448,24 +451,25 @@ return {
                   "If played hand has at",
                   "least 4 {C:attention}Stone{} cards,",
                   "poker hand is your",
-                  "{C:attention}most played poker hand{}"
+                  "{C:attention}highest level poker hand{}"
                 }
             },
             j_picubed_oxplow = {
                 name = 'Ox Plow',
                 text = {
-                  "Earn {C:money}$#1#{} if played",
-                  "hand is {C:attention}not{} your {C:attention}most{}",
-                  "{C:attention}played poker hand{}"
+                  "Earn {C:money}$#1#{} if {C:attention}most played{}",
+                  "{C:attention}poker hand{} wasn't played",
+                  "by end of round",
+                  "{C:inactive}(Currently #2#){}",
                 }
             },
             j_picubed_offthehook = {
                 name = 'Off the Hook',
                 text = {
-                  "After play, all",
-                  "{C:attention}unenhanced{} cards held",
-                  "in hand are discarded",
-                  "{C:chips}+#1#{} Hand"
+                  "After play, all {C:attention}unenhanced{}",
+                  "cards held in hand are",
+                  "{C:attention}discarded{}, {C:chips}+#1#{} Hands",
+                  "when Blind is selected"
                 }
             },
             j_picubed_eyepatch = {

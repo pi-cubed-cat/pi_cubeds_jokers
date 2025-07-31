@@ -11,12 +11,12 @@ SMODS.Joker { --Night Vision
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 7, y = 7 },
-	cost = 6,
+	cost = 7,
 	discovered = true,
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { money = 2 } },
+	config = { extra = { money = 1 } },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }
 	end,

@@ -345,13 +345,27 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
             local _tally = -1
             local stone_hand = nil
             for _, v in ipairs(G.handlist) do
-                if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
+                if G.GAME.hands[v].visible and to_number(G.GAME.hands[v].level) > _tally then
                     stone_hand = v
-                    _tally = G.GAME.hands[v].played
+                    _tally = G.GAME.hands[v].level
                 end
             end
             card.joker_display_values.poker_hand = localize(stone_hand, 'poker_hands')
         end,
+    }
+    jd_def["j_picubed_oxplow"] = { -- Ox Plow
+        text = {
+            { text = "+$" },
+            { ref_table = "card.joker_display_values", ref_value = "money" },
+        },
+        text_config = { colour = G.C.GOLD },
+        reminder_text = {
+            { ref_table = "card.joker_display_values", ref_value = "localized_text" }
+        },
+        calc_function = function(card)
+            card.joker_display_values.money = ((not card.ability.extra.most_played) and card.ability.extra.money) or 0
+            card.joker_display_values.localized_text = "(" .. localize("k_round") .. ")"
+        end
     }
     jd_def["j_picubed_timidjoker"] = { -- Timid Joker
         text = {

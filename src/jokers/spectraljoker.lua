@@ -11,7 +11,7 @@ SMODS.Joker { --Spectral Joker
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 3, y = 2 },
-    cost = 9,
+    cost = 8,
     discovered = true,
     blueprint_compat = true,
     perishable_compat = true,

@@ -124,11 +124,11 @@ if can_do_pokerhand_changer_jokers() then
                 local _tally = -1
                 local stone_hand = nil
                 for _, v in ipairs(G.handlist) do
-                    if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
+                    if G.GAME.hands[v].visible and to_number(G.GAME.hands[v].level) > _tally then
                         --text = v
                         --scoring_hand = poker_hands[v]
                         stone_hand = v
-                        _tally = G.GAME.hands[v].played
+                        _tally = G.GAME.hands[v].level
                     end
                 end
                 if not results[stone_hand][1] then
