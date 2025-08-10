@@ -54,13 +54,13 @@ SMODS.Joker { -- Order Sector (Þe Autumn Circus)
 	end,
 	
 	calculate = function(self, card, context)
-        local card_count = 0
-		for k,v in ipairs(G.graveyard) do
-			if v:is_suit(G.GAME.current_round.picubed_ordersector.suit) or (v.debuff and v.base.suit == G.GAME.current_round.picubed_ordersector.suit) then 
-				card_count = card_count + 1
-			end
-		end
 		if context.joker_main then
+			local card_count = 0
+			for k,v in ipairs(G.graveyard) do
+				if v:is_suit(G.GAME.current_round.picubed_ordersector.suit) or (v.debuff and v.base.suit == G.GAME.current_round.picubed_ordersector.suit) then 
+					card_count = card_count + 1
+				end
+			end
             return {
                 Xmult = 1 + card.ability.extra.Xmult_mod * card_count,
             }
