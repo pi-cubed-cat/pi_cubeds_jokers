@@ -1,0 +1,24 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if (not v.shattered) and (not v.destroyed) then "
+position = "at"
+match_indent = true
+overwrite = true
+payload = '''
+if next(SMODS.find_card('j_picubed_boomerang')) and (not v.shattered) and (not v.destroyed) then
+    if picubed_boomerang_scoring and picubed_boomerang_scoring[v] then --picubed_boomerang_scoring comes from src/jokers/boomerang.lua
+        draw_card(G.play,G.deck, it*100/play_count,'down', false, v)
+        it = it + 1
+        G.deck:shuffle('boomerang'..G.GAME.round_resets.ante)
+    else
+        draw_card(G.play,G.discard, it*100/play_count,'down', false, v)
+        it = it + 1
+    end
+elseif (not v.shattered) and (not v.destroyed) then 
+'''

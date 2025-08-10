@@ -26,20 +26,30 @@ SMODS.Joker { --Landslide
     
     calculate = function(self, card, context)
         if context.cardarea == G.jokers and context.after then 
-            if hand_chips > mult and #G.hand.cards >= 1 then
+            if to_big(hand_chips) > to_big(mult) and #G.hand.cards >= 1 then
                 local rndcard = pseudorandom_element(G.hand.cards, pseudoseed('Landslide'..G.GAME.round_resets.ante))
                 if not SMODS.has_enhancement(rndcard, 'm_stone') then
-                    rndcard:set_ability(G.P_CENTERS.m_stone, nil, true)
                     G.E_MANAGER:add_event(Event({
-                        func = function()
-                            rndcard:juice_up()
+                        trigger = 'before',
+                        delay = 0.2,
+                        func = function() 
+                            rndcard:flip()
+                            play_sound('tarot1', 0.2)
                             return true
                         end
                     }))
-                    return {
-                        message = localize("k_picubeds_tumble")
-                        }
-                    else
+                    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_tumble"), colour = G.C.ORANGE})
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 0.2,
+                        func = function() 
+                            rndcard:set_ability('m_stone', nil, true)
+                            rndcard:flip()
+                            play_sound('tarot1', 1.0)
+                            return true
+                        end
+                    }))
+                else
                     G.E_MANAGER:add_event(Event({
                         func = function()
                             rndcard:juice_up()

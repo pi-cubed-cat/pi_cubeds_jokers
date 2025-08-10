@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.ability.name == 'Ectoplasm' or self.ability.name == 'Hex' or SMODS.pseudorandom_probability(self, 'wheel_of_fortune', 1, self.ability.extra) then"
+position = "at"
+match_indent = true
+overwrite = true
+payload = '''
+if self.ability.name == 'Ectoplasm' or self.ability.name == 'Hex' or SMODS.pseudorandom_probability(self, 'wheel_of_fortune', 1, self.ability.extra) or (self.ability.name == 'The Wheel of Fortune' and next(SMODS.find_card('j_picubed_weighteddie'))) then 
+'''

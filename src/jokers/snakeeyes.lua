@@ -30,6 +30,9 @@ SMODS.Joker { --Snake Eyes
             
             if joker_left ~= 0 and type(joker_left.ability.extra) == 'table' then
                 local odds_count = 0
+                if joker_left.config.center.key == 'j_cavendish' then
+                    check_for_unlock({type = 'picubed_snakeeyes_bananabreaker'})
+                end
                 for k, v in pairs(joker_left.ability.extra) do
                     if string.match(k, "odds") then
                         joker_left.ability.extra[k] = 1

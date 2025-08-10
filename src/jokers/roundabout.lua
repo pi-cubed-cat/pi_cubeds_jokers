@@ -10,9 +10,9 @@ SMODS.Joker { --Round-a-bout
 		text = {
 			"Allows {C:attention}Straights{} to be",
 			"made with {C:attention}Wrap-around Straights{},",
-			"this Joker gains {C:mult}+#1#{} Mult per",
+			"this Joker gains {X:mult,C:white}X#1#{} Mult per",
 			"played {C:attention}Wrap-around Straight{}",
-			"{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+			"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
 		}
 	},
 	rarity = 2,
@@ -23,7 +23,7 @@ SMODS.Joker { --Round-a-bout
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { mult = 0, mult_mod = 8 }},
+	config = { extra = { mult = 1, mult_mod = 0.25 }},
 	in_pool = function(self, args)
 		return can_do_pokerhand_changer_jokers()
 	end,
@@ -82,10 +82,13 @@ SMODS.Joker { --Round-a-bout
 				}
 			end
 		end
+		if context.joker_main and next(context.poker_hands['Straight Flush']) then 
+			check_for_unlock({type = 'picubed_roundabout_wrapastraightflush'})
+		end
 		if context.joker_main and card.ability.extra.mult > 0 then
 			return {
-				message = localize{type='variable', key='a_mult', vars = {card.ability.extra.mult} },
-				mult_mod = card.ability.extra.mult, 
+				--message = localize{type='variable', key='a_mult', vars = {card.ability.extra.xmult} },
+				xmult = card.ability.extra.mult, 
 				colour = G.C.MULT
 			}
 		end

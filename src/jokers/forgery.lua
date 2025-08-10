@@ -33,9 +33,11 @@ SMODS.Joker { --Forgery
 			end
 			card_mult = card_mult + (card_is_kil.ability.perma_bonus or 0) + (card_is_kil.ability.perma_h_chips or 0)
 			if SMODS.has_enhancement(card_is_kil, 'm_bonus') then -- bonus card (vanilla)
-					card_mult = card_mult + 30
+				card_mult = card_mult + 30
+			elseif SMODS.has_enhancement(card_is_kil, 'm_stone') then -- stone card (vanilla)
+				card_mult = card_mult + 50
 			elseif SMODS.has_enhancement(card_is_kil, 'm_akyrs_ash_card') then -- ash card (aikoyori's shenanigans)
-					card_mult = card_mult + 30
+				card_mult = card_mult + 30
 			end
 			if card_is_kil.edition then
 				if card_is_kil.edition.key == 'e_foil' then -- foil (vanilla)
@@ -78,6 +80,9 @@ SMODS.Joker { --Forgery
 					return true 
 				end
 			}))
+			if card_mult * 0.5 >= 40 then
+				check_for_unlock({type = 'picubed_forgery_criticalhit'})
+			end
 			card.ability.extra.mult = card.ability.extra.mult + card_mult * 0.5
 		end
 		if context.joker_main then

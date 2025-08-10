@@ -64,6 +64,7 @@ SMODS.Joker { --Inkjet Printer
                                     delay = 0.3,
                                     blockable = false,
                                     func = function()
+                                        check_for_unlock({type = 'picubed_printer_error'})
                                         local mpcard = create_card('Joker', G.jokers, nil, 0, nil, nil, 'j_misprint', 'pri')
                                         mpcard:set_edition(card.edition, false, true)
                                         mpcard:add_to_deck()

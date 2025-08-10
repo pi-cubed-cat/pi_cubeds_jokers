@@ -46,6 +46,9 @@ SMODS.Joker { --Mount Joker
 						stone_count = stone_count + 1
 				end
 		end
+		if context.joker_main and next(context.poker_hands['Straight Flush']) then
+			check_for_unlock({type = 'picubed_straightflush_agrandmemorial'})
+		end
 		if context.modify_scoring_hand and not context.blueprint and stone_count >= 4 then
 			return {
 					add_to_hand = true

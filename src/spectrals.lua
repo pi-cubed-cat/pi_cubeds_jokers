@@ -124,6 +124,7 @@ SMODS.Consumable { --Extinction (Spectral card)
         if next(SMODS.find_card('j_gros_michel')) then
             for k, v in ipairs(G.jokers.cards) do
                 if v.ability.name == 'Gros Michel' then
+                    check_for_unlock({type = 'picubed_extinction_grossedoff'})
                     card_eval_status_text(v, 'extra', nil, nil, nil, {message = localize('k_extinct_ex') })
                     G.E_MANAGER:add_event(Event({
                         func = function()

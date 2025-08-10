@@ -81,15 +81,3 @@ SMODS.Joker { --Bisexual Flag
         end
     end
 }
-
-SMODS.Joker { -- old "spectrum" version fallback
-    key = 'bisexualflag_spectrums',
-    atlas = 'PiCubedsJokers',
-    pos = { x = 7, y = 2 },
-    no_collection = true,
-    discovered = true,
-    in_pool = function(self, args) return false end,
-    update = function(self, card, dt)
-        card:set_ability(G.P_CENTERS["j_picubed_bisexualflag"])
-    end
-}

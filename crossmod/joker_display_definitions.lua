@@ -345,7 +345,7 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
             local _tally = -1
             local stone_hand = nil
             for _, v in ipairs(G.handlist) do
-                if G.GAME.hands[v].visible and to_number(G.GAME.hands[v].level) > _tally then
+                if G.GAME.hands[v].visible and to_big(G.GAME.hands[v].level) > to_big(_tally) then
                     stone_hand = v
                     _tally = G.GAME.hands[v].level
                 end
@@ -437,10 +437,128 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
 		}
     jd_def["j_picubed_roundabout"] = { -- Round-a-bout
         text = {
+            { 
+              border_nodes = {
+                { text = "X" },
+                { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "exp" }
+              },
+          },
+        },
+    }
+    jd_def["j_picubed_sprinkler"] = { -- Sprinkler
+        text = {
+            { text = "(", colour = G.C.UI.TEXT_INACTIVE },
+            { ref_table = "card.joker_display_values", ref_value = "sprinkler_card_suit" },
+            { text = ")", colour = G.C.UI.TEXT_INACTIVE }
+        },
+        calc_function = function(card)
+            card.joker_display_values.sprinkler_card_suit = localize(G.GAME.current_round.sprinkler_card or "Spades", 'suits_singular')
+        end,
+        style_function = function(card, text, reminder_text, extra)
+            if text and text.children[2] then
+                text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.current_round.sprinkler_card or "Spades"], 0.35)
+            end
+            return false
+        end,
+    }
+    jd_def["j_picubed_monkeyseemonkeydo"] = { -- Monkey See, Monkey Do
+      text = {
+          { text = "(", colour = G.C.UI.TEXT_INACTIVE, scale = 0.3 },
+          { ref_table = "card.joker_display_values", ref_value = "monkey_see", scale = 0.3 },
+          { text = ", ", colour = G.C.UI.TEXT_INACTIVE, scale = 0.3 },
+          { ref_table = "card.joker_display_values", ref_value = "monkey_do", scale = 0.3 },
+          { text = ")", colour = G.C.UI.TEXT_INACTIVE, scale = 0.3 },
+      },
+      calc_function = function(card)
+          card.joker_display_values.monkey_see = localize((G.GAME.current_round.picubed_monkeysee or {}).rank or 'King', 'ranks')
+          card.joker_display_values.monkey_do = localize((G.GAME.current_round.picubed_monkeydo or {}).rank or 'Ace', 'ranks')
+      end
+    }
+    jd_def["j_picubed_splatzone"] = { -- Splat Zone
+        text = {
             { text = "+" },
-            { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
+            { ref_table = "card.joker_display_values", ref_value = "mult", retrigger_type = "mult" }
         },
         text_config = { colour = G.C.MULT },
+        calc_function = function(card)
+          local all_same_suit = 0
+          if #G.hand.cards - #G.hand.highlighted > 0 then
+            local suit_list = {}
+            for k, v in pairs(SMODS.Suits) do
+                suit_list[k] = 0
+            end
+            for k, v in ipairs(G.hand.cards) do
+              for kk, vv in pairs(suit_list) do
+                if v:is_suit(kk, true) and not v.highlighted then 
+                  suit_list[kk] = suit_list[kk] + 1
+                end 
+              end
+            end
+            for kk, vv in pairs(suit_list) do
+              if suit_list[kk] == #G.hand.cards - #G.hand.highlighted then 
+                all_same_suit = 1
+                break
+              end 
+            end 
+          end
+          card.joker_display_values.mult = (card.ability.extra.mult or 0) * all_same_suit
+        end,
+		}
+    jd_def["j_picubed_turfwar"] = { -- Turf War
+        text = {
+            {
+                border_nodes = {
+                    { text = "X" },
+                    { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+                }
+            }
+        },
+        reminder_text = {
+            { text = "(" },
+            { ref_table = "card.joker_display_values", ref_value = "count", colour = G.C.ORANGE },
+            { text = " " },
+            { ref_table = "card.joker_display_values", ref_value = "suit" },
+            { text = " cards)" },
+        },
+        calc_function = function(card)
+            local suit_count = 0
+            for k,v in ipairs(G.playing_cards) do
+              if G.GAME.current_round.picubed_turfwar.suit and v:is_suit(G.GAME.current_round.picubed_turfwar.suit) or (v.debuff and v.base.suit == G.GAME.current_round.picubed_turfwar.suit) then 
+                suit_count = suit_count + 1
+              end
+            end
+            card.joker_display_values.count = suit_count
+            card.joker_display_values.suit = localize((G.GAME.current_round.picubed_turfwar.suit or 'Spades'), 'suits_singular')
+        end,
+        style_function = function(card, text, reminder_text, extra)
+            if reminder_text and reminder_text.children[4] then
+              reminder_text.children[4].config.colour = lighten(G.C.SUITS[G.GAME.current_round.picubed_turfwar.suit or 'Spades'], 0.35)
+            end
+            return false
+        end,
     }
+    jd_def["j_picubed_jokerinanutshell"] = { -- Joker in a Nutshell
+        text = {
+            {
+                border_nodes = {
+                    { text = "X" },
+                    { ref_table = "card.ability.extra", ref_value = "Xmult", retrigger_type = "exp" }
+                }
+            }
+        },
+    }
+    jd_def["j_picubed_surgeon"] = { -- Surgeon
+      extra = {
+          {
+              { text = "(+" },
+              { ref_table = "card.joker_display_values", ref_value = "size" },
+              { text = ")" },
+          }
+      },
+      extra_config = { colour = G.C.ORANGE },
+      calc_function = function(card)
+          card.joker_display_values.size = card.ability.extra.hand_increase or 0
+      end
+    } 
   end
 end

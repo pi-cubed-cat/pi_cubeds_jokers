@@ -79,6 +79,25 @@ local joker_list = {
     'talkingflower',
     'superlustyjoker',
     'laserprinter',
+    -- page 6 (wave 5)
+    'bigtwo',
+    'psychicspirit',
+    'sprinkler',
+    'monkeyseemonkeydo',
+    'weighteddie',
+    'splatzone',
+    'jokercircuit',
+    'satanist',
+    'boomerang',
+    'hierarchy',
+    'turfwar',
+    'nobelprize',
+    'jokerinanutshell',
+    'surgeon',
+    'thecube',
+    -- bonus content??? (unfinished lol)
+    --'tableexpectedgotnil',
+    --'switchingteams'
 }
 
 for _, key in ipairs(joker_list) do

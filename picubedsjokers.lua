@@ -35,6 +35,7 @@ if picubed_config.spectrals then
     assert(SMODS.load_file("src/spectrals.lua"))()
 end
 assert(SMODS.load_file("src/decks.lua"))()
+assert(SMODS.load_file("src/achievements.lua"))()
 
 -- load crossmod files
 if JokerDisplay then
@@ -51,6 +52,9 @@ if Partner_API then
 end
 if next(SMODS.find_mod("RevosVault")) then
     assert(SMODS.load_file("crossmod/revosvault.lua"))()
+end
+if next(SMODS.find_mod("TheAutumnCircus")) then
+    assert(SMODS.load_file("crossmod/theautumncircus.lua"))()
 end
 
 -- jokers & spectrals atlas
@@ -124,7 +128,7 @@ if can_do_pokerhand_changer_jokers() then
                 local _tally = -1
                 local stone_hand = nil
                 for _, v in ipairs(G.handlist) do
-                    if G.GAME.hands[v].visible and to_number(G.GAME.hands[v].level) > _tally then
+                    if G.GAME.hands[v].visible and to_big(G.GAME.hands[v].level) > to_big(_tally) then
                         --text = v
                         --scoring_hand = poker_hands[v]
                         stone_hand = v

@@ -69,3 +69,54 @@ SMODS.Tag { -- gaT pu-poT ylloJ (Cryptid)
 		end
 	end
 }
+
+SMODS.Joker { --XM (Cryptid)
+    key = 'xm',
+    loc_txt = {
+        name = 'XM',
+        text = {
+            "This card gives",
+            "{B:1,C:white}XM{}",
+        }
+    },
+    rarity = 3,
+    atlas = 'PiCubedsJokers',
+    pos = { x = 9, y = 10 },
+    cost = 6,
+    discovered = true,
+    blueprint_compat = true,
+    perishable_compat = true,
+    eternal_compat = true,
+    config = { extra = { repetitions = 1 } },
+	pools = { ["M"] = true },
+	dependencies = {
+		items = { "set_cry_m" },
+	},
+    loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.repetitions, colours = { HEX('7DC6F3') } } }
+    end,
+    in_pool = function(self, args) 
+		local jollycount = 0
+		for i = 1, #G.jokers.cards do
+			if
+				G.jokers.cards[i]:is_jolly()
+				or Cryptid.safe_get(G.jokers.cards[i].config.center, "pools", "M")
+				or G.jokers.cards[i].ability.name == "cry-mprime"
+			then
+				jollycount = jollycount + 1
+			end
+		end
+		return jollycount > 0
+	end,
+    calculate = function(self, card, context)
+        if context.retrigger_joker_check and not context.retrigger_joker and context.other_card.ability.name ~= 'j_picubed_allin' then
+            if context.other_card:is_jolly() or Cryptid.safe_get(context.other_card.config.center, "pools", "M")
+			or context.other_card.ability.name == "cry-mprime" then
+                return {
+                    repetitions = card.ability.extra.repetitions,
+                    card = card
+                }
+            end
+		end
+    end
+}

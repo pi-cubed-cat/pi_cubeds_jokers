@@ -27,7 +27,7 @@ SMODS.Joker { --Shrapnel
 				v.ability.perma_mult = v.ability.perma_mult + card.ability.extra.mult
 				G.E_MANAGER:add_event(Event({
 				trigger = 'before',
-				delay = 0.15,
+				delay = 0,
 				func = (function()
 					v:juice_up()
 					return true
