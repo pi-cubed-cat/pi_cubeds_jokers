@@ -1,5 +1,16 @@
 local function reset_picubed_ordersector()
-    G.GAME.current_round.picubed_ordersector = G.GAME.current_round.picubed_ordersector or { suit = 'Spades' }
+    local is_exist = false
+	for i=1,#TheAutumnCircus.placeholder_jokers do
+		if TheAutumnCircus.placeholder_jokers[i] == 'j_picubed_ordersector' then
+			is_exist = true
+			break
+		end
+	end
+	if not is_exist then
+		TheAutumnCircus.placeholder_jokers[#TheAutumnCircus.placeholder_jokers+1] = 'j_picubed_ordersector'
+	end
+	
+	G.GAME.current_round.picubed_ordersector = G.GAME.current_round.picubed_ordersector or { suit = 'Spades' }
     local ordersector_suits = {}
     for k, v in ipairs({ 'Spades', 'Hearts', 'Clubs', 'Diamonds' }) do
         if v ~= G.GAME.current_round.picubed_ordersector.suit then ordersector_suits[#ordersector_suits + 1] = v end
@@ -17,7 +28,6 @@ SMODS.Joker { -- Order Sector (Þe Autumn Circus)
 			"per {V:1}#3#{} card in {C:attention}graveyard{}",
 			"{s:0.8,C:attention}Suit {}{s:0.8}changes at end of round{}",
 			"{C:inactive}(Currently {X:mult,C:white}X#2#{}{C:inactive} Mult){}",
-			
 		}
 	},
 	config = { extra = { Xmult_mod = 0.25 } },
@@ -31,8 +41,9 @@ SMODS.Joker { -- Order Sector (Þe Autumn Circus)
 		return #G.graveyard > 1
 	end,
     loc_vars = function(self, info_queue, card)
+		if not card.fake_card then info_queue[#info_queue+1] = {generate_ui = TheAutumnCircus.func.artcredit, key = 'autumn'} end
 		local card_count = 0
-		for k,v in ipairs(G.graveyard) do
+		for k,v in ipairs(G.graveyard or {}) do
 			if v:is_suit(G.GAME.current_round.picubed_ordersector.suit) or (v.debuff and v.base.suit == G.GAME.current_round.picubed_ordersector.suit) then 
 				card_count = card_count + 1
 			end

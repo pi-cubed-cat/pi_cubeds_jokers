@@ -798,6 +798,18 @@ return {
                     "{s:0.8}Aces give {s:0.8,C:money}$11{}",
                 }
             },
+            j_picubed_ordersector = {
+				name = {
+					"Order Sector",
+					"{C:autumn,s:0.5}Marina's VR simulation is a WIP!",
+				},
+				text = {
+					"This card gives {X:mult,C:white}X#1#{} Mult", 
+                    "per {V:1}#3#{} card in {C:attention}graveyard{}",
+                    "{s:0.8,C:attention}Suit {}{s:0.8}changes at end of round{}",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{}{C:inactive} Mult){}",
+				},
+			},
         },
         Spectral = {
             c_picubed_commander = {
