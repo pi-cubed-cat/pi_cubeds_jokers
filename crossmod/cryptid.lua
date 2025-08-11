@@ -82,7 +82,7 @@ SMODS.Joker { --XM (Cryptid)
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 10 },
-    cost = 6,
+    cost = 9,
     discovered = true,
     blueprint_compat = true,
     perishable_compat = true,
