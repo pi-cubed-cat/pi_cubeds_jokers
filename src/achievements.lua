@@ -102,7 +102,7 @@ SMODS.Achievement { -- Balatro Theme Custom Remix
         if G and G.jokers and G.jokers.cards then
             for k,v in ipairs(G.jokers.cards) do
                 for i=1,#rhythm_heaven_list do
-                    if v.config.center.key == rhythm_heaven_list[i] then
+                    if string.find(v.config.center.key, rhythm_heaven_list[i]) then
                         rh_count = rh_count + 1
                     end
                 end
