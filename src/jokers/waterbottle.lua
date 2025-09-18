@@ -38,7 +38,7 @@ SMODS.Joker { --Water Bottle
             }
 		end
 		
-		if context.end_of_round and not context.blueprint and G.GAME.blind.boss and card.ability.extra.chips > 0 then
+		if context.end_of_round and not context.blueprint and not context.retrigger_joker and G.GAME.blind.boss and card.ability.extra.chips > 0 then
 			card.ability.extra.chips = 0
 			return {
                 card = card,

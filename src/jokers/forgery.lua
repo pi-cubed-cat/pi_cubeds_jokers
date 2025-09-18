@@ -23,7 +23,7 @@ SMODS.Joker { --Forgery
 		return { vars = { card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
-		if context.setting_blind and not context.blueprint then
+		if context.setting_blind and not context.blueprint and not context.retrigger_joker then
 			local card_is_kil = pseudorandom_element(G.playing_cards, pseudoseed('forgery'..G.GAME.round_resets.ante))
 			local card_mult = 0
 			if SMODS.has_no_rank(card_is_kil) then -- rankless cards

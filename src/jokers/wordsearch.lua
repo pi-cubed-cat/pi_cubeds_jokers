@@ -31,6 +31,7 @@ SMODS.Joker { --Word Search
 			if 
 				context.other_card:get_id() == G.GAME.current_round.picubed_wordsearch_card.id
 				and not context.blueprint 
+				and not context.retrigger_joker
 				and not context.other_card.debuff then
 					card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
 					return {

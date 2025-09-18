@@ -3,10 +3,15 @@ SMODS.Joker { --Polyrhythm
 	loc_txt = {
 		name = 'Polyrhythm',
 		text = {
-			"Receive {C:money}$#1#{} every {C:attention}#2#{} {C:inactive}[#4#]{}",
-			"hands played, create a {C:tarot}Tarot{}",
-			"card every {C:attention}#3#{} {C:inactive}[#5#]{} discards",
-			"{C:inactive}(Must have room){}"
+			{
+				"Receive {C:money}$#1#{} every",
+				"{C:attention}#2#{} {C:inactive}[#4#]{} hands played",
+			},
+			{
+				"Create a {C:tarot}Tarot{} card",
+				"every {C:attention}#3#{} {C:inactive}[#5#]{} discards",
+				"{C:inactive}(Must have room){}"
+			}
 		}
 	},
 	rarity = 1,
@@ -22,7 +27,7 @@ SMODS.Joker { --Polyrhythm
 		return { vars = { card.ability.extra.money, card.ability.extra.money_req, card.ability.extra.tarot_req,card.ability.extra.money_count, card.ability.extra.tarot_count } }
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main and not context.blueprint then
+		if context.joker_main and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.money_count = card.ability.extra.money_count - 1
 			if card.ability.extra.money_count > 0 then
 				return {
@@ -40,7 +45,7 @@ SMODS.Joker { --Polyrhythm
                 card = card
 			}
 		end
-		if context.pre_discard and not context.blueprint then
+		if context.pre_discard and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.tarot_count = card.ability.extra.tarot_count - 1
 			if card.ability.extra.tarot_count > 0 then
 				return {

@@ -29,7 +29,7 @@ SMODS.Joker { --Translucent Joker
 			G.jokers:emplace(mpcard)
 			mpcard:start_materialize()
 		end
-		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.rounds = card.ability.extra.rounds + 1
             if card.ability.extra.rounds == card.ability.extra.rounds_total then
                 local eval = function(card) return not card.REMOVED end

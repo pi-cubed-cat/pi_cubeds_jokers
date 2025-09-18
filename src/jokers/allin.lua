@@ -3,10 +3,16 @@ SMODS.Joker { --All In
     loc_txt = {
         name = 'All In',
         text = {
-            "All {C:attention}face down{} cards and",
-            "Jokers are retriggered",
-            "{C:attention}#1#{} additional time(s)",
-            "{C:inactive}(except All In)"
+            {
+                "Played {C:attention}face down{} cards are",
+                "retriggered {C:attention}#1#{} additonal times"
+            },
+            {
+                "{C:attention}Face down{} Jokers and",
+                "cards held in hand are",
+                "retriggered {C:attention}#2#{} additional time",
+                "{C:inactive}(except All In)"
+            }
         }
     },
     rarity = 2,
@@ -17,9 +23,9 @@ SMODS.Joker { --All In
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
-    config = { extra = { repetitions = 1, face_down_cards = {} } },
+    config = { extra = { repetitions = 2, other_repetitions = 1, face_down_cards = {} } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.repetitions } }
+        return { vars = { card.ability.extra.repetitions, card.ability.extra.other_repetitions } }
     end,
     in_pool = function(self, args) return G.GAME.round_resets.ante >= 2 end,
     calculate = function(self, card, context) --don't base your joker ideas on face-down cards.
@@ -63,7 +69,7 @@ SMODS.Joker { --All In
         if context.cardarea == G.hand and context.repetition and not context.repetition_only then
             if context.other_card.facing == 'back' then
 				return {
-                    repetitions = card.ability.extra.repetitions,
+                    repetitions = card.ability.extra.other_repetitions,
                     card = card
 				}
             end
@@ -71,7 +77,7 @@ SMODS.Joker { --All In
         if context.retrigger_joker_check and not context.retrigger_joker and context.other_card.ability.name ~= 'j_picubed_allin' then
             if context.other_card.facing == 'back' then
                 return {
-                    repetitions = card.ability.extra.repetitions,
+                    repetitions = card.ability.extra.other_repetitions,
                     card = card
                 }
             end

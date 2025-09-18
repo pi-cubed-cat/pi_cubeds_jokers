@@ -24,7 +24,7 @@ SMODS.Joker { --Surgeon
         G.hand:change_size(-card.ability.extra.hand_increase)
     end,
 	calculate = function(self, card, context)
-        if context.remove_playing_cards and not context.blueprint then
+        if context.remove_playing_cards and not context.blueprint and not context.retrigger_joker then
             local sixes = 0
             for _, removed_card in ipairs(context.removed) do
                 if removed_card:get_id() == 6 then sixes = sixes + 1 end

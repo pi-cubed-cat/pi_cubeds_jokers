@@ -23,7 +23,7 @@ SMODS.Joker { --Psychic Spirit
 		}
 	end,
 	calculate = function(self, card, context)
-        if context.before and context.main_eval and #context.full_hand < card.ability.extra.req_cards then
+        if context.before and context.main_eval and #context.full_hand < card.ability.extra.req_cards and not context.blueprint and not context.retrigger_joker then
             card.ability.extra.hands = card.ability.extra.hands - card.ability.extra.hands_mod
             if card.ability.extra.hands <= 0 then
                 G.E_MANAGER:add_event(Event({

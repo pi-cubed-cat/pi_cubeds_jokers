@@ -39,7 +39,7 @@ SMODS.Joker { --Siphon
             end
         end]]
         if not context.selling_self then
-            if context.selling_card and context.card.ability.set == 'Joker' and not context.blueprint then
+            if context.selling_card and context.card.ability.set == 'Joker' and not context.blueprint and not context.retrigger_joker then
                 card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
                 return {
                     selling_self = false,

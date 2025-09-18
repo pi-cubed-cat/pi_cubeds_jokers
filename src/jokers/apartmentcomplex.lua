@@ -30,7 +30,7 @@ SMODS.Joker { --Apartment Complex
         return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
     end,
     calculate = function(self, card, context)
-        if context.before and not context.blueprint then
+        if context.before and not context.blueprint and not context.retrigger_joker then
             if next(context.poker_hands["Flush House"]) then
                 card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
                 return {

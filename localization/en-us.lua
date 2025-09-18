@@ -92,9 +92,9 @@ return {
             j_picubed_jokinhood = {
                 name = "Jokin' Hood",
                 text = {
-                   "{C:attention}Non-face cards{} give {C:money}$#1#{}",
-                   "when scored, {C:attention}face cards{} give",
-                   "{C:money}$#2#{} when scored"
+                    "{C:attention}Non-face cards{} earn {C:money}$#1#{}",
+                    "when scored, {C:attention}face cards{}",
+                    "earn {C:mult}-$#2#{} when scored"
                 }
             },
             j_picubed_prime7 = {
@@ -130,10 +130,14 @@ return {
             j_picubed_stonemason = {
                 name = 'Stonemason',
                 text = {
-                   "{C:attention}Stone{} cards gain {X:mult,C:white}X#1#{} Mult",
-                   "when scored, Stone cards have a",
-                   "{C:green}#2# in #3#{} chance to be {C:attention}destroyed",
-                   "after scoring is finished"
+                    {
+                        "{C:attention}Stone{} cards permanently",
+                        "gain {X:mult,C:white}X#1#{} Mult when scored",
+                    },
+                    {
+                        "Stone cards have a {C:green}#2# in #3#{} chance",
+                        "to be {C:attention}destroyed{} after scoring"
+                    }
                 }
             },
             j_picubed_snakeeyes = {
@@ -295,10 +299,16 @@ return {
             j_picubed_allin = {
                 name = 'All In',
                 text = {
-                   "All {C:attention}face down{} cards and",
-                   "Jokers are retriggered",
-                   "{C:attention}#1#{} additional time(s)",
-                   "{C:inactive}(except All In)"
+                    {
+                        "Played {C:attention}face down{} cards are",
+                        "retriggered {C:attention}#1#{} additonal times"
+                    },
+                    {
+                        "{C:attention}Face down{} Jokers and",
+                        "cards held in hand are",
+                        "retriggered {C:attention}#2#{} additional time",
+                        "{C:inactive}(except All In)"
+                    }
                 }
             },
             j_picubed_gottheworm = {
@@ -310,11 +320,13 @@ return {
             },
             j_picubed_extralimb = {
                 name = 'Extra Limb',
-                text = {
-                   "{C:attention}+#1#{} Consumable Slots,",
-                   "{C:mult}+#2#{} Mult per held",
-                   "Consumable",
-                   "{C:inactive}(Currently {C:mult}+#3# {C:inactive}Mult)"
+                {
+                    "{C:attention}+#1#{} Consumable Slots",
+                },
+                {
+                    "{C:mult}+#2#{} Mult per held",
+                    "Consumable",
+                    "{C:inactive}(Currently {C:mult}+#3# {C:inactive}Mult)"
                 }
             },
             j_picubed_perfectscore = {
@@ -422,10 +434,15 @@ return {
             j_picubed_polyrhythm = {
                 name = 'Polyrhythm',
                 text = {
-                   "Receive {C:money}$#1#{} every {C:attention}#2#{} {C:inactive}[#4#]{}",
-                   "hands played, create a {C:tarot}Tarot{}",
-                   "card every {C:attention}#3#{} {C:inactive}[#5#]{} discards",
-                   "{C:inactive}(Must have room){}"
+                    {
+                        "Receive {C:money}$#1#{} every",
+                        "{C:attention}#2#{} {C:inactive}[#4#]{} hands played",
+                    },
+                    {
+                        "Create a {C:tarot}Tarot{} card",
+                        "every {C:attention}#3#{} {C:inactive}[#5#]{} discards",
+                        "{C:inactive}(Must have room){}"
+                    }
                 }
             },
             j_picubed_pot = {
@@ -466,10 +483,15 @@ return {
             j_picubed_offthehook = {
                 name = 'Off the Hook',
                 text = {
-                   "After Play, all {C:attention}unenhanced{}",
-                   "cards held in hand are",
-                   "{C:attention}discarded{}, {C:chips}+#1#{} Hands",
-                   "when Blind is selected"
+                    {
+                        "After play, all {C:attention}unenhanced{}",
+                        "cards held in hand",
+                        "are {C:attention}discarded{}",
+                    },
+                    {
+                        "Gain {C:chips}+#1#{} Hands",
+                        "when {C:attention}Blind{} is selected"
+                    }
                 }
             },
             j_picubed_eyepatch = {
@@ -606,11 +628,15 @@ return {
             j_picubed_roundabout = {
                 name = 'Round-a-bout',
                 text = {
-                    "Allows {C:attention}Straights{} to be",
-                    "made with {C:attention}Wrap-around Straights{},",
-                    "this Joker gains {X:mult,C:white}X#1#{} Mult per",
-                    "played {C:attention}Wrap-around Straight{}",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
+                    {
+                        "Allows {C:attention}Straights{} to be made",
+                        "using {C:attention}Wrap-around Straights{}",
+                    },
+                    {
+                        "This Joker gains {X:mult,C:white}X#1#{} Mult per",
+                        "played {C:attention}Wrap-around Straight{}",
+                        "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
+                    }
                 }
             },
             j_picubed_hypemoments = {
@@ -810,6 +836,47 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{}{C:inactive} Mult){}",
 				},
 			},
+            j_picubed_blueberrypie = {
+				name = 'Blueberry Pie',
+                text = {
+                    "Copies ability of",
+                    "{C:attention}Joker{} to the right,",
+                    "this card is {C:attention}destroyed{}",
+                    "after {C:attention}#1#{} rounds"
+                },
+			},
+            j_picubed_encore = {
+				name = 'Encore',
+                text = {
+                    "On {C:attention}final hand{} of", 
+                    "{C:attention}Boss Blind{}, all",
+                    "cards earn {C:money}$#1#{}",
+                    "when scored",
+                },
+			},
+            j_picubed_otamatone = {
+				name = 'Otamatone',
+                text = {
+                    "",
+                },
+			},
+            j_picubed_leeroooooy = {
+				name = 'LEEROOOOOY!!',
+                text = {
+                    "{C:attention}Retrigger{} all played cards", 
+                    "per {C:attention}Blind skipped{} this {C:attention}Ante",
+                    "{C:inactive}(Currently {C:attention}#1#{} {C:inactive}retriggers)"
+                },
+			},
+            j_picubed_athrowawayjoker = {
+				name = 'A Throwaway Joker',
+                text = {
+                    "This Joker gains {C:chips}+Chips{}",
+                    "equal to the base {C:mult}Mult{}",
+                    "of {C:attention}discarded poker hand{}",
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
+                },
+			},
         },
         Spectral = {
             c_picubed_commander = {
@@ -837,6 +904,16 @@ return {
                    "from your deck"
                 }
             },
+        },
+        Tag = {
+            tag_picubed_jokercircuitskip = {
+                name = "Speed Tag",
+                text = {
+                    "Gives {C:money}$#1#{} per skipped",
+                    "Blind this run",
+                    "{C:inactive}(Will give {C:money}$#2#{C:inactive})",
+                },
+            }
         },
         Partner = {
             pnr_picubed_roof = {
@@ -1047,6 +1124,7 @@ return {
             config_picubeds_newspectrals = "New Spectral Cards (restart required)",
             config_picubeds_customsfx = "Custom Sound Effects (restart required)",
             config_picubeds_pokerhandchangers = "Hand type-affecting Jokers (restart required)",
+            k_picubeds_chips = "Chips",
         }
     }
 }

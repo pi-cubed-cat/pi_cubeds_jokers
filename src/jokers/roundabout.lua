@@ -8,11 +8,15 @@ SMODS.Joker { --Round-a-bout
 	loc_txt = {
 		name = 'Round-a-bout',
 		text = {
-			"Allows {C:attention}Straights{} to be",
-			"made with {C:attention}Wrap-around Straights{},",
-			"this Joker gains {X:mult,C:white}X#1#{} Mult per",
-			"played {C:attention}Wrap-around Straight{}",
-			"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
+			{
+				"Allows {C:attention}Straights{} to be made",
+				"using {C:attention}Wrap-around Straights{}",
+			},
+			{
+				"This Joker gains {X:mult,C:white}X#1#{} Mult per",
+				"played {C:attention}Wrap-around Straight{}",
+				"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
+			}
 		}
 	},
 	rarity = 2,
@@ -63,7 +67,7 @@ SMODS.Joker { --Round-a-bout
 				end
 			end
 		end
-		if context.before and context.main_eval and not context.blueprint and next(context.poker_hands['Straight']) then
+		if context.before and context.main_eval and not context.blueprint and next(context.poker_hands['Straight']) and not context.retrigger_joker then
 			local has_low = false
 			local has_high = false
 			for k, v in ipairs(context.scoring_hand) do

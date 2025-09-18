@@ -35,7 +35,7 @@ SMODS.Joker { --Turf War
 		}
 	end,
 	calculate = function(self, card, context)
-    	if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+    	if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
             if context.beat_boss then
 				local suit_count = 0
 				for k,v in ipairs(G.playing_cards) do

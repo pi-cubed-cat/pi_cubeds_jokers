@@ -34,7 +34,7 @@ SMODS.Joker { --Rhythmic Joker
                     volume = 0.4,
                     sound = "picubed_rhythm2"
                 }
-            else
+            elseif not context.retrigger_joker then
                 return {
                     message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},
                     mult_mod = card.ability.extra.mult, 
@@ -42,7 +42,7 @@ SMODS.Joker { --Rhythmic Joker
                 }
             end
         end
-        if context.hand_drawn and G.GAME.current_round.hands_left % 2 ~= 0 then
+        if context.hand_drawn and G.GAME.current_round.hands_left % 2 ~= 0 and not context.retrigger_joker then
             if picubed_config.custom_sound_effects then play_sound('picubed_rhythm1', 0.7, 0.7) end
             card:juice_up()
         end

@@ -41,7 +41,7 @@ SMODS.Joker { --Pot
 		}
 	end,
 	calculate = function(self, card, context)
-		if (context.first_hand_drawn or context.hand_drawn) and not context.blueprint then
+		if (context.first_hand_drawn or context.hand_drawn) and not context.blueprint and not context.retrigger_joker then
 			if SMODS.pseudorandom_probability(card, 'picubed_pot', 1, card.ability.extra.odds) then
 				card.ability.extra.is_active = true
 				local eval = function() return card.ability.extra.is_active and not G.RESET_JIGGLES end
@@ -77,7 +77,7 @@ SMODS.Joker { --Pot
 				}
 			end
 		end
-		if context.pre_discard and not context.blueprint and not context.hook then
+		if context.pre_discard and not context.blueprint and not context.hook and not context.retrigger_joker then
 			if card.ability.extra.is_active then
 				card.ability.extra.is_active = false
 				if picubed_config.custom_sound_effects then

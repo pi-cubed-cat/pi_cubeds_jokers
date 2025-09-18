@@ -3,10 +3,15 @@ SMODS.Joker { --Off the Hook
 	loc_txt = {
 		name = 'Off the Hook',
 		text = {
-			"After play, all {C:attention}unenhanced{}",
-			"cards held in hand are",
-			"{C:attention}discarded{}, {C:chips}+#1#{} Hands",
-			"when Blind is selected"
+			{
+				"After play, all {C:attention}unenhanced{}",
+				"cards held in hand",
+				"are {C:attention}discarded{}",
+			},
+			{
+				"Gain {C:chips}+#1#{} Hands",
+				"when {C:attention}Blind{} is selected"
+			}
 		}
 	},
 	rarity = 2,

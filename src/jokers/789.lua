@@ -30,7 +30,7 @@ SMODS.Joker { --7 8 9
                 end
             end
             if has_7 == true then
-                if context.other_card:get_id() == 9 and not context.blueprint 
+                if context.other_card:get_id() == 9 and not context.blueprint and not context.retrigger_joker
                 and not context.other_card.debuff then
                     card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
                     return {
@@ -48,7 +48,7 @@ SMODS.Joker { --7 8 9
                 colour = G.C.MULT
             }
         end
-        if context.destroying_card and context.cardarea == G.play and not context.blueprint then
+        if context.destroying_card and context.cardarea == G.play and not context.blueprint and not context.retrigger_joker then
             local has_7 = false
             for k,v in ipairs(context.scoring_hand) do
                 if v:get_id() == 7 then

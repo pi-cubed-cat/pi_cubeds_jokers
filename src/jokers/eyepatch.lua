@@ -59,7 +59,7 @@ SMODS.Joker { --Eye Patch
 			}))
 		end
 		
-		if context.before and context.main_eval and not context.blueprint then
+		if context.before and context.main_eval and not context.blueprint and not context.retrigger_joker then
             if card.ability.extra.hand_list[context.scoring_name] == false then
                 card.ability.extra.hand_list[context.scoring_name] = true
                 card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod

@@ -95,6 +95,12 @@ local joker_list = {
     'jokerinanutshell',
     'surgeon',
     'thecube',
+    -- page 7 (wave 6+)
+    'blueberrypie',
+    'encore',
+    'otamatone',
+    'leeroooooy',
+    'athrowawayjoker',
     -- bonus content??? (unfinished lol)
     --'tableexpectedgotnil',
     --'switchingteams'

@@ -3,10 +3,14 @@ SMODS.Joker { --Extra Limb
     loc_txt = {
         name = 'Extra Limb',
         text = {
-            "{C:attention}+#1#{} Consumable Slots,",
-            "{C:mult}+#2#{} Mult per held",
-            "Consumable",
-            "{C:inactive}(Currently {C:mult}+#3# {C:inactive}Mult)"
+            {
+                "{C:attention}+#1#{} Consumable Slots",
+            },
+            {
+                "{C:mult}+#2#{} Mult per held",
+                "Consumable",
+                "{C:inactive}(Currently {C:mult}+#3# {C:inactive}Mult)"
+            }
         }
     },
     rarity = 1,

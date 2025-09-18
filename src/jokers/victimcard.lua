@@ -27,7 +27,7 @@ SMODS.Joker { --Victim Card
 		if context.pre_discard and not context.blueprint then
 			picubed_victimcard_prehand = false
 		end
-		if context.hand_drawn and picubed_victimcard_prehand and not context.blueprint and G.GAME.current_round.hands_played ~= 0 then
+		if context.hand_drawn and picubed_victimcard_prehand and not context.blueprint and not context.retrigger_joker and G.GAME.current_round.hands_played ~= 0 then
 			card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
 			if card.ability.extra.Xmult >= card.ability.extra.Xmult_cap then
 				G.E_MANAGER:add_event(Event({

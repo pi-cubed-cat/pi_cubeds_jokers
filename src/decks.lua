@@ -49,6 +49,32 @@ SMODS.Back({ -- my epic deck by pi_cubed
 
 -- relies on additional functions present in lovely/myepicdeck.toml
 
+SMODS.Back({ -- Medusa Deck
+    name = "Medusa Deck",
+    key = "medusadeck",
+    loc_txt = {
+        name = "Medusa Deck",
+        text = {
+        "Start with 8 {C:attention,T:m_stone}Stone cards{}",
+        "instead of Kings and Queens",
+        },
+    },
+    pos = { x = 0, y = 1 },
+    atlas = "picubedsdeck",
+    unlocked = true,
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for k, v in pairs(G.playing_cards) do
+                    if v:get_id() == 13 or v:get_id() == 12 then
+                        v:set_ability('m_stone', nil, true)
+                    end
+                end
+                return true
+            end
+        }))
+    end,
+})
 
 SMODS.Back({ -- Wonderful Deck
     name = "Wonderful Deck",
@@ -139,12 +165,12 @@ SMODS.Back({ -- Rejuvenation Deck (Rejuvination)
 
 local old_g_draw_from_hand_to_discard = G.FUNCS.draw_from_hand_to_discard -- hook for +1 joker slot after boss blind is defeated
 G.FUNCS.draw_from_hand_to_discard = function(card)
-    if G.GAME.modifiers.slots_gain and G.GAME.blind:get_type() == 'Boss' then
+    if G.GAME.modifiers.picubed_slots_gain and G.GAME.blind:get_type() == 'Boss' then
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.3,
             func = function()
-                G.jokers.config.card_limit = G.jokers.config.card_limit + G.GAME.modifiers.slots_gain
+                G.jokers.config.card_limit = G.jokers.config.card_limit + G.GAME.modifiers.picubed_slots_gain
             return true end
         }))
     end
@@ -155,7 +181,7 @@ SMODS.Challenge { -- Nostalgic Rejuvination Deck Challenge Deck
     key = 'nostalgicrejuvinationdeck',
     rules = {
         custom = {
-            { id = 'picubed_slots_gain' },
+            { id = 'picubed_slots_gain', value = 1 },
         },
         modifiers = {
             { id = 'joker_slots', value = 0 },

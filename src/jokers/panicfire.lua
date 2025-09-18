@@ -36,7 +36,7 @@ SMODS.Joker { --Panic Fire
 				colour = G.C.RED
 			}
 		end
-		if context.selling_card and not card.ability.extra.is_active and not context.blueprint and G.GAME.blind.in_blind then
+		if context.selling_card and not card.ability.extra.is_active and not context.blueprint and G.GAME.blind.in_blind and not context.retrigger_joker then
 			card.ability.extra.count_current = card.ability.extra.count_current - 1
 			if card.ability.extra.count_current <= 0 then
 				card.ability.extra.is_active = true

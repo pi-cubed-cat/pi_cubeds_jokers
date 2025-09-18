@@ -3,10 +3,14 @@ SMODS.Joker { --Stonemason
     loc_txt = {
         name = 'Stonemason',
         text = {
-            "{C:attention}Stone{} cards gain {X:mult,C:white}X#1#{} Mult",
-            "when scored, Stone cards have a",
-            "{C:green}#2# in #3#{} chance to be {C:attention}destroyed",
-            "after scoring is finished"
+            {
+                "{C:attention}Stone{} cards permanently",
+                "gain {X:mult,C:white}X#1#{} Mult when scored",
+            },
+            {
+                "Stone cards have a {C:green}#2# in #3#{} chance",
+                "to be {C:attention}destroyed{} after scoring"
+            }
         }
     },
     config = { extra = { Xmult_bonus = 0.25, odds = 6 } },
@@ -38,7 +42,7 @@ SMODS.Joker { --Stonemason
                 }
             end
         end
-        if context.destroying_card and context.cardarea == G.play and not context.blueprint then
+        if context.destroying_card and context.cardarea == G.play and not context.blueprint and not context.retrigger_joker then
             if SMODS.has_enhancement(context.destroying_card, 'm_stone') then
                 if SMODS.pseudorandom_probability(card, 'picubed_stonemason', 1, card.ability.extra.odds) then
                     return {

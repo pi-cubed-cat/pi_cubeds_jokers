@@ -560,5 +560,25 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
           card.joker_display_values.size = card.ability.extra.hand_increase or 0
       end
     } 
+    jd_def["j_picubed_leeroooooy"] = { -- LEEROOOOOY!!
+      extra = {
+          {
+              { text = "(" },
+              { ref_table = "card.joker_display_values", ref_value = "size" },
+              { text = " Retriggers)" },
+          }
+      },
+      extra_config = { colour = G.C.ORANGE },
+      calc_function = function(card)
+          card.joker_display_values.size = card.ability.extra.retriggers or 0
+      end
+    } 
+    jd_def["j_picubed_athrowawayjoker"] = { -- A Throwaway Joker
+      text = {
+            { text = "+" },
+            { ref_table = "card.ability.extra", ref_value = "chips", retrigger_type = "mult" }
+        },
+        text_config = { colour = G.C.CHIPS },
+    }
   end
 end
