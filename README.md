@@ -1,5 +1,5 @@
 ![Mod Logo](https://i.imgur.com/WgRA0cT.png)
-IMPORTANT NOTE: Due to the probability changes, Steamodded **[1.0.0-beta-0711a](https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-0711a)** or later is now required!
+Steamodded **[1.0.0-beta-0711a](https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-0711a)** or later is required.
 
 List of Jokers (Modded Wiki Page): https://balatromods.miraheze.org/wiki/Pi_cubed's_Jokers/Jokers
 
@@ -16,7 +16,7 @@ A game restart is required for Config options to take effect.
 This option enables or disables the Spectral Cards Commander, Rupture, and Extinction from appearing.
 
 ### Custom Sound Effects  
-Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, Talking Flower, and Monkey See, Monkey Do.
+Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, Talking Flower, "Monkey See, Monkey Do", and Otamatone.
 
 ### Hand type-affecting Jokers
 Enables or disables any Jokers that directly change your hand and what poker hands it contains. Certain mods that tinker with poker hands can cause crashes or game closures when these Jokers activate. This option is automatically disabled if Paperback is installed. Currently, this affects Mount Joker, Wee Mini, and Round-a-bout. 
