@@ -40,6 +40,13 @@ return {
                      "{C:attention,T:v_illusion}#2#{}, and {C:attention,T:v_overstock_norm}#3#{}",
                 },
             },
+            b_picubed_medusadeck = {
+                name = "Medusa Deck",
+                text = {
+                    "Start with 8 {C:attention,T:m_stone}Stone cards{}",
+                    "instead of Kings and Queens",
+                },
+            },
         },
         Joker = {
             j_picubed_itsaysjokerontheceiling = {
@@ -171,8 +178,10 @@ return {
             j_picubed_ambigram = {
                 name = 'Ambigram',
                 text = {
-                   "{C:attention}6s{} and {C:attention}9s{} can",
-                   "{C:attention}swap ranks{} anytime"
+                    "{C:attention}6s{} and {C:attention}9s{} can",
+                    "{C:attention}swap ranks{} anytime",
+                    "{C:inactive}(Select cards and",
+                    "{C:inactive}then press 'Swap!')",
                 }
             },
             j_picubed_superwrathfuljoker = {

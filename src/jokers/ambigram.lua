@@ -4,7 +4,9 @@ SMODS.Joker { --Ambigram
         name = 'Ambigram',
         text = {
             "{C:attention}6s{} and {C:attention}9s{} can",
-            "{C:attention}swap ranks{} anytime"
+            "{C:attention}swap ranks{} anytime",
+            "{C:inactive}(Select cards and",
+            "{C:inactive}then press 'Swap!')",
         }
     },
     rarity = 1,
@@ -17,10 +19,10 @@ SMODS.Joker { --Ambigram
     eternal_compat = true,
 }
 
-local card_highlight = Card.highlight -- code based on Ortalab's Index Cards
+local card_highlight = Card.highlight -- code loosely based on Ortalab's Index Cards
 function Card:highlight(highlighted)
     card_highlight(self, highlighted)
-    if self.config.center.key == 'j_picubed_ambigram' and G.hand then
+    if self.config.center.key == 'j_picubed_ambigram' and G.hand and #G.hand.cards > 0 and #G.hand.highlighted > 0 then --extra bit so that you can sell the card
         self.children.use_button = UIBox{
             definition = G.UIDEF.use_ambigram_button(self), 
             config = {align = 'cl', offset = {x=0.35, y=0.4}, parent = self, id = 'picubed_ambigram_swap'}
@@ -32,8 +34,8 @@ function G.UIDEF.use_ambigram_button(card)
     local swap = nil
 
     swap = {n=G.UIT.C, config={align = "cl"}, nodes={
-        {n=G.UIT.C, config={ref_table = card, align = "cl",maxw = 1.25, padding = 0.1, r=0.08, minw = 0.9, minh = 0.9, hover = true, colour = G.C.GREEN, button = 'do_ambigram_swap' }, nodes={
-            {n=G.UIT.T, config={text = 'Swap!', colour = G.C.UI.TEXT_LIGHT, scale = 0.35, shadow = true}}
+        {n=G.UIT.C, config={ref_table = card, align = "cl",maxw = 1.25, padding = 0.1, r=0.08, minw = 0.9, minh = 0.9, hover = true, colour = G.C.ORANGE, button = 'do_ambigram_swap' }, nodes={
+            {n=G.UIT.T, config={text = 'Swap! ', colour = G.C.UI.TEXT_LIGHT, scale = 0.35, shadow = true}}
         }}
     }}
 
