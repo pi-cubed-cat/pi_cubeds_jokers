@@ -30,6 +30,14 @@ https://github.com/Icecanno/Partner-API
 Many of the Jokers added are compatible, and some provide very useful QOL for Jokers like Black Joker and Eye Patch!  
 https://github.com/nh6574/JokerDisplay  
 
+### ÞeAutumnCircus by AutumnMood  
+ÞeAutumnCircus is a very unique content mod, and pi_cubed's Jokers adds 2 new Jokers using some of its mechanics, with theming based on Splatoon 3: Side Order! "Why?" Uh, 'cause it's like an expansion pack? It fit the vibe.  
+https://github.com/AutumnMood924/TheAutumnCircus  
+
+### Revo's Vault by CodeRevo   
+pi_cubed's Jokers adds a new Printer-type Joker (Printer-ception!)  
+https://github.com/Cdrvo/Revos-Vault---Balatro-Mod  
+
 ### Opandora's Box by opan 
 A Joker pack I really enjoy with some interesting synergies, and stellar music.  
 https://github.com/ohpahn/opandoras-box

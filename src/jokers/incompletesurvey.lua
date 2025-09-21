@@ -3,9 +3,14 @@ SMODS.Joker { --Incomplete Survey
     loc_txt = {
         name = 'Incomplete Survey',
         text = {
-            "Earn {C:money}$#1#{} at start of round,",
-            "{C:attention}final card{} drawn to hand is",
-            "drawn {C:attention}face down{}"
+            {
+                "Earn {C:money}$#1#{} at start of round",
+            },
+            {
+                "When drawing cards to",
+                "hand, {C:attention}last card{} drawn is",
+                "always drawn {C:attention}face down{}",
+            }
         }
     },
     rarity = 1,

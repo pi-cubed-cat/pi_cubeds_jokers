@@ -19,17 +19,20 @@ local function reset_monkey_ranks()
     end
     local monkeysee_card = pseudorandom_element(valid_monkey_cards, pseudoseed('picubed_monkeysee' .. G.GAME.round_resets.ante))
     if monkeysee_card then
-        local monkeysee_rank = monkeysee_card.base.id
 		G.GAME.current_round.picubed_monkeysee.rank = monkeysee_card.base.value
         G.GAME.current_round.picubed_monkeysee.id = monkeysee_card.base.id
     end
 	valid_monkey_cards = {}
 	for _, playing_card in ipairs(G.playing_cards) do
-		if not SMODS.has_no_rank(playing_card) and playing_card.base.id ~= monkeysee_rank then
+		if not SMODS.has_no_rank(playing_card) and playing_card.base.id ~= monkeysee_card.base.id then
             valid_monkey_cards[#valid_monkey_cards + 1] = playing_card
         end
     end
 	local monkeydo_card = pseudorandom_element(valid_monkey_cards, pseudoseed('picubed_monkeydo' .. G.GAME.round_resets.ante))
+	if G.GAME.current_round.picubed_monkeysee.rank == 'Ace' and G.GAME.current_round.picubed_monkeydo.rank == 'Ace' then -- prevent this specific case of dupes
+		G.GAME.current_round.picubed_monkeydo.rank = 'King'
+		G.GAME.current_round.picubed_monkeydo.id = 14
+	end
 	if monkeydo_card then
         G.GAME.current_round.picubed_monkeydo.rank = monkeydo_card.base.value
         G.GAME.current_round.picubed_monkeydo.id = monkeydo_card.base.id

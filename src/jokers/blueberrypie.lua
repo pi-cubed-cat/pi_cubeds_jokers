@@ -17,6 +17,7 @@ SMODS.Joker { --Blueberry Pie
 	blueprint_compat = true,
     perishable_compat = true,
 	eternal_compat = false,
+    pools = { ["Food"] = true },
 	config = { extra = { rounds = 5 } },
 	loc_vars = function(self, info_queue, card)
         if card.area and card.area == G.jokers then
