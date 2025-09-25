@@ -40,7 +40,10 @@ https://github.com/Cdrvo/Revos-Vault---Balatro-Mod
 
 ### Opandora's Box by opan 
 A Joker pack I really enjoy with some interesting synergies, and stellar music.  
-https://github.com/ohpahn/opandoras-box
+https://github.com/ohpahn/opandoras-box  
+
+### Ortalab by CrimsonHeart, Eremel, & the Ortalab Team
+https://github.com/EremelMods/Ortalab  
 
 ### Extra Credit by CampfireCollective & more  
 https://github.com/GuilloryCraft/ExtraCredit
