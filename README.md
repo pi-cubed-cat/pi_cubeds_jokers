@@ -19,7 +19,7 @@ This option enables or disables the Spectral Cards Commander, Rupture, and Extin
 Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, Talking Flower, "Monkey See, Monkey Do", and Otamatone.
 
 ### Hand type-affecting Jokers
-Enables or disables any Jokers that directly change your hand and what poker hands it contains. Certain mods that tinker with poker hands can cause crashes or game closures when these Jokers activate. This option is automatically disabled if Paperback is installed. Currently, this affects Mount Joker, Wee Mini, and Round-a-bout. 
+Enables or disables any Jokers that directly change your hand and what poker hands it contains. Certain mods that tinker with poker hands can cause crashes or game closures when these Jokers activate. This option is **automatically disabled if the Paperback mod is active**. Currently, this affects Mount Joker, Wee Mini, and Round-a-bout. 
 
 ## Recommended Mods
 ### Partner by baimao  
@@ -40,7 +40,10 @@ https://github.com/Cdrvo/Revos-Vault---Balatro-Mod
 
 ### Opandora's Box by opan 
 A Joker pack I really enjoy with some interesting synergies, and stellar music.  
-https://github.com/ohpahn/opandoras-box
+https://github.com/ohpahn/opandoras-box  
+
+### Ortalab by CrimsonHeart, Eremel, & the Ortalab Team
+https://github.com/EremelMods/Ortalab  
 
 ### Extra Credit by CampfireCollective & more  
 https://github.com/GuilloryCraft/ExtraCredit
