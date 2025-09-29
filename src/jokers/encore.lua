@@ -4,7 +4,7 @@ SMODS.Joker { --Encore
 		name = 'Encore',
 		text = {
 			"On {C:attention}final hand{} of", 
-			"{C:attention}Boss Blind{}, all",
+			"{C:attention}Boss Blind{}, played",
             "cards earn {C:money}$#1#{}",
             "when scored",
 		}

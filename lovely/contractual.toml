@@ -1,0 +1,27 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''if (self.ability.set == 'Planet' or (self.ability.set == 'Booster' and self.ability.name:find('Celestial'))) and #find_joker('Astronomer') > 0 then self.cost = 0 end'''
+position = "after"
+match_indent = true
+payload = '''
+if self.ability.picubed_contractual then self.cost = math.floor(self.cost / 2) end
+'''
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''if G.GAME.modifiers.enable_rentals_in_shop and pseudorandom((area == G.pack_cards and 'packssjr' or 'ssjr')..G.GAME.round_resets.ante) > 0.7 and not SMODS.Stickers["rental"].should_apply then'''
+position = "before"
+match_indent = true
+payload = '''
+local contractual_poll = pseudorandom((area == G.pack_cards and 'packcontract' or 'contractpoll')..G.GAME.round_resets.ante)
+if G.GAME.modifiers.enable_picubed_contractuals_in_shop and contractual_poll > 0.7 or G.GAME.modifiers.REALLY_enable_picubed_contractuals_in_shop and contractual_poll > 0.4 then 
+    card:set_picubed_contractual()
+end
+'''

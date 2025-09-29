@@ -37,11 +37,19 @@ SMODS.Joker { --Joker in a Nutshell
                 local sliced_card = G.jokers.cards[my_pos + 1]
                 sliced_card.getting_sliced = true
                 G.GAME.joker_buffer = G.GAME.joker_buffer - 1
-				local card_desc = localize{type = "raw_descriptions", set = "Joker", key = G.jokers.cards[my_pos + 1].config.center_key, vars = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,} } --if you need more variables, my mod probably doesn't cross-compat well.
-				G.E_MANAGER:add_event(Event({
+				local card_desc = G.localization.descriptions.Joker[sliced_card.config.center.key].text
+				local num_lines = 0
+                if type(card_desc[1]) == 'table' then
+                    for i=1,#card_desc do
+                        num_lines = num_lines + #card_desc[i]
+                    end
+                elseif type(card_desc[1]) == 'string' then
+                    num_lines = #card_desc
+                end
+                G.E_MANAGER:add_event(Event({
                     func = function()
                         G.GAME.joker_buffer = 0
-                        card.ability.extra.Xmult = card.ability.extra.Xmult + #card_desc * card.ability.extra.Xmult_mod
+                        card.ability.extra.Xmult = card.ability.extra.Xmult + num_lines * card.ability.extra.Xmult_mod
                         card:juice_up(0.8, 0.8)
                         sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
                         play_sound('tarot1', 0.96 + math.random() * 0.08)
@@ -49,7 +57,7 @@ SMODS.Joker { --Joker in a Nutshell
                     end
                 }))
                 return {
-                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult + #card_desc * card.ability.extra.Xmult_mod } },
+                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult + num_lines * card.ability.extra.Xmult_mod } },
                     colour = G.C.RED,
                     no_juice = true,
                 }

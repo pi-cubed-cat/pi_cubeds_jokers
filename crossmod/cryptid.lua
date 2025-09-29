@@ -1,10 +1,3 @@
-SMODS.Atlas {
-	key = "picubed_tags",
-	path = "picubedstag.png",
-	px = 34,
-	py = 34
-}
-
 SMODS.Tag { -- Jolly Top-up Tag (Cryptid)
 	key = 'jollytopup',
 	loc_txt = {

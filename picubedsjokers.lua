@@ -5,7 +5,7 @@ SMODS.current_mod.config_tab = function()
     return {
       n = G.UIT.ROOT,
       config = {
-        align = "cm",
+        align = "cl",
         padding = 0.05,
         colour = G.C.CLEAR,
       },
@@ -14,6 +14,11 @@ SMODS.current_mod.config_tab = function()
             label = localize("config_picubeds_newspectrals"),
             ref_table = picubed_config,
             ref_value = "spectrals",
+        }),
+        create_toggle({
+            label = localize("config_picubeds_newtags"),
+            ref_table = picubed_config,
+            ref_value = "tags",
         }),
         create_toggle({
             label = localize("config_picubeds_customsfx"),
@@ -35,9 +40,16 @@ if picubed_config.spectrals then
     assert(SMODS.load_file("src/spectrals.lua"))()
 end
 assert(SMODS.load_file("src/decks.lua"))()
+if picubed_config.tags then
+    assert(SMODS.load_file("src/tags.lua"))()
+end
+assert(SMODS.load_file("src/stickers.lua"))()
 assert(SMODS.load_file("src/achievements.lua"))()
 
 -- load crossmod files
+if CardSleeves then
+    assert(SMODS.load_file("crossmod/sleeves.lua"))()
+end
 if JokerDisplay then
     assert(SMODS.load_file("crossmod/joker_display_definitions.lua"))()
 end
@@ -79,6 +91,22 @@ SMODS.Atlas {
     path = "picubedsdeck.png",
     px = 71,
     py = 95
+}
+
+-- stickers atlas
+SMODS.Atlas { 
+    key = "picubedsstickers",
+    path = "picubedsstickers.png",
+    px = 71,
+    py = 95
+}
+
+-- tags atlas
+SMODS.Atlas {
+	key = "picubed_tags",
+	path = "picubedstag.png",
+	px = 34,
+	py = 34
 }
 
 -- talisman functions

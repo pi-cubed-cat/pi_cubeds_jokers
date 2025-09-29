@@ -19,34 +19,40 @@ SMODS.Joker { --Ambigram
     eternal_compat = true,
 }
 
-local card_highlight = Card.highlight -- code loosely based on Ortalab's Index Cards
-function Card:highlight(highlighted)
-    card_highlight(self, highlighted)
-    if self.config.center.key == 'j_picubed_ambigram' and G.hand and #G.hand.cards > 0 and #G.hand.highlighted > 0 then --extra bit so that you can sell the card
-        self.children.use_button = UIBox{
-            definition = G.UIDEF.use_ambigram_button(self), 
-            config = {align = 'cl', offset = {x=0.35, y=0.4}, parent = self, id = 'picubed_ambigram_swap'}
-        }
+local use_and_sell_buttonsref = G.UIDEF.use_and_sell_buttons -- code based from Lobotomy Corporation's use_and_sell_buttons hook
+function G.UIDEF.use_and_sell_buttons(card)
+    local t = use_and_sell_buttonsref(card)
+    if t and t.nodes[1] and t.nodes[1].nodes[2] and card.config.center.key == 'j_picubed_ambigram' then
+        table.insert(t.nodes[1].nodes[2].nodes, 
+            {n=G.UIT.C, config={align = "cr"}, nodes={
+                {n=G.UIT.C, config={ref_table = card, align = "cr", maxw = 1.25, padding = 0.1, r=0.08, minw = 1.25, minh = 1, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'do_ambigram_swap', func = 'ambigram_active'}, nodes={
+                    {n=G.UIT.B, config = {w=0.1,h=0.6}},
+                    {n=G.UIT.T, config={text = localize('k_picubeds_swap'),colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
+                }}
+            }}
+        )
     end
+    return t
 end
 
-function G.UIDEF.use_ambigram_button(card)
-    local swap = nil
-
-    swap = {n=G.UIT.C, config={align = "cl"}, nodes={
-        {n=G.UIT.C, config={ref_table = card, align = "cl",maxw = 1.25, padding = 0.1, r=0.08, minw = 0.9, minh = 0.9, hover = true, colour = G.C.ORANGE, button = 'do_ambigram_swap' }, nodes={
-            {n=G.UIT.T, config={text = 'Swap! ', colour = G.C.UI.TEXT_LIGHT, scale = 0.35, shadow = true}}
-        }}
-    }}
-
-    local t = {n=G.UIT.ROOT, config = {padding = 0, colour = G.C.CLEAR}, nodes={
-        {n=G.UIT.C, config={padding = 0.15, align = 'cl'}, nodes={
-        {n=G.UIT.R, config={align = 'cl'}, nodes={
-            swap
-        }},
-        }},
-    }}
-    return t
+G.FUNCS.ambigram_active = function(e)
+    local card = e.config.ref_table
+    local can_use = false
+    if G.hand then
+        for k,v in ipairs(G.hand.highlighted) do
+            if v:get_id() == 6 or v:get_id() == 9 then
+                can_use = true
+                break
+            end
+        end
+    end
+    if can_use then 
+        e.config.colour = G.C.ORANGE
+        e.config.button = 'do_ambigram_swap'
+    else
+        e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+        e.config.button = nil
+    end
 end
 
 G.FUNCS.do_ambigram_swap = function(e)
@@ -54,14 +60,14 @@ G.FUNCS.do_ambigram_swap = function(e)
     e.config.button = nil
     G.jokers:unhighlight_all()
     local card = e.config.ref_table
-    for k, v in ipairs(G.hand.highlighted) do
-        if v.base.id == 6 or v.base.id == 9 then
+    for k, v in ipairs(G.hand.cards) do
+        if (v:get_id() == 6 or v:get_id() == 9) and v.highlighted then
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.2,
                 func = function() 
                     v:flip(); v:juice_up(0.3, 0.3)
-                    if v.base.id == 6 then 
+                    if v:get_id() == 6 then 
                         play_sound('tarot2', 0.85 + math.random()*0.05 )
                     else
                         play_sound('tarot2', 0.95 + math.random()*0.05 )
@@ -72,13 +78,13 @@ G.FUNCS.do_ambigram_swap = function(e)
         end
     end
     for k, v in ipairs(G.hand.highlighted) do
-        if v.base.id == 6 or v.base.id == 9 then
+        if v:get_id() == 6 or v:get_id() == 9 then
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.2,
                 func = function() 
                     v:flip(); v:juice_up(0.3, 0.3)
-                    if v.base.id == 6 then 
+                    if v:get_id() == 6 then 
                         play_sound('tarot2', 0.95 + math.random()*0.05)
                         SMODS.change_base(v, nil, "9")
                     else

@@ -11,7 +11,7 @@ SMODS.Joker { --Boomerang
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 9, y = 9 },
-	cost = 6,
+	cost = 4,
 	discovered = true,
 	blueprint_compat = false,
     perishable_compat = true,

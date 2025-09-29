@@ -131,7 +131,7 @@ SMODS.Back({ -- Rejuvenation Deck (Rejuvination)
     loc_txt = {
         name = "Rejuvenation Deck",
         text = {
-        "Start with {C:attention}#1#{} Joker slots,",
+        "{C:red}#1#{} Joker slots,",
         "{C:attention}+#2#{} slot for every",
         "other Boss Blind defeated",
         },
@@ -139,21 +139,20 @@ SMODS.Back({ -- Rejuvenation Deck (Rejuvination)
     pos = { x = 2, y = 0 },
     atlas = "picubedsdeck",
     unlocked = true,
-    config = {joker_slot = -2, joker_slot_mod = 1, second_boss = false },
+    config = {joker_slot = -2, joker_slot_mod = 1 },
     loc_vars = function(self, info_queue, card)
-        return {vars = {self.config.joker_slot + 5, self.config.joker_slot_mod}}
+        return {vars = {self.config.joker_slot, self.config.joker_slot_mod}}
     end,
     calculate = function(self, back, context)
         if context.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss then
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 func = function()
-                    if self.config.second_boss then
-                        self.config.second_boss = false
-                        G.jokers.config.card_limit = G.jokers.config.card_limit + self.config.joker_slot_mod
-                        card_eval_status_text(self, 'extra', nil, nil, nil, { message = localize("k_picubeds_plusjokerslot"), no_juice = true }) -- message looks jank but i give up
+                    if G.GAME.current_round.pi_cubed_rejuvenation_secondboss == true then
+                        G.GAME.current_round.pi_cubed_rejuvenation_secondboss = false
+                        not_original_modify_joker_slot_count_func()
                     else
-                        self.config.second_boss = true
+                        G.GAME.current_round.pi_cubed_rejuvenation_secondboss = true
                     end
                 return true
                 end
@@ -162,15 +161,21 @@ SMODS.Back({ -- Rejuvenation Deck (Rejuvination)
     end
 })
 
+local startRef = Game.start_run
+function Game:start_run(args)
+	startRef(self, args)
+	G.GAME.current_round.pi_cubed_rejuvenation_secondboss = false
+end
 
-local old_g_draw_from_hand_to_discard = G.FUNCS.draw_from_hand_to_discard -- hook for +1 joker slot after boss blind is defeated
+
+local old_g_draw_from_hand_to_discard = G.FUNCS.draw_from_hand_to_discard -- Nostalgic Rejuvination Deck Challenge Deck
 G.FUNCS.draw_from_hand_to_discard = function(card)
     if G.GAME.modifiers.picubed_slots_gain and G.GAME.blind:get_type() == 'Boss' then
         G.E_MANAGER:add_event(Event({
             trigger = 'after',
             delay = 0.3,
             func = function()
-                G.jokers.config.card_limit = G.jokers.config.card_limit + G.GAME.modifiers.picubed_slots_gain
+                not_original_modify_joker_slot_count_func()
             return true end
         }))
     end
@@ -191,3 +196,65 @@ SMODS.Challenge { -- Nostalgic Rejuvination Deck Challenge Deck
 }
 
 -- relies on additional functions present in lovely/myepicdeck.toml
+
+-- +1 Joker slot for (Nostalgic) Rejuv(e/i)nation Deck
+function not_original_modify_joker_slot_count_func() -- code from ----> Ortalab <----
+    G.CONTROLLER.locks.no_space = true
+    G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+    attention_text({scale = 0.9, text = localize('k_picubeds_plusjokerslot'), hold = 0.9, align = 'cm',
+        cover = G.jokers, cover_padding = 0.1, cover_colour = adjust_alpha(G.C.BLACK, 0.2)})
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.06*G.SETTINGS.GAMESPEED,
+        blockable = false,
+        blocking = false,
+        func = function() play_sound('tarot2', 0.76, 0.4); return true end
+    }))
+
+    play_sound('tarot2', 1, 0.4)
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after', 
+        delay = 0.5*G.SETTINGS.GAMESPEED, 
+        blockable = false, 
+        blocking = false,
+        func = function() G.CONTROLLER.locks.no_space = nil; return true end
+    }))
+end
+
+SMODS.Back({ -- Duplicitous Deck
+    name = "Duplicitous Deck",
+    key = "duplicitousdeck",
+    loc_txt = {
+        name = "Duplicitous Deck",
+        text = {
+            "{C:attention}+#1#{} Joker Slot,",
+            "Jokers can appear with",
+            "the {C:attention}Contractual{} sticker",
+            "{C:inactive,s:0.8}(Eternal and Perishable combined){}",
+            "Start with a",
+            "{C:attention}Contractual{} {C:attention,T:j_credit_card}Credit Card{}",
+        },
+    },
+    pos = { x = 1, y = 1 },
+    atlas = "picubedsdeck",
+    unlocked = true,
+    config = { joker_slot = 1 },
+    loc_vars = function(self, info_queue, back)
+        return { vars = { self.config.joker_slot } }
+    end,
+    apply = function(self, back)
+        G.GAME.modifiers.enable_picubed_contractuals_in_shop = true
+        G.GAME.modifiers['enable_duplicitousdeck'] = true
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                local card = SMODS.add_card({set = 'Joker', area = G.jokers, skip_materialize = true, key = "j_credit_card", stickers = { 'picubed_contractual' }, no_edition = true })
+                card:set_picubed_contractual()
+                --table.insert(G.playing_cards, card)
+                --G.jokers:emplace(card)
+            return true end
+        }))
+        --G.jokers.cards[1]:set_picubed_contractual()
+    end,
+})

@@ -11,7 +11,7 @@ position = "after"
 match_indent = true
 payload = '''
     -- yoinked code and concept from Paperback's Paper deck
-    if (G.GAME.selected_back_key or {}).key == 'b_picubed_myepicdeck' and v.key:find('j_picubed_') then
+    if ((G.GAME.selected_back_key or {}).key == 'b_picubed_myepicdeck' or G.GAME.selected_sleeve == 'sleeve_picubed_myepicsleeve') and v.key:find('j_picubed_') then
       for i = 1, 2 do
         _pool[#_pool + 1] = v.key
         _pool_size = _pool_size + 1
