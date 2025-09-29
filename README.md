@@ -7,13 +7,16 @@ Documentation spreadsheet (Planned content, patch notes, & more info): https://d
 
 Discord discussion thread: https://discord.com/channels/1116389027176787968/1348621804696240201
 
-pi_cubed's Jokers is a relatively lightweight mod with minimal lovely patching and hooks. As a result, there should be few crashes due to conflicts with other mods.
+pi_cubed's Jokers is a relatively lightweight mod with minimal lovely patching and hooks. As a result, there should be few crashes due to conflicts with other mods. Feel free to reach out to me via the link above if problems do occur!
 
 ## Config Options
 A game restart is required for Config options to take effect.
 
 ### New Spectral Cards  
 This option enables or disables the Spectral Cards Commander, Rupture, and Extinction from appearing.
+
+### New Tags
+This option enables or disables the Rebound Tag from appearing.
 
 ### Custom Sound Effects  
 Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, Talking Flower, "Monkey See, Monkey Do", and Otamatone.
@@ -28,7 +31,11 @@ https://github.com/Icecanno/Partner-API
 
 ### JokerDisplay by nh6574  
 Many of the Jokers added are compatible, and some provide very useful QOL for Jokers like Black Joker and Eye Patch!  
-https://github.com/nh6574/JokerDisplay  
+https://github.com/nh6574/JokerDisplay 
+
+### CardSleeves by Larswijn  
+All of the new decks included have a sleeve, including a unique double-up effect!  
+https://github.com/larswijn/CardSleeves  
 
 ### ÞeAutumnCircus by AutumnMood  
 ÞeAutumnCircus is a very unique content mod, and pi_cubed's Jokers adds 2 new Jokers using some of its mechanics, with theming based on Splatoon 3: Side Order! "Why?" Uh, 'cause it's like an expansion pack? It fit the vibe.  
