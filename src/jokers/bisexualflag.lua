@@ -8,6 +8,7 @@ SMODS.Joker { --Bisexual Flag
             "create #1# {C:dark_edition}Negative {C:purple}Tarot{} cards",
         }
     },
+    pronouns = 'it_its',
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 7, y = 2 },

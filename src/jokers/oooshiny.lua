@@ -7,6 +7,7 @@ SMODS.Joker { --Ooo! Shiny!
             "give {C:money}$#1#{} when scored"
         }
     },
+    pronouns = 'they_them',
     config = { extra = { money = 7 } },
     atlas = 'PiCubedsJokers',
     pos = { x = 0, y = 1 },

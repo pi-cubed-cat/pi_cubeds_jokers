@@ -8,6 +8,7 @@ SMODS.Joker { --Apartment Complex
             "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)"
         }
     },
+    pronouns = 'he_they',
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 2 },

@@ -8,6 +8,7 @@ SMODS.Joker { --The Cube
             "{s:0.8}Aces give {s:0.8,C:money}$11{}",
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 4,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 5, y = 10 },

@@ -14,6 +14,7 @@ SMODS.Joker { --Off the Hook
 			}
 		}
 	},
+	pronouns = 'she_her',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 9, y = 5 },

@@ -11,6 +11,7 @@ SMODS.Joker { --Otamatone
 			"",
 		}
 	},
+    pronouns = 'they_them',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 4, y = 11 },

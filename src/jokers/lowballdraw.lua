@@ -8,6 +8,7 @@ SMODS.Joker { --Lowball Draw
 			"to hand during Blind",
 		}
 	},
+	pronouns = 'they_them',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 9, y = 7 },

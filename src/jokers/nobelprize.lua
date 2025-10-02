@@ -10,6 +10,7 @@ SMODS.Joker { --Nobel Prize
             "{S:1.1,C:red,E:2}self destructs{}",
 		}
 	},
+    pronouns = 'he_him',
 	rarity = 1,
     config = { extra = { count_max = 3, count_current = 3 } },
 	atlas = 'PiCubedsJokers',

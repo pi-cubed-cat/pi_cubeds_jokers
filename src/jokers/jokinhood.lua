@@ -8,6 +8,7 @@ SMODS.Joker { --Jokin' Hood
             "earn {C:mult}-$#2#{} when scored"
         }
     },
+    pronouns = 'he_they',
     config = { extra = { num_money = 1, face_money = 2 } },
     rarity = 2,
     atlas = 'PiCubedsJokers',

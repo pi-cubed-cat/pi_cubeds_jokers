@@ -8,6 +8,7 @@ SMODS.Joker { --Echolocation
             "are drawn {C:attention}face down"
         }
     },
+    pronouns = 'she_her',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 1 },

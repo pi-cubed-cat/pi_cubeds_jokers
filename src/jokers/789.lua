@@ -9,6 +9,7 @@ SMODS.Joker { --7 8 9
             "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)"
         }
     },
+    pronouns = 'she_they',
     rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 3, y = 1 },

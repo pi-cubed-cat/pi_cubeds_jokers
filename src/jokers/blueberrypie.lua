@@ -9,6 +9,7 @@ SMODS.Joker { --Blueberry Pie
 			"after {C:attention}#1#{} rounds"
 		},
 	},
+    pronouns = 'she_they',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 2, y = 11 },

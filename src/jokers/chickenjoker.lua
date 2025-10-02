@@ -9,6 +9,7 @@ SMODS.Joker { --Chicken Joker!
 			"slots with {C:dark_edition}Editioned{} {C:attention}Popcorn{}"
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 7, y = 8 },

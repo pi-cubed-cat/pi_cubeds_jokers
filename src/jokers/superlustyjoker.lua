@@ -8,6 +8,7 @@ SMODS.Joker { --Super Lusty Joker
 			"them {C:attention}#1#{} additional time",
 		}
 	},
+	pronouns = 'she_they',
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 7, y = 3 },

@@ -9,6 +9,7 @@ SMODS.Joker { --Encore
             "when scored",
 		}
 	},
+	pronouns = 'they_them',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 3, y = 11 },

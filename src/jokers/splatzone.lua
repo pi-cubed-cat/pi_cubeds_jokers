@@ -8,6 +8,7 @@ SMODS.Joker { --Splat Zone
             "the {C:attention}same suit{}",
 		}
 	},
+	pronouns = 'they_them',
 	rarity = 1,
     config = { extra = { mult = 20 } },
 	atlas = 'PiCubedsJokers',

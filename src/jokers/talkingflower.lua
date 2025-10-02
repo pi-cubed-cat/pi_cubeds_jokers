@@ -162,6 +162,7 @@ SMODS.Joker { --Talking Flower
 			
 		}
 	},
+	pronouns = 'he_they',
 	config = { extra = { slots = 1, mult = 4 } },
 	rarity = 1,
 	atlas = 'PiCubedsJokers',

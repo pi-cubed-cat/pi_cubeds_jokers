@@ -15,6 +15,7 @@ SMODS.Joker { --All In
             }
         }
     },
+    pronouns = 'he_they',
     rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 1, y = 3 },

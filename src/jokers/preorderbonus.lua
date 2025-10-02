@@ -7,6 +7,7 @@ SMODS.Joker { --Preorder Bonus
 			"cost {C:attention}#1#% less{}"
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 5, y = 4 },

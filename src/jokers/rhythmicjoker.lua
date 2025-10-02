@@ -12,6 +12,7 @@ SMODS.Joker { --Rhythmic Joker
             "remaining is {C:attention}even"
         }
     },
+    pronouns = 'he_him',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 3, y = 4 },

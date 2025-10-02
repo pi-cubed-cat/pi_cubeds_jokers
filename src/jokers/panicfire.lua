@@ -9,6 +9,7 @@ SMODS.Joker { --Panic Fire
 			"{C:inactive}(Currently #2#){}",
 		}
 	},
+	pronouns = 'she_they',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 3, y = 8 },

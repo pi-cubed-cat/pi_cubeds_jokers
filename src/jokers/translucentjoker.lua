@@ -9,6 +9,7 @@ SMODS.Joker { --Translucent Joker
 			"{C:inactive}(Currently {}{C:attention}#2#{}{C:inactive}/#1# rounds){}",
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 8, y = 7 },

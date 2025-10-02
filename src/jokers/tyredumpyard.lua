@@ -9,6 +9,7 @@ SMODS.Joker { --Tyre Dumpyard
 			"{C:inactive}(Must have room){}"
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 5, y = 6 },

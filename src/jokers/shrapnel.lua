@@ -8,6 +8,7 @@ SMODS.Joker { --Shrapnel
 			"receive a {C:attention}permanent{} {C:mult}+#1#{} Mult",
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 4, y = 7 },

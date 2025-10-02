@@ -8,6 +8,7 @@ SMODS.Joker { --Rushed Joker
 			"when scored"
 		}
 	},
+	pronouns = 'she_they',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 5, y = 5 },

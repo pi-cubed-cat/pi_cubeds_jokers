@@ -9,6 +9,7 @@ SMODS.Joker { --Yawning Cat
 			"cards {C:attention}#2# additional times{}"
 		}
 	},
+	pronouns = 'she_her',
 	rarity = 4,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 8, y = 6 },

@@ -8,6 +8,7 @@ SMODS.Joker { --Trade-in
             "{C:attention}destroyed"
         }
     },
+    pronouns = 'it_its',
     rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 8, y = 2 },

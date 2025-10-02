@@ -8,6 +8,7 @@ SMODS.Joker { --Super Gluttonous Joker
 			"{C:attention}additional{} card to hand"
 		}
 	},
+	pronouns = 'he_they',
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 4, y = 5 },

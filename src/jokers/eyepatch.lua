@@ -10,6 +10,7 @@ SMODS.Joker { --Eye Patch
 			"{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}",
 		}
 	},
+	pronouns = 'he_him',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 2, y = 6 },

@@ -7,6 +7,7 @@ SMODS.Joker { --Prime 7
             "it becomes {C:dark_edition}Negative{}"
         }
     },
+    pronouns = 'she_her',
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 7, y = 0 },

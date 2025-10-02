@@ -10,6 +10,7 @@ SMODS.Joker { -- Mrs. Jankman (Cryptid & MoreFluff)
 			
 		}
 	},
+	pronouns = 'she_her',
 	config = { extra = { x_chips = 27.41 } },
 	rarity = 4,
 	atlas = 'PiCubedsJokers',

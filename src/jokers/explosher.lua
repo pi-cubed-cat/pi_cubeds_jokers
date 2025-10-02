@@ -23,6 +23,7 @@ SMODS.Joker { --Explosher
             "held in hand a {C:attention}random suit"
         }
     },
+    pronouns = 'she_her',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 2, y = 4 },

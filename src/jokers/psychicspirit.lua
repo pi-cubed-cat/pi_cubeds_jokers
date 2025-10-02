@@ -8,6 +8,7 @@ SMODS.Joker { --Psychic Spirit
             "does not contain {C:attention}#3#{} cards",
 		}
 	},
+    pronouns = 'it_its',
 	config = { extra = { hands = 2, hands_mod = 1, req_cards = 5 } },
 	rarity = 1,
 	atlas = 'PiCubedsJokers',

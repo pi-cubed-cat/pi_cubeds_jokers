@@ -7,6 +7,7 @@ SMODS.Joker { --It Says "Joker" on the Ceiling
 						"Round {C:mult}Mult{} to the next #2#"
 				}
 		},
+		pronouns = 'he_him',
 		rarity = 1,
 		atlas = 'PiCubedsJokers',
 		pos = { x = 0, y = 0 },

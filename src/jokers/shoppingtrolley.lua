@@ -8,6 +8,7 @@ SMODS.Joker { --Shopping Trolley
             "in {C:attention}Booster Packs"
         }
     },
+    pronouns = 'she_they',
     rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 0, y = 2 },

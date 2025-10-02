@@ -9,6 +9,7 @@ SMODS.Joker { --Golden Pancakes
 			"at end of round"
 		}
 	},
+	pronouns = 'she_they',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 4, y = 4 },

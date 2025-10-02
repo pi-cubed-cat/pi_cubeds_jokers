@@ -8,6 +8,7 @@ SMODS.Joker { --Spectral Joker
             "free {C:attention}Ethereal Tag{}"
         }
     },
+    pronouns = 'he_they',
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 3, y = 2 },

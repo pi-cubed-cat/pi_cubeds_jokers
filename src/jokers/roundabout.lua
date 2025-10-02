@@ -19,6 +19,7 @@ SMODS.Joker { --Round-a-bout
 			}
 		}
 	},
+	pronouns = 'she_her',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 5, y = 8 },

@@ -8,6 +8,7 @@ SMODS.Joker { --LEEROOOOOY
             "{C:inactive}(Currently {C:attention}#1#{} {C:inactive}retriggers)"
 		}
 	},
+	pronouns = 'he_him',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 5, y = 11 },

@@ -8,6 +8,7 @@ SMODS.Joker { --Fusion Magic
 			"{C:inactive}(Must have room)"
 		}
 	},
+	pronouns = 'she_they',
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 9, y = 4 },

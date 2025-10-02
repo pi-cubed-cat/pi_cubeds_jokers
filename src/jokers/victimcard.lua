@@ -11,6 +11,7 @@ SMODS.Joker { --Victim Card
 			"{C:inactive}(Currently{} {X:mult,C:white}X#3#{} {C:inactive}Mult){}",
 		}
 	},
+	pronouns = 'he_him',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 5, y = 7 },

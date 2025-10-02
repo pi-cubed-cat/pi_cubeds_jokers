@@ -7,6 +7,7 @@ SMODS.Joker { --D2
 			"to give {C:mult}+#1#{} Mult"
 		}
 	},
+	pronouns = 'she_they',
 	config = { extra = { mult = 20, odds = 2 } },
 	rarity = 1,
 	atlas = 'PiCubedsJokers',

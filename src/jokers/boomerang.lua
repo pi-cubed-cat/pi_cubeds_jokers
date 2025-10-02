@@ -8,6 +8,7 @@ SMODS.Joker { --Boomerang
 			"into the deck",
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 9, y = 9 },

@@ -7,6 +7,7 @@ SMODS.Joker { --Super Wrathful Joker
             "become {C:attention}Kings{} when scored"
         }
     },
+    pronouns = 'he_him',
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 6, y = 1 },

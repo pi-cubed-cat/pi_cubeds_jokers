@@ -9,6 +9,7 @@ SMODS.Joker { --Super Greedy Joker
 			"{C:inactive}(Must have room?)"
 		}
 	},
+	pronouns = 'they_them',
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 6, y = 3 },

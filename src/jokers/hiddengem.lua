@@ -9,6 +9,7 @@ SMODS.Joker { --Hidden Gem
             "{C:inactive}(Must have room)"
         }
     },
+    pronouns = 'they_them',
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 4, y = 1 },

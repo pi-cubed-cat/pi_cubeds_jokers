@@ -8,6 +8,7 @@ SMODS.Joker { --Water Bottle
 			"{C:inactive}(Currently {C:chips}+#2# {C:inactive}Chips)"
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 6, y = 4 },

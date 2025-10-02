@@ -7,6 +7,7 @@ SMODS.Joker { --Arrogant Joker
 			"is the {C:attention}left-most {}Joker"
 		}
 	},
+	pronouns = 'he_him',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 8, y = 3 },

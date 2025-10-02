@@ -8,6 +8,7 @@ SMODS.Joker { --Black Joker
             "cards is {C:attention}#2#{}, earn {C:money}$#3#{}",
         }
     },
+    pronouns = 'it_its',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 6, y = 2 },

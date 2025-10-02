@@ -8,6 +8,7 @@ SMODS.Joker { --Night Vision
 			"{C:attention}face up{} by this Joker",
 		}
 	},
+	pronouns = 'he_him',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 7, y = 7 },

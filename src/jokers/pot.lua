@@ -19,6 +19,7 @@ SMODS.Joker { --Pot
 			"{C:inactive}Currently #4#{}"
 		}
 	},
+	pronouns = 'he_him',
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 3, y = 5 },

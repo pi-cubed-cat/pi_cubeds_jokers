@@ -8,6 +8,7 @@ SMODS.Joker { --Surgeon
             "{C:inactive}(Currently {C:attention}+#2#{C:inactive} Hand Size)",
 		}
 	},
+	pronouns = 'he_they',
 	rarity = 3,
     config = { extra = { hand_increase = 0, hand_increase_mod = 1 } },
 	atlas = 'PiCubedsJokers',

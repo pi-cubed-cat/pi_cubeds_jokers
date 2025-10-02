@@ -9,6 +9,7 @@ SMODS.Joker { --Ambigram
             "{C:inactive}then press 'Swap!')",
         }
     },
+    pronouns = 'they_them',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 5, y = 1 },

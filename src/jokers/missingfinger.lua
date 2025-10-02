@@ -8,6 +8,7 @@ SMODS.Joker { --Missing Finger
 			--"for {C:blue}playing{} and {C:red}discarding{}",
 		}
 	},
+	pronouns = 'they_them',
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 6, y = 7 },
@@ -21,7 +22,10 @@ SMODS.Joker { --Missing Finger
 		return { vars = { card.ability.extra.Xmult, card.ability.extra.select_mod } }
 	end,
 	add_to_deck = function(self, card, from_debuff)
-		G.hand.config.highlighted_limit = G.hand.config.highlighted_limit + card.ability.extra.select_mod 
+		G.hand.config.highlighted_limit = G.hand.config.highlighted_limit + card.ability.extra.select_mod
+		if #G.hand.highlighted > G.hand.config.highlighted_limit then
+			G.hand:unhighlight_all()
+		end
 	end,
 	remove_from_deck = function(self, card, from_debuff)
 		G.hand.config.highlighted_limit = G.hand.config.highlighted_limit - card.ability.extra.select_mod 

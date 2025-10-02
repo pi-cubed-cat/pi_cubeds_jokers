@@ -8,6 +8,7 @@ SMODS.Joker { --Hierarchy
             "each {C:attention}rank{} gives {X:mult,C:white}X#1#{} Mult",
 		}
 	},
+	pronouns = 'he_they',
 	rarity = 3,
     config = { extra = { Xmult = 2, has_king = false } },
 	atlas = 'PiCubedsJokers',

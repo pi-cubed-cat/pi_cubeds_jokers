@@ -20,6 +20,7 @@ SMODS.Joker { --Turf War
             "{C:inactive}(Currently {X:mult,C:white}X#3#{}{C:inactive} Mult){}",
 		}
 	},
+	pronouns = 'she_her',
 	rarity = 2,
     config = { extra = { Xmult = 1, Xmult_mod = 0.1, num_card = 2 } },
 	atlas = 'PiCubedsJokers',

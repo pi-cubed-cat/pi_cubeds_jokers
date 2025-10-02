@@ -8,6 +8,7 @@ SMODS.Joker { --Hype Moments
 			"{C:inactive}(Must have room){}",
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 6, y = 8 },

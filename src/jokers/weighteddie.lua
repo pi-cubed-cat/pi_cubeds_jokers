@@ -7,6 +7,7 @@ SMODS.Joker { --Weighted Die
 			"{E:1,C:green}guaranteed{} to succeed",
 		}
 	},
+	pronouns = 'they_them',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 5, y = 9 },

@@ -9,6 +9,7 @@ SMODS.Joker { --Landslide
             "after scoring"
         }
     },
+    pronouns = 'he_they',
     atlas = 'PiCubedsJokers',
     pos = { x = 8, y = 0 },
     cost = 5,
@@ -31,21 +32,23 @@ SMODS.Joker { --Landslide
                 if not SMODS.has_enhancement(rndcard, 'm_stone') then
                     G.E_MANAGER:add_event(Event({
                         trigger = 'before',
-                        delay = 0.2,
+                        delay = 0.15,
                         func = function() 
                             rndcard:flip()
-                            play_sound('tarot1', 0.2)
+                            rndcard:juice_up()
+                            play_sound('tarot2', 0.9 + math.random()*0.05 )
                             return true
                         end
                     }))
                     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_tumble"), colour = G.C.ORANGE})
+                    rndcard:set_ability('m_stone', nil, true)
                     G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.2,
+                        trigger = 'before',
+                        delay = 0.15,
                         func = function() 
-                            rndcard:set_ability('m_stone', nil, true)
                             rndcard:flip()
-                            play_sound('tarot1', 1.0)
+                            rndcard:juice_up()
+                            play_sound('tarot2', 1.05 + math.random()*0.05 )
                             return true
                         end
                     }))

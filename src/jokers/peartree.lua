@@ -8,6 +8,7 @@ SMODS.Joker { --Pear Tree
             "contain a {C:attention}Pair"
         }
     },
+    pronouns = 'they_them',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 2, y = 2 },

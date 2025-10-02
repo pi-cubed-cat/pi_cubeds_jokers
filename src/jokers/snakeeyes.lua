@@ -10,6 +10,7 @@ SMODS.Joker { --Snake Eyes
             
         }
     },
+    pronouns = 'he_him',
     rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 2, y = 1 },

@@ -7,6 +7,7 @@ SMODS.Joker { --Got the Worm
             "also gives {C:money}$#1#{}"
         }
     },
+    pronouns = 'she_her',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 2, y = 3 },

@@ -8,6 +8,7 @@ SMODS.Joker { --Cyclone
 			"played {C:attention}poker hand{}",
 		}
 	},
+	pronouns = 'he_him',
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 0, y = 8 },

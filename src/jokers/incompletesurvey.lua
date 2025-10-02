@@ -13,6 +13,7 @@ SMODS.Joker { --Incomplete Survey
             }
         }
     },
+    pronouns = 'she_they',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 0, y = 3 },

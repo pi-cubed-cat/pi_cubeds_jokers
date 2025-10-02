@@ -9,6 +9,7 @@ SMODS.Joker { --Advanced Skipping
             "{C:inactive}(Capped at current {}{C:attention}Ante{}{C:inactive}){}"
         }
     },
+    pronouns = 'he_him',
     rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 8, y = 1 },

@@ -14,6 +14,7 @@ SMODS.Joker { --Off-beat
 			"{s:0.8}becomes {s:0.8,C:attention}On-beat{}"
 		}
 	},
+	pronouns = 'he_him',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 1, y = 5 },

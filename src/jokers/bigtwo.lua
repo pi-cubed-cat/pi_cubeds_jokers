@@ -8,6 +8,7 @@ SMODS.Joker { --Big Two
             "{X:mult,C:white}X#1#{} Mult when scored",
 		}
 	},
+	pronouns = 'they_them',
 	config = { extra = { Xmult = 2, odds = 2 } },
 	rarity = 3,
 	atlas = 'PiCubedsJokers',

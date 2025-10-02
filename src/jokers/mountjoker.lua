@@ -9,6 +9,7 @@ SMODS.Joker { --Mount Joker
 			"{C:attention}highest level poker hand{}"
 		}
 	},
+	pronouns = 'he_they',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 7, y = 5 },

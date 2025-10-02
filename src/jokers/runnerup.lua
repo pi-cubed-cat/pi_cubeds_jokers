@@ -7,6 +7,7 @@ SMODS.Joker { --Runner-up
             "hand of round"
         }
     },
+    pronouns = 'he_they',
     config = { extra = { Xmult = 2 } },
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 0 },

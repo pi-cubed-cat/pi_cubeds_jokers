@@ -10,6 +10,7 @@ SMODS.Joker { --Satanist
             "{C:inactive}(Must have room)"
 		}
 	},
+	pronouns = 'she_they',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 8, y = 9 },

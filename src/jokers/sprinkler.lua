@@ -1,26 +1,27 @@
 local function reset_sprinker_card()
-    G.GAME.current_round.sprinkler_card = { suit = 'Spades' }
+    G.GAME.current_round.sprinkler_card = 'Clubs'
     local suit_counting = {}
-    for _, playing_card in ipairs(G.playing_cards) do
-        if not SMODS.has_no_suit(playing_card) then
-            local loc_suit = playing_card.base.suit
-            if suit_counting[loc_suit] == nil then 
-                suit_counting[loc_suit] = 1
-            else 
-                suit_counting[loc_suit] = suit_counting[loc_suit] + 1 
+    if G.playing_cards then
+        for _, playing_card in ipairs(G.playing_cards) do
+            if not SMODS.has_no_suit(playing_card) then
+                local loc_suit = playing_card.base.suit
+                if suit_counting[loc_suit] == nil then 
+                    suit_counting[loc_suit] = 1
+                else 
+                    suit_counting[loc_suit] = suit_counting[loc_suit] + 1 
+                end
             end
         end
-    end
-    local highest_suit = 'Spades'
-    local highest_count = 0
-    for k,v in pairs(suit_counting) do
-        --print(k.."_"..v)
-        if suit_counting[k] > highest_count then
-            highest_count = suit_counting[k]
-            highest_suit = k
+        local highest_suit = 'Clubs'
+        local highest_count = 0
+        for k,v in pairs(SMODS.Suits) do --pairs(suit_counting) do
+            if suit_counting[k] > highest_count then
+                highest_count = suit_counting[k]
+                highest_suit = k
+            end
         end
+        G.GAME.current_round.sprinkler_card = highest_suit
     end
-    G.GAME.current_round.sprinkler_card = highest_suit
 end
 
 SMODS.Joker { --Sprinkler
@@ -34,6 +35,7 @@ SMODS.Joker { --Sprinkler
             "{C:inactive}(Currently {V:1}#2#{}{C:inactive}){}",
 		}
 	},
+    pronouns = 'she_they',
 	config = { extra = { num_card = 1 } },
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
@@ -42,7 +44,8 @@ SMODS.Joker { --Sprinkler
 	discovered = true,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
-		local suit = G.GAME.current_round.sprinkler_card or 'Spades'
+        reset_sprinker_card()
+        local suit = G.GAME.current_round.sprinkler_card or 'Clubs'
 		return { vars = { card.ability.extra.num_card, localize(suit, 'suits_plural'), colours = { G.C.SUITS[suit] } } 
 		}
 	end,

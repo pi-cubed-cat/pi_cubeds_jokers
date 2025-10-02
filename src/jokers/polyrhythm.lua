@@ -14,6 +14,7 @@ SMODS.Joker { --Polyrhythm
 			}
 		}
 	},
+	pronouns = 'she_they',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 2, y = 5 },

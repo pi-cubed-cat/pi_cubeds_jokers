@@ -7,6 +7,7 @@ SMODS.Joker { --Ace Comedian
             "{C:attention}Ace{}, {C:attention}10{}, {C:attention}9{}, and {C:attention}8{}"
         }
     },
+    pronouns = 'they_them',
     rarity = 2,
     config = { extra = { repetitions = 1 } },
     atlas = 'PiCubedsJokers',

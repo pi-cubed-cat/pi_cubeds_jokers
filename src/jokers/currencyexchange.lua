@@ -7,6 +7,7 @@ SMODS.Joker { --Currency Exchange
 			"give {C:mult}+#1#{} Mult"
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 7, y = 4 },

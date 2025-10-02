@@ -10,6 +10,7 @@ SMODS.Joker { --Inkjet Printer
             "{C:inactive}(Must have room){}"
         }
     },
+    pronouns = 'it_its',
     rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 5, y = 2 },

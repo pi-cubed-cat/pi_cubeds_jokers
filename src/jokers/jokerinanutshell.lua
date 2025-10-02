@@ -10,6 +10,7 @@ SMODS.Joker { --Joker in a Nutshell
             "{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive} Mult)",
 		}
 	},
+    pronouns = 'they_them',
 	rarity = 3,
     config = { extra = { Xmult = 1, Xmult_mod = 0.1 } },
 	atlas = 'PiCubedsJokers',

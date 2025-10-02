@@ -9,6 +9,7 @@ SMODS.Joker { --Word Search
 			"{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult)"
 		}
 	},
+	pronouns = 'she_her',
 	config = { extra = { mult = 0, mult_mod = 1 }},
 	rarity = 1,
 	atlas = 'PiCubedsJokers',

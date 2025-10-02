@@ -9,6 +9,7 @@ SMODS.Joker { --A Throwaway Joker
             "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 6, y = 11 },

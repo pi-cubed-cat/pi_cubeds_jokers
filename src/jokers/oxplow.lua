@@ -9,6 +9,7 @@ SMODS.Joker { --Ox Plow
 			"{C:inactive}(Currently #2#){}",
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 8, y = 5 },

@@ -8,6 +8,7 @@ SMODS.Joker { --Joker Circuit
             "create a free {C:attention}Speed Tag{}",
 		}
 	},
+	pronouns = 'he_they',
 	rarity = 2,
     config = { extra = { count_max = 3, count_current = 3 } },
 	atlas = 'PiCubedsJokers',

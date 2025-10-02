@@ -9,6 +9,7 @@ SMODS.Joker { --Acorn Tree
 			"each other Joker affected"
 		}
 	},
+	pronouns = 'she_they',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 6, y = 6 },

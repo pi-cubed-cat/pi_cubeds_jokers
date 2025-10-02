@@ -9,6 +9,7 @@ SMODS.Joker { --Wee Mini
 			"{C:attention}Two Pair{} and apply {C:attention}Splash{}"
 		}
 	},
+	pronouns = 'they_them',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 2, y = 8 },

@@ -8,6 +8,7 @@ SMODS.Joker { --Upgraded Joker
             "{C:mult}+#2#{} Mult when scored"
         }
     },
+    pronouns = 'she_they',
     config = { extra = { chips = 10, mult = 4 } },
     rarity = 1,
     atlas = 'PiCubedsJokers',

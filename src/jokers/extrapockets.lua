@@ -7,6 +7,7 @@ SMODS.Joker { --Extra Pockets
             "each held {C:attention}Consumable",
         }
     },
+    pronouns = 'she_they',
     rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 1, y = 2 },

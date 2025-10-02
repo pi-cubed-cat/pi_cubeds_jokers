@@ -9,6 +9,7 @@ SMODS.Joker { --Siphon
             "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
         }
     },
+    pronouns = 'he_him',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 4, y = 2 },

@@ -8,6 +8,7 @@ SMODS.Joker { --Pi
 			"give {X:mult,C:white}X#1#{} Mult",
 		}
 	},
+	pronouns = 'it_its',
 	rarity = 4,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 4, y = 3 },

@@ -7,6 +7,7 @@ SMODS.Joker { --Molten Joker
 						"and {C:attention}Stone{} cards"
 				}
 		},
+		pronouns = 'they_them',
 		config = { extra = { repetitions = 1 } },
 		rarity = 2,
 		atlas = 'PiCubedsJokers',

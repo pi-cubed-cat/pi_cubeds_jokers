@@ -7,6 +7,7 @@ SMODS.Joker { --Perfect Score
             "hand contains a {C:attention}10{}"
         }
     },
+    pronouns = 'they_them',
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 1, y = 4 },

@@ -49,6 +49,7 @@ SMODS.Joker { --Monkey See, Monkey Do
             "{s:0.8}Ranks change every {}{s:0.8,C:attention}hand{}",
 		}
 	},
+	pronouns = 'he_him',
 	config = { extra = { mult = 8 } },
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
