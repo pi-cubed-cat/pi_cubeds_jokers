@@ -41,9 +41,15 @@ SMODS.Joker { --Landslide
                         end
                     }))
                     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_tumble"), colour = G.C.ORANGE})
-                    rndcard:set_ability('m_stone', nil, true)
                     G.E_MANAGER:add_event(Event({
-                        trigger = 'before',
+                        trigger = 'after',
+                        func = function() 
+                            rndcard:set_ability('m_stone', nil, true)
+                            return true
+                        end
+                    }))
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
                         delay = 0.15,
                         func = function() 
                             rndcard:flip()
