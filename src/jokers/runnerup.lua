@@ -11,7 +11,7 @@ SMODS.Joker { --Runner-up
     config = { extra = { Xmult = 2 } },
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 0 },
-    cost = 6,
+    cost = 5,
     rarity = 2,
     discovered = true,
     blueprint_compat = true,

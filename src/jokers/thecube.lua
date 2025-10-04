@@ -4,8 +4,8 @@ SMODS.Joker { --The Cube
 		name = 'The Cube',
 		text = {
 			"Scored {C:attention}numbered{} cards give", 
-			"{C:money}${} equal to their {C:attention}Rank{}",
-            "{s:0.8}Aces give {s:0.8,C:money}$11{}",
+			"{C:money}${} equal to their {C:attention}rank halved{}",
+            "{s:0.8}Aces give {s:0.8,C:money}$5{}",
 		}
 	},
 	pronouns = 'it_its',
@@ -33,7 +33,7 @@ SMODS.Joker { --The Cube
         	local card_money = 0
 			local coc = context.other_card
 			if not (SMODS.has_no_rank(coc) or coc:get_id() == 11 or coc:get_id() == 12 or coc:get_id() == 13) then
-				card_money = coc.base.nominal
+				card_money = math.floor((coc.base.nominal or 0) / 2)
 				if card_money > 0 then
 					return {
 						dollars = card_money,

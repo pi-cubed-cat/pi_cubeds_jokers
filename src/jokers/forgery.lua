@@ -4,8 +4,8 @@ SMODS.Joker { --Forgery
 		name = 'Forgery',
 		text = {
 			"When {C:attention}Blind{} is selected,",
-			"{C:attention}destroy{} 1 random card in",
-			"{C:attention}deck{}, and add half its",
+			"{C:attention}destroy{} a random card in {C:attention}deck{},",
+			"and add a {C:attention}quarter{} of its",
 			"{C:chips}Chips{} to this Joker as {C:mult}Mult",
 			"{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
 		}
@@ -14,7 +14,7 @@ SMODS.Joker { --Forgery
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 6, y = 5 },
-	cost = 6,
+	cost = 7,
 	discovered = true,
 	blueprint_compat = true,
 	perishable_compat = false,
@@ -86,14 +86,14 @@ SMODS.Joker { --Forgery
 					delay = 0.1,
 					func = function()
 						SMODS.destroy_cards(card_is_kil)
-						SMODS.calculate_effect({ message = localize { type = 'variable', key = 'a_mult', vars = { card_mult * 0.5 } }, colour = G.C.MULT, sound = 'slice1', pitch = 0.96 + math.random() * 0.08 }, card )
+						SMODS.calculate_effect({ message = localize { type = 'variable', key = 'a_mult', vars = { card_mult * 0.25 } }, colour = G.C.MULT, sound = 'slice1', pitch = 0.96 + math.random() * 0.08 }, card )
 						return true 
 					end
 				}))
 				if card_mult * 0.5 >= 40 then
 					check_for_unlock({type = 'picubed_forgery_criticalhit'})
 				end
-				card.ability.extra.mult = card.ability.extra.mult + card_mult * 0.5
+				card.ability.extra.mult = card.ability.extra.mult + card_mult * 0.25
 			end
 
 		end

@@ -18,7 +18,7 @@ SMODS.Joker { --Ox Plow
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { money = 7, most_played = false } },
+	config = { extra = { money = 8, most_played = false } },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money,
 						localize { type = 'variable', key = ((card.ability.extra.most_played and 'k_picubeds_pot_inactive') or 'k_picubeds_pot_active'), vars = { card.ability.extra.most_played } },

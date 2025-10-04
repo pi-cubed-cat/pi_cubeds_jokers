@@ -15,7 +15,7 @@ local function reset_sprinker_card()
         local highest_suit = 'Clubs'
         local highest_count = 0
         for k,v in pairs(SMODS.Suits) do --pairs(suit_counting) do
-            if suit_counting[k] > highest_count then
+            if (suit_counting[k] or 0) > highest_count then
                 highest_count = suit_counting[k]
                 highest_suit = k
             end

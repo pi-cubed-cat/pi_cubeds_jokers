@@ -324,8 +324,9 @@ return {
             j_picubed_superwrathfuljoker = {
                 name = 'Super Wrathful Joker',
                 text = {
-                   "All played {C:spades}Spade{} cards",
-                   "become {C:attention}Kings{} when scored"
+                    "If played hand has {C:attention}#1#{} scoring",
+                    "cards or less, all scored",
+                    "{C:spades}Spade{} cards become {C:attention}Kings{}",
                 }
             },
             j_picubed_acecomedian = {
@@ -691,11 +692,11 @@ return {
             j_picubed_forgery = {
                 name = 'Forgery',
                 text = {
-                   "When {C:attention}Blind{} is selected,",
-                   "{C:attention}destroy{} 1 random card in",
-                   "{C:attention}deck{}, and add half its",
-                   "{C:chips}Chips{} to this Joker as {C:mult}Mult",
-                   "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
+                    "When {C:attention}Blind{} is selected,",
+                    "{C:attention}destroy{} a random card in {C:attention}deck{},",
+                    "and add a {C:attention}quarter{} of its",
+                    "{C:chips}Chips{} to this Joker as {C:mult}Mult",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
                 }
             },
             j_picubed_yawningcat = {
@@ -971,8 +972,8 @@ return {
                 name = 'The Cube',
                 text = {
                     "Scored {C:attention}numbered{} cards give", 
-                    "{C:money}${} equal to their {C:attention}Rank{}",
-                    "{s:0.8}Aces give {s:0.8,C:money}$11{}",
+                    "{C:money}${} equal to their {C:attention}rank halved{}",
+                    "{s:0.8}Aces give {s:0.8,C:money}$5{}",
                 }
             },
             j_picubed_ordersector = {

@@ -11,7 +11,7 @@ SMODS.Joker { --Weighted Die
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 5, y = 9 },
-	cost = 5,
+	cost = 4,
 	discovered = true,
 	blueprint_compat = false,
     perishable_compat = true,

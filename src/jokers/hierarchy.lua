@@ -10,7 +10,7 @@ SMODS.Joker { --Hierarchy
 	},
 	pronouns = 'he_they',
 	rarity = 3,
-    config = { extra = { Xmult = 2, has_king = false } },
+    config = { extra = { Xmult = 1.5, has_king = false } },
 	atlas = 'PiCubedsJokers',
 	pos = { x = 0, y = 10 },
 	cost = 8,

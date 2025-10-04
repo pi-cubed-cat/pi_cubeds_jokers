@@ -29,7 +29,7 @@ SMODS.Joker { --Pot
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { odds = 3, Xmult = 4, is_active = false } },
+	config = { extra = { odds = 3, Xmult = 3, is_active = false } },
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_pot')
 		return { 
