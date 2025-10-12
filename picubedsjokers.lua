@@ -128,9 +128,9 @@ SMODS.Sound({
 	path = "rhythm2.ogg",
 })
 
--- conflict with Mount Joker, Wee Mini, and Round-a-bout due to Paperback and friends :(
+-- conflict with Mount Joker, Wee Mini, and Round-a-bout due to hypothetical mods
 function can_do_pokerhand_changer_jokers()
-    if next(SMODS.find_mod("Paperback")) or picubed_config.pokerhand_changer_jokers == false then
+    if picubed_config.pokerhand_changer_jokers == false then
         return false
     else return true end
 end
