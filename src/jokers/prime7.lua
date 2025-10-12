@@ -29,13 +29,32 @@ SMODS.Joker { --Prime 7
             if #context.full_hand == 1 then
                 for k, v in ipairs(context.scoring_hand) do
                     if not v.debuff and v.base.value == '7' then 
-                        v:set_edition('e_negative', false, true)
-                        G.E_MANAGER:add_event(Event({
-                            func = function()
-                                v:juice_up()
-                                return true
-                            end
-                        }))
+                        if not (next(SMODS.find_card('j_dna')) and G.GAME.current_round.hands_played == 0) then -- regular behaviour (looks nicer)
+                            G.E_MANAGER:add_event(Event({
+                                trigger = 'before',
+                                func = function()
+                                    v:set_edition('e_negative', false, true)
+                                    play_sound('negative', 1.5, 0.4)
+                                    v:juice_up()
+                                    return true
+                                end
+                            }))
+                            return {
+                                colour = G.C.PURPLE,
+                                message = localize("k_picubeds_prime"),
+                                card = card
+                            }
+                        else -- if dna is active (allows the negative edition to be copied)
+                            v:set_edition('e_negative', false, true)
+                            G.E_MANAGER:add_event(Event({
+                                trigger = 'before',
+                                func = function()
+                                    play_sound('negative', 1.5, 0.4)
+                                    v:juice_up()
+                                    return true
+                                end
+                            }))
+                        end
                         return {
                             colour = G.C.PURPLE,
                             message = localize("k_picubeds_prime"),

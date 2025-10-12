@@ -44,17 +44,12 @@ SMODS.Joker { --Landslide
                     G.E_MANAGER:add_event(Event({
                         trigger = 'after',
                         func = function() 
-                            rndcard:set_ability('m_stone', nil, true)
-                            return true
-                        end
-                    }))
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.15,
-                        func = function() 
-                            rndcard:flip()
+                            rndcard:set_ability('m_stone', nil, false)
                             rndcard:juice_up()
+                            rndcard:flip()
                             play_sound('tarot2', 1.05 + math.random()*0.05 )
+                            play_sound('other1')
+							play_sound('button')
                             return true
                         end
                     }))

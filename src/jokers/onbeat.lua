@@ -23,6 +23,7 @@ SMODS.Joker { --On-beat
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
+	in_pool = function(self, args) return (next(SMODS.find_card('j_ring_master')) or not next(SMODS.find_card('j_picubed_offbeat'))) end, -- cannot appear if offbeat exists, unless showman (ring_master) exists
 	config = { extra = { repetitions = 1, odds = 50, secret_art = false } },
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = {key = "offbeat_tooltip", set = 'Other'}

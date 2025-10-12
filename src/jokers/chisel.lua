@@ -3,7 +3,7 @@ SMODS.Joker { --Chisel
 	loc_txt = {
 		name = 'Chisel',
 		text = {
-			"If {C:attention}first{} played card",
+			"If {C:attention}left-most{} scoring card",
 			"is a {C:attention}Stone{} card, {C:attention}remove{}", 
 			"the enhancement and add",
 			"{C:chips}+#1# {C:attention}bonus{} {C:attention}chips{} to the card"
@@ -28,17 +28,26 @@ SMODS.Joker { --Chisel
 	end,
 	
 	calculate = function(self, card, context)
-		if context.cardarea == G.play and context.individual and not context.blueprint then
-			if context.other_card == context.scoring_hand[1] and SMODS.has_enhancement(context.other_card, 'm_stone') then
-				if not context.other_card.debuff then 
-					context.other_card:set_ability(G.P_CENTERS.c_base, nil, true)
-					context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus or 0 --initialises a permanent chips value
-					context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus + card.ability.extra.big_bonus --add permanent chips to playing card
-					return {
-	message = localize("k_picubeds_chisel"),
-	colour = G.C.CHIPS
-					}
-				end
+		if context.before and not context.blueprint and not context.joker_retrigger then
+			local left_card = context.scoring_hand[1]
+			if not left_card.debuff and SMODS.has_enhancement(left_card, 'm_stone') then
+				left_card:set_ability(G.P_CENTERS.c_base, nil, true)
+				left_card.ability.perma_bonus = left_card.ability.perma_bonus or 0 --initialises a permanent chips value
+				left_card.ability.perma_bonus = left_card.ability.perma_bonus + card.ability.extra.big_bonus --add permanent chips to playing card
+				return {
+					message = localize("k_picubeds_chisel"),
+					colour = G.C.CHIPS,
+					card = left_card,
+					G.E_MANAGER:add_event(Event({
+						trigger = 'before',
+						func = function()
+							left_card:set_ability(G.P_CENTERS.c_base, nil, true)
+							play_sound('other1')
+							play_sound('button')
+							--play_sound('glass1', 0.3, 0.15)
+						return true end 
+					}))
+				}
 			end
 		end
 	end

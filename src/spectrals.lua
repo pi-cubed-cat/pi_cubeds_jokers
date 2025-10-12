@@ -48,8 +48,16 @@ SMODS.Consumable { --Commander (Spectral card)
             end
         end
         for k, v in ipairs(G.consumeables.cards) do
-            v:set_edition('e_negative', false, true)
-            v:juice_up()
+            G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.25,
+                func = function()
+                    v:set_edition('e_negative', false, true)
+                    v:juice_up()
+                    play_sound('negative', 1.5, 0.4)
+                    return true
+                end
+            }))
         end
     end
 }

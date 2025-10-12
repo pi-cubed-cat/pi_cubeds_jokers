@@ -55,64 +55,73 @@ SMODS.Joker { --Laser Printer
 			card_eval_status_text(card, 'extra', nil, nil, nil, { message = localize("k_picubeds_fixed") })
 		end
 		if context.using_consumeable and not context.blueprint and not card.ability.extra.is_disabled then
-			if SMODS.pseudorandom_probability(card, 'picubed_laserprinter_copy', 1, card.ability.extra.copy_odds) then
-				local has_activated = false
-				local has_destroyed = false
-				local is_negative = false
-			if SMODS.pseudorandom_probability(card, 'picubed_laserprinter_neg', 1, card.ability.extra.negative_odds) then
-				is_negative = true
-			end
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						if is_negative then
-							local copied_card = copy_card(context.consumeable, nil)
-							copied_card:add_to_deck()
-							if context.consumeable.edition then
-								if not copied_card.edition == 'e_negative' then
-									copied_card:set_edition("e_negative", false, true)
-								end
-							else
-								copied_card:set_edition("e_negative", false, true)
-							end
-							G.consumeables:emplace(copied_card)
-							has_activated = true
-							card_eval_status_text(card, 'extra', nil, nil, nil,
-								{ message = localize("k_picubeds_print") })
-						elseif #G.consumeables.cards < G.consumeables.config.card_limit then
-							local copied_card = copy_card(context.consumeable, nil)
-							copied_card:add_to_deck()
-							G.consumeables:emplace(copied_card)
-							has_activated = true
-							card_eval_status_text(card, 'extra', nil, nil, nil,
-								{ message = localize("k_picubeds_print") })
-						end
-						return true
-					end
-				}))
+			G.E_MANAGER:add_event(Event({
+                func = function()
+                  	if SMODS.pseudorandom_probability(card, 'picubed_laserprinter_copy', 1, card.ability.extra.copy_odds) then
+						local has_activated = false
+						local has_destroyed = false
+						local is_negative = false
 
-				if SMODS.pseudorandom_probability(card, 'picubed_laserprinter_destroy', 1, card.ability.extra.destroy_odds) then
-					card_eval_status_text(card, 'extra', nil, nil, nil,
-											{ message = localize("k_picubeds_error"), sound = 'tarot1', colour = G.C.RED })
-					G.E_MANAGER:add_event(Event({
-					func = function()
-						if has_activated then
-							has_destroyed = true
+						if SMODS.pseudorandom_probability(card, 'picubed_laserprinter_neg', 1, card.ability.extra.negative_odds) then
+							is_negative = true
+						end
+
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'before',
+                            func = function()
+                                if is_negative then
+									card_eval_status_text(card, 'extra', nil, nil, nil,
+										{ message = localize("k_picubeds_print") })
+									local copied_card = copy_card(context.consumeable, nil)
+									copied_card:add_to_deck()
+									if context.consumeable.edition then
+										if not copied_card.edition == 'e_negative' then
+											copied_card:set_edition("e_negative", false, true)
+										end
+									else
+										copied_card:set_edition("e_negative", false, true)
+									end
+									G.consumeables:emplace(copied_card)
+									has_activated = true
+									
+								elseif #G.consumeables.cards < G.consumeables.config.card_limit then
+									card_eval_status_text(card, 'extra', nil, nil, nil,
+										{ message = localize("k_picubeds_print") })
+									local copied_card = copy_card(context.consumeable, nil)
+									copied_card:add_to_deck()
+									G.consumeables:emplace(copied_card)
+									has_activated = true
+								end
+								return true
+                            end
+                        }))
+
+                        if SMODS.pseudorandom_probability(card, 'picubed_inkjetprinter_destroy', 1, card.ability.extra.destroy_odds) then
                             G.E_MANAGER:add_event(Event({
-                                trigger = 'after',
-                                delay = 0.3,
-                                blockable = false,
                                 func = function()
-                                    card.ability.extra.is_disabled = true
-                                    card.children.floating_sprite:set_sprite_pos({ x = 1, y = 7 })
-                                    return true;
+                                    if has_activated then
+                                        card_eval_status_text(card, 'extra', nil, nil, nil,
+                                            { message = localize("k_picubeds_error"), sound = 'tarot1', colour = G.C.RED })
+                                        has_destroyed = true
+										G.E_MANAGER:add_event(Event({
+											trigger = 'after',
+											func = function()
+												card.ability.extra.is_disabled = true
+												card.children.floating_sprite:set_sprite_pos({ x = 1, y = 7 })
+												return true;
+											end
+										}))
+                                    end
+                                    return true
                                 end
                             }))
                         end
-					return true
-					end
-					}))
-				end
-			end
+                    end
+
+                    return true
+                end
+            }))
 		end
+
 	end
 }

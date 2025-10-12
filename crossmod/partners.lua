@@ -129,7 +129,8 @@ Partner_API.Partner { --Copy
                                 delay = 0.3,
                                 blockable = false,
                                 func = function()
-                                    play_sound('tarot1')
+                                    card_eval_status_text(card, 'extra', nil, nil, nil,
+                                        { message = localize("k_picubeds_error"), sound = 'tarot1', colour = G.C.RED })
                                     card.ability.extra.is_disabled = true
                                     return true;
                                 end

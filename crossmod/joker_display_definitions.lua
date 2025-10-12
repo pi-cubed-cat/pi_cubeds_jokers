@@ -246,9 +246,7 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
         calc_function = function(card)
           local sum_rank = 0
           local ace_count = 0
-          local has_decimal = false
           local is_success = 0
-          if card.ability.extra.cap ~= 21 then has_decimal = true end
           
           if G.GAME.current_round.discards_used <= 0 and G.GAME.current_round.hands_played <= 0 then
             

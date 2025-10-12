@@ -25,7 +25,6 @@ SMODS.Joker { --Currency Exchange
 			if not context.other_card.debuff then
 				return {
                     mult = card.ability.extra.mult,
-                    card = context.other_card
                 }
 			end
 		end

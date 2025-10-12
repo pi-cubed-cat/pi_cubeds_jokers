@@ -1,4 +1,3 @@
----TALKING FLOWER FUNCTIONS---
 -- can buy with full slots (from MoreFluff)
 local old_g_funcs_check_for_buy_space = G.FUNCS.check_for_buy_space
 G.FUNCS.check_for_buy_space = function(card)
@@ -6,6 +5,17 @@ G.FUNCS.check_for_buy_space = function(card)
 		return true
 	end
 	return old_g_funcs_check_for_buy_space(card)
+end
+
+-- can select with full slots (from MoreFluff)
+local old_g_funcs_can_select_card = G.FUNCS.can_select_card
+G.FUNCS.can_select_card = function(card)
+  	if card.config.ref_table.ability.name == "j_picubed_talkingflower" and card.config.ref_table.ability.extra.slots >= 1 then
+    	card.config.colour = G.C.GREEN
+    	card.config.button = 'use_card'
+  	else
+    	old_g_funcs_can_select_card(card)
+  	end
 end
 
 -- add speech bubble (from Partner)

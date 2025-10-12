@@ -23,7 +23,7 @@ SMODS.Joker { --Table Expected, got nil
 	calculate = function(self, card, context)
         if context.modify_scoring_hand and not context.blueprint then
             return {
-                add_to_hand = false
+                remove_from_hand = true 
             }
         end
 		if context.joker_main then

@@ -30,60 +30,63 @@ SMODS.Joker { --Inkjet Printer
     end,
     calculate = function(self, card, context)
         if context.using_consumeable and not context.blueprint then
-            if SMODS.pseudorandom_probability(card, 'picubed_inkjetprinter_copy', 1, card.ability.extra.copy_odds) then
-                local has_activated = false
-                local has_destroyed = false
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        if #G.consumeables.cards < G.consumeables.config.card_limit then
-                            local copied_card = copy_card(context.consumeable, nil)
-                            copied_card:add_to_deck()
-                            G.consumeables:emplace(copied_card)
-                            has_activated = true
-                            card_eval_status_text(card, 'extra', nil, nil, nil,
-                                { message = localize("k_picubeds_print") })
-                        end
-                        return true
-                    end
-                }))
+            
+            G.E_MANAGER:add_event(Event({
+                func = function()
+            
+                    if SMODS.pseudorandom_probability(card, 'picubed_inkjetprinter_copy', 1, card.ability.extra.copy_odds) then
+                        local has_activated = false
+                        local has_destroyed = false
 
-                if SMODS.pseudorandom_probability(card, 'picubed_inkjetprinter_destroy', 1, card.ability.extra.destroy_odds) then
-                    card_eval_status_text(card, 'extra', nil, nil, nil,
-                        { message = localize("k_picubeds_error"), sound = 'tarot1', colour = G.C.RED })
-                    G.E_MANAGER:add_event(Event({
-					func = function()
-						if has_activated then
-                            has_destroyed = true
-                            play_sound('tarot1')
-                                card.T.r = -0.2
-                                card:juice_up(0.3, 0.4)
-                                card.states.drag.is = true
-                                card.children.center.pinch.x = true
-                                -- This part destroys the card.
-                                G.E_MANAGER:add_event(Event({
-                                    trigger = 'after',
-                                    delay = 0.3,
-                                    blockable = false,
-                                    func = function()
-                                        check_for_unlock({type = 'picubed_printer_error'})
-                                        local mpcard = create_card('Joker', G.jokers, nil, 0, nil, nil, 'j_misprint', 'pri')
-                                        mpcard:set_edition(card.edition, false, true)
-                                        mpcard:add_to_deck()
-                                        G.jokers:emplace(mpcard)
-                                        mpcard:start_materialize()
-                                        G.GAME.pool_flags.picubed_printer_error = true
-                                        G.jokers:remove_card(card)
-                                        card:remove()
-                                        card = nil
-                                        return true;
-                                    end
-                                }))
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'before',
+                            func = function()
+                                if (#G.consumeables.cards < G.consumeables.config.card_limit) then
+                                    card_eval_status_text(card, 'extra', nil, nil, nil,
+                                { message = localize("k_picubeds_print") })
+                                    local copied_card = copy_card(context.consumeable, nil)
+                                    --G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                                    copied_card:add_to_deck()
+                                    G.consumeables:emplace(copied_card)
+                                    has_activated = true
+                                    --G.GAME.consumeable_buffer = 0
+                                end
+                                return true
                             end
-                    return true
+                        }))
+
+                        if SMODS.pseudorandom_probability(card, 'picubed_inkjetprinter_destroy', 1, card.ability.extra.destroy_odds) then
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    if has_activated then
+                                        card_eval_status_text(card, 'extra', nil, nil, nil,
+                                            { message = localize("k_picubeds_error"), sound = 'tarot1', colour = G.C.RED })
+                                        has_destroyed = true
+                                        G.E_MANAGER:add_event(Event({
+                                            trigger = 'after',
+                                            func = function()
+                                                check_for_unlock({type = 'picubed_printer_error'})
+                                                G.GAME.pool_flags.picubed_printer_error = true
+                                                local mpcard = SMODS.create_card({ set = 'Joker', area = G.jokers, key = 'j_misprint', key_append = 'pri' })
+                                                mpcard:set_edition(card.edition, false, true)
+                                                G.jokers:emplace(mpcard)
+                                                G.jokers:remove_card(card)
+                                                card:remove()
+                                                card = nil
+                                                return true;
+                                            end
+                                        }))
+                                    end
+                                    return true
+                                end
+                            }))
+                        end
                     end
-                    }))
+
+                    return true
                 end
-            end
+            }))
+
         end
     end
 }

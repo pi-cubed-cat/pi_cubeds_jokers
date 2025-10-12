@@ -26,7 +26,7 @@ SMODS.Joker { --Round-a-bout
 	cost = 6,
 	discovered = true,
 	blueprint_compat = true,
-	perishable_compat = true,
+	perishable_compat = false,
 	eternal_compat = true,
 	config = { extra = { mult = 1, mult_mod = 0.25 }},
 	in_pool = function(self, args)

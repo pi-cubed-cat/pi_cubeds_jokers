@@ -219,7 +219,7 @@ return {
             j_picubed_chisel = {
                 name = 'Chisel',
                 text = {
-                   "If {C:attention}first{} played card",
+                   "If {C:attention}left-most{} scoring card",
                    "is a {C:attention}Stone{} card, {C:attention}remove{}", 
                    "the enhancement and add",
                    "{C:chips}+#1# {C:attention}bonus{} {C:attention}chips{} to the card"
@@ -244,8 +244,9 @@ return {
             j_picubed_prime7 = {
                 name = "Prime 7",
                 text = {
-                   "If hand is a single {C:attention}7{},",
-                   "it becomes {C:dark_edition}Negative{}"
+                    "If hand is a single {C:attention}7{},",
+                    "add {C:dark_edition}Negative{} edition",
+                    "to the card",
                 }
             },
             j_picubed_landslide = {
@@ -408,7 +409,7 @@ return {
                 text = {
                    "If the {C:attention}sum rank{} of",
                    "{C:attention}first{} played or discarded",
-                   "cards is {C:attention}#2#{}, earn {C:money}$#3#{}",
+                   "cards is {C:attention}#1#{}, earn {C:money}$#2#{}",
                 }
             },
             j_picubed_bisexualflag = {

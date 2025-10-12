@@ -48,14 +48,13 @@ SMODS.Joker { --Off the Hook
 				for k, v in ipairs(G.hand.cards) do
                     if v.config.center == G.P_CENTERS.c_base then
                         G.hand:add_to_highlighted(v, true)
-                        any_selected = true
 						num_discard_cards = num_discard_cards + 1
                     end
                 end
 				if num_discard_cards >= 12 then
 					check_for_unlock({type = 'picubed_discard12_dontgetcookedstay'})
 				end
-                if any_selected then G.FUNCS.discard_cards_from_highlighted(nil, true) end
+                if num_discard_cards > 0 then G.FUNCS.discard_cards_from_highlighted(nil, true) end
 			return true end }))
 			G.E_MANAGER:add_event(Event({ func = function() 
                 G.hand.config.highlighted_limit = saved_highlight 
@@ -69,13 +68,17 @@ SMODS.Joker { --Off the Hook
 			local saved_highlight = G.hand.config.highlighted_limit
 			G.hand.config.highlighted_limit = 31415
 			G.E_MANAGER:add_event(Event({ func = function()
-                for k, v in ipairs(G.hand.cards) do
+                local num_discard_cards = 0
+				for k, v in ipairs(G.hand.cards) do
                     if v.config.center == G.P_CENTERS.c_base then
                         G.hand:add_to_highlighted(v, true)
-                        any_selected = true
+						num_discard_cards = num_discard_cards + 1
                     end
                 end
-                if any_selected then G.FUNCS.discard_cards_from_highlighted(nil, true) end
+				if num_discard_cards >= 12 then
+					check_for_unlock({type = 'picubed_discard12_dontgetcookedstay'})
+				end
+                if num_discard_cards > 0 then G.FUNCS.discard_cards_from_highlighted(nil, true) end
 			return true end }))
 			G.E_MANAGER:add_event(Event({ func = function() 
                 G.hand.config.highlighted_limit = saved_highlight 

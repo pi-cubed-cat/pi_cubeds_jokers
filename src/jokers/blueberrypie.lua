@@ -12,7 +12,7 @@ SMODS.Joker { --Blueberry Pie
     pronouns = 'she_they',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
-	pos = { x = 2, y = 11 },
+	pos = { x = 0, y = 13 },
 	cost = 7,
 	discovered = true,
 	blueprint_compat = true,
@@ -20,10 +20,28 @@ SMODS.Joker { --Blueberry Pie
 	eternal_compat = false,
     pools = { ["Food"] = true },
 	config = { extra = { rounds = 5 } },
+    update = function(self, card, dt)
+		if G.GAME and card.ability then
+			if card.ability.extra.rounds == 5 then
+                card.children.center:set_sprite_pos({ x = 0, y = 13 })
+            elseif card.ability.extra.rounds == 4 then
+                card.children.center:set_sprite_pos({ x = 1, y = 13 })
+            elseif card.ability.extra.rounds == 3 then
+                card.children.center:set_sprite_pos({ x = 2, y = 13 })
+            elseif card.ability.extra.rounds == 2 then
+                card.children.center:set_sprite_pos({ x = 3, y = 13 })
+            elseif card.ability.extra.rounds == 1 then
+                card.children.center:set_sprite_pos({ x = 4, y = 13 })
+            end
+		end
+	end,
 	loc_vars = function(self, info_queue, card)
         if card.area and card.area == G.jokers then
-            local compatible = G.jokers.cards[1] and G.jokers.cards[1] ~= card and
-                G.jokers.cards[1].config.center.blueprint_compat
+            local other_joker
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i + 1] end
+            end
+            local compatible = other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat
             main_end = {
                 {
                     n = G.UIT.C,
@@ -44,19 +62,25 @@ SMODS.Joker { --Blueberry Pie
 		return { vars = { card.ability.extra.rounds } }
     end,
 	calculate = function(self, card, context)
-        if context.end_of_round and not context.repetition and not context.individual and not context.retrigger_joker then 
+        if context.end_of_round and not context.repetition and not context.individual and not context.retrigger_joker and not context.blueprint then 
             if card.ability.extra.rounds <= 1 then
-                SMODS.destroy_cards(card, nil, nil, true)
-                return {
-                    message = localize('k_eaten_ex'),
-                    colour = G.C.FILTER
-                }
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'before',
+                    func = function()
+                        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_eaten_ex"), colour = G.C.FILTER})
+                        SMODS.destroy_cards(card, nil, nil, true)
+                        return true
+                    end
+                }))
             else
                 card.ability.extra.rounds = card.ability.extra.rounds - 1
-                return {
-                    message = localize{type='variable',key='a_remaining',vars={card.ability.extra.rounds}},
-                    colour = G.C.FILTER
-                }
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'before',
+                    func = function()
+                        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_remaining',vars={card.ability.extra.rounds}}, colour = G.C.FILTER})
+                        return true
+                    end
+                }))
             end
         end
         local other_joker = nil
