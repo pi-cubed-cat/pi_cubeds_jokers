@@ -860,19 +860,19 @@ return {
             j_picubed_psychicspirit = {
                 name = 'Psychic Spirit',
                 text = {
-                   "{C:chips}+#1#{} Hands after Blind is selected,",
-                   "decreases by {C:mult}#2#{} if played hand",
-                   "does not contain {C:attention}#3#{} cards",
+                    "{C:chips}+#1#{} Hands after Blind is selected,",
+                    "decreases by {C:mult}#2#{} if played hand",
+                    "does not contain {C:attention}#3#{} cards",
                 }
             },
             j_picubed_sprinkler = {
                 name = 'Sprinkler',
                 text = {
-                    "On {C:attention}Discard{}, give #1# held", 
-                    "card your full deck's",
-                    "{C:attention}most common suit{}",
+                    "On {C:attention}Discard{}, give #1# held or", 
+                    "discarded card your full",
+                    "deck's {C:attention}most common suit{}",
                     "{C:inactive}(Currently {V:1}#2#{}{C:inactive}){}",
-		            }
+                }
             },
             j_picubed_monkeyseemonkeydo = {
                 name = 'Monkey See, Monkey Do',

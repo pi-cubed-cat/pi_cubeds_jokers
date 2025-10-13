@@ -1,4 +1,4 @@
-local function reset_sprinker_card()
+function reset_j_picubed_sprinker_card()
     G.GAME.current_round.sprinkler_card = 'Clubs'
     local suit_counting = {}
     if G.playing_cards then
@@ -44,16 +44,17 @@ SMODS.Joker { --Sprinkler
 	discovered = true,
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
-        reset_sprinker_card()
+        reset_j_picubed_sprinker_card()
         local suit = G.GAME.current_round.sprinkler_card or 'Clubs'
 		return { vars = { card.ability.extra.num_card, localize(suit, 'suits_plural'), colours = { G.C.SUITS[suit] } } 
 		}
 	end,
 	calculate = function(self, card, context)
-        if not context.blueprint then
+        --[[if not context.blueprint then
             reset_sprinker_card()
-        end
+        end]]
         if context.pre_discard then
+            reset_j_picubed_sprinker_card()
             local highest_suit = G.GAME.current_round.sprinkler_card
             if #G.hand.cards > 0 then
                 local card_list = {}
