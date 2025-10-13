@@ -1,5 +1,5 @@
 function reset_j_picubed_sprinker_card()
-    G.GAME.current_round.sprinkler_card = 'Clubs'
+    G.GAME.current_round.sprinkler_card = 'Spades'
     local suit_counting = {}
     if G.playing_cards then
         for _, playing_card in ipairs(G.playing_cards) do
@@ -12,12 +12,12 @@ function reset_j_picubed_sprinker_card()
                 end
             end
         end
-        local highest_suit = 'Clubs'
+        local highest_suit = 'Spades'
         local highest_count = 0
-        for k,v in pairs(SMODS.Suits) do --pairs(suit_counting) do
-            if (suit_counting[k] or 0) > highest_count then
-                highest_count = suit_counting[k]
-                highest_suit = k
+        for k,v in pairs(SMODS.Suit.obj_buffer) do --pairs(suit_counting) do
+            if (suit_counting[v] or 0) >= highest_count then
+                highest_count = suit_counting[v]
+                highest_suit = v
             end
         end
         G.GAME.current_round.sprinkler_card = highest_suit
@@ -45,7 +45,7 @@ SMODS.Joker { --Sprinkler
 	blueprint_compat = true,
 	loc_vars = function(self, info_queue, card)
         reset_j_picubed_sprinker_card()
-        local suit = G.GAME.current_round.sprinkler_card or 'Clubs'
+        local suit = G.GAME.current_round.sprinkler_card or 'Spades'
 		return { vars = { card.ability.extra.num_card, localize(suit, 'suits_plural'), colours = { G.C.SUITS[suit] } } 
 		}
 	end,

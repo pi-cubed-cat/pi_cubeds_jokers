@@ -451,11 +451,11 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
         },
         calc_function = function(card)
             reset_j_picubed_sprinker_card()
-            card.joker_display_values.sprinkler_card_suit = localize(G.GAME.current_round.sprinkler_card or "Clubs", 'suits_singular')
+            card.joker_display_values.sprinkler_card_suit = localize(G.GAME.current_round.sprinkler_card or "Spades", 'suits_singular')
         end,
         style_function = function(card, text, reminder_text, extra)
             if text and text.children[2] then
-                text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.current_round.sprinkler_card or "Clubs"], 0.35) 
+                text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.current_round.sprinkler_card or "Spades"], 0.35) 
             end
             return false
         end,
