@@ -14,8 +14,8 @@ function reset_j_picubed_sprinker_card()
         end
         local highest_suit = 'Spades'
         local highest_count = 0
-        for _,v in ipairs(SMODS.Suit.obj_buffer) do --pairs(suit_counting) do
-            if (suit_counting[v] or 0) >= highest_count then
+        for _,v in ipairs(SMODS.Suit.obj_buffer) do
+            if suit_counting[v] and (suit_counting[v] >= highest_count) then
                 highest_count = suit_counting[v]
                 highest_suit = v
             end
