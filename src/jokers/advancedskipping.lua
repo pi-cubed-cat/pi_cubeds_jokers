@@ -23,8 +23,7 @@ SMODS.Joker { --Advanced Skipping
         return { vars = { card.ability.extra.add_tags, card.ability.extra.add_tags_mod} }
     end,
     calculate = function(self, card, context)
-        if context.skip_blind and not context.blueprint then
-            --code below taken from Ortalab's Recycled Enhancement
+        if context.skip_blind then
             local tag_pool = get_current_pool('Tag')
             for i=1,card.ability.extra.add_tags do         
                 local selected_tag = pseudorandom_element(tag_pool, pseudoseed('advancedskipping'..G.GAME.round_resets.ante))
@@ -35,8 +34,8 @@ SMODS.Joker { --Advanced Skipping
                 end
                 if selected_tag ~= 'tag_orbital' then
                     add_tag(Tag(selected_tag))
-                else --i can't be assed dealing with orbital tag rn
-                    add_tag(Tag('tag_meteor'))
+                else 
+                    add_tag(Tag(selected_tag, false, 'Small'))
                 end
             end
             card:juice_up()

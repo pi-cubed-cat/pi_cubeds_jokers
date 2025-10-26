@@ -36,6 +36,38 @@ function G.UIDEF.use_and_sell_buttons(card)
     return t
 end
 
+function ambigram_controller_button(args)
+  if not args then return end
+  return UIBox{
+    T = {args.card.VT.x,args.card.VT.y,0,0},
+    definition = 
+      {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR}, nodes={
+        {n=G.UIT.R, config={id = nil, ref_table = args.card, ref_parent = args.parent, align = 'cr', colour = G.C.BLACK, 
+        shadow = true, r = 0.08, func = 'ambigram_active', one_press = false, button = 'do_ambigram_swap', focus_args = {type = 'none'}, hover = true}, 
+        nodes={
+          {n=G.UIT.R, config={align = 'cr', minw = 1, minh = 1, padding = 0.08,
+              focus_args = {button = 'rightshoulder', scale = 0.55, orientation = 'tri', offset = {x = -0.1, y = 0}, type = 'none'},
+              func = 'set_button_pip'}, nodes={
+            {n=G.UIT.R, config={align = "cm", minh = 0.3}, nodes={}},
+            {n=G.UIT.R, config={align = "cm"}, nodes={
+              {n=G.UIT.C, config={align = "cm",minw = 0.2, minh = 0.6}, nodes={}},
+              {n=G.UIT.C, config={align = "cm", maxw = 1}, nodes={
+                {n=G.UIT.T, config={text = localize('k_picubeds_swap'),colour = G.C.WHITE, scale = 0.5}}
+              }},
+            }}
+          }}
+        }}
+      }}, 
+    config = {
+        align = 'cr',
+        offset = {x=((args.card_width or 0) - 0.17 - args.card.T.w/2),y=0}, 
+        parent = args.parent,
+      }
+  }
+end
+
+local ambigram_activating_rn = false
+
 G.FUNCS.ambigram_active = function(e)
     local card = e.config.ref_table
     local can_use = false
@@ -47,7 +79,7 @@ G.FUNCS.ambigram_active = function(e)
             end
         end
     end
-    if can_use then 
+    if can_use and not ambigram_activating_rn then 
         e.config.colour = G.C.ORANGE
         e.config.button = 'do_ambigram_swap'
     else
@@ -56,13 +88,16 @@ G.FUNCS.ambigram_active = function(e)
     end
 end
 
-G.FUNCS.do_ambigram_swap = function(e)
+G.FUNCS.do_ambigram_swap = function(e) -- for some reason, this function gets called twice when a controller presses "Swap!". no clue why :/
+    --print("hi")
     stop_use()
+    ambigram_activating_rn = true
     e.config.button = nil
     G.jokers:unhighlight_all()
+    --G.CONTROLLER.focused.target = nil
     local card = e.config.ref_table
     for k, v in ipairs(G.hand.cards) do
-        if (v:get_id() == 6 or v:get_id() == 9) and v.highlighted then
+        if (v:get_id() == 6 or v:get_id() == 9) and v.highlighted == true then
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.2,
@@ -78,8 +113,8 @@ G.FUNCS.do_ambigram_swap = function(e)
             }))
         end
     end
-    for k, v in ipairs(G.hand.highlighted) do
-        if v:get_id() == 6 or v:get_id() == 9 then
+    for k, v in ipairs(G.hand.cards) do
+        if (v:get_id() == 6 or v:get_id() == 9) and v.highlighted == true then
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.2,
@@ -92,9 +127,12 @@ G.FUNCS.do_ambigram_swap = function(e)
                         play_sound('tarot2', 0.85 + math.random()*0.05)
                         SMODS.change_base(v, nil, "6")
                     end
+                    ambigram_activating_rn = false
                     return true
                 end
             }))
         end
     end
 end
+
+-- relies on additional functionality present in lovely/ambigram.toml (controller compat)

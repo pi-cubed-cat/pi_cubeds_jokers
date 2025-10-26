@@ -18,12 +18,26 @@ SMODS.Joker { --Super Greedy Joker
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { num = 4, num_remaining = 4 } },
+	--config = { extra = { num = 4, num_remaining = 4 } },
 	calculate = function(self, card, context)
 		if context.end_of_round or context.before then
 			picubeds_supergreedyjoker_emptyslots = G.jokers.config.card_limit - #G.jokers.cards
 		end
-		if context.cardarea == G.play then
+		
+		if context.final_scoring_step and not context.blueprint and not context.joker_retrigger then
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				func = function()
+					for k,v in ipairs(G.jokers.cards) do
+						if v.picubed_supergreedyjoker_created then
+							v:flip()
+							v.picubed_supergreedyjoker_created = nil
+						end
+					end
+					return true;
+				end
+			}))
+		elseif context.cardarea == G.play then
 			if context.individual then
 				if context.other_card:is_suit("Diamonds") and #G.jokers.cards < G.jokers.config.card_limit and picubeds_supergreedyjoker_emptyslots > 0 then
 					SMODS.calculate_effect({ message = localize('k_picubeds_diamond'), colour = G.C.SUITS["Diamonds"] },
@@ -34,11 +48,14 @@ SMODS.Joker { --Super Greedy Joker
 							has_diamond = true
 							local mpcard = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'pri')
 							local edition = poll_edition('edi'..G.GAME.round_resets.ante, 1, true, true)
+							mpcard.picubed_supergreedyjoker_created = true
 							mpcard:set_edition(edition, false, true)
 							mpcard:add_to_deck()
 							G.jokers:emplace(mpcard)
 							mpcard:start_materialize()
 							card:juice_up()
+							--mpcard.facing = 'back'
+							mpcard:flip()
 							return true;
 						end
 					}))
@@ -50,11 +67,14 @@ SMODS.Joker { --Super Greedy Joker
 						func = function()
 							local mpcard = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'pri')
 							local edition = "e_negative"
+							mpcard.picubed_supergreedyjoker_created = true
 							mpcard:set_edition(edition, false, true)
 							mpcard:add_to_deck()
 							G.jokers:emplace(mpcard)
 							mpcard:start_materialize()
 							card:juice_up()
+							--mpcard.facing = 'back'
+							mpcard:flip()
 							return true;
 						end
 					}))

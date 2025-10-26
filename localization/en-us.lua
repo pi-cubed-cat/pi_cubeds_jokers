@@ -72,10 +72,9 @@ return {
             sleeve_picubed_covetoussleeve_alt = {
                 name = "Covetous Sleeve",
                 text = {
-                     "Start with 3 copies of",
-                     "{C:attention,T:j_picubed_shoppingtrolley}#1#{},",
-                     "a {C:attention,T:j_picubed_preorderbonus}#2#{},",
-                     "{C:attention,T:v_seed_money}#3#{}, and {C:attention,T:v_money_tree}#4#{}",
+                     "Start with 2 extra copies",
+                     "of {C:attention,T:j_picubed_shoppingtrolley}#1#{},",
+                     "and a {C:attention,T:v_money_tree}#4#{}",
                 },
             },
             sleeve_picubed_myepicsleeve = {
@@ -89,9 +88,7 @@ return {
             sleeve_picubed_myepicsleeve_alt = {
                 name = "my epic sleeve by pi_cubed",
                 text = {
-                    "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{}",
-                    "are {C:attention}3x{} more likely to appear,",
-                    "Start with an extra {C:money}$#1#",
+                    "Start with an extra {C:money}$5",
                     "and an {C:attention,T:j_picubed_inkjetprinter}#2#{}",
                 },
             },
@@ -105,9 +102,9 @@ return {
             sleeve_picubed_medusasleeve_alt = {
                 name = "Medusa Sleeve",
                 text = {
-                    "Start with 16 {C:attention,T:m_stone}Stone cards{}",
-                    "instead of Kings, Queens,",
-                    "2s, and 3s",
+                    "Start with 8 extra",
+                    "{C:attention,T:m_stone}Stone cards{}",
+                    "instead of 2s and 3s",
                 },
             },
             sleeve_picubed_wonderfulsleeve = {
@@ -120,9 +117,8 @@ return {
             sleeve_picubed_wonderfulsleeve_alt = {
                 name = "Wonderful Sleeve",
                 text = {
-                    "Start with a",
-                    "{C:dark_edition,T:e_foil}Foil{} {C:attention,T:j_picubed_talkingflower}Talking Flower{}",
-                    "and a {C:dark_edition,T:e_polychrome}Polychrome{}",
+                    "Start with a bonus",
+                    "{C:dark_edition,T:e_polychrome}Polychrome{}",
                     "{C:attention,T:j_picubed_talkingflower}Talking Flower{}",
                 },
             },
@@ -137,9 +133,8 @@ return {
             sleeve_picubed_collectorssleeve_alt = {
                 name = "Collector's Sleeve",
                 text = {
-                    "Start with a {C:attention,T:v_magic_trick}#1#{},",
-                    "{C:attention,T:v_illusion}#2#{}, {C:attention,T:v_overstock_norm}#3#{}",
-                    "and {C:attention,T:v_overstock_plus}#4#{}",
+                    "Start also with an",
+                    "{C:attention,T:v_overstock_plus}#4#{}",
                     " ",
                     "Create a {C:attention,T:tag_standard}#5#{}",
                     "When Blind is defeated",
@@ -156,7 +151,7 @@ return {
             sleeve_picubed_rejuvinationsleeve_alt = {
                 name = "Rejuvenation Sleeve",
                 text = {
-                    "{C:red}#1#{} Joker slots,",
+                    "Additional {C:red}-1{} Joker slot,",
                     "{C:attention}+#2#{} Joker slot after",
                     "{C:attention}any{} Boss Blind defeated",
                 },
@@ -175,12 +170,9 @@ return {
             sleeve_picubed_duplicitoussleeve_alt = {
                 name = "Duplicitous Sleeve",
                 text = {
-                    "{C:attention}+#1#{} Joker Slots,",
-                    "Jokers can appear with",
-                    "the {C:attention}Contractual{} sticker",
-                    "{C:inactive,s:0.8}(Eternal and Perishable combined){}",
-                    "Start with 2",
-                    "{C:attention}Contractual{} {C:attention,T:j_credit_card}Credit Cards{}",
+                    "{C:attention}+1{} additional Joker Slot,",
+                    "Start with an extra",
+                    "{C:attention}Contractual{} {C:attention,T:j_credit_card}Credit Card{}",
                     "{s:0.8}Contractual Jokers appear more often",
                 },
             },
@@ -220,8 +212,8 @@ return {
                 name = 'Chisel',
                 text = {
                    "If {C:attention}left-most{} scoring card",
-                   "is a {C:attention}Stone{} card, {C:attention}remove{}", 
-                   "the enhancement and add",
+                   "is a {C:attention}Stone{} card, give it a", 
+                   "{C:attention}random{} enhancement and add",
                    "{C:chips}+#1# {C:attention}bonus{} {C:attention}chips{} to the card"
                 }
             },
@@ -380,9 +372,10 @@ return {
             j_picubed_spectraljoker = {
                 name = 'Spectral Joker',
                 text = {
-                   "After {C:attention}Boss Blind{} is",
-                   "defeated, create a",
-                   "free {C:attention}Ethereal Tag{}"
+                    "After {C:attention}Boss Blind{} is",
+                    "defeated, next shop has",
+                    "an additional {C:attention}free{}",
+                    "{C:attention}Mega Spectral Pack{}",
                 }
             },
             j_picubed_siphon = {
@@ -454,7 +447,7 @@ return {
                 text = {
                     {
                         "Played {C:attention}face down{} cards are",
-                        "retriggered {C:attention}#1#{} additonal times"
+                        "retriggered {C:attention}#1#{} additonal time"
                     },
                     {
                         "{C:attention}Face down{} Jokers and",
@@ -474,7 +467,7 @@ return {
             j_picubed_extralimb = {
                 name = 'Extra Limb',
                 {
-                    "{C:attention}+#1#{} Consumable Slots",
+                    "{C:attention}+#1#{} Consumable Slot",
                 },
                 {
                     "{C:mult}+#2#{} Mult per held",
@@ -1174,6 +1167,15 @@ return {
                     "for the next {C:attention}#1#{} rounds,",
                     "then expires and is removed",
                     "{C:inactive}({C:attention}#2#{C:inactive} remaining)",
+                },
+            },
+            picubed_ranklesscards = {
+                name = '"Stone" cards',
+                text = {
+                    "Also works on other", 
+                    "modded enhanced",
+                    "cards with {C:attention}no rank{}",
+                    "{C:attention}and no suit{}!",
                 },
             },
         },

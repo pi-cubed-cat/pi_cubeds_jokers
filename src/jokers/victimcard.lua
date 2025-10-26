@@ -1,4 +1,4 @@
-local picubed_victimcard_prehand = false
+--local picubed_victimcard_prehand = false
 SMODS.Joker { --Victim Card
 	key = 'victimcard',
 	loc_txt = {
@@ -25,46 +25,46 @@ SMODS.Joker { --Victim Card
 		return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult_cap, card.ability.extra.Xmult } }
 	end,
 	calculate = function(self, card, context)
-		if context.pre_discard and not context.blueprint then
+		--[[if context.pre_discard and not context.blueprint then
 			picubed_victimcard_prehand = false
-		end
-		if context.hand_drawn and picubed_victimcard_prehand and not context.blueprint and not context.retrigger_joker and G.GAME.current_round.hands_played ~= 0 then
-			card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-			if card.ability.extra.Xmult >= card.ability.extra.Xmult_cap then
-				G.E_MANAGER:add_event(Event({
-					func = function()
-						play_sound('tarot1')
-						card.T.r = -0.2
-						card:juice_up(0.3, 0.4)
-						card.states.drag.is = true
-						card.children.center.pinch.x = true
-						G.E_MANAGER:add_event(Event({
-								trigger = 'after',
-								delay = 0.3,
-								blockable = false,
+		end]]
+		if context.final_scoring_step and not context.blueprint and not context.joker_retrigger then
+			G.E_MANAGER:add_event(Event({
+				trigger = 'after',
+				func = function()
+					if G.GAME.chips + SMODS.calculate_round_score() < G.GAME.blind.chips then
+						card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+						if card.ability.extra.Xmult >= card.ability.extra.Xmult_cap then
+							G.E_MANAGER:add_event(Event({
 								func = function()
-										card:remove()
-										return true
+									play_sound('tarot1')
+									card.T.r = -0.2
+									card:juice_up(0.3, 0.4)
+									card.states.drag.is = true
+									card.children.center.pinch.x = true
+									G.E_MANAGER:add_event(Event({
+											trigger = 'after',
+											delay = 0.3,
+											blockable = false,
+											func = function()
+													card:remove()
+													return true
+											end
+									}))
+									return true
 								end
-						}))
-						return true
+							}))
+							card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_victimcard"), colour = G.C.MULT})
+						else
+							card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
+						end
 					end
-				}))
-				return {
-					message = localize('k_picubeds_victimcard'),
-					colour = G.C.MULT,
-					card = card
-				}
-			else
-				return {
-					message = localize('k_upgrade_ex'),
-					colour = G.C.MULT,
-					card = card
-				}
-			end
+					return true;
+				end
+			}))
 		end
 		if context.joker_main then
-			picubed_victimcard_prehand = true
+			--picubed_victimcard_prehand = true
 			return {
 				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
 				Xmult_mod = card.ability.extra.Xmult

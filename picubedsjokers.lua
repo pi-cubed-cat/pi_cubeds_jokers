@@ -128,6 +128,32 @@ SMODS.Sound({
 	path = "rhythm2.ogg",
 })
 
+-- check if a card is a stone card or a rankless & suitless enhanced card
+function picubed_is_stonelike(card)
+    if SMODS.has_enhancement(card, 'm_stone') 
+    or SMODS.has_no_rank(card) and SMODS.has_no_suit(card) and card.config.center ~= G.P_CENTERS.c_base then
+        return true
+    else
+        return false
+    end
+end
+
+-- change the tooltip of a joker depending on if new rankless & suitless enhancements are added (crossmod)
+function picubed_stonelike_infoqueue(info_queue)
+    local has_modded_norank = false
+    for k,v in ipairs(get_current_pool("Enhanced")) do
+        if v ~= 'm_stone' and G.P_CENTERS[v].no_rank and G.P_CENTERS[v].no_suit then
+            has_modded_norank = true
+            break
+        end
+    end
+    if not has_modded_norank then
+        info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+    else
+        info_queue[#info_queue + 1] = { key = "picubed_ranklesscards", set = "Other" }
+    end
+end
+
 -- conflict with Mount Joker, Wee Mini, and Round-a-bout due to hypothetical mods
 function can_do_pokerhand_changer_jokers()
     if picubed_config.pokerhand_changer_jokers == false then
@@ -143,12 +169,12 @@ if can_do_pokerhand_changer_jokers() then
         if next(SMODS.find_card("j_picubed_mountjoker")) then
             local stone_count = 0
             for k,v in ipairs(G.hand.highlighted) do
-                if SMODS.has_enhancement(v, 'm_stone') then 
+                if picubed_is_stonelike(v) then 
                     stone_count = stone_count + 1
                 end
             end
             for k,v in ipairs(G.play.cards) do
-                if SMODS.has_enhancement(v, 'm_stone') then 
+                if picubed_is_stonelike(v) then 
                     stone_count = stone_count + 1
                 end
             end

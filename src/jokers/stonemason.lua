@@ -23,17 +23,24 @@ SMODS.Joker { --Stonemason
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
-    enhancement_gate = 'm_stone',
+    in_pool = function(self, args)
+		for kk, vv in pairs(G.playing_cards or {}) do
+			if picubed_is_stonelike(vv) then
+				return true
+			end
+		end
+		return false
+	end,
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_stonemason')
-        info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+        picubed_stonelike_infoqueue(info_queue)
         return {
             vars = { card.ability.extra.Xmult_bonus, numerator, denominator, card.ability.max_highlighted }
         }
     end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
-            if SMODS.has_enhancement(context.other_card, 'm_stone') then
+            if picubed_is_stonelike(context.other_card) then
                 context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult or 1 
                 context.other_card.ability.perma_x_mult = context.other_card.ability.perma_x_mult +         card.ability.extra.Xmult_bonus
                 return {
@@ -44,7 +51,7 @@ SMODS.Joker { --Stonemason
             end
         end
         if context.destroying_card and context.cardarea == G.play and not context.blueprint and not context.retrigger_joker then
-            if SMODS.has_enhancement(context.destroying_card, 'm_stone') then
+            if picubed_is_stonelike(context.other_card) then
                 if SMODS.pseudorandom_probability(card, 'picubed_stonemason', 1, card.ability.extra.odds) then
                     return {
                         remove = true

@@ -1,5 +1,5 @@
 local joker_list = {
-    -- page 1 (wave 1)
+    ---- page 1 (wave 1)
     'itsaysjokerontheceiling',
     'd2',
     'wordsearch',
@@ -15,7 +15,7 @@ local joker_list = {
     'snakeeyes',
     '789',
     'hiddengem',
-    -- page 2 (wave 1)
+    ---- page 2 (wave 1)
     'ambigram',
     'superwrathfuljoker',
     'acecomedian',
@@ -31,7 +31,7 @@ local joker_list = {
     'bisexualflag',
     'tradein',
     'apartmentcomplex',
-    -- page 3 (wave 2)
+    ---- page 3 (wave 2)
     'incompletesurvey',
     'allin',
     'gottheworm',
@@ -47,7 +47,7 @@ local joker_list = {
     'fusionmagic',
     'supergreedyjoker',
     'pi',
-    -- page 4 (wave 3)
+    ---- page 4 (wave 3)
     'onbeat',
     'offbeat',
     'polyrhythm',
@@ -63,7 +63,7 @@ local joker_list = {
     'acorntree',
     'forgery',
     'yawningcat',
-    -- page 5 (wave 4)
+    ---- page 5 (wave 4)
     'weemini',
     'lowballdraw',
     'chickenjoker',
@@ -79,7 +79,7 @@ local joker_list = {
     'talkingflower',
     'superlustyjoker',
     'laserprinter',
-    -- page 6 (wave 5)
+    ---- page 6 (wave 5)
     'bigtwo',
     'psychicspirit',
     'sprinkler',
@@ -95,13 +95,23 @@ local joker_list = {
     'jokerinanutshell',
     'surgeon',
     'thecube',
-    -- page 7 (wave 6+)
+    ---- page 7 (wave 6/7)
+    --'illusionofchoice',
     'blueberrypie',
+    --'intermission',
+    --'dughole',
     'encore',
     'otamatone',
+    --'wahooworld',
+    --'multstick',
+    --'whippedcream',
     'leeroooooy',
+    --'pocketlint'
+    --'hidenseek',
     'athrowawayjoker',
-    -- bonus content??? (unfinished lol)
+    --'certifiedentry',
+    --'parallellines',
+    ---- bonus content??? (unfinished lol)
     --'tableexpectedgotnil',
     --'switchingteams'
 }

@@ -20,14 +20,14 @@ SMODS.Joker { --Mount Joker
 	eternal_compat = true,
 	in_pool = function(self, args)
 		for kk, vv in pairs(G.playing_cards or {}) do
-			if SMODS.has_enhancement(vv, 'm_stone') then
+			if picubed_is_stonelike(vv) then
 				return can_do_pokerhand_changer_jokers()
 			end
 		end
 		return false
 	end,
 	loc_vars = function(self, info_queue, card)
-		info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+		picubed_stonelike_infoqueue(info_queue)
 		return {
 			vars = { card.ability.max_highlighted}
 		}
@@ -38,12 +38,12 @@ SMODS.Joker { --Mount Joker
 		end
 		local stone_count = 0
 		for k,v in ipairs(G.hand.highlighted) do
-				if SMODS.has_enhancement(v, 'm_stone') then 
+				if picubed_is_stonelike(v) then 
 						stone_count = stone_count + 1
 				end
 		end
 		for k,v in ipairs(G.play.cards) do
-				if SMODS.has_enhancement(v, 'm_stone') then 
+				if picubed_is_stonelike(v) then 
 						stone_count = stone_count + 1
 				end
 		end
@@ -58,4 +58,4 @@ SMODS.Joker { --Mount Joker
 	end
 }
 
--- relies on additional functions present in src/jokers.lua
+-- relies on additional functions present in picubedsjokers.lua

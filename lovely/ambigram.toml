@@ -1,0 +1,20 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = -1
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+--The card UI can have BUY, REDEEM, USE, and SELL buttons depending on the context of the card
+'''
+position = "after"
+payload = '''
+if card.area == G.jokers and G.jokers and card.ability.name == 'j_picubed_ambigram' then
+    base_attach.children.use = ambigram_controller_button{
+      card = card, parent = base_attach, card_width = card_width
+    }
+end
+'''
+match_indent = true
