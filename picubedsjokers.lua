@@ -68,6 +68,9 @@ end
 if next(SMODS.find_mod("TheAutumnCircus")) then
     assert(SMODS.load_file("crossmod/theautumncircus.lua"))()
 end
+if next(SMODS.find_mod("paperback")) then
+    assert(SMODS.load_file("crossmod/paperback.lua"))()
+end
 
 -- jokers & spectrals atlas
 SMODS.Atlas {
@@ -128,13 +131,36 @@ SMODS.Sound({
 	path = "rhythm2.ogg",
 })
 
+-- creates the Food pool, if it doesn't exist already
+if not SMODS.ObjectTypes.Food then
+    SMODS.ObjectType({
+        key = "Food",
+        default = "j_joker",
+        cards = {},
+        inject = function(self)
+            SMODS.ObjectType.inject(self)
+            self:inject_card(G.P_CENTERS.j_gros_michel)
+            self:inject_card(G.P_CENTERS.j_egg)
+            self:inject_card(G.P_CENTERS.j_ice_cream)
+            self:inject_card(G.P_CENTERS.j_cavendish)
+            self:inject_card(G.P_CENTERS.j_turtle_bean)
+            self:inject_card(G.P_CENTERS.j_diet_cola)
+            self:inject_card(G.P_CENTERS.j_popcorn)
+            self:inject_card(G.P_CENTERS.j_ramen)
+            self:inject_card(G.P_CENTERS.j_selzer)
+        end,
+    })
+end
+
 -- check if a card is a stone card or a rankless & suitless enhanced card
 function picubed_is_stonelike(card)
-    if SMODS.has_enhancement(card, 'm_stone') 
-    or SMODS.has_no_rank(card) and SMODS.has_no_suit(card) and card.config.center ~= G.P_CENTERS.c_base then
-        return true
-    else
-        return false
+    if card then
+        if SMODS.has_enhancement(card, 'm_stone') 
+        or SMODS.has_no_rank(card) and SMODS.has_no_suit(card) and card.config.center ~= G.P_CENTERS.c_base then
+            return true
+        else
+            return false
+        end
     end
 end
 

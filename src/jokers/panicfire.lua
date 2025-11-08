@@ -1,3 +1,8 @@
+SMODS.Sound({
+	key = "panicfireready",
+	path = "panicfireready.ogg",
+})
+
 SMODS.Joker { --Panic Fire
 	key = 'panicfire',
 	loc_txt = {
@@ -41,10 +46,20 @@ SMODS.Joker { --Panic Fire
 			card.ability.extra.count_current = card.ability.extra.count_current - 1
 			if card.ability.extra.count_current <= 0 then
 				card.ability.extra.is_active = true
-				return {
-					card = card,
-					message = localize('k_picubeds_panicfire_ready')
-				} 
+				if picubed_config.custom_sound_effects then
+					return {
+						card = card,
+						message = localize('k_picubeds_panicfire_ready'),
+						sound = 'picubed_panicfireready',
+						pitch = 0.9 + math.random()*0.1,
+						volume = 0.8
+					} 
+				else
+					return {
+						card = card,
+						message = localize('k_picubeds_panicfire_ready'),
+					} 
+				end
 			else
 				return {
 					card = card,

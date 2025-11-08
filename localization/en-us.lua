@@ -982,6 +982,20 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{}{C:inactive} Mult){}",
 				},
 			},
+            j_picubed_illusionofchoice = {
+				name = 'Illusion of Choice',
+                text = {
+                     {
+                        "Choose #1# additional card",
+                        "in {C:attention}Booster Packs{}",
+                        "to obtain or use",
+                    },
+                    {
+                        "All cards in a Booster",
+                        "Pack are {C:attention}the same{}",
+                    }
+                },
+			},
             j_picubed_blueberrypie = {
 				name = 'Blueberry Pie',
                 text = {
@@ -989,6 +1003,24 @@ return {
                     "{C:attention}Joker{} to the right,",
                     "this card is {C:attention}destroyed{}",
                     "after {C:attention}#1#{} rounds"
+                },
+			},
+            j_picubed_intermission = {
+				name = 'Intermission',
+                text = {
+                    "{C:green}#1# in #2#{} chance to create",
+                    "a {C:attention}Food Joker{} if played",
+                    "hand contains a {C:attention}Straight{}",
+                },
+			},
+            j_picubed_darkjester = {
+				name = 'Dark Jester',
+                text = {
+                    "This Joker gains {C:mult}+#1#{} Mult when",
+                    "a {C:spades}Spade{} or {C:clubs}Club{} card scores,",
+                    "{C:attention}resets{} when a {C:hearts}Heart{} or",
+                    "{C:diamonds}Diamond{} card scores",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                 },
 			},
             j_picubed_encore = {
@@ -1006,12 +1038,66 @@ return {
                     "",
                 },
 			},
+            j_picubed_wahooworld = {
+				name = 'Wahoo World',
+                text = {
+                    "Played {V:1}#1#{} cards give {C:mult}+#3#{} Mult",
+                    "and {C:chips}+#2#{} Chips when scored",
+                    "{s:0.8}suit changes at end of {s:0.8,C:attention}Ante{}",
+                },
+			},
+            j_picubed_scarletforest = {
+				name = 'Scarlet Forest',
+                text = {
+                    "{C:attention}5th{} scoring card each hand",
+                    "becomes a {C:attention}Mult Card{}",
+                },
+			},
+            j_picubed_frosting = {
+				name = 'Frosting',
+                text = {
+                    {
+                        "All Jokers and playing cards in",
+                        "{C:attention}shop{} are given an {C:attention}edition{}",
+                    },
+                    {
+                        "{C:green}#1# in #2#{} chance this Joker",
+                        "is destroyed on {C:attention}shop reroll{}",
+                    }
+                },
+			},
             j_picubed_leeroooooy = {
 				name = 'LEEROOOOOY!!',
                 text = {
                     "{C:attention}Retrigger{} all played cards", 
                     "per {C:attention}Blind skipped{} this {C:attention}Ante",
                     "{C:inactive}(Currently {C:attention}#1#{} {C:inactive}retriggers)"
+                },
+			},
+            j_picubed_fastpass = {
+				name = 'FastPass',
+                text = {
+                    "Cards with a {C:attention}Seal{} are",
+                    "always shuffled to the",
+                    "{C:attention}top{} of your deck"
+                },
+			},
+            j_picubed_pocketlint = {
+				 name = 'Pocket Lint',
+                text = {
+                    "Gain {C:red}+#1#{} Discard if",
+                    "played hand contains",
+                    "a {C:attention}Two Pair{}",
+                },
+			},
+            j_picubed_hidenseek = {
+				name = "Hide n' Seek",
+                text = {
+                    "One {C:attention}secret rank{} will give",
+                    "{C:money}$#1#{} and create a {C:planet}Planet{} card",
+                    "when played and scoring,",
+                    "rank changes after it is {C:attention}found{}",
+                    "{C:inactive}(Must have room)",
                 },
 			},
             j_picubed_athrowawayjoker = {
@@ -1021,6 +1107,15 @@ return {
                     "equal to the base {C:mult}Mult{}",
                     "of {C:attention}discarded poker hand{}",
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)"
+                },
+			},
+            j_picubed_parallellines = {
+				 name = 'Parallel Lines',
+                text = {
+                    "This Joker gains {X:mult,C:white}X#1#{} Mult",
+                    "per {C:attention}consecutive{} hand",
+                    "containing a {C:attention}Two Pair{}",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)",
                 },
 			},
         },
@@ -1264,6 +1359,7 @@ return {
             k_picubeds_pot_active = "Active!",
             k_picubeds_pot_inactive = "Inactive",
             k_picubeds_pi = "pi",
+            k_picubeds_a_discards = "+#1# Discards",
         },
         challenge_names = {
             c_picubed_nostalgicrejuvinationdeck = "Nostalgic Rejuvination Deck",
@@ -1301,6 +1397,7 @@ return {
             config_picubeds_customsfx = "Custom Sound Effects (restart required)",
             config_picubeds_pokerhandchangers = "Hand type-affecting Jokers (restart required)",
             k_picubeds_chips = "Chips",
+            k_picubeds_yep = "Yep!",
         }
     }
 }

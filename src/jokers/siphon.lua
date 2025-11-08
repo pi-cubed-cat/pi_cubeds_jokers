@@ -5,7 +5,7 @@ SMODS.Joker { --Siphon
         text = {
             "This Joker gains {C:chips}+#1#{} Chips",
             "when another Joker is {C:attention}sold",
-            "or {C:attention}destroyed{}",
+            --"or {C:attention}destroyed{}",
             "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"
         }
     },
@@ -23,32 +23,35 @@ SMODS.Joker { --Siphon
         return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
     end,
     calculate = function(self, card, context)
-        --[[if context.joker_type_destroyed and context.card.ability.set == 'Joker' and not context.blueprint then
+        --[[if context.joker_type_destroyed and context.card.ability.set == 'Joker' and not context.blueprint and not context.retrigger_joker then
             print("hi")
             local num_destroy = 0
+            local self_destroyed = false
             for k,v in ipairs(context.card) do
                 num_destroy = num_destroy + 1
+                if card == v then 
+                    self_destroyed = true
+                    break 
+                end
             end
-            if num_destroy > 0 then
+            print(self_destroyed)
+            if num_destroy > 0 and not self_destroyed then
                 card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod * num_destroy
                 return {
-                        selling_self = false,
                         message = localize('k_upgrade_ex'),
                         colour = G.C.CHIPS,
                         card = card
                     }
             end
         end]]
-        if not context.selling_self then
-            if context.selling_card and context.card.ability.set == 'Joker' and not context.blueprint and not context.retrigger_joker then
-                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
-                return {
-                    selling_self = false,
-                    message = localize('k_upgrade_ex'),
-                    colour = G.C.CHIPS,
-                    card = card
-                }
-            end
+        if context.selling_card and context.card.ability.set == 'Joker' and not context.blueprint 
+        and not context.retrigger_joker and card ~= context.card then
+            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
+            return {
+                message = localize('k_upgrade_ex'),
+                colour = G.C.CHIPS,
+                card = card
+            }
         end
         if context.joker_main then
             return {

@@ -51,7 +51,8 @@ SMODS.Joker { --Stonemason
             end
         end
         if context.destroying_card and context.cardarea == G.play and not context.blueprint and not context.retrigger_joker then
-            if picubed_is_stonelike(context.other_card) then
+            local contextother_card = context.other_card
+            if picubed_is_stonelike(contextother_card) then
                 if SMODS.pseudorandom_probability(card, 'picubed_stonemason', 1, card.ability.extra.odds) then
                     return {
                         remove = true

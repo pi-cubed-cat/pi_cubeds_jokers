@@ -579,5 +579,60 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
         },
         text_config = { colour = G.C.CHIPS },
     }
+    jd_def["j_picubed_darkjester"] = { -- Dark Jester
+        text = {
+            { text = "+" },
+            { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "mult" }
+        },
+        text_config = { colour = G.C.MULT },
+        calc_function = function(card)
+          card.joker_display_values.rank = localize((G.GAME.current_round.picubed_wordsearch_card or {}).rank or 'Ace', 'ranks')
+        end
+    }
+    jd_def["j_picubed_wahooworld"] = { -- Wahoo World
+        text = {
+            { text = "(", colour = G.C.UI.TEXT_INACTIVE },
+            { ref_table = "card.joker_display_values", ref_value = "sprinkler_card_suit" },
+            { text = ")", colour = G.C.UI.TEXT_INACTIVE }
+        },
+        calc_function = function(card)
+            card.joker_display_values.sprinkler_card_suit = localize(G.GAME.current_round.wahoo_world_card.suit or "Spades", 'suits_singular')
+        end,
+        style_function = function(card, text, reminder_text, extra)
+            if text and text.children[2] then
+                text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.current_round.wahoo_world_card.suit or "Spades"], 0.35) 
+            end
+            return false
+        end,
+    }
+    jd_def["j_picubed_parallellines"] = { -- Parallel Lines
+        text = {
+            {
+                border_nodes = {
+                    { text = "X" },
+                    { ref_table = "card.ability.extra", ref_value = "xmult", retrigger_type = "exp" }
+                }
+            }
+        },
+    }
+    jd_def["j_picubed_hidenseek"] = { -- Hide n' Seek
+      text = {
+          { text = "(" },
+          { ref_table = "card.joker_display_values", ref_value = "displ_list", colour = G.C.RED },
+          { text = ")" },
+      },
+      text_config = { scale = 0.3 },
+      calc_function = function(card)
+				local unsearched_ranks = picubed_get_unsearched_ranks()
+        for i=1,#unsearched_ranks do
+            unsearched_ranks[i] = string.sub(unsearched_ranks[i], 1, 2)
+        end
+        if #unsearched_ranks > 0 and #unsearched_ranks <= 8 and next(SMODS.find_card('j_picubed_hidenseek')) then
+            card.joker_display_values.displ_list = table.concat(unsearched_ranks or {}, ", ")
+        else
+            card.joker_display_values.displ_list = ""
+        end
+			end
+    }
   end
 end

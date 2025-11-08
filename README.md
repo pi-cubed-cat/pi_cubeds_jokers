@@ -1,5 +1,5 @@
 ![Mod Logo](https://i.imgur.com/WgRA0cT.png)
-Steamodded **[1.0.0-beta-0711a](https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-0711a)** or later is required.
+Steamodded **[1.0.0-beta-0827c](https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-0827c)** or later is required.
 
 List of Jokers (Modded Wiki Page): https://balatromods.miraheze.org/wiki/Pi_cubed's_Jokers/Jokers
 
@@ -19,7 +19,7 @@ This option enables or disables the Spectral Cards Commander, Rupture, and Extin
 This option enables or disables the Rebound Tag from appearing.
 
 ### Custom Sound Effects  
-Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, Talking Flower, "Monkey See, Monkey Do", and Otamatone.
+Enables or disables any custom sound effects I've implemented into the mod. Currently, this affects Rhythmic Joker, Explosher, On-beat, Off-beat, Pot, Talking Flower, "Monkey See, Monkey Do", Otamatone, and Panic Fire.
 
 ### Hand type-affecting Jokers
 Enables or disables any Jokers that directly change your hand and what poker hands it contains. Certain mods that tinker with poker hands can cause crashes or game closures when these Jokers activate. Currently, this affects Mount Joker, Wee Mini, and Round-a-bout. 
@@ -45,23 +45,24 @@ https://github.com/AutumnMood924/TheAutumnCircus
 pi_cubed's Jokers adds a new Printer-type Joker (Printer-ception!)  
 https://github.com/Cdrvo/Revos-Vault---Balatro-Mod  
 
-### Opandora's Box by opan 
-A Joker pack I really enjoy with some interesting synergies, and stellar music.  
-https://github.com/ohpahn/opandoras-box  
+### Paperback by PaperMoon, OppositeWolf770, srockw, GitNether, Victin, BBBalatroMod, & more    
+pi_cubed's Jokers adds a Joker that synergises with Clips! In addition, Paperback adds *many* Jokers that synergise very well in general!  
+https://github.com/GitNether/paperback  
 
 ### Ortalab by CrimsonHeart, Eremel, & the Ortalab Team
 https://github.com/EremelMods/Ortalab  
 
-### Paperback by PaperMoon, OppositeWolf770, srockw, GitNether, Victin, BBBalatroMod, & more  
-The Bisexual Flag Joker is compatible with additional suits. In addition, has a lot of great synergies!  
-https://github.com/GitNether/paperback
-
 ### Extra Credit by CampfireCollective & more  
-https://github.com/GuilloryCraft/ExtraCredit
+https://github.com/GuilloryCraft/ExtraCredit  
 
 ### Neato Jokers by NEATO  
-https://github.com/neatoqueen/NeatoJokers
+https://github.com/neatoqueen/NeatoJokers  
 
 ### Cryptid by MathIsFun_ & many more  
 There's some hidden content that requires Cryptid. In addition, I've put a big focus on making sure the changing value mechanics and Misprintize behave properly with all Jokers!  
-https://github.com/SpectralPack/Cryptid
+https://github.com/SpectralPack/Cryptid  
+
+### Opandora's Box by opan  
+(Disclaimer: This mod has major issues with latest SMODS, but I want to give a shoutout regardless)  
+A Joker pack I really enjoy with some interesting synergies, and stellar music.  
+https://github.com/ohpahn/opandoras-box  

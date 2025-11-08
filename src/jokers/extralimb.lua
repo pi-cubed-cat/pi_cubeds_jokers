@@ -42,10 +42,10 @@ SMODS.Joker { --Extra Limb
             return true end }))
     end,
     calculate = function(self, card, context)
-        if context.joker_main and #G.consumeables.cards ~= 0 then
+        if context.joker_main and (#G.consumeables.cards + G.GAME.consumeable_buffer) ~= 0 then
             return {
-                mult_mod = card.ability.extra.mult_mod * #G.consumeables.cards,
-                message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult_mod * #G.consumeables.cards } }
+                mult_mod = card.ability.extra.mult_mod * (#G.consumeables.cards + G.GAME.consumeable_buffer),
+                message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult_mod * (#G.consumeables.cards + G.GAME.consumeable_buffer) } }
             }
         end
     end
