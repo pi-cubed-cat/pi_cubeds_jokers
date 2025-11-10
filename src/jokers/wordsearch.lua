@@ -54,7 +54,7 @@ SMODS.Joker { --Word Search
 
 -- WORDSEARCH RANK SELECTION FUNCTIONALITY
 --Code below from Vanilla Remade mod
-local function reset_wordsearch_rank()
+function reset_picubed_wordsearch_rank()
 	G.GAME.current_round.picubed_wordsearch_card = { rank = 'Ace' }
     local valid_wordsearch_cards = {}
     for _, playing_card in ipairs(G.playing_cards) do
@@ -69,6 +69,6 @@ local function reset_wordsearch_rank()
     end
 end
 
-function SMODS.current_mod.reset_game_globals(run_start)
-    reset_wordsearch_rank() 
-end
+--[[function SMODS.current_mod.reset_game_globals(run_start)
+    reset_picubed_wordsearch_rank() 
+end]]

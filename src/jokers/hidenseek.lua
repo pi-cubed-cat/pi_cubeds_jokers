@@ -1,5 +1,5 @@
 --Code below from Vanilla Remade mod
-local function reset_hidenseek_rank()
+function reset_picubed_hidenseek_rank()
 	G.GAME.current_round.picubed_hidenseek_possible_ranks = {}
     G.GAME.current_round.picubed_hidenseek_searched_ranks = {}
     G.GAME.current_round.picubed_hidenseek_card = { rank = 'None', id = 'None' }
@@ -73,6 +73,11 @@ SMODS.Joker { --Hide n' Seek
 		end
         return { vars = { card.ability.extra.money }, main_end = main_end }
 	end,
+    add_to_deck = function(self, card, from_debuff)
+		if not next(SMODS.find_card('j_picubed_hidenseek')) then
+            reset_picubed_hidenseek_rank()
+        end
+	end,
     calculate = function(self, card, context)
         if (context.setting_blind or context.end_of_round) and not context.blueprint and not context.joker_retrigger then
             local secret_card_remaining = false
@@ -83,7 +88,7 @@ SMODS.Joker { --Hide n' Seek
                 end
             end
             if not secret_card_remaining then
-                reset_hidenseek_rank()
+                reset_picubed_hidenseek_rank()
                 return {
                     message = localize('k_reset')
                 }
@@ -116,7 +121,7 @@ SMODS.Joker { --Hide n' Seek
                     end)}))
                     card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
                 end
-                reset_hidenseek_rank()
+                reset_picubed_hidenseek_rank()
                 return {
                     dollars = card.ability.extra.money,
                     card = card,
@@ -134,6 +139,6 @@ SMODS.Joker { --Hide n' Seek
     end
 }
 
-function SMODS.current_mod.reset_game_globals(run_start)
-    if run_start then reset_hidenseek_rank() end
-end
+--[[function SMODS.current_mod.reset_game_globals(run_start)
+    if run_start then reset_picubed_hidenseek_rank() end
+end]]

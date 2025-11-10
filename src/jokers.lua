@@ -119,3 +119,8 @@ local joker_list = {
 for _, key in ipairs(joker_list) do
     assert(SMODS.load_file("src/jokers/"..key..".lua"))()
 end
+
+function SMODS.current_mod.reset_game_globals(run_start)
+    reset_picubed_wordsearch_rank() 
+    if run_start then reset_picubed_hidenseek_rank() end
+end
