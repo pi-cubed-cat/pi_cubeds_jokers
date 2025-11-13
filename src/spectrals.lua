@@ -87,7 +87,7 @@ SMODS.Consumable { --Rupture (Spectral card)
             return true
     end,
     use = function(self, card, area, copier)
-        if G.jokers.cards then
+        if G.jokers.cards and G.jokers.cards[1] then
             if not SMODS.is_eternal(G.jokers.cards[1]) then
                 G.jokers.cards[1]:start_dissolve(nil, nil)
             end

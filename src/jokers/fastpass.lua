@@ -12,7 +12,7 @@ SMODS.Joker { --FastPass
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 7, y = 13 },
-    cost = 7,
+    cost = 8,
     discovered = true,
     blueprint_compat = false,
     perishable_compat = true,

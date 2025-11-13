@@ -17,7 +17,7 @@ SMODS.Joker { --Shrapnel
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { mult = 2 } },
+	config = { extra = { mult = 1 } },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
 	end,

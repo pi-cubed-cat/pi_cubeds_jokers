@@ -43,6 +43,7 @@ assert(SMODS.load_file("src/decks.lua"))()
 if picubed_config.tags then
     assert(SMODS.load_file("src/tags.lua"))()
 end
+--assert(SMODS.load_file("src/editions.lua"))()
 assert(SMODS.load_file("src/stickers.lua"))()
 assert(SMODS.load_file("src/achievements.lua"))()
 
@@ -164,17 +165,26 @@ function picubed_is_stonelike(card)
     end
 end
 
+local find_collage = false
+if next(SMODS.find_mod("artbox")) then
+    find_collage = true
+end
+
 -- change the tooltip of a joker depending on if new rankless & suitless enhancements are added (crossmod)
 function picubed_stonelike_infoqueue(info_queue)
-    local has_modded_norank = false
-    for k,v in ipairs(get_current_pool("Enhanced")) do
-        if v ~= 'm_stone' and G.P_CENTERS[v].no_rank and G.P_CENTERS[v].no_suit then
-            has_modded_norank = true
-            break
+    if not find_collage then
+        local has_modded_norank = false
+        for k,v in ipairs(get_current_pool("Enhanced")) do
+            if v ~= 'm_stone' and G.P_CENTERS[v].no_rank and G.P_CENTERS[v].no_suit then
+                has_modded_norank = true
+                break
+            end
         end
-    end
-    if not has_modded_norank then
-        info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+        if not has_modded_norank then
+            info_queue[#info_queue+1] = G.P_CENTERS.m_stone
+        else
+            info_queue[#info_queue + 1] = { key = "picubed_ranklesscards", set = "Other" }
+        end
     else
         info_queue[#info_queue + 1] = { key = "picubed_ranklesscards", set = "Other" }
     end

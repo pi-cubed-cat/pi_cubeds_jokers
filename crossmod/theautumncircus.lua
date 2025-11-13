@@ -28,6 +28,7 @@ SMODS.Joker { -- Order Sector (Þe Autumn Circus)
 			"per {V:1}#3#{} card in {C:attention}graveyard{}",
 			"{s:0.8,C:attention}Suit {}{s:0.8}changes at end of round{}",
 			"{C:inactive}(Currently {X:mult,C:white}X#2#{}{C:inactive} Mult){}",
+			"{E:1,C:autumn,s:0.8}Marina's VR simulation is a WIP!",
 		}
 	},
 	config = { extra = { Xmult_mod = 0.25 } },

@@ -19,13 +19,13 @@ SMODS.Joker { --Wahoo World
         name = 'Wahoo World',
         text = {
             "Played {V:1}#1#{} cards give {C:mult}+#3#{} Mult",
-            "and {C:chips}+#2#{} Chips when scored",
+            "or {C:chips}+#2#{} Chips when scored",
             "{s:0.8}suit changes at end of {s:0.8,C:attention}Ante{}",
         }
     },
     pronouns = 'they_them',
     rarity = 1,
-    config = { extra = { chips = 20, mult = 4 } },
+    config = { extra = { chips = 30, mult = 4 } },
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 11 },
     cost = 5,
@@ -41,11 +41,18 @@ SMODS.Joker { --Wahoo World
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             if context.other_card:is_suit(G.GAME.current_round.wahoo_world_card.suit) and not context.other_card.debuff then
-                return {
-                    mult = card.ability.extra.mult,
-                    chips = card.ability.extra.chips,
-                    card = card
-                }
+                local give_chips = pseudorandom('picubed_wahooworld', 0, 1)
+                if give_chips > 0.5 then
+                    return {
+                        chips = card.ability.extra.chips,
+                        card = card
+                    }
+                else
+                    return {
+                        mult = card.ability.extra.mult,
+                        card = card
+                    }
+                end
             end
         end
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then

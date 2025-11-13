@@ -236,9 +236,10 @@ return {
             j_picubed_prime7 = {
                 name = "Prime 7",
                 text = {
-                    "If hand is a single {C:attention}7{},",
-                    "add {C:dark_edition}Negative{} edition",
-                    "to the card",
+                    "Once per round, if hand is",
+                    "a single {C:attention}7{}, add {C:dark_edition}Negative{}",
+                    "edition to the card",
+                    "{C:inactive}(Currently #1#){}",
                 }
             },
             j_picubed_landslide = {
@@ -447,7 +448,7 @@ return {
                 text = {
                     {
                         "Played {C:attention}face down{} cards are",
-                        "retriggered {C:attention}#1#{} additonal time"
+                        "retriggered {C:attention}#1#{} additonal times"
                     },
                     {
                         "{C:attention}Face down{} Jokers and",
@@ -970,18 +971,6 @@ return {
                     "{s:0.8}Aces give {s:0.8,C:money}$5{}",
                 }
             },
-            j_picubed_ordersector = {
-				name = {
-					"Order Sector",
-					"{C:autumn,s:0.5}Marina's VR simulation is a WIP!",
-				},
-				text = {
-					"This card gives {X:mult,C:white}X#1#{} Mult", 
-                    "per {V:1}#3#{} card in {C:attention}graveyard{}",
-                    "{s:0.8,C:attention}Suit {}{s:0.8}changes at end of round{}",
-                    "{C:inactive}(Currently {X:mult,C:white}X#2#{}{C:inactive} Mult){}",
-				},
-			},
             j_picubed_illusionofchoice = {
 				name = 'Illusion of Choice',
                 text = {
@@ -1042,7 +1031,7 @@ return {
 				name = 'Wahoo World',
                 text = {
                     "Played {V:1}#1#{} cards give {C:mult}+#3#{} Mult",
-                    "and {C:chips}+#2#{} Chips when scored",
+                    "or {C:chips}+#2#{} Chips when scored",
                     "{s:0.8}suit changes at end of {s:0.8,C:attention}Ante{}",
                 },
 			},
@@ -1056,14 +1045,10 @@ return {
             j_picubed_frosting = {
 				name = 'Frosting',
                 text = {
-                    {
-                        "All Jokers and playing cards in",
-                        "{C:attention}shop{} are given an {C:attention}edition{}",
-                    },
-                    {
-                        "{C:green}#1# in #2#{} chance this Joker",
-                        "is destroyed on {C:attention}shop reroll{}",
-                    }
+                    "All Jokers and playing cards in",
+                    "{C:attention}shop{} are given an {C:attention}edition{},",
+                    "{C:green}#1# in #2#{} chance this Joker",
+                    "is destroyed on {C:attention}shop reroll{}",
                 },
 			},
             j_picubed_leeroooooy = {

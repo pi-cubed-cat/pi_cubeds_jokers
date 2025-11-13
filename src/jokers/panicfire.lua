@@ -19,7 +19,7 @@ SMODS.Joker { --Panic Fire
 	atlas = 'PiCubedsJokers',
 	pos = { x = 3, y = 8 },
 	soul_pos = { x = 4, y = 8 },
-	cost = 6,
+	cost = 5,
 	discovered = true,
 	blueprint_compat = true,
 	perishable_compat = true,
@@ -34,7 +34,7 @@ SMODS.Joker { --Panic Fire
 		} }
 	end,
 	calculate = function(self, card, context)
-		if context.setting_blind and card.ability.extra.count_current ~= card.ability.extra.count_max then 
+		if context.setting_blind and card.ability.extra.count_current ~= card.ability.extra.count_max and not context.blueprint and not context.joker_retrigger then 
 			card.ability.extra.is_active = false
 			card.ability.extra.count_current = card.ability.extra.count_max
 			return {

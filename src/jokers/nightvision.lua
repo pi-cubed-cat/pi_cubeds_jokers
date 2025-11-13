@@ -22,13 +22,15 @@ SMODS.Joker { --Night Vision
 		return { vars = { card.ability.extra.money } }
 	end,
 	calculate = function(self, card, context)
-		if context.before and not context.blueprint then
+		if context.before then
 			local flip_count = 0
 			for k, v in ipairs(G.hand.cards) do
 				if v.facing ~= 'front' then
 					flip_count = flip_count + 1
 				end
-				v:flip()
+				if not context.blueprint then
+					v:flip()
+				end
 			end
 			if flip_count > 0 then
 				return {

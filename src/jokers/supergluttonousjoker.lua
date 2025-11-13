@@ -14,11 +14,19 @@ SMODS.Joker { --Super Gluttonous Joker
 	pos = { x = 4, y = 5 },
 	cost = 9,
 	discovered = true,
-	blueprint_compat = true,
+	blueprint_compat = false,
 	perishable_compat = true,
 	eternal_compat = true,
 	calculate = function(self, card, context)
-		if (context.first_hand_drawn or context.hand_drawn) then
+		if context.setting_blind and card.ability.extra.count_current ~= card.ability.extra.count_max and not context.blueprint and not context.joker_retrigger then 
+			card.ability.extra.is_active = false
+			card.ability.extra.count_current = card.ability.extra.count_max
+			return {
+				message = localize('k_reset'),
+				colour = G.C.RED
+			}
+		end
+		if (context.first_hand_drawn or context.hand_drawn) and not context.blueprint and not context.joker_retrigger then
 			local club_count = 0
 			for k,v in ipairs(context.hand_drawn) do
 				if v:is_suit("Clubs") then
