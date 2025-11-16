@@ -175,7 +175,7 @@ function picubed_stonelike_infoqueue(info_queue)
     if not find_collage then
         local has_modded_norank = false
         for k,v in ipairs(get_current_pool("Enhanced")) do
-            if v ~= 'm_stone' and G.P_CENTERS[v].no_rank and G.P_CENTERS[v].no_suit then
+            if v ~= 'm_stone' and G.P_CENTERS[v] and G.P_CENTERS[v].no_rank and G.P_CENTERS[v].no_suit then
                 has_modded_norank = true
                 break
             end
