@@ -36,10 +36,10 @@ function picubed_get_unsearched_ranks()
     return loc_unsearched_ranks
 end
 
-SMODS.Joker { --Hide n' Seek
+SMODS.Joker { --Hide 'n Seek
     key = 'hidenseek',
     loc_txt = {
-        name = "Hide n' Seek",
+        name = "Hide 'n Seek",
         text = {
             "One {C:attention}secret rank{} will give",
             "{C:money}$#1#{} and create a {C:planet}Planet{} card",
@@ -50,7 +50,7 @@ SMODS.Joker { --Hide n' Seek
     },
     pronouns = 'he_they',
     rarity = 1,
-    config = { extra = { money = 6 } },
+    config = { extra = { money = 8 } },
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 13 },
     cost = 4,

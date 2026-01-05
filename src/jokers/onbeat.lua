@@ -9,7 +9,7 @@ SMODS.Joker { --On-beat
 		name = 'On-beat',
 		text = {
 			"Retrigger the {C:attention}1st{}, {C:attention}3rd{},",
-			"and {C:attention}5th{} scoring card",
+			"and {C:attention}5th{} scoring cards",
 			"{s:0.8}After hand is played,",
 			"{s:0.8}becomes {s:0.8,C:attention}Off-beat{}"
 		}

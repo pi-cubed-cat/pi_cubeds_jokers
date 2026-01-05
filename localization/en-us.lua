@@ -309,7 +309,7 @@ return {
             j_picubed_ambigram = {
                 name = 'Ambigram',
                 text = {
-                    "{C:attention}6s{} and {C:attention}9s{} can",
+                    "{C:attention}6s{} & {C:attention}9s{}, and {C:attention}2s{} & {C:attention}5s{} can", 
                     "{C:attention}swap ranks{} anytime",
                     "{C:inactive}(Select cards and",
                     "{C:inactive}then press 'Swap!')",
@@ -563,19 +563,19 @@ return {
             j_picubed_onbeat = {
                 name = 'On-beat',
                 text = {
-                   "Retrigger the {C:attention}1st{}, {C:attention}3rd{},",
-                   "and {C:attention}5th{} scoring card",
-                   "{s:0.8}After hand is played,",
-                   "{s:0.8}becomes {s:0.8,C:attention}Off-beat{}"
+                    "Retrigger the {C:attention}1st{}, {C:attention}3rd{},",
+                    "and {C:attention}5th{} scoring cards",
+                    "{s:0.8}After hand is played,",
+                    "{s:0.8}becomes {s:0.8,C:attention}Off-beat{}"
                 }
             },
             j_picubed_offbeat = {
                 name = 'Off-beat',
                 text = {
-                   "Retrigger the {C:attention}2nd{}",
-                   "and {C:attention}4th{} scoring card",
-                   "{s:0.8}After hand is played,",
-                   "{s:0.8}becomes {s:0.8,C:attention}On-beat{}"
+                    "Retrigger the {C:attention}2nd{}",
+                    "and {C:attention}4th{} scoring cards",
+                    "{s:0.8}After hand is played,",
+                    "{s:0.8}becomes {s:0.8,C:attention}On-beat{}"
                 }
             },
             j_picubed_polyrhythm = {
@@ -1076,7 +1076,7 @@ return {
                 },
 			},
             j_picubed_hidenseek = {
-				name = "Hide n' Seek",
+				name = "Hide 'n Seek",
                 text = {
                     "One {C:attention}secret rank{} will give",
                     "{C:money}$#1#{} and create a {C:planet}Planet{} card",
@@ -1208,19 +1208,19 @@ return {
             onbeat_tooltip = {
                 name = "On-beat",
                 text = {
-                     "Retrigger the {C:attention}1st{}, {C:attention}3rd{},",
-                     "and {C:attention}5th{} scoring card",
-                     "{s:0.8}After hand is played,",
-                     "{s:0.8}becomes {s:0.8,C:attention}Off-beat{}"
+                    "Retrigger the {C:attention}1st{}, {C:attention}3rd{},",
+                    "and {C:attention}5th{} scoring cards",
+                    "{s:0.8}After hand is played,",
+                    "{s:0.8}becomes {s:0.8,C:attention}Off-beat{}"
                 }
             },
             offbeat_tooltip = {
                 name = 'Off-beat',
                 text = {
-                     "Retrigger the {C:attention}2nd{}",
-                     "and {C:attention}4th{} scoring card",
-                     "{s:0.8}After hand is played,",
-                     "{s:0.8}becomes {s:0.8,C:attention}On-beat{}"
+                    "Retrigger the {C:attention}2nd{}",
+                    "and {C:attention}4th{} scoring cards",
+                    "{s:0.8}After hand is played,",
+                    "{s:0.8}becomes {s:0.8,C:attention}On-beat{}"
                 }
             },
             invisiblejoker_tooltip = {
@@ -1379,7 +1379,7 @@ return {
             k_picubeds_splat = "Splat!",
             config_picubeds_newspectrals = "New Spectral Cards (restart required)",
             config_picubeds_newtags = "New Tags (restart required)",
-            config_picubeds_customsfx = "Custom Sound Effects (restart required)",
+            config_picubeds_customsfx = "Custom Sound Effects",
             config_picubeds_pokerhandchangers = "Hand type-affecting Jokers (restart required)",
             k_picubeds_chips = "Chips",
             k_picubeds_yep = "Yep!",

@@ -15,7 +15,7 @@ SMODS.Joker { --Stonemason
     },
     pronouns = 'she_they',
     config = { extra = { Xmult_bonus = 0.25, odds = 6 } },
-    rarity = 2,
+    rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 1, y = 1 },
     cost = 8,

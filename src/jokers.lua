@@ -113,7 +113,8 @@ local joker_list = {
     'parallellines',
     ---- bonus content??? (unfinished lol)
     --'tableexpectedgotnil',
-    --'switchingteams'
+    --'switchingteams',
+    --'room',
 }
 
 for _, key in ipairs(joker_list) do

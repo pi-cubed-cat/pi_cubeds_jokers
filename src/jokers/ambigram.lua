@@ -3,7 +3,7 @@ SMODS.Joker { --Ambigram
     loc_txt = {
         name = 'Ambigram',
         text = {
-            "{C:attention}6s{} and {C:attention}9s{} can",
+            "{C:attention}6s{} & {C:attention}9s{}, and {C:attention}2s{} & {C:attention}5s{} can", 
             "{C:attention}swap ranks{} anytime",
             "{C:inactive}(Select cards and",
             "{C:inactive}then press 'Swap!')",
@@ -13,7 +13,7 @@ SMODS.Joker { --Ambigram
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 5, y = 1 },
-    cost = 5,
+    cost = 6,
     discovered = true,
     blueprint_compat = false,
     perishable_compat = true,
@@ -73,7 +73,7 @@ G.FUNCS.ambigram_active = function(e)
     local can_use = false
     if G.hand then
         for k,v in ipairs(G.hand.highlighted) do
-            if v:get_id() == 6 or v:get_id() == 9 then
+            if v:get_id() == 6 or v:get_id() == 9 or v:get_id() == 2 or v:get_id() == 5 then
                 can_use = true
                 break
             end
@@ -97,13 +97,13 @@ G.FUNCS.do_ambigram_swap = function(e) -- for some reason, this function gets ca
     --G.CONTROLLER.focused.target = nil
     local card = e.config.ref_table
     for k, v in ipairs(G.hand.cards) do
-        if (v:get_id() == 6 or v:get_id() == 9) and v.highlighted == true then
+        if (v:get_id() == 6 or v:get_id() == 9 or v:get_id() == 2 or v:get_id() == 5) and v.highlighted == true then
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.2,
                 func = function() 
                     v:flip(); v:juice_up(0.3, 0.3)
-                    if v:get_id() == 6 then 
+                    if v:get_id() == 6 or v:get_id() == 2 then 
                         play_sound('tarot2', 0.85 + math.random()*0.05 )
                     else
                         play_sound('tarot2', 0.95 + math.random()*0.05 )
@@ -114,7 +114,7 @@ G.FUNCS.do_ambigram_swap = function(e) -- for some reason, this function gets ca
         end
     end
     for k, v in ipairs(G.hand.cards) do
-        if (v:get_id() == 6 or v:get_id() == 9) and v.highlighted == true then
+        if (v:get_id() == 6 or v:get_id() == 9 or v:get_id() == 2 or v:get_id() == 5) and v.highlighted == true then
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.2,
@@ -123,9 +123,15 @@ G.FUNCS.do_ambigram_swap = function(e) -- for some reason, this function gets ca
                     if v:get_id() == 6 then 
                         play_sound('tarot2', 0.95 + math.random()*0.05)
                         SMODS.change_base(v, nil, "9")
-                    else
+                    elseif v:get_id() == 9 then
                         play_sound('tarot2', 0.85 + math.random()*0.05)
                         SMODS.change_base(v, nil, "6")
+                    elseif v:get_id() == 2 then 
+                        play_sound('tarot2', 0.95 + math.random()*0.05)
+                        SMODS.change_base(v, nil, "5")
+                    elseif v:get_id() == 5 then
+                        play_sound('tarot2', 0.85 + math.random()*0.05)
+                        SMODS.change_base(v, nil, "2")
                     end
                     ambigram_activating_rn = false
                     return true
