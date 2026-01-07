@@ -22,11 +22,11 @@ Partner_API.Partner { --Roof
         if context.setting_blind then
             card.ability.extra.has_triggered = true
         end
-        if context.end_of_round and tonumber(G.GAME.dollars) < 1e308 and card.ability.extra.has_triggered then
+        if context.end_of_round and to_number(G.GAME.dollars) < 1e308 and card.ability.extra.has_triggered then
             card.ability.extra.has_triggered = false
             if SMODS.pseudorandom_probability(card, 'picubed_roof', 1, card.ability.extra.odds) then
                 local ceil = 10
-                local money = tonumber(G.GAME.dollars)
+                local money = to_number(G.GAME.dollars)
                 local me = (#SMODS.find_card("j_picubed_itsaysjokerontheceiling") or 0)
                 ceil = ceil * (2 ^ me)
                 ceil = math.ceil(money / ceil) * ceil
