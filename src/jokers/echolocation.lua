@@ -40,12 +40,17 @@ SMODS.Joker { --Echolocation
                 -- else return { stay_flipped = false }
             end
         end
-        if context.cardarea == G.jokers and context.before then
-            for k, v in ipairs(context.full_hand) do
-                if v.facing == 'back' then
-                    v:flip()
-                end
-            end
+        if context.cardarea == G.jokers and context.press_play then
+            G.E_MANAGER:add_event(Event({
+                func = (function()
+                    for k, v in ipairs(G.play.cards) do
+                        if v.facing == 'back' then
+                            v:flip()
+                        end
+                    end
+                    return true
+                end)
+            }))
         end
     end
 }

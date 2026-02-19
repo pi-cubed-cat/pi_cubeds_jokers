@@ -393,7 +393,7 @@ return {
                 text = {
                    "{C:attention}Consumables{} have a {C:green}#1# in #2#",
                    "chance to be {C:attention}recreated{} on use,",
-                   "this card has a {C:green}#3# in #4#{} chance to",
+                   "this Joker has a {C:green}#3# in #4#{} chance to",
                    "be {C:attention}destroyed{} after activating",
                    "{C:inactive}(Must have room){}"
                 }
@@ -832,7 +832,7 @@ return {
                    "{C:attention}Consumables{} have a {C:green}#1# in #2#{} chance",
                    "to be {C:attention}recreated{} on use and a",
                    "{C:green}#5# in #6#{} chance to be made {C:dark_edition}Negative{},",
-                   "this card has a {C:green}#3# in #4#{} ",
+                   "this Joker has a {C:green}#3# in #4#{} ",
                    "chance to be {C:attention}disabled{} for",
                    "this Ante after activating",
                    "{C:inactive}(Must have room){}"
@@ -1110,8 +1110,8 @@ return {
                 text = {
                    "{C:attention}Destroy{} #1# random",
                    "Consumable if slots are",
-                   "filled, add {C:dark_edition}Negative{}",
-                   "to all others"
+                   "filled, then add {C:dark_edition}Negative{}",
+                   "to all Consumables"
                 }
             },
             c_picubed_rupture = {
@@ -1128,6 +1128,23 @@ return {
                    "{C:attention}Destroy{} all cards of",
                    "a {C:attention}random rank{}",
                    "from your deck"
+                }
+            },
+            c_picubed_glamour = {
+                name = 'Glamour',
+                text = {
+                    "Each card held in hand",
+                    "has a {C:green}#1# in #2#{} chance to",
+                    "receive the {C:dark_edition}Bisexual{} edition",
+                }
+            },
+            c_picubed_partition = {
+                name = 'Partition',
+                text = {
+                    "A random Joker with",
+                    "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
+                    "{C:dark_edition}Polychrome{} has its {C:attention}edition{}",
+                    "replaced with {C:dark_edition}Bisexual{}",
                 }
             },
         },
@@ -1147,6 +1164,14 @@ return {
                     "additional times for",
                     "next round",
                 }
+            },
+            tag_picubed_bisexual = {
+                name = "Bisexual Tag",
+                text = {
+                    "Next base edition shop",
+                    "Joker is free and",
+                    "becomes {C:dark_edition}Bisexual{}",
+                },
             },
         },
         Partner = {
@@ -1189,9 +1214,17 @@ return {
             picubedsjokers = {
                 name = "pi_cubed's Jokers",
                 text = {
-                     "A collection of vanilla-friendly Jokers (and more) made by",
-                     "yours truly. Follow me on bluesky at @picubed.bsky.social!",
-                     "Thanks franderman123 for Español (México) localization!"
+                    "A collection of vanilla-esque Jokers and more made by",
+                    "yours truly. Follow me on bluesky at @picubed.bsky.social!",
+                    " ",
+                    "Thanks franderman123 for Español (México) localization!",
+                    " ",
+                    "Thanks mellows, Eremel, AutumnMood, N', Riv_Falcon, Aikoyori, Bepis,",
+                    "Somethingcom515, SleepyG11, jmibo, and lily.felli for development help!",
+                    " ",
+                    "Thanks ABuffZucchini and SDM_0 for gameplay balance help!",
+                    " ",
+                    "Thanks ejwu2 for Paperback compat and Sprinkler debugging!",
                 }
             },
         },
@@ -1328,6 +1361,9 @@ return {
 			ach_picubed_wrapastraightflush = "Wrap-a-Straight Flush",
 			ach_picubed_criticalhit = "Critical Hit!",
 			ach_picubed_balatrothemecustomremix = "Balatro Theme Custom Remix",
+            ach_picubed_bisexualsmakeforgoodideas = "Bisexuals make for good ideas",
+            ach_picubed_iaintreadingallat = "I 'aint reading allat",
+            ach_picubed_spawncamping = "Spawncamping",
 		},
 		achievement_descriptions = {
 			ach_picubed_printererror = "Allow Inkjet Printer to destroy itself",
@@ -1339,6 +1375,9 @@ return {
 			ach_picubed_wrapastraightflush = "Play a Wrap-around Straight that contains a Straight Flush using Round-a-bout",
 			ach_picubed_criticalhit = "Allow Forgery to gain +40 Mult or more from one destroyed card",
 			ach_picubed_balatrothemecustomremix = "Own at least 4 Rhythm Heaven-themed Jokers",
+            ach_picubed_bisexualsmakeforgoodideas = "Have a Bisexual Bisexual Flag",
+            ach_picubed_iaintreadingallat = "Allow Joker in a Nutshell to gain +X0.7 Mult or more in one round",
+            ach_picubed_spawncamping = "Allow Turf War to gain +X2 Mult or more in one round whilst also having 20 Wild cards in full deck",
 		},
         v_dictionary = {
             k_picubeds_pot_active = "Active!",
@@ -1377,8 +1416,9 @@ return {
             k_picubeds_inactive = "Inactive",
             k_picubeds_plusjokerslot = "+1 Joker Slot",
             k_picubeds_splat = "Splat!",
-            config_picubeds_newspectrals = "New Spectral Cards (restart required)",
+            config_picubeds_newspectrals = "New Spectral cards (restart required)",
             config_picubeds_newtags = "New Tags (restart required)",
+            config_picubeds_neweditions = "New Editions (restart required)",
             config_picubeds_customsfx = "Custom Sound Effects",
             config_picubeds_pokerhandchangers = "Hand type-affecting Jokers (restart required)",
             k_picubeds_chips = "Chips",

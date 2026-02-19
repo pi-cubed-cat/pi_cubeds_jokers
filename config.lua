@@ -3,4 +3,5 @@ return {
 	["pokerhand_changer_jokers"] = true,
 	["custom_sound_effects"] = true,
 	["spectrals"] = true,
+	["editions"] = true,
 }

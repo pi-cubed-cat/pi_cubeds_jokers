@@ -10,7 +10,7 @@ SMODS.Tag { -- Rebound Tag
 	},
 	config = { extra = { retriggers = 2, rounds_played = 0 } },
 	atlas = "picubed_tags",
-	pos = { x = 2, y = 0 },
+	pos = { x = 3, y = 0 },
 	discovered = true,
 	min_ante = 2,
 	loc_vars = function(self, info_queue, card)
@@ -42,7 +42,7 @@ SMODS.Joker { -- Rebound Tag (Joker-fied)
 	rarity = 1,
     config = { extra = { retriggers = 2 } },
 	atlas = 'picubed_tags',
-	pos = { x = 2, y = 0,
+	pos = { x = 3, y = 0,
         draw = function(card, scale_mod, rotate_mod) 
             card.children.center:draw_shader(nil, nil, card.ARGS.send_to_shader)
         end
@@ -99,3 +99,41 @@ SMODS.Joker { -- Rebound Tag (Joker-fied)
         end
 	end    
 }
+
+if picubed_config.editions then
+    SMODS.Tag {
+        key = "bisexual",
+        loc_txt = {
+            name = "Bisexual Tag",
+            text = {
+                "Next base edition shop",
+                "Joker is free and",
+                "becomes {C:dark_edition}Bisexual{}",
+            },
+        },
+        pos = { x = 0, y = 0 },
+        atlas = "picubed_tags",
+        loc_vars = function(self, info_queue, tag)
+            info_queue[#info_queue + 1] = G.P_CENTERS.e_picubed_bisexual
+        end,
+        apply = function(self, tag, context)
+            if context.type == 'store_joker_modify' then
+                if not context.card.edition and not context.card.temp_edition and context.card.ability.set == 'Joker' then
+                    local lock = tag.ID
+                    G.CONTROLLER.locks[lock] = true
+                    context.card.temp_edition = true
+                    tag:yep('+', G.C.DARK_EDITION, function()
+                        context.card.temp_edition = nil
+                        context.card:set_edition("e_picubed_bisexual", true)
+                        context.card.ability.couponed = true
+                        context.card:set_cost()
+                        G.CONTROLLER.locks[lock] = nil
+                        return true
+                    end)
+                    tag.triggered = true
+                    return true
+                end
+            end
+        end,
+    }
+end

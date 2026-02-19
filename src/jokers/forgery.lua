@@ -90,7 +90,7 @@ SMODS.Joker { --Forgery
 						return true 
 					end
 				}))
-				if card_mult * 0.5 >= 40 then
+				if card_mult * 0.25 >= 40 then
 					check_for_unlock({type = 'picubed_forgery_criticalhit'})
 				end
 				card.ability.extra.mult = card.ability.extra.mult + card_mult * 0.25

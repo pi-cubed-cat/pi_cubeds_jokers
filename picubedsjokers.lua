@@ -21,6 +21,11 @@ SMODS.current_mod.config_tab = function()
             ref_value = "tags",
         }),
         create_toggle({
+            label = localize("config_picubeds_neweditions"),
+            ref_table = picubed_config,
+            ref_value = "editions",
+        }),
+        create_toggle({
             label = localize("config_picubeds_customsfx"),
             ref_table = picubed_config,
             ref_value = "custom_sound_effects",
@@ -34,6 +39,10 @@ SMODS.current_mod.config_tab = function()
     }
 end
 
+SMODS.current_mod.description_loc_vars = function()
+    return { background_colour = G.C.UI.TEXT_DARK, text_colour = G.C.WHITE, scale = 1.2 }
+end
+
 -- load files
 assert(SMODS.load_file("src/jokers.lua"))()
 if picubed_config.spectrals then
@@ -43,7 +52,9 @@ assert(SMODS.load_file("src/decks.lua"))()
 if picubed_config.tags then
     assert(SMODS.load_file("src/tags.lua"))()
 end
---assert(SMODS.load_file("src/editions.lua"))()
+if picubed_config.editions then
+    assert(SMODS.load_file("src/editions.lua"))()
+end
 assert(SMODS.load_file("src/stickers.lua"))()
 assert(SMODS.load_file("src/achievements.lua"))()
 

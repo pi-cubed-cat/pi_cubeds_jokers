@@ -8,7 +8,6 @@ Documentation spreadsheet (Planned content, patch notes, & more info): https://d
 Discord discussion thread: https://discord.com/channels/1116389027176787968/1348621804696240201
 
 pi_cubed's Jokers is a relatively lightweight mod with minimal lovely patching and hooks. As a result, there should be few crashes due to conflicts with other mods. Feel free to reach out to me via the link above if problems do occur!
-If you are interested in playing this mod with Paperback, please get the [beta branch](https://github.com/Balatro-Paperback/paperback/tree/beta) of it.
 
 ## Config Options
 A game restart is required for Config options to take effect.

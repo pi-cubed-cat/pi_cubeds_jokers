@@ -46,6 +46,19 @@ SMODS.Joker { --Turf War
 				end
 				suit_count = (math.floor(suit_count/card.ability.extra.num_card))*card.ability.extra.Xmult_mod
 				reset_picubed_turfwar()
+				
+				-- achievement-related stuff
+				local wild_count = 0
+				for k,v in ipairs(G.playing_cards) do
+					if SMODS.has_enhancement(v, 'm_wild') then
+						wild_count = wild_count + 1
+					end
+				end
+				if suit_count >= 2 and wild_count >= 20 then
+					check_for_unlock({type = 'picubed_turfwar_spawncamping'})
+				end
+
+				-- ok back to normal stuff
 				if suit_count > 0 then
 					card.ability.extra.Xmult = card.ability.extra.Xmult + suit_count
 					return {

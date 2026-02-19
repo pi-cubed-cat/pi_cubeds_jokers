@@ -29,6 +29,10 @@ SMODS.Joker { --Bisexual Flag
     end,]]
     calculate = function(self, card, context)
         if context.joker_main then
+            if card.edition and card.edition.key == 'e_picubed_bisexual' then
+                check_for_unlock({type = 'picubed_bisexual_squared'})
+            end
+            
             local suit_list = {}
             for k, v in pairs(SMODS.Suits) do
                 suit_list[k] = 0

@@ -25,16 +25,9 @@ SMODS.Joker { --Encore
 	calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 and G.GAME.blind and G.GAME.blind.boss then
 			G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
-            return {
+            G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+			return {
                 dollars = card.ability.extra.money,
-                func = function()
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            G.GAME.dollar_buffer = 0
-                            return true
-                        end
-                    }))
-                end
             }
 		end
 	end

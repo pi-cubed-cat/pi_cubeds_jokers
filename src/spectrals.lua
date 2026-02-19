@@ -170,3 +170,133 @@ SMODS.Consumable { --Extinction (Spectral card)
         end
     end
 }
+
+if picubed_config.editions then
+
+SMODS.Consumable { --Glamour (Spectral card)
+    set = "Spectral",
+    key = "glamour",
+    loc_txt = {
+        name = 'Glamour',
+        text = {
+            "Each card held in hand",
+            "has a {C:green}#1# in #2#{} chance to",
+            "receive the {C:dark_edition}Bisexual{} edition",
+        }
+    },
+    discovered = true,
+    atlas = 'PiCubedsJokers',
+    pos = { x = 0, y = 12 },
+    cost = 4,
+    config = { 
+        extra = { odds = 6 }
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_picubed_bisexual
+        local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_glamour')
+        return { vars = { numerator, denominator } }
+    end,
+    can_use = function(self, card)
+        for k,v in ipairs(G.hand.cards or {}) do
+            if not v.edition or not v.edition.key == 'e_picubed_glamour' then
+                return true
+            end
+        end
+        return false
+    end,
+    use = function(self, card, area, copier)
+        for k,v in ipairs(G.hand.cards or {}) do
+            if not v.edition or not v.edition.key == 'e_picubed_glamour' then
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.4,
+                    func = function()
+                        if SMODS.pseudorandom_probability(card, 'picubed_glamour', 1, card.ability.extra.odds) then
+                            v:set_edition('e_picubed_bisexual', true)
+                            card:juice_up(0.3, 0.5)
+                        else
+                            attention_text({
+                                text = localize('k_nope_ex'),
+                                scale = 1,
+                                hold = 1.4,
+                                major = v,
+                                backdrop_colour = G.C.SECONDARY_SET.Spectral,
+                                align = 'cm',
+                                offset = { x = 0, y = -0.4 },
+                                silent = true
+                            })
+                            G.E_MANAGER:add_event(Event({
+                                trigger = 'after',
+                                delay = 0.06 * G.SETTINGS.GAMESPEED,
+                                blockable = false,
+                                blocking = false,
+                                func = function()
+                                    play_sound('tarot2', 0.76, 0.4)
+                                    return true
+                                end
+                            }))
+                            play_sound('tarot2', 1, 0.4)
+                            card:juice_up(0.3, 0.5)
+                        end
+                        return true
+                    end
+                }))
+            end
+        end
+    end
+}
+
+SMODS.Consumable { --Partition (Spectral card)
+    set = "Spectral",
+    key = "partition",
+    loc_txt = {
+        name = 'Partition',
+        text = {
+            "A random Joker with ",
+            "{C:dark_edition}Foil{}, {C:dark_edition}Holographic{}, or",
+            "{C:dark_edition}Polychrome{} has its edition",
+            "replaced with {C:dark_edition}Bisexual{}",
+        }
+    },
+    discovered = true,
+    atlas = 'PiCubedsJokers',
+    pos = { x = 1, y = 12 },
+    cost = 4,
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_picubed_bisexual
+    end,
+    in_pool = function(self, args)
+        for k,v in ipairs(G.jokers.cards or {}) do
+            if v.edition then
+                if v.edition.key == 'e_foil' or v.edition.key == 'e_holo' or v.edition.key == 'e_polychrome' then
+                    return true
+                end
+            end
+        end
+        return false
+    end,
+    can_use = function(self, card)
+        for k,v in ipairs(G.jokers.cards or {}) do
+            if v.edition then
+                if v.edition.key == 'e_foil' or v.edition.key == 'e_holo' or v.edition.key == 'e_polychrome' then
+                    return true
+                end
+            end
+        end
+        return false
+    end,
+    use = function(self, card, area, copier)
+        local editioned_jokers = {}
+        for k,v in ipairs(G.jokers.cards or {}) do
+            if v.edition then
+                if v.edition.key == 'e_foil' or v.edition.key == 'e_holo' or v.edition.key == 'e_polychrome' then
+                    editioned_jokers[#editioned_jokers+1] = v
+                end
+            end
+        end
+        local eligible_card = pseudorandom_element(editioned_jokers, 'picubed_partition')
+        eligible_card:set_edition('e_picubed_bisexual', true)
+    end
+}
+
+end

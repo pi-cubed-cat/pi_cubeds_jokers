@@ -6,7 +6,7 @@
     #define MY_HIGHP_OR_MEDIUMP mediump
 #endif
 
-extern MY_HIGHP_OR_MEDIUMP vec2 evil;
+extern MY_HIGHP_OR_MEDIUMP vec2 bisexual;
 extern MY_HIGHP_OR_MEDIUMP number dissolve;
 extern MY_HIGHP_OR_MEDIUMP number time;
 extern MY_HIGHP_OR_MEDIUMP vec4 texture_details;
@@ -111,15 +111,15 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     vec4 bhsl = HSL(tex); // make a base copy of HSL values
 
     vec3 sepiaVec = tex.rgb;
-    sepiaVec.r = 0.2 + (1 * tex.r - 0.075 * uv.x / sprite_width);
+    sepiaVec.r = 0.2 + (1. * tex.r - 0.075 * uv.x / sprite_width);
     sepiaVec.g = 0.2 + 0.1 * tex.g;
-    sepiaVec.b = 0.2 + (1 * tex.b + 0.075 * (uv.x - 1) / sprite_width);
+    sepiaVec.b = 0.2 + (1. * tex.b + 0.075 * (uv.x - 1.) / sprite_width);
 
     tex = vec4(sepiaVec, tex.a);
 
     // Does not do anything. Required for shader to not crash.
     if (uv.x > 2. * uv.x) {
-        uv = evil;
+        uv = bisexual;
     }
 
     // required

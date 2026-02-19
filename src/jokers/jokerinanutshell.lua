@@ -57,6 +57,11 @@ SMODS.Joker { --Joker in a Nutshell
                         return true
                     end
                 }))
+                
+                if num_lines * card.ability.extra.Xmult_mod >= 0.7 then
+                    check_for_unlock({type = 'picubed_nutshell_large'})
+                end
+                
                 return {
                     message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult + num_lines * card.ability.extra.Xmult_mod } },
                     colour = G.C.RED,

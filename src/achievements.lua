@@ -112,3 +112,30 @@ SMODS.Achievement { -- Balatro Theme Custom Remix
         end
     end
 }
+
+SMODS.Achievement { -- Bisexuals make for good ideas
+    key = 'bisexualsmakeforgoodideas',
+    reset_on_startup = true,
+    order = 10,
+    unlock_condition = function(self, args)
+        if args.type == 'picubed_bisexual_squared' then return true end
+    end
+}
+
+SMODS.Achievement { -- I 'aint reading allat
+    key = 'iaintreadingallat',
+    reset_on_startup = true,
+    order = 11,
+    unlock_condition = function(self, args)
+        if args.type == 'picubed_nutshell_large' then return true end
+    end
+}
+
+SMODS.Achievement { -- Spawncamping
+    key = 'spawncamping',
+    reset_on_startup = true,
+    order = 12,
+    unlock_condition = function(self, args)
+        if args.type == 'picubed_turfwar_spawncamping' then return true end
+    end
+}
