@@ -198,7 +198,7 @@ SMODS.Consumable { --Glamour (Spectral card)
     end,
     can_use = function(self, card)
         for k,v in ipairs(G.hand.cards or {}) do
-            if not v.edition or not v.edition.key == 'e_picubed_glamour' then
+            if not v.edition or v.edition.key ~= 'e_picubed_glamour' then
                 return true
             end
         end
@@ -206,7 +206,7 @@ SMODS.Consumable { --Glamour (Spectral card)
     end,
     use = function(self, card, area, copier)
         for k,v in ipairs(G.hand.cards or {}) do
-            if not v.edition or not v.edition.key == 'e_picubed_glamour' then
+            if not v.edition or v.edition.key ~= 'e_picubed_glamour' then
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
                     delay = 0.4,
