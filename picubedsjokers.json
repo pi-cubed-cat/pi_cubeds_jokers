@@ -8,8 +8,8 @@
     "badge_colour": "34CEB1",
     "display_name": "pi^3's jokers",
     "dependencies": [
-        "Steamodded (>=1.0.0~BETA-0827a)"
+        "Steamodded (>=1.0.0~BETA-1224a)"
     ],
-    "version": "2.2.3a",
+    "version": "2.2.3b",
     "allow_redistribution": true
 }

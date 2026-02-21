@@ -24,7 +24,7 @@ SMODS.Joker { --Hitting a Sick Clip
     end,
     calculate = function(self, card, context)
         if context.retrigger_joker_check and context.other_card and context.other_card.config and context.other_card.config.center
-        and (context.other_card.config.center.key == 'j_paperback_clothespin' or context.other_card.config.center.key == 'j_paperback_clippy') then
+        and (context.other_card.config.center.key == 'j_paperback_clippy' or context.other_card.config.center.key == 'j_paperback_chip_clip') then
             return {
                 message = localize("k_again_ex"),
                 repetitions = card.ability.extra.repetitions,

@@ -1,5 +1,5 @@
 SMODS.Atlas({
-    key = "picubed_atlas", 
+    key = "picubed_thecube", 
     path = "picubed_thecube.png", 
     px = 71,
     py = 95,
@@ -20,7 +20,7 @@ SMODS.Joker { --The Cube
 	},
 	pronouns = 'it_its',
 	rarity = 4,
-	atlas = 'picubed_atlas',
+	atlas = 'picubed_thecube',
 	pos = { x = 0, y = 0 },
     soul_pos = { x = 0, y = 1 },
 	cost = 20,
