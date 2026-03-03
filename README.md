@@ -1,4 +1,5 @@
-![Mod Logo](https://i.imgur.com/xL9qXgo.png)
+## RETRO BLAST EDITION  
+![Mod Logo](https://i.imgur.com/WgRA0cT.png)
 Steamodded **[1.0.0-beta-1224a](https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-1224a)** or later is required.
 
 List of Jokers (Modded Wiki Page): https://balatromods.miraheze.org/wiki/Pi_cubed's_Jokers/Jokers
