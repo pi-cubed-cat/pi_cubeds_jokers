@@ -1,6 +1,6 @@
 {
-    "id": "picubedsjokers",
-    "name": "pi_cubed's Jokers",
+    "id": "picubedsjokers_retro",
+    "name": "pi_cubed's Jokers (RETRO BLAST EDITION)",
     "author": ["pi_cubed"],
     "description": "A collection of vanilla-friendly Jokers (and more) made by yours truly.",
     "prefix": "picubed",
@@ -10,6 +10,9 @@
     "dependencies": [
         "Steamodded (>=1.0.0~BETA-1224a)"
     ],
-    "version": "2.2.3b",
+    "conflicts": [
+		"picubedsjokers"
+	],
+    "version": "2.2.3b-RETRO",
     "allow_redistribution": true
 }

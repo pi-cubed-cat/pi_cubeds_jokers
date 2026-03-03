@@ -1212,10 +1212,10 @@ return {
         },
         Mod = {
             picubedsjokers = {
-                name = "pi_cubed's Jokers",
+                name = "pi_cubed's Jokers (RETRO BLAST EDITION)",
                 text = {
-                    "A collection of vanilla-esque Jokers and more made by",
-                    "yours truly. Follow me on bluesky at @picubed.bsky.social!",
+                    "Celebrating 1 Year of pi_cubed's Jokers!",
+                    "Thank you for playing the special branch!",
                     " ",
                     "Thanks franderman123 for Español (México) localization!",
                     " ",
