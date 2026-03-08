@@ -18,7 +18,7 @@ SMODS.Joker { --On-beat
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 0, y = 5 },
-	cost = 6,
+	cost = 4,
 	discovered = true,
 	blueprint_compat = true,
 	perishable_compat = true,

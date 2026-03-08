@@ -9,7 +9,7 @@ SMODS.Joker { --Apartment Complex
         }
     },
     pronouns = 'he_they',
-    rarity = 3,
+    rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 2 },
     cost = 7,
@@ -26,7 +26,7 @@ SMODS.Joker { --Apartment Complex
         end
         return false
     end,
-    config = { extra = { Xmult_mod = 0.75, Xmult = 1 } },
+    config = { extra = { Xmult_mod = 1, Xmult = 1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
     end,

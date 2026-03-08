@@ -16,7 +16,7 @@ SMODS.Joker { --Rhythmic Joker
     rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 3, y = 4 },
-    cost = 5,
+    cost = 4,
     discovered = true,
     blueprint_compat = true,
     perishable_compat = true,

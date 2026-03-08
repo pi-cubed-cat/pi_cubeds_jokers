@@ -24,7 +24,7 @@ SMODS.Joker { --All In
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
-    config = { extra = { repetitions = 2, other_repetitions = 1, face_down_cards = {} } },
+    config = { extra = { repetitions = 2, other_repetitions = 2, face_down_cards = {} } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.repetitions, card.ability.extra.other_repetitions } }
     end,

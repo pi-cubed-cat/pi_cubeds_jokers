@@ -9,15 +9,15 @@ SMODS.Joker { --Shopping Trolley
         }
     },
     pronouns = 'she_they',
-    rarity = 2,
+    rarity = 1,
     atlas = 'PiCubedsJokers',
     pos = { x = 0, y = 2 },
-    cost = 4,
+    cost = 3,
     discovered = true,
     blueprint_compat = false,
     perishable_compat = true,
     eternal_compat = true,
-    config = { extra = { odds = 4, hand_increase = 10, trolley_success = 0 } },
+    config = { extra = { odds = 4, hand_increase = 5, trolley_success = 0 } },
     pools = { ["Meme"] = true },
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 3, card.ability.extra.odds, 'picubed_shoppingtrolley')

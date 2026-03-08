@@ -17,7 +17,7 @@ SMODS.Joker { --Super Wrathful Joker
     blueprint_compat = false,
     perishable_compat = true,
     eternal_compat = true,
-    config = { extra = { max_cards = 4 } },
+    config = { extra = { max_cards = 200 } },
     loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.max_cards } }
 	end,

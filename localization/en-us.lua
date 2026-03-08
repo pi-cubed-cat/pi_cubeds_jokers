@@ -236,10 +236,9 @@ return {
             j_picubed_prime7 = {
                 name = "Prime 7",
                 text = {
-                    "Once per round, if hand is",
-                    "a single {C:attention}7{}, add {C:dark_edition}Negative{}",
-                    "edition to the card",
-                    "{C:inactive}(Currently #1#){}",
+                    "If hand is a single {C:attention}7{},",
+                    "add {C:dark_edition}Negative{} edition",
+                    "to the card",
                 }
             },
             j_picubed_landslide = {
@@ -261,7 +260,8 @@ return {
             j_picubed_oooshiny = {
                 name = 'Ooo! Shiny!',
                 text = {
-                   "{C:dark_edition}Polychrome{} cards",
+                   "Cards with a {C:money}Gold Seal{} or",
+                    "{C:dark_edition}Polychrome{} edition",
                    "give {C:money}$#1#{} when scored"
                 }
             },
@@ -318,9 +318,8 @@ return {
             j_picubed_superwrathfuljoker = {
                 name = 'Super Wrathful Joker',
                 text = {
-                    "If played hand has {C:attention}#1#{} scoring",
-                    "cards or less, all scored",
-                    "{C:spades}Spade{} cards become {C:attention}Kings{}",
+                    "All scored {C:spades}Spade{}",
+                    "cards become {C:attention}Kings{}",
                 }
             },
             j_picubed_acecomedian = {
@@ -336,7 +335,7 @@ return {
                    "Receive {C:attention}#1#{} additional random {C:attention}tags",
                    "when blind is {C:attention}skipped{},",
                    "{C:attention}+#2# tag{} after each skip",
-                   "{C:inactive}(Capped at current {}{C:attention}Ante{}{C:inactive}){}"
+                   --"{C:inactive}(Capped at current {}{C:attention}Ante{}{C:inactive}){}"
                 }
             },
             j_picubed_echolocation = {
@@ -446,16 +445,17 @@ return {
             j_picubed_allin = {
                 name = 'All In',
                 text = {
-                    {
-                        "Played {C:attention}face down{} cards are",
-                        "retriggered {C:attention}#1#{} additonal times"
-                    },
+                    --{
+                        "{C:attention}Face down{} cards are",
+                        "retriggered {C:attention}#1#{} additonal times",
+                        "{C:inactive}(except All In)",
+                    --[[},
                     {
                         "{C:attention}Face down{} Jokers and",
                         "cards held in hand are",
                         "retriggered {C:attention}#2#{} additional time",
                         "{C:inactive}(except All In)"
-                    }
+                    }]]
                 }
             },
             j_picubed_gottheworm = {
@@ -510,8 +510,9 @@ return {
             j_picubed_preorderbonus = {
                 name = 'Preorder Bonus',
                 text = {
-                   "Booster Packs",
-                   "cost {C:attention}#1#% less{}"
+                    "After opening a",
+                    "Booster Pack, refund",
+                    "{C:attention}#1#%{} of the cost",
                 }
             },
             j_picubed_waterbottle = {
@@ -556,7 +557,7 @@ return {
                 name = 'Pi',
                 text = {
                    "Cards with an {C:attention}edition{}",
-                   "have a {C:green}#2# in #3#{} chance to",
+                   --"have a {C:green}#2# in #3#{} chance to",
                    "give {X:mult,C:white}X#1#{} Mult"
                 }
             },
@@ -621,10 +622,10 @@ return {
             j_picubed_oxplow = {
                 name = 'Ox Plow',
                 text = {
-                   "Earn {C:money}$#1#{} if {C:attention}most played{}",
-                   "{C:attention}poker hand{} wasn't played",
-                   "by end of round",
-                   "{C:inactive}(Currently #2#){}",
+                   "Earn {C:money}$#1#{} if played poker hand",
+                   "is not {C:attention}most played{} poker hand",
+                   --"by end of round",
+                   --"{C:inactive}(Currently #2#){}",
                 }
             },
             j_picubed_offthehook = {
@@ -689,7 +690,7 @@ return {
                 text = {
                     "When {C:attention}Blind{} is selected,",
                     "{C:attention}destroy{} a random card in {C:attention}deck{},",
-                    "and add a {C:attention}quarter{} of its",
+                    "and add {C:attention}half{} of its",
                     "{C:chips}Chips{} to this Joker as {C:mult}Mult",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"
                 }
@@ -798,8 +799,8 @@ return {
                 name = 'Panic Fire',
                 text = {
                     "{X:mult,C:white}X#1#{} Mult for {C:attention}this round{}",
-                    "after #3# {C:inactive}[#4#]{} cards have",
-                    "been {C:attention}sold{} during {C:attention}Blind{}",
+                    "after a card has been {C:attention}sold{}",
+                    "before first Play or Discard",
                     "{C:inactive}(Currently #2#){}",
                 }
             },
@@ -967,8 +968,8 @@ return {
                 name = 'The Cube',
                 text = {
                     "Scored {C:attention}numbered{} cards give", 
-                    "{C:money}${} equal to their {C:attention}rank halved{}",
-                    "{s:0.8}Aces give {s:0.8,C:money}$5{}",
+                    "{C:money}${} equal to their {C:attention}rank{}",
+                    "{s:0.8}Aces give {s:0.8,C:money}$11{}",
                 }
             },
             j_picubed_illusionofchoice = {
@@ -1211,8 +1212,8 @@ return {
             },
         },
         Mod = {
-            picubedsjokers = {
-                name = "pi_cubed's Jokers (RETRO BLAST EDITION)",
+            picubedsjokers_retro = {
+                name = "pi^3's Jokers (RETRO BLAST EDITION)",
                 text = {
                     "Celebrating 1 Year of pi_cubed's Jokers!",
                     "Thank you for playing the special branch!",

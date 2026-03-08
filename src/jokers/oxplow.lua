@@ -18,17 +18,17 @@ SMODS.Joker { --Ox Plow
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { money = 8, most_played = false } },
+	config = { extra = { money = 3, most_played = false } },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money,
 						localize { type = 'variable', key = ((card.ability.extra.most_played and 'k_picubeds_pot_inactive') or 'k_picubeds_pot_active'), vars = { card.ability.extra.most_played } },
 	} }
 	end,
 	calculate = function(self, card, context)
-		if context.setting_blind then
+		--[[if context.setting_blind then
 			card.ability.extra.most_played = false
-		end
-		if context.after then
+		end]]
+		if context.before then
 			local is_most = true
 			local play_more_than = (G.GAME.hands[context.scoring_name].played or 0)
 			for k, v in pairs(G.GAME.hands) do
@@ -37,12 +37,17 @@ SMODS.Joker { --Ox Plow
 					break
 				end
 			end
-			if is_most then
-				card.ability.extra.most_played = true
+			if not is_most then
+				G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
+				G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+				return {
+					dollars = card.ability.extra.money,
+				}
+				--card.ability.extra.most_played = true
 			end
 		end
 	end,
-	calc_dollar_bonus = function(self, card)
+	--[[calc_dollar_bonus = function(self, card)
         return (not card.ability.extra.most_played) and card.ability.extra.money or nil
-    end
+    end]]
 }

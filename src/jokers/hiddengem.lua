@@ -10,10 +10,10 @@ SMODS.Joker { --Hidden Gem
         }
     },
     pronouns = 'they_them',
-    rarity = 3,
+    rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 4, y = 1 },
-    cost = 9,
+    cost = 8,
     config = { extra = { odds = 15 } },
     discovered = true,
     blueprint_compat = false,

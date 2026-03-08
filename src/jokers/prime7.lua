@@ -13,7 +13,6 @@ SMODS.Joker { --Prime 7
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 7, y = 0 },
-    soul_pos = { x = 3, y = 3},
     cost = 7,
     discovered = true,
     blueprint_compat = false,
@@ -27,17 +26,17 @@ SMODS.Joker { --Prime 7
         }
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and card.ability.extra.is_active == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
+        --[[if context.end_of_round and context.game_over == false and card.ability.extra.is_active == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
 			card.ability.extra.is_active = true
 			return {
 				message = localize('k_reset'),
 				colour = G.C.RED
 			}
-		end
+		end]]
         if not context.blueprint and context.before then 
             if #context.full_hand == 1 then
                 for k, v in ipairs(context.scoring_hand) do
-                    if not v.debuff and v.base.value == '7' and card.ability.extra.is_active then 
+                    if not v.debuff and v.base.value == '7' --[[and card.ability.extra.is_active]] then 
                         card.ability.extra.is_active = false
                         if not (next(SMODS.find_card('j_dna')) and G.GAME.current_round.hands_played == 0) then -- regular behaviour (looks nicer)
                             G.E_MANAGER:add_event(Event({

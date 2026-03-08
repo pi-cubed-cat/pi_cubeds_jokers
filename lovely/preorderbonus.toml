@@ -10,7 +10,7 @@ pattern = "if self.ability.set == 'Booster' and G.GAME.modifiers.booster_ante_sc
 position = "before"
 match_indent = true
 payload = '''
-local preorder_bonus_discount = 1
+--[[local preorder_bonus_discount = 1
 if self.ability.set == 'Booster' and #find_joker('j_picubed_preorderbonus') > 0 then 
     for k, v in ipairs(G.jokers.cards) do
     if v.ability.name == 'j_picubed_preorderbonus' then
@@ -21,5 +21,5 @@ if self.ability.set == 'Booster' and #find_joker('j_picubed_preorderbonus') > 0 
     preorder_bonus_discount = 0
     end
 end
-self.cost = math.max(1, math.floor(self.cost*preorder_bonus_discount))
+self.cost = math.max(1, math.floor(self.cost*preorder_bonus_discount))]]
 '''

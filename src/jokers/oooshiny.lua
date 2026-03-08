@@ -8,11 +8,11 @@ SMODS.Joker { --Ooo! Shiny!
         }
     },
     pronouns = 'they_them',
-    config = { extra = { money = 7 } },
+    config = { extra = { money = 10 } },
     atlas = 'PiCubedsJokers',
     pos = { x = 0, y = 1 },
     cost = 7,
-    rarity = 2,
+    rarity = 3,
     discovered = true,
     blueprint_compat = true,
     perishable_compat = true,
@@ -23,6 +23,9 @@ SMODS.Joker { --Ooo! Shiny!
                 if vv.edition.key == 'e_polychrome' then
                     return true
                 end
+            end
+            if vv.ability.seal and vv.ability.seal == 'Gold' then
+                return true
             end
         end 
         for kk, vv in pairs(G.jokers.cards or {}) do
@@ -36,13 +39,15 @@ SMODS.Joker { --Ooo! Shiny!
     end,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.e_polychrome
+        info_queue[#info_queue + 1] = G.P_SEALS['Gold']
         return {
             vars = { card.ability.extra.money, card.ability.max_highlighted }
         }
     end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
-            if context.other_card.edition and context.other_card.edition.key == 'e_polychrome' 
+            if (context.other_card.edition and context.other_card.edition.key == 'e_polychrome'
+            or  context.other_card.ability.seal and context.other_card.ability.seal == 'Gold') 
             and (not context.other_card.debuff) then
                 return {
                     dollars = card.ability.extra.money,

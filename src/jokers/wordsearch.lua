@@ -10,7 +10,7 @@ SMODS.Joker { --Word Search
 		}
 	},
 	pronouns = 'she_her',
-	config = { extra = { mult = 0, mult_mod = 1 }},
+	config = { extra = { mult = 0, mult_mod = 2 }},
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 2, y = 0 },

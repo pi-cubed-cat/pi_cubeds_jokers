@@ -34,7 +34,7 @@ SMODS.Joker { --Panic Fire
 		} }
 	end,
 	calculate = function(self, card, context)
-		if context.setting_blind and card.ability.extra.count_current ~= card.ability.extra.count_max and not context.blueprint and not context.joker_retrigger then 
+		if context.setting_blind and card.ability.extra.is_active and not context.blueprint and not context.joker_retrigger then 
 			card.ability.extra.is_active = false
 			card.ability.extra.count_current = card.ability.extra.count_max
 			return {
@@ -42,9 +42,10 @@ SMODS.Joker { --Panic Fire
 				colour = G.C.RED
 			}
 		end
-		if context.selling_card and not card.ability.extra.is_active and not context.blueprint and G.GAME.blind.in_blind and not context.retrigger_joker then
-			card.ability.extra.count_current = card.ability.extra.count_current - 1
-			if card.ability.extra.count_current <= 0 then
+		if context.selling_card and not card.ability.extra.is_active and not context.blueprint and G.GAME.blind.in_blind and not context.retrigger_joker 
+		and G.GAME.current_round.hands_played == 0 and G.GAME.current_round.discards_used == 0 then
+			--card.ability.extra.count_current = card.ability.extra.count_current - 1
+			--if card.ability.extra.count_current <= 0 then
 				card.ability.extra.is_active = true
 				if picubed_config.custom_sound_effects then
 					return {
@@ -60,12 +61,12 @@ SMODS.Joker { --Panic Fire
 						message = localize('k_picubeds_panicfire_ready'),
 					} 
 				end
-			else
+			--[[else
 				return {
 					card = card,
 					message = tostring(card.ability.extra.count_current)
 				} 
-			end
+			end]]
 		end
 		if context.joker_main and card.ability.extra.is_active then
 			return {

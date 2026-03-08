@@ -20,10 +20,19 @@ SMODS.Joker { --Preorder Bonus
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.discount * 100 } }
 	end,
+	calculate = function(self, card, context)
+		if context.open_booster then
+			local price_refund = card.ability.extra.discount * context.card.cost
+			return {
+				dollars = price_refund,
+				card = card
+			}
+		end
+	end
 	--[[in_pool = function(self, args)
 		if not G.GAME.challenge == 'ch_c_picubed_balalajokerpoker' then return true end
 	end,]]
-	add_to_deck = function(self, card, from_debuff)
+	--[[add_to_deck = function(self, card, from_debuff)
 		G.E_MANAGER:add_event(Event({func = function()
 			for k, v in pairs(G.I.CARD) do
 					if v.set_cost then v:set_cost() end
@@ -36,7 +45,7 @@ SMODS.Joker { --Preorder Bonus
 					if v.set_cost then v:set_cost() end
 			end
 		return true end }))
-	end
+	end]]
 }
 
 -- relies on additional functions present in lovely/preorderbonus.toml

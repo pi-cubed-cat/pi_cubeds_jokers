@@ -17,7 +17,7 @@ SMODS.Joker { --Water Bottle
 	blueprint_compat = true,
 	perishable_compat = false,
 	eternal_compat = true,
-	config = { extra = { chips_mod = 15, chips = 0} },
+	config = { extra = { chips_mod = 30, chips = 0} },
 	pools = { ["Food"] = true },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }

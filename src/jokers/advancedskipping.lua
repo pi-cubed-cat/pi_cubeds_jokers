@@ -39,13 +39,13 @@ SMODS.Joker { --Advanced Skipping
                 end
             end
             card:juice_up()
-            if G.GAME.round_resets.ante > card.ability.extra.add_tags then
+            --if G.GAME.round_resets.ante > card.ability.extra.add_tags then
                 card.ability.extra.add_tags = card.ability.extra.add_tags + card.ability.extra.add_tags_mod
                 return {
                     message = localize('k_upgrade_ex'),
                     card = card
                 }
-            end
+            --end
         end
     end
 }

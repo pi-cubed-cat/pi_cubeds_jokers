@@ -9,15 +9,15 @@ SMODS.Joker { --Missing Finger
 		}
 	},
 	pronouns = 'they_them',
-	rarity = 3,
+	rarity = 4,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 6, y = 7 },
-	cost = 9,
+	cost = 7,
 	discovered = true,
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { Xmult = 3, select_mod = -1 } },
+	config = { extra = { Xmult = 4, select_mod = -1 } },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult, card.ability.extra.select_mod } }
 	end,

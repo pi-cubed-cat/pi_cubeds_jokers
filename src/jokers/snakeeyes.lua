@@ -14,7 +14,7 @@ SMODS.Joker { --Snake Eyes
     rarity = 2,
     atlas = 'PiCubedsJokers',
     pos = { x = 2, y = 1 },
-    cost = 6,
+    cost = 4,
     discovered = true,
     blueprint_compat = false,
     perishable_compat = true,

@@ -17,7 +17,7 @@ SMODS.Joker { --Black Joker
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
-    config = { extra = { cap = 21, money = 7 } },
+    config = { extra = { cap = 21, money = 13 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cap, card.ability.extra.money } }
     end,

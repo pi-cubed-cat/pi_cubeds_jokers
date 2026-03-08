@@ -14,7 +14,7 @@ SMODS.Joker { --7 8 9
     atlas = 'PiCubedsJokers',
     pos = { x = 3, y = 1 },
     cost = 7,
-    config = { extra = { Xmult_mod = 0.3, Xmult = 1 } },
+    config = { extra = { Xmult_mod = 0.5, Xmult = 1 } },
     discovered = true,
     blueprint_compat = true,
     perishable_compat = false,

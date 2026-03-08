@@ -33,7 +33,8 @@ SMODS.Joker { --The Cube
         	local card_money = 0
 			local coc = context.other_card
 			if not (SMODS.has_no_rank(coc) or coc:get_id() == 11 or coc:get_id() == 12 or coc:get_id() == 13) then
-				card_money = math.floor((coc.base.nominal or 0) / 2)
+				card.money = coc.base.nominal
+				--card_money = math.floor((coc.base.nominal or 0) / 2)
 				G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card_money
 				G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
 				if card_money > 0 then

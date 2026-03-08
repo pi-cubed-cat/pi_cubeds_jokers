@@ -86,14 +86,14 @@ SMODS.Joker { --Forgery
 					delay = 0.1,
 					func = function()
 						SMODS.destroy_cards(card_is_kil)
-						SMODS.calculate_effect({ message = localize { type = 'variable', key = 'a_mult', vars = { card_mult * 0.25 } }, colour = G.C.MULT, sound = 'slice1', pitch = 0.96 + math.random() * 0.08 }, card )
+						SMODS.calculate_effect({ message = localize { type = 'variable', key = 'a_mult', vars = { card_mult * 0.5 } }, colour = G.C.MULT, sound = 'slice1', pitch = 0.96 + math.random() * 0.08 }, card )
 						return true 
 					end
 				}))
 				if card_mult * 0.25 >= 40 then
 					check_for_unlock({type = 'picubed_forgery_criticalhit'})
 				end
-				card.ability.extra.mult = card.ability.extra.mult + card_mult * 0.25
+				card.ability.extra.mult = card.ability.extra.mult + card_mult * 0.5
 			end
 
 		end

@@ -18,7 +18,7 @@ SMODS.Joker { --Siphon
     blueprint_compat = true,
     perishable_compat = false,
     eternal_compat = true,
-    config = { extra = { chips_mod = 8, chips = 0 } },
+    config = { extra = { chips_mod = 20, chips = 0 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
     end,

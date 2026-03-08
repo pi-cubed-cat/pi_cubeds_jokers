@@ -14,7 +14,7 @@ SMODS.Joker { --Satanist
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 8, y = 9 },
-	cost = 6,
+	cost = 5,
 	discovered = true,
 	blueprint_compat = true,
     perishable_compat = true,
