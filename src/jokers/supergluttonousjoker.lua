@@ -28,7 +28,7 @@ SMODS.Joker { --Super Gluttonous Joker
 			if club_count > 0 and #G.deck.cards > 0 then
 				G.E_MANAGER:add_event(Event({
 					func = function()
-						G.FUNCS.draw_from_deck_to_hand(club_count)
+						SMODS.draw_cards(club_count)
 				return true end 
 				}))	
 				return {
