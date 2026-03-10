@@ -1,4 +1,5 @@
 ## RETRO BLAST EDITION  
+Please download via the green Code button! Do not download via releases! (They do not contain RETRO.)
 
 ![Mod Logo](https://i.imgur.com/WgRA0cT.png)
 Steamodded **[1.0.0-beta-1224a](https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-1224a)** or later is required.
