@@ -1,14 +1,44 @@
 ## RETRO BLAST EDITION  
+
 ![Mod Logo](https://i.imgur.com/WgRA0cT.png)
 Steamodded **[1.0.0-beta-1224a](https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-1224a)** or later is required.
 
-List of Jokers (Modded Wiki Page): https://balatromods.miraheze.org/wiki/Pi_cubed's_Jokers/Jokers
-
-Documentation spreadsheet (Planned content, patch notes, & more info): https://docs.google.com/spreadsheets/d/1s2MFswjKUeVcx3W0Cylmya1ZfFvx2fiQZD42ZThxd5Q/edit?usp=sharing
-
-Discord discussion thread: https://discord.com/channels/1116389027176787968/1348621804696240201
-
-pi_cubed's Jokers is a relatively lightweight mod with minimal lovely patching and hooks. As a result, there should be few crashes due to conflicts with other mods. Feel free to reach out to me via the link above if problems do occur!
+### LIST OF CHANGES FOR THE RETRO BLAST EDITION  
+* Card art changes to lots of the Jokers!
+* Hidden Gem is Rare -> Uncommon and costs $9 -> $8
+* Black Joker gives $7 -> $13
+* Advanced Skipping no longer has capped scaling
+* Rhythmic Joker costs $5 -> $4
+* All In retriggers face-down Jokers and held cards 1 -> 2 additional times
+* Night Vision gives $1 -> $2 per card flipped face up and costs $7 -> $6
+* Acorn Tree is Uncommon -> Common and costs $6 -> $5
+* Ox Plow has been reworked: Earn $3 if played poker hand is not your most played
+* Fusion Magic costs $8 -> $7
+* Prime 7 now can activate multiple times per round
+* Pi has been reworked: Editioned cards give X1.5 Mult
+* Shopping Trolley gives +10 -> +5 hand size and is Uncommon -> Common
+* Stonemason is Rare -> Uncommon
+* Shrapnel upgrades cards by +1 -> +2 Mult
+* FastPass costs $8 -> $7
+* Panic Fire now only needs 1 card to be sold to become active but that card must now be sold before first Play or Discard
+* Super Wrathful Joker no longer has a cap on number of scored cards
+* Pot gives X3 -> X4 Mult
+* Super Gluttonous Joker is now blueprint compatible
+* Forgery now upgrades by quarter -> half chips of destroyed card
+* Missing Finger gives X3 -> X4 Mult and costs $9 -> $7
+* Hierarchy gives X1.5 -> X2 Mult
+* Satanist costs $6 -> $5
+* The Cube gives $ equal to half rank -> rank
+* Ooo! Shiny! gives $7 -> $10 per activation, is Uncommon -> Rare, and also works with cards with a Gold Seal
+* Explosher costs $5 -> $4
+* 7 8 9 upgrades by X0.3 -> X0.5 Mult
+* Apartment Complex upgrades by X0.75 -> X1 Mult and is Rare -> Uncommon
+* Word Search upgrades by +1 -> +2 Mult
+* Siphon upgrades by +8 -> +20 Chips
+* Water Bottle upgrades by +15 -> +30 Chips
+* Snake Eyes costs $6 -> $4
+* Preorder Bonus has been reworked: Earn half the cost of booster packs back when opening them
+* Preorder Bonus is now Blueprint Compatible
 
 ## Config Options
 A game restart is required for Config options to take effect.
