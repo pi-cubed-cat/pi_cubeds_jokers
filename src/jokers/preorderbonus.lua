@@ -13,7 +13,7 @@ SMODS.Joker { --Preorder Bonus
 	pos = { x = 5, y = 4 },
 	cost = 3,
 	discovered = true,
-	blueprint_compat = false,
+	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { discount = 0.5 } },
