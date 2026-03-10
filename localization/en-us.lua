@@ -1220,7 +1220,7 @@ return {
                     "Thanks franderman123 for Español (México) localization!",
                     " ",
                     "Thanks mellows, Eremel, AutumnMood, N', Riv_Falcon, Aikoyori, Bepis,",
-                    "Somethingcom515, SleepyG11, jmibo, and lily.felli for development help!",
+                    "Somethingcom515, SleepyG11, jmibo, and ophelia for development help!",
                     " ",
                     "Thanks ABuffZucchini and SDM_0 for gameplay balance help!",
                     " ",
