@@ -40,4 +40,15 @@ SMODS.Joker { --Preorder Bonus
 	end
 }
 
--- relies on additional functions present in lovely/preorderbonus.toml
+local set_cost_ref = Card.set_cost
+Card.set_cost = function(self)
+    set_cost_ref(self)
+    if self.ability.set == 'Booster' and self.cost > 0
+	and next(SMODS.find_card('j_picubed_preorderbonus')) then
+        local preorder_bonus_discount = 1
+		for k, v in pairs(SMODS.find_card('j_picubed_preorderbonus')) do
+			preorder_bonus_discount = preorder_bonus_discount * v.ability.extra.discount
+		end
+		self.cost = math.max(1, math.floor(self.cost*preorder_bonus_discount))
+    end
+end

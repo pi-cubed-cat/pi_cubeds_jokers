@@ -69,7 +69,7 @@ end
 if next(SMODS.find_mod("Cryptid")) then
     assert(SMODS.load_file("crossmod/cryptid.lua"))()
 end
-if next(SMODS.find_mod("Cryptid")) and next(SMODS.find_mod("MoreFluff")) then
+if next(SMODS.find_mod("MoreFluff")) then
     assert(SMODS.load_file("crossmod/mrsjankman.lua"))()
 end
 if Partner_API then

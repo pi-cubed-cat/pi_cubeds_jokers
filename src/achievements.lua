@@ -91,7 +91,8 @@ local rhythm_heaven_list = {
     'j_picubed_monkeyseemonkeydo', -- Monkey See, Monkey Do
     'j_rh_', -- All Balatro Hevven Jokers
     'j_mxms_sneaky_spirit', -- Sneaky Spirit (Maximus)
-    'j_qualatro_together_now' -- Together Now! (Qualatro)
+    'j_qualatro_together_now', -- Together Now! (Qualatro)
+    'j_zero_dazzles', -- The Dazzles (0 ERROR)
 }
 
 SMODS.Achievement { -- Balatro Theme Custom Remix

@@ -547,7 +547,7 @@ return {
             j_picubed_supergreedyjoker = {
                 name = 'Super Greedy Joker',
                 text = {
-                   "Create a random {C:attention}Editioned {}Joker",
+                   "Create a random {C:dark_edition}Editioned{} Joker",
                    "when a {C:diamonds}Diamond {}card scores",
                    "{C:inactive}(Must have room?)"
                 }
@@ -598,7 +598,7 @@ return {
                    "{C:green}#1# in #2#{} chance for {X:mult,C:white}X#3#{} Mult,",
                    "gives a {C:attention}cue{} if this Joker",
                    "will activate for played hand",
-                   "{C:inactive}Currently #4#{}"
+                   "{C:inactive}(Currently #4#){}"
                 }
             },
             j_picubed_supergluttonousjoker = {
