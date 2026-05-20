@@ -18,6 +18,7 @@ SMODS.Joker { --Joker Circuit
 	blueprint_compat = true,
     perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'tag', 'economy', 'hand_type', 'hands' },
 	loc_vars = function(self, info_queue, card)
 	    info_queue[#info_queue + 1] = { key = "speedtag_tooltip", set = "Other", vars = { G.GAME.skips*5 or 0 } }
         return { vars = { card.ability.extra.count_max, card.ability.extra.count_current } }
@@ -49,7 +50,7 @@ SMODS.Joker { --Joker Circuit
 	end
 }
 
-SMODS.Tag { -- Speed Tag (special version for Joker Circuit - waits to activate if G.GAME.skips == 0, and otherwise activates *immediately* and )
+SMODS.Tag { -- Speed Tag (special version for Joker Circuit - waits to activate if G.GAME.skips == 0, and otherwise activates *immediately*)
     key = "jokercircuitskip",
     pos = { x = 0, y = 3 },
     config = { skip_bonus = 5 },

@@ -20,6 +20,7 @@ SMODS.Joker { --Inkjet Printer
     perishable_compat = true,
     eternal_compat = false,
     config = { extra = { copy_odds = 2, destroy_odds = 4, copied = {} } },
+    attributes = { 'generation', 'copying', 'chance' },
     loc_vars = function(self, info_queue, card)
         local numerator_copy, denominator_copy = SMODS.get_probability_vars(card, 1, card.ability.extra.copy_odds, 'picubed_inkjetprinter_copy')
         local numerator_destroy, denominator_destroy = SMODS.get_probability_vars(card, 1, card.ability.extra.destroy_odds, 'picubed_inkjetprinter_destroy')

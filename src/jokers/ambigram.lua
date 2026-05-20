@@ -18,6 +18,7 @@ SMODS.Joker { --Ambigram
     blueprint_compat = false,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'modify_card', 'passive', 'two', 'five', 'six', 'nine' },
 }
 
 local use_and_sell_buttonsref = G.UIDEF.use_and_sell_buttons -- code based from Lobotomy Corporation's use_and_sell_buttons hook

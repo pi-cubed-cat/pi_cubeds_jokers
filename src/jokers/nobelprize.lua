@@ -20,6 +20,7 @@ SMODS.Joker { --Nobel Prize
 	blueprint_compat = false,
     perishable_compat = true,
 	eternal_compat = false,
+    attributes = { 'spectral', 'hand_type' },
     in_pool = function(self, args) --only shows up if there is a remaining poker hand with no plays
 		for kk, vv in pairs(G.GAME.hands) do
             if G.GAME.hands[kk].played <= 0 then

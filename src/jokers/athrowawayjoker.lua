@@ -19,6 +19,7 @@ SMODS.Joker { --A Throwaway Joker
     perishable_compat = false,
 	eternal_compat = true,
 	config = { extra = { chips = 0 } },
+	attributes = { 'chips', 'scaling', 'hand_type' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips } }
 	end,

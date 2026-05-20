@@ -15,6 +15,7 @@ SMODS.Joker { --Molten Joker
 	cost = 5,
 	discovered = true,
 	blueprint_compat = true,
+	attributes = { 'enhancements', 'retrigger' },
 	in_pool = function(self, args)
 		for kk, vv in pairs(G.playing_cards or {}) do
 			if SMODS.has_enhancement(vv, 'm_gold') or SMODS.has_enhancement(vv, 'm_steel') 

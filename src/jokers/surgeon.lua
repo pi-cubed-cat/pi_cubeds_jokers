@@ -18,6 +18,7 @@ SMODS.Joker { --Surgeon
 	blueprint_compat = false,
     perishable_compat = false,
 	eternal_compat = true,
+	attributes = { 'hand_size', 'rank', 'six', 'scaling' },
 	loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.hand_increase_mod, card.ability.extra.hand_increase } }
 	end,

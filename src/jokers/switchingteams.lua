@@ -15,8 +15,9 @@ SMODS.Joker { --Switching Teams
 	blueprint_compat = true,
     perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'swap' },
 	calculate = function(self, card, context)
-        if context.before and context.main_eval then
+        if context.initial_scoring_step then
 			local old_chips = hand_chips
 			local old_mult = mult
 			hand_chips = old_mult
@@ -26,12 +27,5 @@ SMODS.Joker { --Switching Teams
                 colour = G.C.TAROT,
             }
 		end
-		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 2 then
-            if SMODS.pseudorandom_probability(card, 'picubed_bigtwo', 1, card.ability.extra.odds) then
-                return {
-                    xmult = card.ability.extra.Xmult
-                }
-            end
-        end
 	end
 }

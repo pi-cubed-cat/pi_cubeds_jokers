@@ -18,6 +18,8 @@ SMODS.Joker { --Chicken Joker!
 	blueprint_compat = false,
 	perishable_compat = true,
 	eternal_compat = true,
+	pools = { ["Meme"] = true },
+	attributes = { 'minecraft', 'generation', 'joker_slot', 'enhancements', 'joker' },
 	loc_vars = function(self, info_queue, card)
 		picubed_stonelike_infoqueue(info_queue)
 		info_queue[#info_queue+1] = G.P_CENTERS.m_steel

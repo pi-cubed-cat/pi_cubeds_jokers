@@ -23,6 +23,7 @@ SMODS.Joker { --Incomplete Survey
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { money = 5 } },
+    attributes = { 'economy', 'modify_card' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.money } }
     end,

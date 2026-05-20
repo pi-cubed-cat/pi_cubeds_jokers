@@ -19,6 +19,7 @@ SMODS.Joker { --Water Bottle
 	eternal_compat = true,
 	config = { extra = { chips_mod = 15, chips = 0} },
 	pools = { ["Food"] = true },
+	attributes = { 'food', 'chips', 'scaling', 'reset', 'boss_blind' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
 	end,

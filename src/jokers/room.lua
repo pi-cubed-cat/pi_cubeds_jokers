@@ -15,6 +15,7 @@ SMODS.Joker { --Room (idea by many people)
     blueprint_compat = false,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'passive' },
     add_to_deck = function(self, card, from_debuff)
         G.GAME.joker_buffer = G.GAME.joker_buffer - 100
         G.GAME.consumeable_buffer = G.GAME.consumeable_buffer - 100

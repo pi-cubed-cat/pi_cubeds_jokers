@@ -17,6 +17,7 @@ SMODS.Joker { --FastPass
     blueprint_compat = false,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'full_deck', 'seal' },
 }
 
 local shuffle_ref = CardArea.shuffle -- code from Creased marking (Lucky Rabbit)

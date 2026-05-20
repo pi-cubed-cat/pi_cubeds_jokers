@@ -18,6 +18,7 @@ SMODS.Joker { --Jokin' Hood
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'face', 'economy' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.num_money, card.ability.extra.face_money } }
     end,

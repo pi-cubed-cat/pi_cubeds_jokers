@@ -18,6 +18,8 @@ SMODS.Joker { --Hierarchy
 	blueprint_compat = true,
     perishable_compat = true,
 	eternal_compat = true,
+	pools = { ["Meme"] = true },
+	attributes = { 'xmult', 'rank', 'king' },
 	loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult } }
 	end,

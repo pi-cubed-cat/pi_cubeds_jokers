@@ -24,8 +24,9 @@ SMODS.Joker { --Off the Hook
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { h_plays = 2 } },
+	attributes = { 'hands', 'discard', 'enhancements', 'splatoon' },
 	loc_vars = function(self, info_queue, card)
-			return { vars = { card.ability.extra.h_plays } }
+		return { vars = { card.ability.extra.h_plays } }
 	end,
 	calculate = function(self, card, context)
 		if context.setting_blind then

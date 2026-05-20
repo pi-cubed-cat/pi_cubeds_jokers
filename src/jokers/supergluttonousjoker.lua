@@ -17,6 +17,7 @@ SMODS.Joker { --Super Gluttonous Joker
 	blueprint_compat = false,
 	perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'passive', 'suit', 'clubs' },
 	calculate = function(self, card, context)
 		if (context.first_hand_drawn or context.hand_drawn) and not context.blueprint and not context.joker_retrigger then
 			local club_count = 0

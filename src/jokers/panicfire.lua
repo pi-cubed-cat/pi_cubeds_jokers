@@ -25,6 +25,7 @@ SMODS.Joker { --Panic Fire
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { Xmult = 3, is_active = false, count_max = 3, count_current = 3 } },
+	attributes = { 'xmult', 'scaling', 'on_sell', 'reset', 'splatoon' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { 
             card.ability.extra.Xmult, 

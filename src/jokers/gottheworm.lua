@@ -17,6 +17,7 @@ SMODS.Joker { --Got the Worm
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { money = 15 } },
+    attributes = { 'skip', 'economy' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.money } }
     end,

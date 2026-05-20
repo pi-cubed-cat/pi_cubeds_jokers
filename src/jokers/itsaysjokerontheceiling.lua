@@ -14,6 +14,7 @@ SMODS.Joker { --It Says "Joker" on the Ceiling
 	cost = 5,
 	discovered = true,
 	blueprint_compat = true,
+	attributes = { 'mult', 'chips' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips_ceil, card.ability.extra.mult_ceil } }
 	end,

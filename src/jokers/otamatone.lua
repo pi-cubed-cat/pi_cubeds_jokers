@@ -20,7 +20,9 @@ SMODS.Joker { --Otamatone
 	blueprint_compat = true,
     perishable_compat = true,
 	eternal_compat = true,
+    pools = { ["Meme"] = true },
 	config = { extra = { chips_min = 0, chips_max = 153 } },
+    attributes = { 'chips' },
 	loc_vars = function(self, info_queue, card)
         local r_chips = {}
         for i = card.ability.extra.chips_min, card.ability.extra.chips_max do

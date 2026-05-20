@@ -16,6 +16,7 @@ SMODS.Joker { --Weighted Die
 	blueprint_compat = false,
     perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'passive' },
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS.c_wheel_of_fortune
 		return { vars = { card.ability.max_highlighted } }

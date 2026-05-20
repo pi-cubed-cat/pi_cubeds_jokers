@@ -19,6 +19,7 @@ SMODS.Joker { --Tyre Dumpyard
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { mult = 5 } },
+	attributes = { 'generation', 'boss_blind' },
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS.c_wheel_of_fortune
 		return { vars = { card.ability.max_highlighted } }

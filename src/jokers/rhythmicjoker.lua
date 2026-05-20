@@ -22,6 +22,7 @@ SMODS.Joker { --Rhythmic Joker
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { mult = 12 } },
+    attributes = { 'hands', 'mult', 'rhythm_heaven' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult } }
     end,

@@ -18,6 +18,7 @@ SMODS.Edition {
 	extra_cost = 4,
 	sound = { sound = "polychrome1", per = 1.1, vol = 0.7 },
     config = { triggered = false },
+    discovered = true,
 	get_weight = function(self)
 		return G.GAME.edition_rate * self.weight
 	end,

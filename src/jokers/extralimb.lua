@@ -23,12 +23,10 @@ SMODS.Joker { --Extra Limb
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { card_limit = 1, mult_mod = 6 } },
+    attributes = { 'mult', 'passive' },
     loc_vars = function(self, info_queue, card)
-        if G.OVERLAY_MENU then
-            return { vars = { card.ability.extra.card_limit, card.ability.extra.mult_mod, 0 } }
-        else
-            return { vars = { card.ability.extra.card_limit, card.ability.extra.mult_mod, card.ability.extra.mult_mod * #G.consumeables.cards } }
-        end
+        local consumable_count = G.consumeables and G.consumeables.cards and #G.consumeables.cards or 0
+        return { vars = { card.ability.extra.card_limit, card.ability.extra.mult_mod, card.ability.extra.mult_mod * consumable_count } }
     end,
     --add & remove taken from Extra Credit's Forklift
     add_to_deck = function(self, card, from_debuff)

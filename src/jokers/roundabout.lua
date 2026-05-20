@@ -29,6 +29,7 @@ SMODS.Joker { --Round-a-bout
 	perishable_compat = false,
 	eternal_compat = true,
 	config = { extra = { mult = 1, mult_mod = 0.25 }},
+	attributes = { 'hand_type', 'scaling', 'xmult', 'passive' },
 	in_pool = function(self, args)
 		return can_do_pokerhand_changer_jokers()
 	end,

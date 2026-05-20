@@ -59,6 +59,7 @@ SMODS.Joker { --Monkey See, Monkey Do
 	blueprint_compat = true,
     perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'rank', 'mult', 'rhythm_heaven' },
     loc_vars = function(self, info_queue, card)
         return { vars = { localize((G.GAME.current_round.picubed_monkeysee or {}).rank or 'King', 'ranks'), localize((G.GAME.current_round.picubed_monkeydo or {}).rank or 'Ace', 'ranks'), card.ability.extra.mult } }
     end,

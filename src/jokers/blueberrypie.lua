@@ -20,6 +20,7 @@ SMODS.Joker { --Blueberry Pie
 	eternal_compat = false,
     pools = { ["Food"] = true },
 	config = { extra = { rounds = 5 } },
+    attributes = { 'copying', 'food' },
     update = function(self, card, dt)
 		if G.GAME and card.ability then
 			if card.ability.extra.rounds == 5 then

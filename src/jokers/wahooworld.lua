@@ -33,6 +33,7 @@ SMODS.Joker { --Wahoo World
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'suit', 'mult', 'chips', 'boss_blind', 'splatoon' },
     loc_vars = function(self, info_queue, card)
         local suit = (G.GAME.current_round.wahoo_world_card or {}).suit or 'Spades'
 		return { vars = { localize(suit, 'suits_singular'), card.ability.extra.chips, card.ability.extra.mult,  colours = { G.C.SUITS[suit] } } 

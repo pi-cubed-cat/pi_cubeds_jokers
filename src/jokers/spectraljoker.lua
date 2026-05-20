@@ -19,6 +19,7 @@ SMODS.Joker { --Spectral Joker
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { triggered = false } },
+    attributes = { 'spectral', 'generation', 'boss_blind' },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.p_spectral_mega
         return {

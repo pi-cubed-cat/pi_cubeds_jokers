@@ -18,7 +18,7 @@ SMODS.Joker { --Super Greedy Joker
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	--config = { extra = { num = 4, num_remaining = 4 } },
+	attributes = { 'joker', 'generation', 'edition', 'suit', 'diamonds' },
 	calculate = function(self, card, context)
 		if context.end_of_round or context.before then
 			picubeds_supergreedyjoker_emptyslots = G.jokers.config.card_limit - #G.jokers.cards

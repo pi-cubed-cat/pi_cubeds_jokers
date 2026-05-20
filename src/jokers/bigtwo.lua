@@ -17,6 +17,7 @@ SMODS.Joker { --Big Two
 	cost = 8,
 	discovered = true,
 	blueprint_compat = true,
+	attributes = { 'xmult', 'rank', 'two', 'chance' },
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_bigtwo')
 		return { vars = { card.ability.extra.Xmult, 

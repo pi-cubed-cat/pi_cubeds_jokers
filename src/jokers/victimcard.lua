@@ -21,6 +21,8 @@ SMODS.Joker { --Victim Card
 	perishable_compat = false,
 	eternal_compat = false,
 	config = { extra = { Xmult_mod = 0.2, Xmult_cap = 4, Xmult = 2 } },
+	pools = { ["Meme"] = true },
+	attributes = { 'xmult', 'scaling' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult_cap, card.ability.extra.Xmult } }
 	end,

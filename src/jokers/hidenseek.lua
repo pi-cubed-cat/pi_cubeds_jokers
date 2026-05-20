@@ -58,6 +58,7 @@ SMODS.Joker { --Hide 'n Seek
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'rank', 'economy', 'planet', 'generation' },
     loc_vars = function(self, info_queue, card)
 		local unsearched_ranks = picubed_get_unsearched_ranks()
         if #unsearched_ranks > 0 and next(SMODS.find_card('j_picubed_hidenseek')) then

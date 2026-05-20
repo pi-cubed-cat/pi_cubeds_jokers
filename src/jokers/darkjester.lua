@@ -20,6 +20,7 @@ SMODS.Joker { --Dark Jester
     blueprint_compat = true,
     perishable_compat = false,
     eternal_compat = true,
+    attributes = { 'mult', 'scaling', 'reset', 'suit', 'hearts', 'diamonds', 'spades', 'clubs' },
     loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult_mod, card.ability.extra.mult } }
 	end,

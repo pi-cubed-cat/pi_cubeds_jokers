@@ -18,6 +18,7 @@ SMODS.Joker { --Wee Mini
 	blueprint_compat = false,
 	perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'rank', 'two', 'hand_type', 'passive' },
 	in_pool = function(self, args)
 		return can_do_pokerhand_changer_jokers()
 	end,

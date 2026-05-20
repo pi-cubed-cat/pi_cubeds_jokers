@@ -15,6 +15,7 @@ SMODS.Joker { --D2
 	cost = 4,
 	discovered = true,
 	blueprint_compat = true,
+	attributes = { 'mult', 'chance' },
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_d2')
 		return { vars = { card.ability.extra.mult, 

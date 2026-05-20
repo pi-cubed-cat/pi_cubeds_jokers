@@ -19,6 +19,7 @@ SMODS.Joker { --7 8 9
     blueprint_compat = true,
     perishable_compat = false,
     eternal_compat = true,
+    attributes = { 'xmult', 'scaling', 'rank', 'destroy_card', 'seven', 'nine' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult} }
     end,

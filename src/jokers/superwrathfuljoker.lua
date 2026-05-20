@@ -18,6 +18,7 @@ SMODS.Joker { --Super Wrathful Joker
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { max_cards = 4 } },
+    attributes = { 'rank', 'king', 'modify_card', 'suit', 'spades' },
     loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.max_cards } }
 	end,

@@ -57,6 +57,7 @@ if picubed_config.editions then
 end
 assert(SMODS.load_file("src/stickers.lua"))()
 assert(SMODS.load_file("src/achievements.lua"))()
+assert(SMODS.load_file("src/attributes.lua"))()
 
 -- load crossmod files
 if CardSleeves then

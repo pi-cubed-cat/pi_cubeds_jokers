@@ -17,6 +17,7 @@ SMODS.Joker { --Table Expected, got nil
 	blueprint_compat = true,
     perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'xmult', 'passive' },
 	loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult } }
 	end,

@@ -19,6 +19,7 @@ SMODS.Joker { --Hidden Gem
     blueprint_compat = false,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'generation', 'discard', 'spectral', 'destroy_card', 'chance' },
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_hiddengem')
         return { vars = { numerator, denominator } }

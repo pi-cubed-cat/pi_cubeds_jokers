@@ -17,6 +17,7 @@ SMODS.Joker { --Preorder Bonus
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { discount = 0.5 } },
+	attributes = { 'passive', 'economy' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.discount * 100 } }
 	end,

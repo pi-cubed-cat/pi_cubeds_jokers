@@ -16,6 +16,7 @@ SMODS.Joker { --Scarlet Forest
     blueprint_compat = false,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'mult', 'enhancements', 'modify_card' },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_mult
 	end,

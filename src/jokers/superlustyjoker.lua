@@ -18,6 +18,7 @@ SMODS.Joker { --Super Lusty Joker
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { repetitions = 1, odds = 2 } },
+	attributes = { 'chance', 'retrigger', 'suit', 'hearts' },
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_superlustyjoker')
 		return { vars = { card.ability.extra.repetitions, numerator, denominator } }

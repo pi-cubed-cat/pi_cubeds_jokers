@@ -19,6 +19,7 @@ SMODS.Joker { --Arrogant Joker
 	eternal_compat = true,
 	config = { extra = { Xmult = 2 } },
 	pools = { ["Meme"] = true },
+	attributes = { 'xmult', 'joker_slot' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult } }
 	end,

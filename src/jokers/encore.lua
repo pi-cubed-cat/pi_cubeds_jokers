@@ -19,6 +19,7 @@ SMODS.Joker { --Encore
     perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { money = 3 } },
+	attributes = { 'economy', 'boss_blind', 'hands' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }
 	end,

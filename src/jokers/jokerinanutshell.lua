@@ -20,11 +20,10 @@ SMODS.Joker { --Joker in a Nutshell
 	blueprint_compat = true,
     perishable_compat = false,
 	eternal_compat = true,
+    attributes = { 'xmult', 'scaling', 'destroy_card' },
 	loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult, card.ability.extra.Xmult_mod } }
 	end,
-
-	
 	calculate = function(self, card, context)
         if context.setting_blind and not context.blueprint and not context.retrigger_joker then
             local my_pos = nil

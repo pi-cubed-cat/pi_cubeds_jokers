@@ -17,6 +17,7 @@ SMODS.Joker { --Extra Pockets
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = {hand_increase_mod = 1, hand_increase = 0, hand_diff = 0} },
+    attributes = { 'hand_size', 'passive' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.hand_increase_mod } }
     end,

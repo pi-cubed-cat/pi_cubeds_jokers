@@ -20,6 +20,7 @@ SMODS.Joker { -- Mrs. Jankman (Cryptid & MoreFluff)
 	discovered = true,
 	blueprint_compat = true,
 	pools = { ["Meme"] = true },
+	attributes = { 'xchips', 'editions', 'joker' },
 	in_pool = function(self, args)
 		return (#find_joker("j_mf_jankman") > 0)
 	end,

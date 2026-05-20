@@ -18,6 +18,7 @@ SMODS.Joker { --Intermission
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'generation', 'hand_type', 'chance' },
     loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_d2')
 		return { vars = { numerator, denominator } }

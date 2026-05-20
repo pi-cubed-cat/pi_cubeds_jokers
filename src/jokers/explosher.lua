@@ -33,7 +33,8 @@ SMODS.Joker { --Explosher
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { num = 5 } },
- loc_vars = function(self, info_queue, card)
+    attributes = { 'modify_card', 'splatoon', 'suit' },
+    loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.num } }
     end,
     calculate = function(self, card, context)

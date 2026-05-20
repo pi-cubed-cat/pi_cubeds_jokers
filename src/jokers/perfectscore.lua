@@ -17,6 +17,7 @@ SMODS.Joker { --Perfect Score
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { chips = 100 } },
+    attributes = { 'chips', 'ten' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips } }
     end,

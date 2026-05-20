@@ -19,6 +19,7 @@ SMODS.Joker { --Translucent Joker
 	perishable_compat = true,
 	eternal_compat = false,
 	config = { extra = { rounds_total = 2, rounds = 0 } },
+	attributes = { 'generation', 'on_sell' },
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = { key = "invisiblejoker_tooltip", set = "Other" }
 		return { vars = { card.ability.extra.rounds_total, card.ability.extra.rounds } }

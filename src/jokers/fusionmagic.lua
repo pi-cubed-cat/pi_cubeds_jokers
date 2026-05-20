@@ -18,6 +18,7 @@ SMODS.Joker { --Fusion Magic
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { num = 4, num_remaining = 4 } },
+	attributes = { 'tarot', 'spectral', 'scaling', 'generation' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.num, card.ability.extra.num_remaining } }
 	end,

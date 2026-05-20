@@ -19,6 +19,7 @@ SMODS.Joker { --Siphon
     perishable_compat = false,
     eternal_compat = true,
     config = { extra = { chips_mod = 8, chips = 0 } },
+    attributes = { 'chips', 'scaling', 'on_sell', 'joker' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
     end,

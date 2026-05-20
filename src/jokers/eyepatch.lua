@@ -20,6 +20,7 @@ SMODS.Joker { --Eye Patch
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { Xmult = 1, Xmult_mod = 1/3, hand_list = {}, displ_list = {} } },
+	attributes = { 'xmult', 'scaling', 'reset', 'hand_type' },
 	loc_vars = function(self, info_queue, card)
 		if #card.ability.extra.displ_list > 0 then
             main_end = {

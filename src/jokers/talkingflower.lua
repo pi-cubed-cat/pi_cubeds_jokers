@@ -181,6 +181,7 @@ SMODS.Joker { --Talking Flower
 	discovered = true,
 	blueprint_compat = true,
 	pools = { ["Meme"] = true },
+	attributes = { 'mult', 'joker_slot' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.slots, card.ability.extra.mult } }
 	end,

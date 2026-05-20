@@ -19,7 +19,7 @@ SMODS.Joker { --Word Search
 	blueprint_compat = true,
 	perishable_compat = false,
 	eternal_compat = true,
-	
+	attributes = { 'scaling', 'mult', 'rank' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { 
 			localize((G.GAME.current_round.picubed_wordsearch_card or {}).rank or 'Ace', 'ranks'), card.ability.extra.mult_mod, card.ability.extra.mult 

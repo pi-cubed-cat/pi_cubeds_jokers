@@ -20,6 +20,7 @@ SMODS.Joker { --Snake Eyes
     perishable_compat = true,
     eternal_compat = false,
     pools = { ["Meme"] = true },
+    attributes = { 'on_sell', 'modify_card', 'joker', 'joker_slot' },
     calculate = function(self, card, context)
         if #G.jokers.cards ~= 1 and not context.blueprint and context.selling_self then
             local joker_left = joker_left or 0

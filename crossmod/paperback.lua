@@ -17,6 +17,7 @@ SMODS.Joker { --Hitting a Sick Clip
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'retrigger' },
     in_pool = function(self, args)
         for _, v in ipairs(G.playing_cards or {}) do
             if PB_UTIL.has_paperclip(v) then return true end

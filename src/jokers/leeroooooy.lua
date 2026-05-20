@@ -19,6 +19,7 @@ SMODS.Joker { --LEEROOOOOY
 	eternal_compat = true,
 	pools = { ["Meme"] = true },
 	config = { extra = { retriggers = 0 } },
+	attributes = { 'skip', 'retrigger', 'scaling', 'reset', 'boss_blind' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.retriggers } }
 	end,

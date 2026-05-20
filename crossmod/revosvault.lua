@@ -17,6 +17,7 @@ SMODS.Joker { -- Inkjet Printer Printer (Revo's Vault)
 	perishable_compat = true,
 	eternal_compat = true,
 	blueprint_compat = true,
+	attributes = { 'generation' },
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS.j_picubed_inkjetprinter
 		return { vars = { card.ability.max_highlighted } }

@@ -17,6 +17,7 @@ SMODS.Joker { --Boomerang
 	blueprint_compat = false,
     perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'passive', 'full_deck' },
 	calculate = function(self, card, context)
 		if context.after and not context.blueprint then -- makeshift jankshit context.scoring_hand but "global"
 			picubed_boomerang_scoring = {}

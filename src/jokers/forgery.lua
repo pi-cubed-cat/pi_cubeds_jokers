@@ -20,6 +20,7 @@ SMODS.Joker { --Forgery
 	perishable_compat = false,
 	eternal_compat = true,
 	config = { extra = { mult = 0 } },
+	attributes = { 'mult', 'chips', 'destroy_card', 'scaling' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
 	end,

@@ -19,6 +19,7 @@ SMODS.Joker { --Shopping Trolley
     eternal_compat = true,
     config = { extra = { odds = 4, hand_increase = 10, trolley_success = 0 } },
     pools = { ["Meme"] = true },
+    attributes = { 'chance', 'passive', 'hand_size' },
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 3, card.ability.extra.odds, 'picubed_shoppingtrolley')
         return { vars = { numerator, denominator, card.ability.extra.hand_increase} }

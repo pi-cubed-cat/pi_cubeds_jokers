@@ -24,6 +24,7 @@ SMODS.Joker { --Frosting
     perishable_compat = true,
     eternal_compat = false,
     pools = { ["Food"] = true },
+    attributes = { 'editions', 'chance', 'food', 'reroll', 'passive' },
     loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_d2')
 		return { vars = { numerator, denominator } }

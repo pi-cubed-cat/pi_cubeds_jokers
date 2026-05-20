@@ -17,6 +17,8 @@ SMODS.Joker { --Hype Moments
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
+	pools = { ["Meme"] = true },
+	attributes = { 'generation', 'spectral', 'boss_blind' },
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS.c_aura
 		return { vars = { card.ability.max_highlighted } }

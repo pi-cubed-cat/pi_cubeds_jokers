@@ -18,6 +18,7 @@ SMODS.Joker { --Trade-in
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { money = 5 } },
+    attributes = { 'economy' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.money } }
     end,

@@ -19,6 +19,7 @@ SMODS.Joker { --Satanist
 	blueprint_compat = true,
     perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'rank', 'six', 'hand_type', 'tarot', 'generation' },
 	loc_vars = function(self, info_queue, card)
 	    info_queue[#info_queue + 1] = G.P_CENTERS.c_devil
 		return { vars = { card.ability.max_highlighted } }

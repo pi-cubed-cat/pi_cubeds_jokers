@@ -24,6 +24,7 @@ SMODS.Joker { --Polyrhythm
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { money = 3, money_req = 3, tarot_req = 4, money_count = 3, tarot_count = 4 } },
+	attributes = { 'economy', 'generation', 'tarot', 'scaling', 'rhythm_heaven' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money, card.ability.extra.money_req, card.ability.extra.tarot_req,card.ability.extra.money_count, card.ability.extra.tarot_count } }
 	end,

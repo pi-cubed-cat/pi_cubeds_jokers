@@ -19,11 +19,12 @@ SMODS.Joker { --Golden Pancakes
 	perishable_compat = true,
 	eternal_compat = false,
 	config = { extra = { money = 1, odds = 6 } },
+	pools = { ["Food"] = true },
+	attributes = { 'food', 'chance', 'economy' },
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_goldenpancakes')
 		return { vars = { card.ability.extra.money, numerator, denominator } }
 	end,
-	pools = { ["Food"] = true },
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play then
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money

@@ -22,6 +22,7 @@ SMODS.Joker { --Acorn Tree
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }
 	end,
+	attributes = { 'economy', 'joker', 'joker_slot', 'modify_card' },
 	calculate = function(self, card, context)
 		if context.setting_blind and not context.blueprint then
 			G.E_MANAGER:add_event(Event({ trigger = 'after', delay = 0.2, func = function() 

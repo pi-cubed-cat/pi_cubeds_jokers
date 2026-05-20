@@ -18,6 +18,7 @@ SMODS.Joker { --Upgraded Joker
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'enhancements', 'mult', 'chips' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
     end,

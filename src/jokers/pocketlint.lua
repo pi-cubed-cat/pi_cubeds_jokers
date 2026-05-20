@@ -18,6 +18,7 @@ SMODS.Joker { --Pocket Lint
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'discard', 'hand_type' },
     loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.discards_mod } }
 	end,

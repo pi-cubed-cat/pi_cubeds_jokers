@@ -20,6 +20,7 @@ SMODS.Joker { --Prime 7
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { is_active = true } },
+    attributes = { 'rank', 'seven', 'editions', 'modify_card' },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = {key = 'e_negative_playing_card', set = 'Edition', config = {extra = G.P_CENTERS['e_negative'].config.card_limit} }
         return {

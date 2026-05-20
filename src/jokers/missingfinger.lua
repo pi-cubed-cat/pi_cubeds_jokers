@@ -18,6 +18,7 @@ SMODS.Joker { --Missing Finger
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { Xmult = 3, select_mod = -1 } },
+	attributes = { 'xmult', 'passive' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult, card.ability.extra.select_mod } }
 	end,

@@ -24,6 +24,8 @@ SMODS.Joker { --Illusion of Choice
     blueprint_compat = false,
     perishable_compat = true,
     eternal_compat = true,
+    pools = { ["Meme"] = true },
+    attributes = { 'passive' },
     loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.choices } }
 	end,

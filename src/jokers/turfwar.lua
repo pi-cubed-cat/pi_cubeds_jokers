@@ -30,6 +30,7 @@ SMODS.Joker { --Turf War
 	blueprint_compat = true,
     perishable_compat = false,
 	eternal_compat = true,
+	attributes = { 'xmult', 'scaling', 'suit', 'boss_blind', 'splatoon' },
 	loc_vars = function(self, info_queue, card)
 		local suit = (G.GAME.current_round.picubed_turfwar or {}).suit or 'Spades'
 		return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.num_card, card.ability.extra.Xmult, localize(suit, 'suits_singular'), colours = { G.C.SUITS[suit] } } 

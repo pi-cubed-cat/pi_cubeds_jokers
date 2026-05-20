@@ -19,6 +19,7 @@ SMODS.Joker { --Psychic Spirit
     perishable_compat = true,
 	eternal_compat = false,
     pools = { ["Food"] = true },
+    attributes = { 'hands', 'scaling', 'food' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.hands, card.ability.extra.hands_mod, card.ability.extra.req_cards } 
 		}

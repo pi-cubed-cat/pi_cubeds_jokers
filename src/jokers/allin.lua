@@ -25,6 +25,7 @@ SMODS.Joker { --All In
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { repetitions = 2, other_repetitions = 1, face_down_cards = {} } },
+    attributes = { 'retrigger', 'joker' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.repetitions, card.ability.extra.other_repetitions } }
     end,

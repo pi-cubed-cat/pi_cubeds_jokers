@@ -22,6 +22,7 @@ SMODS.Joker { --Advanced Skipping
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.add_tags, card.ability.extra.add_tags_mod} }
     end,
+    attributes = { 'generation', 'scaling', 'skip' },
     calculate = function(self, card, context)
         if context.skip_blind then
             local tag_pool = get_current_pool('Tag')

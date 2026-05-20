@@ -18,6 +18,7 @@ SMODS.Joker { --Echolocation
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { odds = 5, hand_increase = 2 } },
+    attributes = { 'hand_size', 'chance', 'modify_card' },
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_echolocation')
         return { vars = { numerator, denominator, card.ability.extra.hand_increase} }

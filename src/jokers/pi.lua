@@ -19,6 +19,7 @@ SMODS.Joker { --Pi
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { Xmult = 3.14, odds = 3 } },
+	attributes = { 'xmult', 'edition', 'chance' },
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_pi')
 		return { vars = { 

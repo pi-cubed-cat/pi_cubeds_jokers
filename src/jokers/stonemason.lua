@@ -23,6 +23,7 @@ SMODS.Joker { --Stonemason
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'enhancements', 'modify_card', 'chance', 'xmult', 'destroy_card' },
     in_pool = function(self, args)
 		for kk, vv in pairs(G.playing_cards or {}) do
 			if picubed_is_stonelike(vv) then

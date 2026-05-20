@@ -43,6 +43,7 @@ SMODS.Joker { --Sprinkler
 	cost = 4,
 	discovered = true,
 	blueprint_compat = true,
+    attributes = { 'splatoon', 'discard', 'modify_card', 'full_deck' },
 	loc_vars = function(self, info_queue, card)
         reset_j_picubed_sprinker_card()
         local suit = G.GAME.current_round.sprinkler_card or 'Spades'

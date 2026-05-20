@@ -25,6 +25,7 @@ SMODS.Joker { --Off-beat
 	eternal_compat = true,
 	in_pool = function(self, args) return false end,
 	config = { extra = { repetitions = 1, odds = 50, secret_art = false } },
+	attributes = { 'rhythm_heaven', 'retrigger', 'hands' },
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = {key = "onbeat_tooltip", set = 'Other'}
 		return { vars = { card.ability.max_highlighted } }

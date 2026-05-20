@@ -18,6 +18,7 @@ SMODS.Joker { --Mount Joker
 	blueprint_compat = false,
 	perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'enhancements', 'passive', 'hand_type' },
 	in_pool = function(self, args)
 		for kk, vv in pairs(G.playing_cards or {}) do
 			if picubed_is_stonelike(vv) then

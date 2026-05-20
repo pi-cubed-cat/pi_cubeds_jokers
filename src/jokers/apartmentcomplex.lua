@@ -27,6 +27,7 @@ SMODS.Joker { --Apartment Complex
         return false
     end,
     config = { extra = { Xmult_mod = 0.75, Xmult = 1 } },
+    attributes = { 'xmult', 'scaling', 'hand_type' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
     end,

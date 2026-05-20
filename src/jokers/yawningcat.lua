@@ -21,6 +21,7 @@ SMODS.Joker { --Yawning Cat
 	eternal_compat = true,
 	pools = { ["Cat"] = true },
 	config = { extra = { num = 3, retriggers = 2 } },
+	attributes = { 'retrigger' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.num, card.ability.extra.retriggers } }
 	end,

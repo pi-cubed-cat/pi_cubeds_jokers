@@ -17,6 +17,7 @@ SMODS.Joker { --Ace Comedian
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'retrigger', 'rank', 'eight', 'nine', 'ten', 'ace' },
     calculate = function(self, card, context)
         if context.cardarea == G.play and context.repetition and not context.repetition_only then
             if 

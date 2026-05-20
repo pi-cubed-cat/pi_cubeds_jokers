@@ -18,6 +18,7 @@ SMODS.Joker { --Bisexual Flag
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'hand_type', 'generation', 'tarot' },
     loc_vars = function(self, info_queue, card)
             info_queue[#info_queue + 1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
         return {

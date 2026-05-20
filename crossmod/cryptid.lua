@@ -72,6 +72,7 @@ SMODS.Joker { --XM (Cryptid)
             "{B:1,C:white}XM{}",
         }
     },
+	attributes = { 'retrigger', 'joker' },
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 10 },

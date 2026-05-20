@@ -17,6 +17,7 @@ SMODS.Joker { --Cyclone
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = false,
+	attributes = { 'seals', 'planet', 'generation', 'hand_type' },
 	calculate = function(self, card, context)
 		if context.cardarea == G.play then
 			if context.individual then

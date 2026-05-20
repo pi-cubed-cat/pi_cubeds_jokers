@@ -15,20 +15,21 @@ SMODS.Joker { --Ox Plow
 	pos = { x = 8, y = 5 },
 	cost = 4,
 	discovered = true,
-	blueprint_compat = true,
+	blueprint_compat = false,
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { money = 8, most_played = false } },
+	attributes = { 'hand_type', 'economy' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money,
 						localize { type = 'variable', key = ((card.ability.extra.most_played and 'k_picubeds_pot_inactive') or 'k_picubeds_pot_active'), vars = { card.ability.extra.most_played } },
 	} }
 	end,
 	calculate = function(self, card, context)
-		if context.setting_blind then
+		if context.setting_blind and not context.blueprint and not context.joker_retrigger then
 			card.ability.extra.most_played = false
 		end
-		if context.after then
+		if context.after and not context.blueprint and not context.joker_retrigger then
 			local is_most = true
 			local play_more_than = (G.GAME.hands[context.scoring_name].played or 0)
 			for k, v in pairs(G.GAME.hands) do

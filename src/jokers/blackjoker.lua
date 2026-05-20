@@ -18,6 +18,7 @@ SMODS.Joker { --Black Joker
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { cap = 21, money = 7 } },
+    attributes = { 'economy', 'hands', 'discard' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cap, card.ability.extra.money } }
     end,

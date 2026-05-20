@@ -17,6 +17,7 @@ SMODS.Joker { --Ooo! Shiny!
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
+    attributes = { 'editions', 'economy' },
     in_pool = function(self, args)
         for kk, vv in pairs(G.playing_cards or {}) do
             if vv.edition then

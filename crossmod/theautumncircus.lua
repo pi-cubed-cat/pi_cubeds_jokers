@@ -38,6 +38,7 @@ SMODS.Joker { -- Order Sector (Þe Autumn Circus)
 	cost = 7,
 	discovered = true,
 	blueprint_compat = true,
+	attributes = { 'xmult', 'scaling', 'suit', 'splatoon' },
 	in_pool = function(self, args)
 		return #G.graveyard > 1
 	end,
@@ -97,7 +98,7 @@ SMODS.Joker { -- Lucky Color Chip (Þe Autumn Circus)
 	cost = 6,
 	discovered = true,
 	blueprint_compat = true,
-	
+	attributes = { 'generation', 'suit', 'splatoon' },
 	calculate = function(self, card, context)
 		if context.joker_main and #G.hand.cards > 0 then
 			local all_same_suit = false

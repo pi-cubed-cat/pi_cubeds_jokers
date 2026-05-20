@@ -28,6 +28,7 @@ SMODS.Joker { --The Cube
 	blueprint_compat = true,
     perishable_compat = true,
 	eternal_compat = true,
+	attributes = { 'economy', 'rank', 'ace', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten' },
 	calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
         	local card_money = 0
