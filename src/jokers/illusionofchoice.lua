@@ -53,10 +53,10 @@ SMODS.Joker { --Illusion of Choice
                     end
                 end
             end
+            card.ability.extra.held_joker = false
         end
     end,
     calculate = function(self, card, context)
-        card.ability.extra.held_joker = false
         if context.open_booster and not context.blueprint and not context.joker_retrigger then
             card.ability.extra.held_joker = true
         end
