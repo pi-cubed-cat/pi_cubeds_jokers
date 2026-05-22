@@ -9,7 +9,7 @@ SMODS.Tag { -- Jolly Top-up Tag (Cryptid)
 	},
 	config = { extra = { spawn_jokers = 5 } },
 	atlas = "picubed_tags",
-	pos = { x = 0, y = 0 },
+	pos = { x = 1, y = 0 },
 	discovered = true,
 	min_ante = 2,
 	loc_vars = function(self, info_queue, card)
@@ -41,7 +41,7 @@ SMODS.Tag { -- gaT pu-poT ylloJ (Cryptid)
 	},
 	config = { extra = { spawn_jokers = 2 } },
 	atlas = "picubed_tags",
-	pos = { x = 1, y = 0 },
+	pos = { x = 2, y = 0 },
 	discovered = true,
 	min_ante = 2,
 	loc_vars = function(self, info_queue, card)
