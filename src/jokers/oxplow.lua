@@ -20,6 +20,7 @@ SMODS.Joker { --Ox Plow
 	eternal_compat = true,
 	config = { extra = { money = 8, most_played = false } },
 	attributes = { 'hand_type', 'economy' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money,
 						localize { type = 'variable', key = ((card.ability.extra.most_played and 'k_picubeds_pot_inactive') or 'k_picubeds_pot_active'), vars = { card.ability.extra.most_played } },
@@ -41,6 +42,11 @@ SMODS.Joker { --Ox Plow
 			if is_most then
 				card.ability.extra.most_played = true
 			end
+		end
+		if context.forcetrigger then
+			return {
+				dollars = card.ability.extra.money
+			}
 		end
 	end,
 	calc_dollar_bonus = function(self, card)

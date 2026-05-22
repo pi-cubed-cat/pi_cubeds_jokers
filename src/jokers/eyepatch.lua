@@ -21,6 +21,7 @@ SMODS.Joker { --Eye Patch
 	eternal_compat = true,
 	config = { extra = { Xmult = 1, Xmult_mod = 1/3, hand_list = {}, displ_list = {} } },
 	attributes = { 'xmult', 'scaling', 'reset', 'hand_type' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		if #card.ability.extra.displ_list > 0 then
             main_end = {
@@ -64,14 +65,22 @@ SMODS.Joker { --Eye Patch
 		if context.before and context.main_eval and not context.blueprint and not context.retrigger_joker then
             if card.ability.extra.hand_list[context.scoring_name] == false then
                 card.ability.extra.hand_list[context.scoring_name] = true
-                card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
                 return {
-                    message = localize('k_upgrade_ex'),
-                    card = card
+                    card = card,
+					func = function()
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "Xmult",
+                            scalar_value = "Xmult_mod",
+                            scaling_message = {
+                                message = localize('k_upgrade_ex'),
+                            }
+                        })
+                    end
                 }
             end
 		end
-		if context.joker_main then
+		if context.joker_main or context.forcetrigger then
             return {
                 xmult = card.ability.extra.Xmult
             }
@@ -82,12 +91,22 @@ SMODS.Joker { --Eye Patch
 				card.ability.extra.hand_list[v] = false
 			end
 
-			card.ability.extra.Xmult = 1
+			local reset_xmult = -card.ability.extra.Xmult + 1
 			return {
-                card = card,
-                message = localize('k_reset'),
-                colour = G.C.RED
-			}
+				card = card,
+				func = function()
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "Xmult",
+						scalar_table = { reset_xmult },
+						scalar_value = 1,
+						scaling_message = {
+							message = localize('k_reset'),
+							colour = G.C.RED
+						}
+					})
+				end
+			} 
 		end
 	end
 }

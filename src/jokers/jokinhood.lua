@@ -19,6 +19,7 @@ SMODS.Joker { --Jokin' Hood
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'face', 'economy' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.num_money, card.ability.extra.face_money } }
     end,
@@ -51,6 +52,11 @@ SMODS.Joker { --Jokin' Hood
                     end
                 }
             end
+        end
+        if context.forcetrigger then
+            return {
+                dollars = card.ability.extra.num_money,
+            }
         end
     end
 }

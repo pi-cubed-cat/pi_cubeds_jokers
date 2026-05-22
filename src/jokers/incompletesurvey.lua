@@ -24,11 +24,13 @@ SMODS.Joker { --Incomplete Survey
     eternal_compat = true,
     config = { extra = { money = 5 } },
     attributes = { 'economy', 'modify_card' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.money } }
     end,
     calculate = function(self, card, context)
-        if context.first_hand_drawn == true and not context.blueprint then
+        if (context.first_hand_drawn == true and not context.blueprint) 
+        or context.forcetrigger then
             return {
                     dollars = card.ability.extra.money,
                     card = card

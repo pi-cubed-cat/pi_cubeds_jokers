@@ -25,18 +25,37 @@ SMODS.Joker { --LEEROOOOOY
 	end,
 	calculate = function(self, card, context)
         if context.skip_blind and not context.blueprint and not context.retrigger_joker then
-			card.ability.extra.retriggers = card.ability.extra.retriggers + 1
             return {
-                message = localize('k_upgrade_ex')
-            }
+				func = function()
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "retriggers",
+						scalar_table = { 1 },
+						scalar_value = 1,
+						scaling_message = {
+							message = localize('k_upgrade_ex'),
+						}
+					})
+				end
+			} 
 		end
 		if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
             if context.beat_boss and card.ability.extra.retriggers ~= 0 then
-                card.ability.extra.retriggers = 0
-                return {
-                    message = localize('k_reset'),
-                    colour = G.C.RED
-                }
+                local retriggers = card.ability.extra.retriggers
+				return {
+					func = function()
+						SMODS.scale_card(card, {
+							ref_table = card.ability.extra,
+							ref_value = "retriggers",
+							scalar_table = { -retriggers },
+							scalar_value = 1,
+							scaling_message = {
+								message = localize('k_reset'),
+								colour = G.C.RED
+							}
+						})
+					end
+				} 
             end
         end
 		if context.repetition and context.cardarea == G.play and card.ability.extra.retriggers >= 1 then

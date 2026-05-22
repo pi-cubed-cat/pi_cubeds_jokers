@@ -20,6 +20,7 @@ SMODS.Joker { --7 8 9
     perishable_compat = false,
     eternal_compat = true,
     attributes = { 'xmult', 'scaling', 'rank', 'destroy_card', 'seven', 'nine' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult} }
     end,
@@ -34,16 +35,25 @@ SMODS.Joker { --7 8 9
             if has_7 == true then
                 if context.other_card:get_id() == 9 and not context.blueprint and not context.retrigger_joker
                 and not context.other_card.debuff then
-                    card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
                     return {
-                        message = localize('k_upgrade_ex'),
-                        colour = G.C.MULT,
-                        card = card
+                        card = card,
+                        func = function()
+                            SMODS.scale_card(card, {
+                                ref_table = card.ability.extra,
+                                ref_value = "Xmult",
+                                scalar_value = "Xmult_mod",
+                                scaling_message = {
+                                    message = localize('k_upgrade_ex'),
+                                    colour = G.C.MULT
+                                }
+                            })
+                        end
                     }
                 end
             end
         end
-        if context.joker_main and card.ability.extra.Xmult > 1 then
+        if (context.joker_main and card.ability.extra.Xmult > 1)
+        or context.forcetrigger then
             return {
                 message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
                 Xmult_mod = card.ability.extra.Xmult, 

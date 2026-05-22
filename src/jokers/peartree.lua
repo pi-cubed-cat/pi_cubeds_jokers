@@ -19,6 +19,7 @@ SMODS.Joker { --Pear Tree
     eternal_compat = true,
     config = { extra = { mult = 15 } },
     attributes = { 'mult', 'hand_type' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult } }
     end,
@@ -43,6 +44,11 @@ SMODS.Joker { --Pear Tree
                     end
                 end
             end
-        end        
+        end
+        if context.forcetrigger then
+            return {
+                mult = card.ability.extra.mult,
+            }
+        end
     end
 }

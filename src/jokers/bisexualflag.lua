@@ -19,6 +19,7 @@ SMODS.Joker { --Bisexual Flag
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'hand_type', 'generation', 'tarot' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
             info_queue[#info_queue + 1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
         return {
@@ -81,8 +82,26 @@ SMODS.Joker { --Bisexual Flag
                             return true
                         end
                     )}))
-                    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_pride"), colour = G.C.PURPLE})
+                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_picubeds_pride"), colour = G.C.PURPLE})
                 end
+            end
+        end
+        if context.forcetrigger then
+            for i=1,card.ability.extra.tarots do
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'before',
+                    delay = 0.0,
+                    func = (function()
+                        local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
+                        card:set_edition('e_negative', true)
+                        card:add_to_deck()
+                        G.consumeables:emplace(card)
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                )}))
+                card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_pride"), colour = G.C.PURPLE})
             end
         end
     end

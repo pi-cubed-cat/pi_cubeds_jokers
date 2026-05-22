@@ -18,6 +18,7 @@ SMODS.Joker { --Cyclone
 	perishable_compat = true,
 	eternal_compat = false,
 	attributes = { 'seals', 'planet', 'generation', 'hand_type' },
+	demicoloncompat = true,
 	calculate = function(self, card, context)
 		if context.cardarea == G.play then
 			if context.individual then
@@ -43,6 +44,23 @@ SMODS.Joker { --Cyclone
 					end
 				end
 			end
+		end
+		if context.forcetrigger then
+			local _planet = nil
+			for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+				if v.config.hand_type == G.GAME.last_hand_played then
+					_planet = v.key
+				end
+			end
+			G.E_MANAGER:add_event(Event({
+				trigger = 'before',
+				delay = 0.0,
+				func = (function()
+					SMODS.add_card({ key = _planet or 'c_pluto' })
+					--card:juice_up(0.5, 0.5)
+					return true
+				end)}))
+			card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
 		end
 	end
 }

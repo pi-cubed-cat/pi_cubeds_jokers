@@ -20,6 +20,7 @@ SMODS.Joker { --Encore
 	eternal_compat = true,
 	config = { extra = { money = 3 } },
 	attributes = { 'economy', 'boss_blind', 'hands' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }
 	end,
@@ -27,6 +28,11 @@ SMODS.Joker { --Encore
         if context.individual and context.cardarea == G.play and G.GAME.current_round.hands_left == 0 and G.GAME.blind and G.GAME.blind.boss then
 			G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.money
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+			return {
+                dollars = card.ability.extra.money,
+            }
+		end
+		if context.forcetrigger then
 			return {
                 dollars = card.ability.extra.money,
             }

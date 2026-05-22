@@ -19,12 +19,13 @@ SMODS.Joker { --Advanced Skipping
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { add_tags = 1, add_tags_mod = 1} },
+    attributes = { 'generation', 'scaling', 'skip' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.add_tags, card.ability.extra.add_tags_mod} }
     end,
-    attributes = { 'generation', 'scaling', 'skip' },
     calculate = function(self, card, context)
-        if context.skip_blind then
+        if context.skip_blind or context.forcetrigger then
             local tag_pool = get_current_pool('Tag')
             for i=1,card.ability.extra.add_tags do         
                 local selected_tag = pseudorandom_element(tag_pool, pseudoseed('advancedskipping'..G.GAME.round_resets.ante))
@@ -33,19 +34,23 @@ SMODS.Joker { --Advanced Skipping
                     it = it + 1
                     selected_tag = pseudorandom_element(tag_pool, pseudoseed('advancedskipping'..it..G.GAME.round_resets.ante))
                 end
-                if selected_tag ~= 'tag_orbital' then
-                    add_tag(Tag(selected_tag))
-                else 
-                    add_tag(Tag(selected_tag, false, 'Small'))
-                end
+                add_tag(Tag(selected_tag))
             end
             card:juice_up()
             if G.GAME.round_resets.ante > card.ability.extra.add_tags then
-                card.ability.extra.add_tags = card.ability.extra.add_tags + card.ability.extra.add_tags_mod
-                return {
+                --card.ability.extra.add_tags = card.ability.extra.add_tags + card.ability.extra.add_tags_mod
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "add_tags",
+                    scalar_value = "add_tags_mod",
+                    scaling_message = {
+                        message = localize('k_upgrade_ex'),
+                    }
+                })
+                --[[return {
                     message = localize('k_upgrade_ex'),
                     card = card
-                }
+                }]]
             end
         end
     end

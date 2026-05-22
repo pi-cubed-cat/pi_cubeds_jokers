@@ -72,14 +72,15 @@ CardSleeves.Sleeve({ -- my epic sleeve by pi_cubed
     loc_txt = {
         name = "my epic sleeve by pi_cubed",
         text = {
-            "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{}",
-            "are {C:attention}3x{} more likely to appear,",
-            "Start with an extra {C:money}$#1#",
+            "When {C:attention}Boss Blind{} is defeated,",
+            "next shop has a {C:attention}free{}",
+            "{C:purple,T:p_picubed_buffoon_mega_1}Mega pi_cubed Pack{}",
         },
     },
     pos = { x = 1, y = 0 },
     atlas = "picubedssleeve",
     unlocked = true,
+    config = { triggered = false },
     loc_vars = function(self)
         local key, vars
         if self.get_current_deck_key() == "b_picubed_myepicdeck" then
@@ -90,9 +91,6 @@ CardSleeves.Sleeve({ -- my epic sleeve by pi_cubed
             }
         else
             key = self.key
-            vars = { 
-                6
-            }
         end
         return { key = key, vars = vars }
     end,
@@ -100,23 +98,34 @@ CardSleeves.Sleeve({ -- my epic sleeve by pi_cubed
         if self.get_current_deck_key() == "b_picubed_myepicdeck" then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    G.GAME.dollars = G.GAME.dollars + 5
+                    G.GAME.dollars = G.GAME.dollars + 6
                     SMODS.add_card({set = 'Joker', area = G.jokers, skip_materialize = true, key = "j_picubed_inkjetprinter", no_edition = true})
                     return true 
                 end
             }))
-        else
-            G.E_MANAGER:add_event(Event({
+        end
+    end,
+    calculate = function(self, sleeve, context)
+        if context.starting_shop and sleeve.config.triggered 
+        and not self.get_current_deck_key() == "b_picubed_myepicdeck" then -- code from Paperback's iron cross
+            sleeve.config.triggered = false
+
+            G.E_MANAGER:add_event(Event {
                 func = function()
-                    G.GAME.dollars = G.GAME.dollars + 6
-                    return true 
+                    local booster = SMODS.add_booster_to_shop('p_picubed_buffoon_mega_'..math.random(0,3))
+                    booster.ability.couponed = true
+                    booster:set_cost()
+                    return true
                 end
-            }))
+            })
+        end
+
+        if context.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss 
+        and not self.get_current_deck_key() == "b_picubed_myepicdeck" then
+            sleeve.config.triggered = true
         end
     end
 })
-
--- relies on additional functions present in lovely/myepicdeck.toml
 
 CardSleeves.Sleeve({ -- Medusa Sleeve
     name = "Medusa Sleeve",

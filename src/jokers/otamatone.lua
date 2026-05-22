@@ -23,6 +23,7 @@ SMODS.Joker { --Otamatone
     pools = { ["Meme"] = true },
 	config = { extra = { chips_min = 0, chips_max = 153 } },
     attributes = { 'chips' },
+    demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
         local r_chips = {}
         for i = card.ability.extra.chips_min, card.ability.extra.chips_max do
@@ -54,7 +55,7 @@ SMODS.Joker { --Otamatone
         return { main_start = main_start }
     end,
 	calculate = function(self, card, context)
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
             local rand_num = pseudorandom('picubed_otamatone', card.ability.extra.chips_min, card.ability.extra.chips_max)
 			rand_num = rand_num / card.ability.extra.chips_max
             if picubed_config.custom_sound_effects then

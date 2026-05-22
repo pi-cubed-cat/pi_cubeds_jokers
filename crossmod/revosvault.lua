@@ -18,13 +18,14 @@ SMODS.Joker { -- Inkjet Printer Printer (Revo's Vault)
 	eternal_compat = true,
 	blueprint_compat = true,
 	attributes = { 'generation' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS.j_picubed_inkjetprinter
 		return { vars = { card.ability.max_highlighted } }
 	end,
 	
 	calculate = function(self, card, context)
-		if context.setting_blind then -- code from Jimbo Printer
+		if context.setting_blind or context.forcetrigger then -- code from Jimbo Printer
 			if G.GAME.used_vouchers["v_crv_printerup"] == true then
 				local new_card = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_picubed_inkjetprinter")
 				new_card:set_edition({
@@ -33,7 +34,8 @@ SMODS.Joker { -- Inkjet Printer Printer (Revo's Vault)
 				new_card:add_to_deck()
 				G.jokers:emplace(new_card)
 			else
-				if #G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers then
+				if (#G.jokers.cards < G.jokers.config.card_limit or self.area == G.jokers) 
+				or context.forcetrigger then
 					local new_card = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_picubed_inkjetprinter")
 					new_card:add_to_deck()
 					G.jokers:emplace(new_card)

@@ -19,6 +19,7 @@ SMODS.Joker { --Upgraded Joker
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'enhancements', 'mult', 'chips' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips, card.ability.extra.mult } }
     end,
@@ -31,6 +32,13 @@ SMODS.Joker { --Upgraded Joker
                     card = card
                 }
             end
+        end
+        if context.forcetrigger then
+            return {
+                chips = card.ability.extra.chips,
+                mult = card.ability.extra.mult,
+                card = card
+            }
         end
     end
 }

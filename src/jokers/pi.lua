@@ -20,6 +20,7 @@ SMODS.Joker { --Pi
 	eternal_compat = true,
 	config = { extra = { Xmult = 3.14, odds = 3 } },
 	attributes = { 'xmult', 'edition', 'chance' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_pi')
 		return { vars = { 
@@ -66,5 +67,11 @@ SMODS.Joker { --Pi
 			end
 		end
 		
+		if context.forcetrigger then
+			return {
+				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
+				Xmult_mod = card.ability.extra.Xmult,
+			}
+		end
 	end
 }

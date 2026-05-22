@@ -21,6 +21,7 @@ SMODS.Joker { --Joker in a Nutshell
     perishable_compat = false,
 	eternal_compat = true,
     attributes = { 'xmult', 'scaling', 'destroy_card' },
+    demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult, card.ability.extra.Xmult_mod } }
 	end,
@@ -49,7 +50,6 @@ SMODS.Joker { --Joker in a Nutshell
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         G.GAME.joker_buffer = 0
-                        card.ability.extra.Xmult = card.ability.extra.Xmult + num_lines * card.ability.extra.Xmult_mod
                         card:juice_up(0.8, 0.8)
                         sliced_card:start_dissolve({ HEX("57ecab") }, nil, 1.6)
                         play_sound('tarot1', 0.96 + math.random() * 0.08)
@@ -60,15 +60,26 @@ SMODS.Joker { --Joker in a Nutshell
                 if num_lines * card.ability.extra.Xmult_mod >= 0.7 then
                     check_for_unlock({type = 'picubed_nutshell_large'})
                 end
-                
-                return {
-                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult + num_lines * card.ability.extra.Xmult_mod } },
-                    colour = G.C.RED,
-                    no_juice = true,
-                }
+                return { 
+					func = function()
+                        local Xmult = card.ability.extra.Xmult
+                        local Xmult_mod = card.ability.extra.Xmult_mod
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "Xmult",
+                            scalar_table = { num_lines * Xmult_mod },
+                            scalar_value = 1,
+                            scaling_message = {
+                                message = localize { type = 'variable', key = 'a_xmult', vars = { Xmult + num_lines * Xmult_mod } },
+                                colour = G.C.RED,
+                                no_juice = true,
+                            }
+                        })
+                    end
+				}
             end
         end
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
             return {
                 xmult = card.ability.extra.Xmult
             }

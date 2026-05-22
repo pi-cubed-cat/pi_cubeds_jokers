@@ -24,6 +24,7 @@ SMODS.Joker { --Extra Limb
     eternal_compat = true,
     config = { extra = { card_limit = 1, mult_mod = 6 } },
     attributes = { 'mult', 'passive' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         local consumable_count = G.consumeables and G.consumeables.cards and #G.consumeables.cards or 0
         return { vars = { card.ability.extra.card_limit, card.ability.extra.mult_mod, card.ability.extra.mult_mod * consumable_count } }
@@ -40,7 +41,8 @@ SMODS.Joker { --Extra Limb
             return true end }))
     end,
     calculate = function(self, card, context)
-        if context.joker_main and (#G.consumeables.cards + G.GAME.consumeable_buffer) ~= 0 then
+        if (context.joker_main and (#G.consumeables.cards + G.GAME.consumeable_buffer) ~= 0)
+        or context.forcetrigger then
             return {
                 mult_mod = card.ability.extra.mult_mod * (#G.consumeables.cards + G.GAME.consumeable_buffer),
                 message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult_mod * (#G.consumeables.cards + G.GAME.consumeable_buffer) } }
@@ -48,3 +50,19 @@ SMODS.Joker { --Extra Limb
         end
     end
 }
+
+-- Prevents selling if selling it would overflow held consumables
+local sell_card_ref = Card.sell_card
+function Card:sell_card()
+    if self and self.ability and self.ability.extra and type(self.ability.extra) == 'table'
+    and self.config.center_key == 'j_picubed_extralimb' then
+        if #G.consumeables.cards <= G.consumeables.config.card_limit - self.ability.extra.card_limit then
+            return sell_card_ref(self)
+        else
+            self.area:remove_from_highlighted(self)
+            alert_no_space(self, G.consumeables)
+        end
+    else
+        return sell_card_ref(self)
+    end
+end

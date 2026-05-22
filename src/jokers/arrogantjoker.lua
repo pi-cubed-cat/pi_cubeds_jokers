@@ -20,6 +20,7 @@ SMODS.Joker { --Arrogant Joker
 	config = { extra = { Xmult = 2 } },
 	pools = { ["Meme"] = true },
 	attributes = { 'xmult', 'joker_slot' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult } }
 	end,
@@ -37,6 +38,12 @@ SMODS.Joker { --Arrogant Joker
 	
 	calculate = function(self, card, context)
 		if context.joker_main and G.jokers.cards[1] == card then
+			return {
+				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
+				Xmult_mod = card.ability.extra.Xmult
+			}
+		end
+		if context.forcetrigger then
 			return {
 				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
 				Xmult_mod = card.ability.extra.Xmult

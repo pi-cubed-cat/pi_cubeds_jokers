@@ -31,6 +31,7 @@ SMODS.Joker { --Pot
 	eternal_compat = true,
 	config = { extra = { odds = 3, Xmult = 3, is_active = false } },
 	attributes = { 'xmult', 'chance', 'rhythm_heaven' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_pot')
 		return { 
@@ -64,7 +65,8 @@ SMODS.Joker { --Pot
 				end
 			end
 		end
-		if context.joker_main and card.ability.extra.is_active then
+		if (context.joker_main and card.ability.extra.is_active)
+		or context.forcetrigger then
 			if picubed_config.custom_sound_effects then
 				return {
 					volume = 0.4,

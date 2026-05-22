@@ -58,6 +58,7 @@ end
 assert(SMODS.load_file("src/stickers.lua"))()
 assert(SMODS.load_file("src/achievements.lua"))()
 assert(SMODS.load_file("src/attributes.lua"))()
+assert(SMODS.load_file("src/boosters.lua"))()
 
 -- load crossmod files
 if CardSleeves then
@@ -83,6 +84,9 @@ if next(SMODS.find_mod("TheAutumnCircus")) then
 end
 if next(SMODS.find_mod("paperback")) then
     assert(SMODS.load_file("crossmod/paperback.lua"))()
+end
+if next(SMODS.find_mod("artbox")) then
+    assert(SMODS.load_file("crossmod/artbox.lua"))()
 end
 
 -- jokers & spectrals atlas
@@ -123,6 +127,14 @@ SMODS.Atlas {
 	path = "picubedstag.png",
 	px = 34,
 	py = 34
+}
+
+-- boosters atlas
+SMODS.Atlas {
+    key = "picubed_boosters",
+    path = "picubed_boosters.png",
+    px = 71,
+    py = 95
 }
 
 -- talisman functions

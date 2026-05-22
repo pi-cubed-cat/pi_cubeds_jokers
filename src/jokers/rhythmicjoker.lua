@@ -23,11 +23,13 @@ SMODS.Joker { --Rhythmic Joker
     eternal_compat = true,
     config = { extra = { mult = 12 } },
     attributes = { 'hands', 'mult', 'rhythm_heaven' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult } }
     end,
     calculate = function(self, card, context)
-        if context.joker_main and G.GAME.current_round.hands_left % 2 == 0 then
+        if (context.joker_main and G.GAME.current_round.hands_left % 2 == 0) 
+        or context.forcetrigger then
             if picubed_config.custom_sound_effects then
                 return {
                     message = localize{type='variable',key='a_mult',vars={card.ability.extra.mult}},

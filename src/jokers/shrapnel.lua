@@ -23,7 +23,8 @@ SMODS.Joker { --Shrapnel
 		return { vars = { card.ability.extra.mult } }
 	end,
 	calculate = function(self, card, context)
-		if context.using_consumeable and G.hand.cards then
+		if (context.using_consumeable and G.hand.cards)
+		or context.forcetrigger then
 			for k, v in ipairs(G.hand.cards) do
 				v.ability.perma_mult = v.ability.perma_mult or 0 
 				v.ability.perma_mult = v.ability.perma_mult + card.ability.extra.mult

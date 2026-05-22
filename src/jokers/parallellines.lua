@@ -20,23 +20,37 @@ SMODS.Joker { --Parallel Lines
     perishable_compat = false,
     eternal_compat = true,
     attributes = { 'hand_type', 'hands', 'scaling', 'reset', 'xmult' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult } }
 	end,
     calculate = function(self, card, context)
         if context.before and not context.blueprint and not context.joker_retrigger then
             if next(context.poker_hands["Two Pair"]) then
-                card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_mod
-            else
-                if card.ability.extra.xmult > 1 then
-                    card.ability.extra.xmult = 1
-                    return {
-                        message = localize('k_reset')
-                    }
-                end
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "xmult",
+                    scalar_value = "xmult_mod",
+                    no_message = true,
+                })
+            elseif card.ability.extra.xmult > 1 then
+                local xmult = card.ability.extra.xmult
+                return {
+                    func = function()
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "xmult",
+                            scalar_table = { -xmult + 1 },
+                            scalar_value = 1,
+                            scaling_message = {
+                                message = localize('k_reset'),
+                            }
+                        })
+                    end
+                }
             end
         end
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
             return {
                 xmult = card.ability.extra.xmult
             }

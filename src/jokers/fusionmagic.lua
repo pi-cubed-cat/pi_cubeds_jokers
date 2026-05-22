@@ -19,21 +19,35 @@ SMODS.Joker { --Fusion Magic
 	eternal_compat = true,
 	config = { extra = { num = 4, num_remaining = 4 } },
 	attributes = { 'tarot', 'spectral', 'scaling', 'generation' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.num, card.ability.extra.num_remaining } }
 	end,
 	calculate = function(self, card, context)
 		if context.selling_card and context.card.ability.set == 'Tarot' and not context.blueprint then
-			card.ability.extra.num_remaining = card.ability.extra.num_remaining - 1
-			if card.ability.extra.num_remaining > 0 then
-				return {
-					message = tostring(card.ability.extra.num_remaining)
-				}
+			local num_remaining = card.ability.extra.num_remaining
+			local num = card.ability.extra.num
+			if num_remaining - 1 > 0 then
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "num_remaining",
+					scalar_table = { -1 },
+					scalar_value = 1,
+					scaling_message = {
+						message = tostring(num_remaining - 1),
+					}
+				})
 			else
 				if (#G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit) --negative tarots 
 				or ((#G.consumeables.cards + G.GAME.consumeable_buffer - 1 < G.consumeables.config.card_limit) and (not context.card.edition or (context.card.edition and context.card.edition.key ~= 'e_negative'))) then --non-negative tarots
 					G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-					card.ability.extra.num_remaining = card.ability.extra.num
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "num_remaining",
+						scalar_table = { num - num_remaining },
+						scalar_value = 1,
+						no_message = true,
+					})
 					G.E_MANAGER:add_event(Event({
                         trigger = 'before',
                         delay = 0.0,
@@ -53,6 +67,22 @@ SMODS.Joker { --Fusion Magic
 					card.ability.extra.num_remaining = 1
 				end
 			end
+		end
+		if context.forcetrigger then
+			G.E_MANAGER:add_event(Event({
+				trigger = 'before',
+				delay = 0.0,
+				func = (function()
+					local card = create_card('Spectral',G.consumeables, nil, nil, nil, nil, nil, 'sixth')
+					card:add_to_deck()
+					G.consumeables:emplace(card)
+				return true
+			end)}))
+			return {
+				message = localize('k_plus_spectral'),
+				colour = G.C.SECONDARY_SET.Spectral,
+				card = card
+			}
 		end
 	end
 }

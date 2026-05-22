@@ -31,6 +31,7 @@ SMODS.Joker { --Turf War
     perishable_compat = false,
 	eternal_compat = true,
 	attributes = { 'xmult', 'scaling', 'suit', 'boss_blind', 'splatoon' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		local suit = (G.GAME.current_round.picubed_turfwar or {}).suit or 'Spades'
 		return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.num_card, card.ability.extra.Xmult, localize(suit, 'suits_singular'), colours = { G.C.SUITS[suit] } } 
@@ -61,15 +62,24 @@ SMODS.Joker { --Turf War
 
 				-- ok back to normal stuff
 				if suit_count > 0 then
-					card.ability.extra.Xmult = card.ability.extra.Xmult + suit_count
 					return {
-						message = "+X"..tostring(suit_count),
-						colour = G.C.RED
+						func = function()
+							SMODS.scale_card(card, {
+								ref_table = card.ability.extra,
+								ref_value = "Xmult",
+								scalar_table = { suit_count },
+								scalar_value = 1,
+								scaling_message = {
+									message = "+X"..tostring(suit_count),
+									colour = G.C.MULT
+								}
+							})
+						end
 					}
 				end
 			end
 		end
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
             return {
                 xmult = card.ability.extra.Xmult
             }

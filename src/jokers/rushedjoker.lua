@@ -19,6 +19,7 @@ SMODS.Joker { --Rushed Joker
 	eternal_compat = true,
 	config = { extra = { mult = 5 } },
 	attributes = { 'mult' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
 	end,
@@ -30,6 +31,12 @@ SMODS.Joker { --Rushed Joker
 					card = card
 				}
 			end
+		end
+		if context.forcetrigger then
+			return {
+				mult = card.ability.extra.mult,
+				card = card
+			}
 		end
 	end
 }

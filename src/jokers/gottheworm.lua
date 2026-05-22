@@ -18,11 +18,12 @@ SMODS.Joker { --Got the Worm
     eternal_compat = true,
     config = { extra = { money = 15 } },
     attributes = { 'skip', 'economy' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.money } }
     end,
     calculate = function(self, card, context)
-        if context.skip_blind then
+        if context.skip_blind or context.forcetrigger then
             return {
                 dollars = card.ability.extra.money,
                 card = card

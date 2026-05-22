@@ -59,6 +59,7 @@ SMODS.Joker { --Hide 'n Seek
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'rank', 'economy', 'planet', 'generation' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
 		local unsearched_ranks = picubed_get_unsearched_ranks()
         if #unsearched_ranks > 0 and next(SMODS.find_card('j_picubed_hidenseek')) then
@@ -136,6 +137,27 @@ SMODS.Joker { --Hide 'n Seek
                     end
                 }
             end
+        end
+        if context.forcetrigger then
+            G.E_MANAGER:add_event(Event({
+                func = (function()
+                    SMODS.add_card({ set = 'Planet' })
+                    G.GAME.consumeable_buffer = 0
+                return true
+            end)}))
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_planet'), colour = G.C.SECONDARY_SET.Planet})
+            return {
+                dollars = card.ability.extra.money,
+                card = card,
+                func = function()
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        G.GAME.dollar_buffer = 0
+                        return true
+                    end
+                }))
+                end
+            }
         end
     end
 }

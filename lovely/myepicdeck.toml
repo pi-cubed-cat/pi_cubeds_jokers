@@ -5,22 +5,6 @@ priority = -1
 
 [[patches]]
 [patches.pattern]
-target = "functions/common_events.lua"
-pattern = "if add and not G.GAME.banned_keys[v.key] then "
-position = "after"
-match_indent = true
-payload = '''
-    -- yoinked code and concept from Paperback's Paper deck
-    if ((G.GAME.selected_back_key or {}).key == 'b_picubed_myepicdeck' or G.GAME.selected_sleeve == 'sleeve_picubed_myepicsleeve') and v.key:find('j_picubed_') then
-      for i = 1, 2 do
-        _pool[#_pool + 1] = v.key
-        _pool_size = _pool_size + 1
-      end
-    end
-'''
-
-[[patches]]
-[patches.pattern]
 target = '''=[SMODS _ "src/overrides.lua"]'''
 pattern = "return G.P_CENTERS['p_buffoon_normal_'..(math.random(1, 2))]"
 position = "before"

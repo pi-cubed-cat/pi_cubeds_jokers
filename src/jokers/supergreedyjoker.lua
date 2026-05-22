@@ -19,6 +19,7 @@ SMODS.Joker { --Super Greedy Joker
 	perishable_compat = true,
 	eternal_compat = true,
 	attributes = { 'joker', 'generation', 'edition', 'suit', 'diamonds' },
+	demicoloncompat = true,
 	calculate = function(self, card, context)
 		if context.end_of_round or context.before then
 			picubeds_supergreedyjoker_emptyslots = G.jokers.config.card_limit - #G.jokers.cards
@@ -85,6 +86,24 @@ SMODS.Joker { --Super Greedy Joker
 					}
 				end
 			end
+		end
+
+		if context.forcetrigger then
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					local mpcard = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'pri')
+					local edition = poll_edition('edi'..G.GAME.round_resets.ante, 1, true, true)
+					mpcard.picubed_supergreedyjoker_created = true
+					mpcard:set_edition(edition, false, true)
+					mpcard:add_to_deck()
+					G.jokers:emplace(mpcard)
+					mpcard:start_materialize()
+					card:juice_up()
+					--mpcard.facing = 'back'
+					mpcard:flip()
+					return true;
+				end
+			}))
 		end
 	end
 }

@@ -20,6 +20,7 @@ SMODS.Joker { --Siphon
     eternal_compat = true,
     config = { extra = { chips_mod = 8, chips = 0 } },
     attributes = { 'chips', 'scaling', 'on_sell', 'joker' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
     end,
@@ -37,24 +38,40 @@ SMODS.Joker { --Siphon
             end
             print(self_destroyed)
             if num_destroy > 0 and not self_destroyed then
-                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod * num_destroy
                 return {
-                        message = localize('k_upgrade_ex'),
-                        colour = G.C.CHIPS,
-                        card = card
-                    }
+                    card = card,
+                    func = function()
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "chips",
+                            scalar_value = "chips_mod",
+                            scaling_message = {
+                                message = localize('k_upgrade_ex'),
+                                colour = G.C.CHIPS
+                            }
+                        })
+                    end
+                }
             end
         end]]
         if context.selling_card and context.card.ability.set == 'Joker' and not context.blueprint 
         and not context.retrigger_joker and card ~= context.card then
-            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
             return {
-                message = localize('k_upgrade_ex'),
-                colour = G.C.CHIPS,
-                card = card
-            }
+				card = card,
+				func = function()
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "chips",
+						scalar_value = "chips_mod",
+						scaling_message = {
+							message = localize('k_upgrade_ex'),
+							colour = G.C.CHIPS
+						}
+					})
+				end
+			}
         end
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
             return {
                     chip_mod = card.ability.extra.chips,
                     message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } }

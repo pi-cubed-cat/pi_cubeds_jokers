@@ -20,20 +20,29 @@ SMODS.Joker { --Water Bottle
 	config = { extra = { chips_mod = 15, chips = 0} },
 	pools = { ["Food"] = true },
 	attributes = { 'food', 'chips', 'scaling', 'reset', 'boss_blind' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips_mod, card.ability.extra.chips } }
 	end,
 	
 	calculate = function(self, card, context)
 		if context.using_consumeable and not context.blueprint then
-			card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
 			return {
-				message = localize('k_upgrade_ex'),
-				colour = G.C.CHIPS,
-				card = card
+				card = card,
+				func = function()
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "chips",
+						scalar_value = "chips_mod",
+						scaling_message = {
+							message = localize('k_upgrade_ex'),
+							colour = G.C.CHIPS,
+						}
+					})
+				end
 			}
 		end
-		if context.joker_main then
+		if context.joker_main or context.forcetrigger then
 			return {
                 chip_mod = card.ability.extra.chips,
                 message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } }

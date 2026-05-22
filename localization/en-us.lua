@@ -11,9 +11,9 @@ return {
             b_picubed_myepicdeck = {
                 name = "my epic deck by pi_cubed",
                 text = {
-                     "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{}",
-                     "are {C:attention}3x{} more likely to appear,",
-                     "Start with an extra {C:money}$#1#",
+                    "When {C:attention}Boss Blind{} is defeated,",
+                    "next shop has a {C:attention}free{}",
+                    "{C:purple,T:p_picubed_buffoon_mega_1}Mega pi_cubed Pack{}",
                 },
             },
             b_picubed_rejuvinationdeck = {
@@ -80,15 +80,15 @@ return {
             sleeve_picubed_myepicsleeve = {
                 name = "my epic sleeve by pi_cubed",
                 text = {
-                    "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{}",
-                    "are {C:attention}3x{} more likely to appear,",
-                    "Start with an extra {C:money}$#1#",
+                    "When {C:attention}Boss Blind{} is defeated,",
+                    "next shop has a {C:attention}free{}",
+                    "{C:purple,T:p_picubed_buffoon_mega_1}Mega pi_cubed Pack{}",
                 },
             },
             sleeve_picubed_myepicsleeve_alt = {
                 name = "my epic sleeve by pi_cubed",
                 text = {
-                    "Start with an extra {C:money}$5",
+                    "Start with an extra {C:money}$6",
                     "and an {C:attention,T:j_picubed_inkjetprinter}#2#{}",
                 },
             },
@@ -1000,6 +1000,7 @@ return {
                     "{C:green}#1# in #2#{} chance to create",
                     "a {C:attention}Food Joker{} if played",
                     "hand contains a {C:attention}Straight{}",
+                    "{C:inactive}(Must have room)",
                 },
 			},
             j_picubed_darkjester = {
@@ -1289,6 +1290,14 @@ return {
                     "modded enhanced",
                     "cards with {C:attention}no rank{}",
                     "{C:attention}and no suit{}!",
+                },
+            },
+            p_picubed_buffoon_mega = {
+                name = "Mega pi_cubed Pack",
+                text = {
+                    "Choose {C:attention}#1#{} of up to ",
+                    "{C:attention}#2#{} {C:joker}Joker{} cards",
+                    "from {C:purple}pi_cubed's Jokers",
                 },
             },
         },

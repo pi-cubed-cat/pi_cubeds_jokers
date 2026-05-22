@@ -21,6 +21,7 @@ SMODS.Joker { -- Mrs. Jankman (Cryptid & MoreFluff)
 	blueprint_compat = true,
 	pools = { ["Meme"] = true },
 	attributes = { 'xchips', 'editions', 'joker' },
+	demicoloncompat = true,
 	in_pool = function(self, args)
 		return (#find_joker("j_mf_jankman") > 0)
 	end,
@@ -30,20 +31,21 @@ SMODS.Joker { -- Mrs. Jankman (Cryptid & MoreFluff)
 	
 	calculate = function(self, card, context)
 		if context.other_joker and context.other_joker.edition then
-			if context.other_joker.edition.key ~= 'e_polychrome' then
-				if context.other_joker.edition.key ~= 'e_foil' then
-					if context.other_joker.edition.key ~= 'e_holographic' then
-						if context.other_joker.edition.key ~= 'e_negative' then
-							if (not context.other_joker.debuff) then
-								return {
-									xchips = card.ability.extra.x_chips,
-									card = card
-								}
-							end
-						end
-					end
-				end
+			if context.other_joker.edition.key ~= 'e_polychrome'
+			and context.other_joker.edition.key ~= 'e_foil'
+			and context.other_joker.edition.key ~= 'e_holographic'
+			and context.other_joker.edition.key ~= 'e_negative' then
+				return {
+					xchips = card.ability.extra.x_chips,
+					card = card
+				}
 			end
+		end
+		if context.forcetrigger then
+			return {
+				xchips = card.ability.extra.x_chips,
+				card = card
+			}
 		end
 	end
 }

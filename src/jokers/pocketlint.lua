@@ -19,11 +19,13 @@ SMODS.Joker { --Pocket Lint
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'discard', 'hand_type' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.discards_mod } }
 	end,
     calculate = function(self, card, context)
-        if context.after and next(context.poker_hands["Two Pair"]) then 
+        if (context.after and next(context.poker_hands["Two Pair"])) 
+        or context.forcetrigger then 
             G.E_MANAGER:add_event(Event({
                 func = function()
                     ease_discard(card.ability.extra.discards_mod, nil, true)

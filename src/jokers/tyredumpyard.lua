@@ -20,6 +20,7 @@ SMODS.Joker { --Tyre Dumpyard
 	eternal_compat = true,
 	config = { extra = { mult = 5 } },
 	attributes = { 'generation', 'boss_blind' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue+1] = G.P_CENTERS.c_wheel_of_fortune
 		return { vars = { card.ability.max_highlighted } }
@@ -45,6 +46,20 @@ SMODS.Joker { --Tyre Dumpyard
 				end
 			end
 		
+		end
+
+		if context.forcetrigger then
+			G.E_MANAGER:add_event(Event({
+				trigger = 'before',
+				delay = 0.0,
+				func = (function()
+					local card = create_card('Tarot', G.consumeables, nil, nil, nil, nil, 'c_wheel_of_fortune')
+					card:add_to_deck()
+					G.consumeables:emplace(card)
+					card:juice_up(0.5, 0.5)
+					return true
+				end)}))
+			card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_tarot'), colour = G.C.PURPLE})
 		end
 	end
 }

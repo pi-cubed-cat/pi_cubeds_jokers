@@ -19,6 +19,7 @@ SMODS.Joker { --Timid Joker
 	eternal_compat = true,
 	config = { extra = { mult = 20 } },
 	attributes = { 'mult', 'joker_slot' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
 	end,
@@ -34,7 +35,8 @@ SMODS.Joker { --Timid Joker
 		end
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main and G.jokers.cards[#G.jokers.cards] == card then
+		if (context.joker_main and G.jokers.cards[#G.jokers.cards] == card)
+		or context.forcetrigger then
 			return {
 				message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } },
 				mult_mod = card.ability.extra.mult

@@ -20,6 +20,7 @@ SMODS.Joker { --Hierarchy
 	eternal_compat = true,
 	pools = { ["Meme"] = true },
 	attributes = { 'xmult', 'rank', 'king' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult } }
 	end,
@@ -49,6 +50,11 @@ SMODS.Joker { --Hierarchy
         end
 		if context.after then
 			card.ability.extra.has_king = false
+		end
+		if context.forcetrigger then
+			return {
+				xmult = card.ability.extra.Xmult
+			}
 		end
 	end
 }

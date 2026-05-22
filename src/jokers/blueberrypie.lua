@@ -64,25 +64,43 @@ SMODS.Joker { --Blueberry Pie
     end,
 	calculate = function(self, card, context)
         if context.end_of_round and not context.repetition and not context.individual and not context.retrigger_joker and not context.blueprint then 
-            if card.ability.extra.rounds <= 1 then
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'before',
-                    func = function()
-                        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_eaten_ex"), colour = G.C.FILTER})
+            G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                func = function()
+                    local rounds = card.ability.extra.rounds
+                    if rounds - 1 <= 0 then
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "rounds",
+                            scalar_table = { -1 },
+                            scalar_value = 1,
+                            scaling_message = {
+                                message = localize("k_eaten_ex"),
+                            }
+                        })
+                    else
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "rounds",
+                            scalar_table = { -1 },
+                            scalar_value = 1,
+                            scaling_message = {
+                                message = localize{type='variable',key='a_remaining',vars={rounds - 1}},
+                            }
+                        })
+                    end
+                    return true
+                end
+            }))
+            G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                func = function()
+                    if card.ability.extra.rounds <= 0 then
                         SMODS.destroy_cards(card, nil, nil, true)
-                        return true
                     end
-                }))
-            else
-                card.ability.extra.rounds = card.ability.extra.rounds - 1
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'before',
-                    func = function()
-                        card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_remaining',vars={card.ability.extra.rounds}}, colour = G.C.FILTER})
-                        return true
-                    end
-                }))
-            end
+                    return true
+                end
+            }))
         end
         local other_joker = nil
         for i = 1, #G.jokers.cards do

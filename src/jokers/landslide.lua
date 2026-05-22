@@ -19,15 +19,16 @@ SMODS.Joker { --Landslide
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'modify_card', 'enhancements' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_stone
         return {
             vars = { card.ability.max_highlighted }
         }
     end,
-    
     calculate = function(self, card, context)
-        if context.cardarea == G.jokers and context.after then 
+        if (context.cardarea == G.jokers and context.after) 
+        or context.forcetrigger then 
             if to_big(hand_chips) > to_big(mult) and #G.hand.cards >= 1 then
                 local rndcard = pseudorandom_element(G.hand.cards, pseudoseed('Landslide'..G.GAME.round_resets.ante))
                 if not SMODS.has_enhancement(rndcard, 'm_stone') then

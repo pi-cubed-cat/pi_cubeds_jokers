@@ -34,6 +34,7 @@ SMODS.Joker { --Wahoo World
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'suit', 'mult', 'chips', 'boss_blind', 'splatoon' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         local suit = (G.GAME.current_round.wahoo_world_card or {}).suit or 'Spades'
 		return { vars = { localize(suit, 'suits_singular'), card.ability.extra.chips, card.ability.extra.mult,  colours = { G.C.SUITS[suit] } } 
@@ -66,6 +67,14 @@ SMODS.Joker { --Wahoo World
                 }
             end
         end 
+
+        if context.forcetrigger then
+            return {
+                chips = card.ability.extra.chips,
+                mult = card.ability.extra.mult,
+                card = card
+            }
+        end
     end
 }
 

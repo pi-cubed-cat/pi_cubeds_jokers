@@ -19,6 +19,7 @@ SMODS.Joker { --Black Joker
     eternal_compat = true,
     config = { extra = { cap = 21, money = 7 } },
     attributes = { 'economy', 'hands', 'discard' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cap, card.ability.extra.money } }
     end,
@@ -57,6 +58,12 @@ SMODS.Joker { --Black Joker
                     card = card
                 }
             end
+        end
+        if context.forcetrigger then
+            return {
+                dollars = card.ability.extra.money,
+                card = card
+            }
         end
     end
 }

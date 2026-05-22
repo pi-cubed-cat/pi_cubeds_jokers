@@ -19,6 +19,7 @@ SMODS.Joker { --Trade-in
     eternal_compat = true,
     config = { extra = { money = 5 } },
     attributes = { 'economy' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.money } }
     end,
@@ -34,6 +35,12 @@ SMODS.Joker { --Trade-in
                         card = card
                     }
             end
+        end
+        if context.forcetrigger then
+            return {
+                dollars = card.ability.extra.money,
+                card = card
+            }
         end
     end
 }

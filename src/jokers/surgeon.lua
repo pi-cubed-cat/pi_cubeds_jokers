@@ -32,9 +32,23 @@ SMODS.Joker { --Surgeon
                 if removed_card:get_id() == 6 then sixes = sixes + 1 end
             end
             if sixes > 0 then
-                card.ability.extra.hand_increase = card.ability.extra.hand_increase + sixes * card.ability.extra.hand_increase_mod
-				G.hand:change_size(sixes * card.ability.extra.hand_increase_mod)
-                return { message = "+"..tostring(card.ability.extra.hand_increase), }
+				local hand_increase_mod = card.ability.extra.hand_increase_mod
+				return {
+					func = function()
+						local old_hand_increase = card.ability.extra.hand_increase
+						SMODS.scale_card(card, {
+							ref_table = card.ability.extra,
+							ref_value = "hand_increase",
+							scalar_table = { hand_increase_mod * sixes },
+							scalar_value = 1,
+							scaling_message = {
+								message = "+"..tostring(sixes * hand_increase_mod), 
+							}
+						})
+						local new_hand_increase = card.ability.extra.hand_increase
+						G.hand:change_size(new_hand_increase - old_hand_increase)
+					end
+				}
             end
         end
 	end

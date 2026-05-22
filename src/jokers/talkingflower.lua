@@ -182,6 +182,7 @@ SMODS.Joker { --Talking Flower
 	blueprint_compat = true,
 	pools = { ["Meme"] = true },
 	attributes = { 'mult', 'joker_slot' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.slots, card.ability.extra.mult } }
 	end,
@@ -222,7 +223,7 @@ SMODS.Joker { --Talking Flower
 				--print("Tough choice...")
 			end
 		end
-		if context.joker_main then
+		if context.joker_main or context.forcetrigger then
 			return {
 				mult = card.ability.extra.mult,
 				card = card

@@ -19,6 +19,7 @@ SMODS.Joker { --Splat Zone
     perishable_compat = true,
 	eternal_compat = true,
 	attributes = { 'splatoon', 'mult' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult } }
 	end,
@@ -48,5 +49,10 @@ SMODS.Joker { --Splat Zone
                 }
             end
         end
+		if context.forcetrigger then
+			return {
+				mult = card.ability.extra.mult
+			}
+		end
 	end
 }

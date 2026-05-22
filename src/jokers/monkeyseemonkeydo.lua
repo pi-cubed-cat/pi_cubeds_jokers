@@ -60,6 +60,7 @@ SMODS.Joker { --Monkey See, Monkey Do
     perishable_compat = true,
 	eternal_compat = true,
 	attributes = { 'rank', 'mult', 'rhythm_heaven' },
+	demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { localize((G.GAME.current_round.picubed_monkeysee or {}).rank or 'King', 'ranks'), localize((G.GAME.current_round.picubed_monkeydo or {}).rank or 'Ace', 'ranks'), card.ability.extra.mult } }
     end,
@@ -101,6 +102,11 @@ SMODS.Joker { --Monkey See, Monkey Do
 					return true
 				end)
 			}))
+		end
+		if context.forcetrigger then
+			return {
+				mult = card.ability.extra.mult,
+			}
 		end
 	end
 }

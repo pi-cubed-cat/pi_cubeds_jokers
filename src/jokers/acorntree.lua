@@ -19,12 +19,14 @@ SMODS.Joker { --Acorn Tree
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { money = 2 } },
+	attributes = { 'economy', 'joker', 'joker_slot', 'modify_card' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }
 	end,
-	attributes = { 'economy', 'joker', 'joker_slot', 'modify_card' },
 	calculate = function(self, card, context)
-		if context.setting_blind and not context.blueprint then
+		if (context.setting_blind and not context.blueprint)
+		or context.forcetrigger then
 			G.E_MANAGER:add_event(Event({ trigger = 'after', delay = 0.2, func = function() 
 				for k, v in ipairs(G.jokers.cards) do
 					v:flip()

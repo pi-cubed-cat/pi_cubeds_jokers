@@ -20,6 +20,7 @@ SMODS.Joker { --Chicken Joker!
 	eternal_compat = true,
 	pools = { ["Meme"] = true },
 	attributes = { 'minecraft', 'generation', 'joker_slot', 'enhancements', 'joker' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		picubed_stonelike_infoqueue(info_queue)
 		info_queue[#info_queue+1] = G.P_CENTERS.m_steel
@@ -79,6 +80,22 @@ SMODS.Joker { --Chicken Joker!
 					end
 				end
 			end
+		end
+		if context.forcetrigger then
+			G.E_MANAGER:add_event(Event({
+				trigger = 'before',
+				delay = 0.25,
+				func = (function()
+					local mpcard = create_card('Joker', G.jokers, nil, nil, nil, nil, 'j_popcorn', 'chi')
+					mpcard.picubed_chickenjoker_created = true
+					mpcard:set_edition(polled_edition, false, true)
+					mpcard:add_to_deck()
+					G.jokers:emplace(mpcard)
+					mpcard:start_materialize()
+					card:juice_up()
+					mpcard:flip()
+					return true
+			end)}))
 		end
 	end
 }

@@ -18,6 +18,7 @@ SMODS.Joker { --Super Gluttonous Joker
 	perishable_compat = true,
 	eternal_compat = true,
 	attributes = { 'passive', 'suit', 'clubs' },
+	demicoloncompat = true,
 	calculate = function(self, card, context)
 		if (context.first_hand_drawn or context.hand_drawn) and not context.blueprint and not context.joker_retrigger then
 			local club_count = 0
@@ -38,6 +39,13 @@ SMODS.Joker { --Super Gluttonous Joker
 					colour = G.C.SUITS["Clubs"]
 				}
 			end
+		end
+		if context.forcetrigger then
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					SMODS.draw_cards(club_count)
+			return true end 
+			}))
 		end
 	end
 }

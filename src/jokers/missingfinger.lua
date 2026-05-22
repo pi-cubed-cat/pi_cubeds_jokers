@@ -19,6 +19,7 @@ SMODS.Joker { --Missing Finger
 	eternal_compat = true,
 	config = { extra = { Xmult = 3, select_mod = -1 } },
 	attributes = { 'xmult', 'passive' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult, card.ability.extra.select_mod } }
 	end,
@@ -32,7 +33,7 @@ SMODS.Joker { --Missing Finger
 		G.hand.config.highlighted_limit = G.hand.config.highlighted_limit - card.ability.extra.select_mod 
 	end,
 	calculate = function(self, card, context)
-		if context.joker_main then
+		if context.joker_main or context.forcetrigger then
 			return {
                 message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
                 Xmult_mod = card.ability.extra.Xmult

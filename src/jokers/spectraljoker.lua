@@ -21,7 +21,7 @@ SMODS.Joker { --Spectral Joker
     config = { extra = { triggered = false } },
     attributes = { 'spectral', 'generation', 'boss_blind' },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS.p_spectral_mega
+        info_queue[#info_queue+1] = G.P_CENTERS.p_spectral_mega_1
         return {
             vars = { card.ability.max_highlighted }
         }

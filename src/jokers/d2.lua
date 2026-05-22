@@ -16,6 +16,7 @@ SMODS.Joker { --D2
 	discovered = true,
 	blueprint_compat = true,
 	attributes = { 'mult', 'chance' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_d2')
 		return { vars = { card.ability.extra.mult, 
@@ -30,6 +31,12 @@ SMODS.Joker { --D2
 					message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
 				}
 			end
+		end
+		if context.forcetrigger then
+			return {
+				mult_mod = card.ability.extra.mult,
+				message = localize { type = 'variable', key = 'a_mult', vars = { card.ability.extra.mult } }
+			}
 		end
 	end
 }

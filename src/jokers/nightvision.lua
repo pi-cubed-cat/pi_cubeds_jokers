@@ -19,11 +19,12 @@ SMODS.Joker { --Night Vision
 	eternal_compat = true,
 	config = { extra = { money = 1 } },
 	attributes = { 'economy', 'modify_card' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }
 	end,
 	calculate = function(self, card, context)
-		if context.before then
+		if context.before or context.forcetrigger then
 			local flip_count = 0
 			for k, v in ipairs(G.hand.cards) do
 				if v.facing ~= 'front' then

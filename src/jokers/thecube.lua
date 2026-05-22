@@ -29,6 +29,7 @@ SMODS.Joker { --The Cube
     perishable_compat = true,
 	eternal_compat = true,
 	attributes = { 'economy', 'rank', 'ace', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten' },
+	demicoloncompat = true,
 	calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
         	local card_money = 0
@@ -44,5 +45,10 @@ SMODS.Joker { --The Cube
 				end
 			end
         end
+		if context.forcetrigger then
+			return {
+				dollars = 5,
+			}
+		end
 	end
 }

@@ -17,6 +17,7 @@ SMODS.Joker { --Apartment Complex
     blueprint_compat = true,
     perishable_compat = false,
     eternal_compat = true,
+    demicoloncompat = true,
     in_pool = function(self, args)
         if G.GAME.hands["Flush House"].played ~= 0 then
             return true
@@ -34,15 +35,24 @@ SMODS.Joker { --Apartment Complex
     calculate = function(self, card, context)
         if context.before and not context.blueprint and not context.retrigger_joker then
             if next(context.poker_hands["Flush House"]) then
-                card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
                 return {
-                    message = localize('k_upgrade_ex'),
-                    colour = G.C.MULT,
-                    card = card
+                    card = card,
+                    func = function()
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "Xmult",
+                            scalar_value = "Xmult_mod",
+                            scaling_message = {
+                                message = localize('k_upgrade_ex'),
+                                colour = G.C.MULT
+                            }
+                        })
+                    end
                 }
             end
         end
-        if context.joker_main and card.ability.extra.Xmult > 1 then
+        if (context.joker_main and card.ability.extra.Xmult > 1)
+        or context.forcetrigger then
             return {
 				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
 				Xmult_mod = card.ability.extra.Xmult

@@ -19,16 +19,20 @@ SMODS.Joker { --Intermission
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'generation', 'hand_type', 'chance' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
 		local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_d2')
 		return { vars = { numerator, denominator } }
 	end,
     calculate = function(self, card, context)
-        if context.after and next(context.poker_hands["Straight"]) then 
+        if context.after and next(context.poker_hands["Straight"]) 
+        and #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then 
             if SMODS.pseudorandom_probability(card, 'picubed_intermission', 1, card.ability.extra.odds) then
+                G.GAME.joker_buffer = G.GAME.joker_buffer + 1
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         SMODS.add_card({set = "Food", area = G.Jokers })
+                        G.GAME.joker_buffer = 0
                         return true
                     end
                 }))
@@ -36,6 +40,17 @@ SMODS.Joker { --Intermission
                     message = localize('k_plus_joker')
                 }
             end
+        end
+        if context.forcetrigger then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    SMODS.add_card({set = "Food", area = G.Jokers })
+                    return true
+                end
+            }))
+            return {
+                message = localize('k_plus_joker')
+            }
         end
     end
 }

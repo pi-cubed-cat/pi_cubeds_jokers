@@ -18,6 +18,7 @@ SMODS.Joker { --Ooo! Shiny!
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'editions', 'economy' },
+    demicoloncompat = true,
     in_pool = function(self, args)
         for kk, vv in pairs(G.playing_cards or {}) do
             if vv.edition then
@@ -59,6 +60,12 @@ SMODS.Joker { --Ooo! Shiny!
                     card = card
                 }
             end
+        end
+        if context.forcetrigger then
+            return {
+                dollars = card.ability.extra.money,
+                card = card
+            }
         end
     end
 }

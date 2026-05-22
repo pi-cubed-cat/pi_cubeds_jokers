@@ -20,6 +20,7 @@ SMODS.Joker { --Satanist
     perishable_compat = true,
 	eternal_compat = true,
 	attributes = { 'rank', 'six', 'hand_type', 'tarot', 'generation' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 	    info_queue[#info_queue + 1] = G.P_CENTERS.c_devil
 		return { vars = { card.ability.max_highlighted } }
@@ -64,5 +65,28 @@ SMODS.Joker { --Satanist
 				end
             end
         end
+		if context.forcetrigger then
+			G.E_MANAGER:add_event(Event({
+				func = (function()
+					SMODS.add_card {
+						key = 'c_devil',
+						set = 'Tarot',
+						key_append = 'picubed_satanist'
+					}
+					G.GAME.consumeable_buffer = 0
+					return true
+				end)
+			}))
+			G.E_MANAGER:add_event(Event({
+				func = (function()
+					SMODS.add_card {
+						set = 'Tarot',
+						key_append = 'picubed_satanist'
+					}
+					G.GAME.consumeable_buffer = 0
+					return true
+				end)
+			}))
+		end
 	end
 }

@@ -18,6 +18,7 @@ SMODS.Joker { --Perfect Score
     eternal_compat = true,
     config = { extra = { chips = 100 } },
     attributes = { 'chips', 'ten' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips } }
     end,
@@ -35,6 +36,12 @@ SMODS.Joker { --Perfect Score
                 message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } }
                 }
             end
+        end
+        if context.forcetrigger then
+            return {
+                chip_mod = card.ability.extra.chips,
+                message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } }
+            }
         end
     end
 }

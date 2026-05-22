@@ -28,15 +28,16 @@ SMODS.Joker { --Round-a-bout
 	blueprint_compat = true,
 	perishable_compat = false,
 	eternal_compat = true,
-	config = { extra = { mult = 1, mult_mod = 0.25 }},
+	config = { extra = { xmult = 1, xmult_mod = 0.25 }},
 	attributes = { 'hand_type', 'scaling', 'xmult', 'passive' },
+	demicoloncompat = true,
 	in_pool = function(self, args)
 		return can_do_pokerhand_changer_jokers()
 	end,
 	loc_vars = function(self, info_queue, card)
 		info_queue[#info_queue + 1] = { key = "wraparound", set = "Other" }
 		return { 
-			vars = { card.ability.extra.mult_mod, card.ability.extra.mult } 
+			vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult } 
 		}
 	end,
 	calculate = function(self, card, context)
@@ -80,21 +81,29 @@ SMODS.Joker { --Round-a-bout
 				end
 			end
 			if has_low and has_high then
-				card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
 				return {
-					message = localize('k_upgrade_ex'),
-					colour = G.C.MULT,
-					card = card
+					func = function()
+						SMODS.scale_card(card, {
+							ref_table = card.ability.extra,
+							ref_value = "xmult",
+							scalar_value = "xmult_mod",
+							scaling_message = {
+								message = localize('k_upgrade_ex'),
+								colour = G.C.MULT,
+							}
+						})
+					end
 				}
 			end
 		end
 		if context.joker_main and next(context.poker_hands['Straight Flush']) then 
 			check_for_unlock({type = 'picubed_roundabout_wrapastraightflush'})
 		end
-		if context.joker_main and card.ability.extra.mult > 0 then
+		if (context.joker_main and card.ability.extra.xmult > 0)
+		or context.forcetrigger then
 			return {
 				--message = localize{type='variable', key='a_mult', vars = {card.ability.extra.xmult} },
-				xmult = card.ability.extra.mult, 
+				xmult = card.ability.extra.xmult, 
 				colour = G.C.MULT
 			}
 		end

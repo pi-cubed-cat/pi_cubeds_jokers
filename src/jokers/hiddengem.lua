@@ -20,6 +20,7 @@ SMODS.Joker { --Hidden Gem
     perishable_compat = true,
     eternal_compat = true,
     attributes = { 'generation', 'discard', 'spectral', 'destroy_card', 'chance' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_hiddengem')
         return { vars = { numerator, denominator } }
@@ -53,6 +54,22 @@ SMODS.Joker { --Hidden Gem
                     end
                 end
             end
+        end
+        if context.forcetrigger then
+            G.E_MANAGER:add_event(Event({
+                trigger = 'before',
+                delay = 0.0,
+                func = (function()
+                    local card = create_card('Spectral',G.consumeables, nil, nil, nil, nil, nil, 'sixth')
+                    card:add_to_deck()
+                    G.consumeables:emplace(card)
+                    return true
+                end)}))
+            return {
+                message = localize('k_plus_spectral'),
+                colour = G.C.SECONDARY_SET.Spectral,
+                card = card,
+            }
         end
     end
 }

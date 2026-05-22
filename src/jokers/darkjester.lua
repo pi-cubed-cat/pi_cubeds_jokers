@@ -21,6 +21,7 @@ SMODS.Joker { --Dark Jester
     perishable_compat = false,
     eternal_compat = true,
     attributes = { 'mult', 'scaling', 'reset', 'suit', 'hearts', 'diamonds', 'spades', 'clubs' },
+    demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.mult_mod, card.ability.extra.mult } }
 	end,
@@ -31,23 +32,41 @@ SMODS.Joker { --Dark Jester
         and not context.retrigger_joker
         and not context.other_card.debuff then
 			if (context.other_card:is_suit("Hearts") or context.other_card:is_suit("Diamonds")) and card.ability.extra.mult ~= 0 then
-                card.ability.extra.mult = 0
+                local reset_mult = -card.ability.extra.mult
                 return {
-                    message = localize('k_reset'),
-                    colour = G.C.MULT,
                     card = card,
-                }
+                    func = function()
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "mult",
+                            scalar_table = { reset_mult },
+                            scalar_value = 1,
+                            scaling_message = {
+                                message = localize('k_reset'),
+                                colour = G.C.RED
+                            }
+                        })
+                    end
+                } 
 			end
             if context.other_card:is_suit("Spades") or context.other_card:is_suit("Clubs") then
-                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
                 return {
-                    message = localize('k_upgrade_ex'),
-                    colour = G.C.MULT,
-                    card = card
+                    card = card,
+                    func = function()
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "mult",
+                            scalar_value = "mult_mod",
+                            scaling_message = {
+                                message = localize('k_upgrade_ex'),
+                            }
+                        })
+                    end
                 }
 			end
 		end
-		if context.joker_main and card.ability.extra.mult > 0 then
+		if (context.joker_main and card.ability.extra.mult > 0)
+        or context.forcetrigger then
 			return {
 				message = localize{type='variable', key='a_mult', vars = {card.ability.extra.mult} },
 				mult_mod = card.ability.extra.mult, 

@@ -20,6 +20,7 @@ SMODS.Joker { --A Throwaway Joker
 	eternal_compat = true,
 	config = { extra = { chips = 0 } },
 	attributes = { 'chips', 'scaling', 'hand_type' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.chips } }
 	end,
@@ -27,13 +28,23 @@ SMODS.Joker { --A Throwaway Joker
         if context.pre_discard and not context.hook and not context.blueprint and not context.retrigger_joker then
 			local text, _ = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
 			local basemult = G.GAME.hands[text].mult
-			card.ability.extra.chips = card.ability.extra.chips + basemult
 			return {
-                message = '+'..tostring(basemult),
-                colour = G.C.CHIPS
-            }
+				card = card,
+				func = function()
+					SMODS.scale_card(card, {
+						ref_table = card.ability.extra,
+						ref_value = "chips",
+						scalar_table = { basemult },
+						scalar_value = 1,
+						scaling_message = {
+							message = localize { type = 'variable', key = 'a_chips', vars = { basemult } },
+							colour = G.C.CHIPS
+						}
+					})
+				end
+			}
 		end
-		if context.joker_main then
+		if context.joker_main or context.forcetrigger then
             return {
                 chip_mod = card.ability.extra.chips,
                 message = localize { type = 'variable', key = 'a_chips', vars = { card.ability.extra.chips } }

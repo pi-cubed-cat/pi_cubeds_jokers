@@ -20,13 +20,27 @@ SMODS.Joker { --Psychic Spirit
 	eternal_compat = false,
     pools = { ["Food"] = true },
     attributes = { 'hands', 'scaling', 'food' },
+    demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.hands, card.ability.extra.hands_mod, card.ability.extra.req_cards } 
+		return { 
+            vars = { card.ability.extra.hands, card.ability.extra.hands_mod, card.ability.extra.req_cards } 
 		}
 	end,
 	calculate = function(self, card, context)
         if context.before and context.main_eval and #context.full_hand < card.ability.extra.req_cards and not context.blueprint and not context.retrigger_joker then
-            card.ability.extra.hands = card.ability.extra.hands - card.ability.extra.hands_mod
+            local hands_mod = card.ability.extra.hands_mod
+            local hands = card.ability.extra.hands
+            SMODS.scale_card(card, {
+                ref_table = card.ability.extra,
+                ref_value = "hands",
+                scalar_table = { -hands_mod },
+                scalar_value = 1,
+                no_message = hands <= hands_mod,
+                scaling_message = {
+                    message = tostring(card.ability.extra.hands - hands_mod),
+                    colour = G.C.FILTER,
+                }
+            })
             if card.ability.extra.hands <= 0 then
                 G.E_MANAGER:add_event(Event({
                     func = function()
@@ -51,24 +65,19 @@ SMODS.Joker { --Psychic Spirit
                     message = localize('k_drank_ex'),
                     colour = G.C.FILTER
                 }
-            else
-                return {
-                    message = card.ability.extra.hands.."",
-                    colour = G.C.FILTER
-                }
             end 
         end
-        if context.setting_blind then
+        if context.setting_blind or context.forcetrigger then
+            local context_blueprint_card = context.blueprint_card
             G.E_MANAGER:add_event(Event({
                 func = function()
                     ease_hands_played(card.ability.extra.hands)
                     SMODS.calculate_effect(
                         { message = localize { type = 'variable', key = 'a_hands', vars = { card.ability.extra.hands } } },
-                        context.blueprint_card or card)
+                        context_blueprint_card or card)
                     return true
                 end
             }))
-            return true
         end
         
 	end

@@ -20,6 +20,7 @@ SMODS.Joker { --Word Search
 	perishable_compat = false,
 	eternal_compat = true,
 	attributes = { 'scaling', 'mult', 'rank' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { 
 			localize((G.GAME.current_round.picubed_wordsearch_card or {}).rank or 'Ace', 'ranks'), card.ability.extra.mult_mod, card.ability.extra.mult 
@@ -29,20 +30,27 @@ SMODS.Joker { --Word Search
 	calculate = function(self, card, context)
 		if context.individual and context.cardarea == G.play and not 
 		SMODS.has_no_rank(context.other_card) then
-			if 
-				context.other_card:get_id() == G.GAME.current_round.picubed_wordsearch_card.id
-				and not context.blueprint 
-				and not context.retrigger_joker
-				and not context.other_card.debuff then
-					card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_mod
-					return {
-						message = localize('k_upgrade_ex'),
-						colour = G.C.MULT,
-						card = card
-					}
+			if context.other_card:get_id() == G.GAME.current_round.picubed_wordsearch_card.id
+			and not context.blueprint 
+			and not context.retrigger_joker
+			and not context.other_card.debuff then
+				return {
+					func = function()
+						SMODS.scale_card(card, {
+							ref_table = card.ability.extra,
+							ref_value = "mult",
+							scalar_value = "mult_mod",
+							scaling_message = {
+								message = localize('k_upgrade_ex'),
+								colour = G.C.MULT,
+							}
+						})
+					end
+				}
 			end
 		end
-		if context.joker_main and card.ability.extra.mult > 0 then
+		if (context.joker_main and card.ability.extra.mult > 0) 
+		or context.forcetrigger then
 			return {
 				message = localize{type='variable', key='a_mult', vars = {card.ability.extra.mult} },
 				mult_mod = card.ability.extra.mult, 

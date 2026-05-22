@@ -21,6 +21,7 @@ SMODS.Joker { --Nobel Prize
     perishable_compat = true,
 	eternal_compat = false,
     attributes = { 'spectral', 'hand_type' },
+    demicoloncompat = true,
     in_pool = function(self, args) --only shows up if there is a remaining poker hand with no plays
 		for kk, vv in pairs(G.GAME.hands) do
             if G.GAME.hands[kk].played <= 0 then
@@ -66,6 +67,18 @@ SMODS.Joker { --Nobel Prize
                 }))
                 end
             end
+        end
+        if context.forcetrigger then
+            G.E_MANAGER:add_event(Event({
+                func = (function()
+                    SMODS.add_card {
+                        set = 'Spectral',
+                        key_append = 'picubed_nobel_prize'
+                    }
+                    return true
+                end)
+            }))
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_plus_spectral"), colour = G.C.SECONDARY_SET.Spectral})
         end
 	end
 }

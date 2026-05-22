@@ -19,6 +19,7 @@ SMODS.Joker { --Lowball Draw
 	eternal_compat = true,
 	config = { extra = { money = 1 } },
 	attributes = { 'economy', 'rank', 'two', 'seven' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }
 	end,
@@ -38,6 +39,12 @@ SMODS.Joker { --Lowball Draw
                     card = card
 				}
 			end
+		end
+		if context.forcetrigger then
+			return {
+				dollars = card.ability.extra.money,
+				card = card
+			}
 		end
 	end
 }

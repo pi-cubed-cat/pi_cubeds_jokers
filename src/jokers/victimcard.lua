@@ -23,6 +23,7 @@ SMODS.Joker { --Victim Card
 	config = { extra = { Xmult_mod = 0.2, Xmult_cap = 4, Xmult = 2 } },
 	pools = { ["Meme"] = true },
 	attributes = { 'xmult', 'scaling' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult_cap, card.ability.extra.Xmult } }
 	end,
@@ -35,7 +36,20 @@ SMODS.Joker { --Victim Card
 				trigger = 'after',
 				func = function()
 					if G.GAME.chips + SMODS.calculate_round_score() < G.GAME.blind.chips then
-						card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+						local Xmult_mod = card.ability.extra.Xmult_mod
+						local Xmult = card.ability.extra.Xmult
+						local Xmult_cap = card.ability.extra.Xmult_cap
+						SMODS.scale_card(card, {
+							ref_table = card.ability.extra,
+							ref_value = "Xmult",
+							scalar_value = "Xmult_mod",
+							no_message = (Xmult + Xmult_mod >= Xmult_cap),
+							scaling_message = {
+								message = localize("k_upgrade_ex"),
+								colour = G.C.MULT
+							}
+						})
+						
 						if card.ability.extra.Xmult >= card.ability.extra.Xmult_cap then
 							G.E_MANAGER:add_event(Event({
 								func = function()
@@ -57,15 +71,13 @@ SMODS.Joker { --Victim Card
 								end
 							}))
 							card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_victimcard"), colour = G.C.MULT})
-						else
-							card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.MULT})
 						end
 					end
 					return true;
 				end
 			}))
 		end
-		if context.joker_main then
+		if context.joker_main or context.forcetrigger then
 			--picubed_victimcard_prehand = true
 			return {
 				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },

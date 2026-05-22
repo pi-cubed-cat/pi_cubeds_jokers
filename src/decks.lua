@@ -33,21 +33,34 @@ SMODS.Back({ -- my epic deck by pi_cubed
     loc_txt = {
         name = "my epic deck by pi_cubed",
         text = {
-        "{C:tarot}pi_cubed's Jokers{}' {C:attention}Jokers{}",
-        "are {C:attention}3x{} more likely to appear,",
-        "Start with an extra {C:money}$#1#",
+            "When {C:attention}Boss Blind{} is defeated,",
+            "next shop has a {C:attention}free{}",
+            "{C:purple,T:p_picubed_buffoon_mega_1}Mega pi_cubed Pack{}",
         },
     },
     pos = { x = 1, y = 0 },
     atlas = "picubedsdeck",
     unlocked = true,
-    config = { dollars = 6 },
-    loc_vars = function(self, info_queue, back)
-        return { vars = { self.config.dollars } }
-    end,
-})
+    config = { triggered = false },
+    calculate = function(self, back, context)
+        if context.starting_shop and back.effect.config.triggered then -- code from Paperback's iron cross
+            back.effect.config.triggered = false
 
--- relies on additional functions present in lovely/myepicdeck.toml
+            G.E_MANAGER:add_event(Event {
+                func = function()
+                    local booster = SMODS.add_booster_to_shop('p_picubed_buffoon_mega_'..math.random(0,3))
+                    booster.ability.couponed = true
+                    booster:set_cost()
+                    return true
+                end
+            })
+        end
+
+        if context.context == 'eval' and G.GAME.last_blind and G.GAME.last_blind.boss then
+            back.effect.config.triggered = true
+        end
+    end
+})
 
 SMODS.Back({ -- Medusa Deck
     name = "Medusa Deck",

@@ -19,24 +19,65 @@ SMODS.Joker { --Joker Circuit
     perishable_compat = true,
 	eternal_compat = true,
 	attributes = { 'tag', 'economy', 'hand_type', 'hands' },
+	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 	    info_queue[#info_queue + 1] = { key = "speedtag_tooltip", set = "Other", vars = { G.GAME.skips*5 or 0 } }
         return { vars = { card.ability.extra.count_max, card.ability.extra.count_current } }
 	end,
 	calculate = function(self, card, context)
         if context.before and context.main_eval and not context.blueprint and next(context.poker_hands['Straight']) then
-			card.ability.extra.count_current = card.ability.extra.count_current - 1
-			if card.ability.extra.count_current > 0 then
-				return {
-					card = card,
-					message = tostring(card.ability.extra.count_current),
-					colour = G.C.MONEY
-				}
+			local count_current = card.ability.extra.count_current
+			local num = card.ability.extra.num
+			if count_current - 1 > 0 then
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "count_current",
+					scalar_table = { -1 },
+					scalar_value = 1,
+					scaling_message = {
+						message = tostring(card.ability.extra.count_current - 1),
+						colour = G.C.MONEY,
+					}
+				})
+			else
+				SMODS.scale_card(card, {
+					ref_table = card.ability.extra,
+					ref_value = "count_current",
+					scalar_table = { -1 },
+					scalar_value = 1,
+					no_message = true,
+				})
 			end
 		end
-		if context.before and context.main_eval and not context.blueprint and next(context.poker_hands['Straight']) and card.ability.extra.count_current <= 0 and not context.retrigger_joker then
-			card.ability.extra.count_current = card.ability.extra.count_max
-			card_eval_status_text(card, 'extra', nil, nil, nil, {message = "+1 Tag", colour = G.C.MONEY})
+		if context.joker_main and next(context.poker_hands['Straight']) and card.ability.extra.count_current <= 0 then
+			if not context.blueprint and not context.retrigger_joker then
+				local count_current = card.ability.extra.count_current
+				local count_max = card.ability.extra.count_max
+				G.E_MANAGER:add_event(Event({
+					func = (function()
+						SMODS.scale_card(card, {
+							ref_table = card.ability.extra,
+							ref_value = "count_current",
+							scalar_table = { count_max - count_current },
+							scalar_value = 1,
+							no_message = true,
+						})
+						return true
+					end)
+				}))
+			end
+			card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "+1 Tag", colour = G.C.MONEY})
+			G.E_MANAGER:add_event(Event({
+                func = (function()
+                    card:juice_up()
+					add_tag(Tag('tag_picubed_jokercircuitskip'))
+                    play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+                    play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+                    return true
+                end)
+            }))
+		end
+		if context.forcetrigger then
 			G.E_MANAGER:add_event(Event({
                 func = (function()
                     card:juice_up()
