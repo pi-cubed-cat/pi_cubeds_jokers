@@ -438,7 +438,7 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
             { 
               border_nodes = {
                 { text = "X" },
-                { ref_table = "card.ability.extra", ref_value = "mult", retrigger_type = "exp" }
+                { ref_table = "card.ability.extra", ref_value = "xmult", retrigger_type = "exp" }
               },
           },
         },
