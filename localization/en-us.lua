@@ -53,7 +53,8 @@ return {
                     "{C:attention}+#1#{} Joker Slot,",
                     "Jokers can appear with",
                     "the {C:attention}Contractual{} sticker",
-                    "{C:inactive,s:0.8}(Eternal and Perishable combined){}",
+                    "{C:inactive,s:0.8}(Can't be sold or destroyed", 
+                    "{C:inactive,s:0.8}for 10 rounds, then is removed)",
                     "Start with a",
                     "{C:attention}Contractual{} {C:attention,T:j_credit_card}Credit Card{}",
                 },
@@ -162,7 +163,8 @@ return {
                     "{C:attention}+#1#{} Joker Slot,",
                     "Jokers can appear with",
                     "the {C:attention}Contractual{} sticker",
-                    "{C:inactive,s:0.8}(Eternal and Perishable combined){}",
+                    "{C:inactive,s:0.8}(Can't be sold or destroyed", 
+                    "{C:inactive,s:0.8}for 10 rounds, then is removed)",
                     "Start with a",
                     "{C:attention}Contractual{} {C:attention,T:j_credit_card}Credit Card{}",
                 },
@@ -447,8 +449,9 @@ return {
                 name = 'All In',
                 text = {
                     {
-                        "Played {C:attention}face down{} cards are",
-                        "retriggered {C:attention}#1#{} additonal times"
+                        "{C:attention}All{} played {C:attention}face down{} cards",
+                        "count in {C:attention}scoring{}, and are",
+                        "retriggered {C:attention}#1#{} additonal times",
                     },
                     {
                         "{C:attention}Face down{} Jokers and",
@@ -628,7 +631,7 @@ return {
                 }
             },
             j_picubed_offthehook = {
-                name = 'Off the Hook',
+                name = 'Off The Hook',
                 text = {
                     {
                         "After play, all {C:attention}unenhanced{}",
@@ -645,9 +648,8 @@ return {
                 name = 'Eye Patch',
                 text = {
                    "This Joker gains {X:mult,C:white}X#2#{} Mult",
-                   "if {C:attention}poker hand{} has {C:attention}not{}",
-                   "been played this {C:attention}Ante{}, resets",
-                   "when {C:attention}Boss Blind{} is defeated",
+                   "for each unique {C:attention}poker hand{}",
+                   "played {C:attention}this Ante{}",
                    "{C:inactive}(Currently {X:mult,C:white}X#1#{} {C:inactive}Mult){}",
                 }
             },
@@ -680,8 +682,8 @@ return {
                 text = {
                    "When {C:attention}Blind{} is selected, all",
                    "Jokers are {C:attention}flipped and{}",
-                   "{C:attention}shuffled{}, and earn {C:money}$#1#{} for",
-                   "each other Joker affected"
+                   "{C:attention}shuffled{}, and earn {C:money}$#1#{} per",
+                   "Joker affected, excluding self",
                 }
             },
             j_picubed_forgery = {
@@ -762,6 +764,7 @@ return {
                    "Scored cards with a {C:attention}Seal{}",
                    "create the {C:planet}Planet{} card of",
                    "played {C:attention}poker hand{}",
+                   "{C:inactive}(Must have room){}"
                 }
             },
             j_picubed_missingfinger = {
@@ -879,7 +882,7 @@ return {
             j_picubed_weighteddie = {
                 name = 'Weighted Die',
                 text = {
-                    "The {C:attention}Wheel of Fortune{} is", 
+                    "{C:attention}The Wheel of Fortune{} is", 
                     "{E:1,C:green}guaranteed{} to succeed",
                 }
             },
@@ -1379,7 +1382,7 @@ return {
 			ach_picubed_grossedoff = "Use Extinction whilst owning Gros Michel",
 			ach_picubed_stoned = "Have a deck of only Stone Cards",
 			ach_picubed_agrandmemorial = "Use Mount Joker to play a Straight Flush",
-			ach_picubed_dontgetcookedstay = "Discard 12 or more cards at once using Off the Hook",
+			ach_picubed_dontgetcookedstay = "Discard 12 or more cards at once using Off The Hook",
 			ach_picubed_bananabreaker = "Use Snake Eyes on Cavendish",
 			ach_picubed_wrapastraightflush = "Play a Wrap-around Straight that contains a Straight Flush using Round-a-bout",
 			ach_picubed_criticalhit = "Allow Forgery to gain +40 Mult or more from one destroyed card",

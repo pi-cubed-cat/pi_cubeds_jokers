@@ -47,6 +47,19 @@ SMODS.Joker { --All In
             --print(#(card.ability.extra.face_down_cards or {6,6,6,6,6,6}))
             end
         end
+        if context.modify_scoring_hand and not context.blueprint then
+			local card_pos = 1
+            for i = 1, #context.full_hand do
+                if context.full_hand[i] == context.other_card then
+                    card_pos = i
+                end
+            end
+            if card.ability.extra.face_down_cards[card_pos] == true or context.other_card.facing == 'back' then
+                return {
+                    add_to_hand = true
+                }
+            end
+		end
         if context.cardarea == G.play and context.repetition and not context.repetition_only then
                 --print(card.ability.extra.face_down_cards)
                 local card_pos = 1
