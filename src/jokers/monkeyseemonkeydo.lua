@@ -71,7 +71,7 @@ SMODS.Joker { --Monkey See, Monkey Do
 		end
 		if context.individual and context.cardarea == G.play then
 			if not picubed_config.custom_sound_effects then
-				if context.other_card:get_id() == G.GAME.current_round.picubed_monkeysee or context.other_card:get_id() == G.GAME.current_round.picubed_monkeydo then
+				if context.other_card:get_id() == G.GAME.current_round.picubed_monkeysee.id or context.other_card:get_id() == G.GAME.current_round.picubed_monkeydo.id then
 					return {
 						mult = card.ability.extra.mult
 					}
