@@ -1,16 +1,17 @@
-![Mod Logo](https://i.imgur.com/xL9qXgo.png)
+List of Jokers (Modded Wiki page): https://balatromods.miraheze.org/wiki/Pi_cubed%27s_Jokers/Jokers
+
+<img src="https://i.imgur.com/xL9qXgo.png" alt="Mod Logo" width="200"/>
+
 Steamodded **[1.0.0-beta-1620a](https://github.com/Steamodded/smods/releases/tag/1.0.0-beta-1620a)** or later is required.
 
-List of Jokers (Modded Wiki Page): https://balatromods.miraheze.org/wiki/Pi_cubed's_Jokers/Jokers
-
-Documentation spreadsheet (Planned content, patch notes, & more info): https://docs.google.com/spreadsheets/d/1s2MFswjKUeVcx3W0Cylmya1ZfFvx2fiQZD42ZThxd5Q/edit?usp=sharing
-
-Discord discussion thread: https://discord.com/channels/1116389027176787968/1348621804696240201
+If you need help, reach out via the Discord discussion thread: https://discord.com/channels/1116389027176787968/1348621804696240201  
 
 pi_cubed's Jokers is a relatively lightweight mod with minimal lovely patching and hooks. As a result, there should be few crashes due to conflicts with other mods. Feel free to reach out to me via the link above if problems do occur!
 
-## Config Options
-A game restart is required for Config options to take effect.
+Documentation spreadsheet (Planned content, patch notes, & more info): https://docs.google.com/spreadsheets/d/1s2MFswjKUeVcx3W0Cylmya1ZfFvx2fiQZD42ZThxd5Q/edit?usp=sharing
+
+## Config Options  
+A game restart is required for changed Config options to take effect.
 
 ### New Spectral Cards  
 This option enables or disables the Spectral Cards Commander, Rupture, Extinction, Glamour, and Partition from appearing.

@@ -1,0 +1,10 @@
+{
+  "name": "pi_cubed's Jokers",
+  "version_number": "2.2.6",
+  "website_url": "https://github.com/pi-cubed-cat/pi_cubeds_jokers",
+  "description": "100+ new vanilla-esque Jokers, and more!",
+  "dependencies": [
+    "Thunderstore-lovely-0.8.0",
+    "Steamodded-Steamodded-1.1620.0"
+  ]
+}
