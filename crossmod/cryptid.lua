@@ -90,17 +90,19 @@ SMODS.Joker { --XM (Cryptid)
 		return { vars = { card.ability.extra.repetitions, colours = { HEX('7DC6F3') } } }
     end,
     in_pool = function(self, args) 
-		local jollycount = 0
-		for i = 1, #G.jokers.cards do
-			if
-				G.jokers.cards[i]:is_jolly()
-				or Cryptid.safe_get(G.jokers.cards[i].config.center, "pools", "M")
-				or G.jokers.cards[i].ability.name == "cry-mprime"
-			then
-				jollycount = jollycount + 1
+		if G.jokers then
+			local jollycount = 0
+			for i = 1, #G.jokers.cards do
+				if
+					G.jokers.cards[i]:is_jolly()
+					or Cryptid.safe_get(G.jokers.cards[i].config.center, "pools", "M")
+					or G.jokers.cards[i].ability.name == "cry-mprime"
+				then
+					jollycount = jollycount + 1
+				end
 			end
+			return jollycount > 0
 		end
-		return jollycount > 0
 	end,
     calculate = function(self, card, context)
         if context.retrigger_joker_check and not context.retrigger_joker and context.other_card.ability.name ~= 'j_picubed_allin' then
