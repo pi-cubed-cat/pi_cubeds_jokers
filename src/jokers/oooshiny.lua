@@ -27,10 +27,12 @@ SMODS.Joker { --Ooo! Shiny!
                 end
             end
         end 
-        for kk, vv in pairs(G.jokers.cards or {}) do
-            if vv.edition then
-                if vv.edition.key == 'e_polychrome' then
-                    return true
+        if G.jokers then
+            for kk, vv in pairs(G.jokers.cards or {}) do
+                if vv.edition then
+                    if vv.edition.key == 'e_polychrome' then
+                        return true
+                    end
                 end
             end
         end
