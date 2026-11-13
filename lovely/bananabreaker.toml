@@ -1,0 +1,17 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 1
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''
+if self.ability.name == 'Gros Michel' then G.GAME.pool_flags.gros_michel_extinct = true end
+'''
+position = "after"
+match_indent = true
+overwrite = true
+payload = '''
+if self.config.center_key == 'j_cavendish' then check_for_unlock({type = 'picubed_snakeeyes_bananabreaker'}) end
+'''

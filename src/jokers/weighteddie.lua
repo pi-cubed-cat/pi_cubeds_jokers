@@ -22,13 +22,13 @@ SMODS.Joker { --Weighted Die
 		return { vars = { card.ability.max_highlighted } }
 	end,
 	calculate = function(self, card, context)
-        if context.using_consumeable and context.consumeable.config.center_key == 'c_wheel_of_fortune' and not context.blueprint then
+        if context.fix_probability and context.trigger_obj and context.trigger_obj.config.center_key == 'c_wheel_of_fortune' and not context.blueprint then
             return {
+				numerator = 4,
+				denominator = 4,
 				message = localize('k_picubeds_yep'),
 				colour = G.C.GREEN,
 			}
         end
     end
 }
-
--- functionality relies on a patch present in lovely/weighteddie.toml

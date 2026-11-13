@@ -16,6 +16,7 @@ SMODS.Edition {
 	shader = "bisexual",
 	in_shop = true,
 	extra_cost = 4,
+    attributes = { 'tarot' },
 	sound = { sound = "polychrome1", per = 1.1, vol = 0.7 },
     config = { triggered = false },
     discovered = true,

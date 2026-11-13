@@ -183,15 +183,15 @@ return {
             j_picubed_itsaysjokerontheceiling = {
                 name = 'It Says "Joker" on the Ceiling',
                 text = {
-                   "Round {C:chips}Chips{} to the next #1#,", 
-                   "Round {C:mult}Mult{} to the next #2#"
+                   "Round up {C:chips}Chips{} to the nearest {C:chips}#1#{},",
+                   "Round up {C:mult}Mult{} to the nearest {C:mult}#2#{}",
                 }
             },
             j_picubed_d2 = {
                 name = 'D2',
                 text = {
                    "{C:green}#2# in #3#{} chance", 
-                   "to give {C:mult}+#1#{} Mult"
+                   "to give {C:mult}+#1#{} Mult",
                 }
             },
             j_picubed_wordsearch = {
@@ -283,11 +283,9 @@ return {
             j_picubed_snakeeyes = {
                 name = 'Snake Eyes',
                 text = {
-                   "When this card is {C:attention}sold{}, Joker",
-                   "to the {C:attention}left{} has its listed ",
-                   "{E:1,C:green}probabilities {C:attention}guaranteed",
-                   "{C:inactive}(ex: {C:green}1 in 6 {C:inactive}-> {C:green}1 in 1{C:inactive})"
-                   
+                   "Joker to the {C:attention}left{} has its",
+                   "listed {E:1,C:green}probabilities {C:attention}guaranteed",
+                   "{C:inactive}(ex: {C:green}1 in 6 {C:inactive}-> {C:green}6 in 6{C:inactive})"
                 }
             },
             j_picubed_789 = {
@@ -717,9 +715,8 @@ return {
             j_picubed_lowballdraw = {
                 name = 'Lowball Draw',
                 text = {
-                   "Earn {C:money}$#1#{} when a",
-                   "{C:attention}2{} or {C:attention}7{} is drawn",
-                   "to hand during Blind",
+                   "Earn {C:money}$#1#{} when a {C:attention}2{} or",
+                   "{C:attention}7{} is drawn to hand",
                 }
             },
             j_picubed_chickenjoker = {
@@ -793,7 +790,7 @@ return {
                 name = 'Hype Moments',
                 text = {
                    "When {C:attention}Boss Blind{} is selected,",
-                   "create an {C:attention}Aura{}",
+                   "create a copy of {C:spectral}Aura{}",
                    "{C:inactive}(Must have room){}",
                 }
             },

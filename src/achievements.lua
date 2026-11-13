@@ -1,5 +1,6 @@
 SMODS.Achievement { -- Printer Error
     key = 'printererror',
+    bypass_all_unlocked = true,
     --reset_on_startup = true,
     order = 1,
     unlock_condition = function(self, args)
@@ -9,6 +10,7 @@ SMODS.Achievement { -- Printer Error
 
 SMODS.Achievement { -- Grossed Off
     key = 'grossedoff',
+    bypass_all_unlocked = true,
     --reset_on_startup = true,
     order = 2,
     unlock_condition = function(self, args)
@@ -18,6 +20,7 @@ SMODS.Achievement { -- Grossed Off
 
 SMODS.Achievement { -- Stoned
     key = 'stoned',
+    bypass_all_unlocked = true,
     --reset_on_startup = true,
     order = 3,
     unlock_condition = function(self, args)
@@ -36,6 +39,7 @@ SMODS.Achievement { -- Stoned
 
 SMODS.Achievement { -- A Grand Memorial
     key = 'agrandmemorial',
+    bypass_all_unlocked = true,
     --reset_on_startup = true,
     order = 4,
     unlock_condition = function(self, args)
@@ -45,6 +49,7 @@ SMODS.Achievement { -- A Grand Memorial
 
 SMODS.Achievement { -- Don't Get Cooked, Stay...
     key = 'dontgetcookedstay',
+    bypass_all_unlocked = true,
     --reset_on_startup = true,
     order = 5,
     unlock_condition = function(self, args)
@@ -54,6 +59,7 @@ SMODS.Achievement { -- Don't Get Cooked, Stay...
 
 SMODS.Achievement { -- Banana Breaker
     key = 'bananabreaker',
+    bypass_all_unlocked = true,
     --reset_on_startup = true,
     order = 6,
     unlock_condition = function(self, args)
@@ -63,6 +69,7 @@ SMODS.Achievement { -- Banana Breaker
 
 SMODS.Achievement { -- Wrap-a-Straight Flush
     key = 'wrapastraightflush',
+    bypass_all_unlocked = true,
     --reset_on_startup = true,
     order = 7,
     unlock_condition = function(self, args)
@@ -72,6 +79,7 @@ SMODS.Achievement { -- Wrap-a-Straight Flush
 
 SMODS.Achievement { -- Critical Hit!
     key = 'criticalhit',
+    bypass_all_unlocked = true,
     --reset_on_startup = true,
     order = 8,
     unlock_condition = function(self, args)
@@ -97,6 +105,7 @@ local rhythm_heaven_list = {
 
 SMODS.Achievement { -- Balatro Theme Custom Remix
     key = 'balatrothemecustomremix',
+    bypass_all_unlocked = true,
     --reset_on_startup = true,
     order = 9,
     unlock_condition = function(self, args)
@@ -116,7 +125,8 @@ SMODS.Achievement { -- Balatro Theme Custom Remix
 
 SMODS.Achievement { -- Bisexuals make for good ideas
     key = 'bisexualsmakeforgoodideas',
-    reset_on_startup = true,
+    bypass_all_unlocked = true,
+    --reset_on_startup = true,
     order = 10,
     unlock_condition = function(self, args)
         if args.type == 'picubed_bisexual_squared' then return true end
@@ -125,7 +135,8 @@ SMODS.Achievement { -- Bisexuals make for good ideas
 
 SMODS.Achievement { -- I 'aint reading allat
     key = 'iaintreadingallat',
-    reset_on_startup = true,
+    bypass_all_unlocked = true,
+    --reset_on_startup = true,
     order = 11,
     unlock_condition = function(self, args)
         if args.type == 'picubed_nutshell_large' then return true end
@@ -134,7 +145,8 @@ SMODS.Achievement { -- I 'aint reading allat
 
 SMODS.Achievement { -- Spawncamping
     key = 'spawncamping',
-    reset_on_startup = true,
+    bypass_all_unlocked = true,
+    --reset_on_startup = true,
     order = 12,
     unlock_condition = function(self, args)
         if args.type == 'picubed_turfwar_spawncamping' then return true end

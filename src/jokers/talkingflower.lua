@@ -22,8 +22,7 @@ end
 function Card:add_tf_speech_bubble(input_key)
     if self.children.speech_bubble then self.children.speech_bubble:remove() end
     local align = nil
-    if self.T.x+self.T.w/2 > G.ROOM.T.w/2 then align = "cl" end
-    self.config.speech_bubble_align = {align = align or "cr", offset = {x=align and -0.1 or 0.1,y=0}, parent = self}
+    self.config.speech_bubble_align = {align = align or "bm", offset = {x=0,y=0.1}, parent = self}
     self.children.speech_bubble = UIBox{
         definition = G.UIDEF.tf_speech_bubble(input_key),
         config = self.config.speech_bubble_align
@@ -41,7 +40,7 @@ function G.UIDEF.tf_speech_bubble(input_key)
     localize{type = "quips", key = input_key, nodes=text}
     local row = {}
     for k, v in ipairs(text) do
-        row[#row+1] = {n=G.UIT.R, config={align = "cl"}, nodes=v}
+        row[#row+1] = {n=G.UIT.R, config={align = "cm"}, nodes=v}
     end
     local t = {n=G.UIT.ROOT, config = {align = "cm", minh = 1, r = 0.3, padding = 0.07, minw = 1, colour = G.C.JOKER_GREY, shadow = true}, nodes={
         {n=G.UIT.C, config={align = "cm", minh = 1, r = 0.2, padding = 0.1, minw = 1, colour = G.C.WHITE}, nodes={
@@ -70,10 +69,10 @@ end
 
 local Card_draw_ref = Card.draw
 function Card:draw(layer)
-		Card_draw_ref(self, layer)
-		if self.children.speech_bubble then
-				self.children.speech_bubble:draw()
-		end
+	Card_draw_ref(self, layer)
+	if self.children.speech_bubble then
+			self.children.speech_bubble:draw()
+	end
 end
 
 function Card:remove_tf_speech_bubble()
@@ -81,7 +80,7 @@ function Card:remove_tf_speech_bubble()
 end
 
 function Card:tf_say(key, prob)
-	prob = #SMODS.find_card('j_picubed_talkingflower')
+	prob = (prob or 1) * #SMODS.find_card('j_picubed_talkingflower')
 	if pseudorandom(tostring(key)..G.GAME.round_resets.ante) < (1 / prob) then
 		G.E_MANAGER:add_event(Event({ func = function() 
 			self:add_tf_speech_bubble(key)
@@ -215,11 +214,11 @@ SMODS.Joker { --Talking Flower
 		if context.starting_shop then
 			if to_number(G.GAME.dollars) >= 15 then
 				local tfnum = pseudorandom_element({1,2,3}, pseudoseed("talkingflower"..G.GAME.round_resets.ante))
-				card:tf_say("tf_shop_high"..tfnum)
+				card:tf_say("tf_shop_high"..tfnum, 2)
 				--print("Why not take both?")
 			else
 				local tfnum = pseudorandom_element({1,2,3}, pseudoseed("talkingflower"..G.GAME.round_resets.ante))
-				card:tf_say("tf_shop_low"..tfnum)
+				card:tf_say("tf_shop_low"..tfnum, 2)
 				--print("Tough choice...")
 			end
 		end

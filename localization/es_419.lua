@@ -870,7 +870,7 @@ return {
             k_picubeds_inactive = "Inactive",]]
             config_picubeds_newspectrals = "Nuevas cartas espectrales (Requiere reinicio)",
             config_picubeds_preorderhook = "Beneficios de preventa' hook (desactivar para mejor compatibilidad, Requiere reinicio)",
-            config_picubeds_customsfx = "Efectos de sonidos personalizados (Requiere reinicio)"
+            config_picubeds_customsfx = "Efectos de sonidos personalizados"
         }
     }
 }

@@ -13,6 +13,7 @@ SMODS.Tag { -- Rebound Tag
 	pos = { x = 3, y = 0 },
 	discovered = true,
 	min_ante = 2,
+    attributes = { 'retrigger' },
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.config.extra.retriggers } }
 	end,
@@ -54,6 +55,7 @@ SMODS.Joker { -- Rebound Tag (Joker-fied)
 	blueprint_compat = false,
     perishable_compat = false,
 	eternal_compat = false,
+    attributes = { 'retrigger' },
     in_pool = function(self, args) return false end,
 	loc_vars = function(self, info_queue, card)
         --info_queue[1] = nil
@@ -114,6 +116,7 @@ if picubed_config.editions then
         pos = { x = 0, y = 0 },
         atlas = "picubed_tags",
         discovered = true,
+        attributes = { 'joker, editions' },
         loc_vars = function(self, info_queue, tag)
             info_queue[#info_queue + 1] = G.P_CENTERS.e_picubed_bisexual
         end,

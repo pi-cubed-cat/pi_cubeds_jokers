@@ -17,6 +17,7 @@ SMODS.Consumable { --Commander (Spectral card)
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 3 },
     cost = 4,
+    attributes = { 'modify_card', 'editions', 'destroy_card' },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = G.P_CENTERS['e_negative'].config.card_limit} }
         return { vars = { card.ability.extra.num } }
@@ -80,6 +81,7 @@ SMODS.Consumable { --Rupture (Spectral card)
     atlas = 'PiCubedsJokers',
     pos = { x = 8, y = 8 },
     cost = 4,
+    attributes = { 'generation', 'spectral', 'joker_slot', 'destroy_card', 'position' },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.num } }
     end,
@@ -125,6 +127,7 @@ SMODS.Consumable { --Extinction (Spectral card)
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 8 },
     cost = 4,
+    attributes = { 'destroy_card', 'rank' },
     can_use = function(self, card)
         return true
     end,
@@ -191,6 +194,7 @@ SMODS.Consumable { --Glamour (Spectral card)
     config = { 
         extra = { odds = 6 }
     },
+    attributes = { 'modify_card', 'editions' },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.e_picubed_bisexual
         local numerator, denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'picubed_glamour')
@@ -262,6 +266,7 @@ SMODS.Consumable { --Partition (Spectral card)
     atlas = 'PiCubedsJokers',
     pos = { x = 1, y = 12 },
     cost = 4,
+    attributes = { 'modify_card', 'editions' },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.e_picubed_bisexual
     end,

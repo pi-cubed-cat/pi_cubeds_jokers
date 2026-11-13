@@ -18,15 +18,15 @@ SMODS.Joker { --Lowball Draw
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { money = 1 } },
-	attributes = { 'economy', 'rank', 'two', 'seven' },
+	attributes = { 'economy', 'rank', 'two', 'seven', 'booster' },
 	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }
 	end,
 	calculate = function(self, card, context)
 		local low_count = 0
-		if (context.first_hand_drawn or context.hand_drawn) and G.GAME.blind.in_blind then
-			for k,v in ipairs(context.hand_drawn) do
+		if context.hand_drawn or context.other_drawn then
+			for k,v in ipairs(context.hand_drawn or context.other_drawn or {}) do
 				if v:get_id() == 2 or v:get_id() == 7 then
 					low_count = low_count + 1
 				end

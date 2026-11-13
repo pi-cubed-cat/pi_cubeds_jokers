@@ -19,7 +19,7 @@ SMODS.Joker { --Advanced Skipping
     perishable_compat = true,
     eternal_compat = true,
     config = { extra = { add_tags = 1, add_tags_mod = 1} },
-    attributes = { 'generation', 'scaling', 'skip' },
+    attributes = { 'generation', 'scaling', 'skip', 'tag' },
     demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.add_tags, card.ability.extra.add_tags_mod} }

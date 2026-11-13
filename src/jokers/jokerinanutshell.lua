@@ -20,7 +20,7 @@ SMODS.Joker { --Joker in a Nutshell
 	blueprint_compat = true,
     perishable_compat = false,
 	eternal_compat = true,
-    attributes = { 'xmult', 'scaling', 'destroy_card' },
+    attributes = { 'xmult', 'scaling', 'destroy_card', 'position' },
     demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.Xmult, card.ability.extra.Xmult_mod } }
@@ -47,6 +47,9 @@ SMODS.Joker { --Joker in a Nutshell
                 elseif type(card_desc[1]) == 'string' then
                     num_lines = #card_desc
                 end
+                local vars, main_start, main_end = sliced_card:generate_UIBox_ability_table(true)
+                if main_start then num_lines = num_lines + 1 end
+                if main_end then num_lines = num_lines + 1 end
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         G.GAME.joker_buffer = 0

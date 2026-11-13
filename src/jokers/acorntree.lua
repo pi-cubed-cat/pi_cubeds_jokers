@@ -19,7 +19,7 @@ SMODS.Joker { --Acorn Tree
 	perishable_compat = true,
 	eternal_compat = true,
 	config = { extra = { money = 2 } },
-	attributes = { 'economy', 'joker', 'joker_slot', 'modify_card' },
+	attributes = { 'economy', 'joker', 'joker_slot', 'face_down' },
 	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
 		return { vars = { card.ability.extra.money } }

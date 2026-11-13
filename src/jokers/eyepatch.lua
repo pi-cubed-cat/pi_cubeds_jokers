@@ -26,8 +26,8 @@ SMODS.Joker { --Eye Patch
 		if #card.ability.extra.displ_list > 0 then
             main_end = {
                 {n=G.UIT.C, config={align = "bm", padding = 0.02}, nodes={
-                    {n=G.UIT.C, config={align = "m", colour = G.C.CHIPS, r = 0.05, padding = 0.05}, nodes={
-                        {n=G.UIT.T, config={text = table.concat(card.ability.extra.displ_list or {}, ", "), colour = G.C.UI.TEXT_LIGHT, scale = 0.3, shadow = true}},
+                    {n=G.UIT.C, config={align = "m", colour = HEX('4b71e4'), r = 0.05, padding = 0.06}, nodes={
+                        {n=G.UIT.T, config={text = table.concat(card.ability.extra.displ_list or {}, ", "), colour = G.C.UI.TEXT_LIGHT, scale = 0.3, shadow = false}},
                     }}
                 }}
             }

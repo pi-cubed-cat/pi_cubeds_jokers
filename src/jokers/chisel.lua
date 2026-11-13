@@ -19,7 +19,7 @@ SMODS.Joker { --Chisel
 	blueprint_compat = false,
 	perishable_compat = true,
 	eternal_compat = true,
-	attributes = { 'chips', 'modify_card', 'enhancements' },
+	attributes = { 'chips', 'modify_card', 'enhancements', 'position' },
 	in_pool = function(self, args)
 		for kk, vv in pairs(G.playing_cards or {}) do
 			if picubed_is_stonelike(vv) then
