@@ -2,7 +2,7 @@ List of Jokers (Modded Wiki page): https://balatromods.miraheze.org/wiki/Pi_cube
 
 <img src="https://i.imgur.com/xL9qXgo.png" alt="Mod Logo" width="200"/>
 
-Steamodded **[SMODS v26.1002.0](https://github.com/Steamodded/smods/releases/tag/26.1002.0)** or later is required.
+Steamodded **[v26.1002.0](https://github.com/Steamodded/smods/releases/tag/26.1002.0)** or later is required.
 
 If you need help, reach out via the Discord discussion thread: https://discord.com/channels/1116389027176787968/1348621804696240201  
 
