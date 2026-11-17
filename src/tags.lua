@@ -116,7 +116,7 @@ if picubed_config.editions then
         pos = { x = 0, y = 0 },
         atlas = "picubed_tags",
         discovered = true,
-        attributes = { 'joker, editions' },
+        attributes = { 'joker', 'editions' },
         loc_vars = function(self, info_queue, tag)
             info_queue[#info_queue + 1] = G.P_CENTERS.e_picubed_bisexual
         end,

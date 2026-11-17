@@ -1,16 +1,6 @@
 --local picubed_victimcard_prehand = false
 SMODS.Joker { --Victim Card
 	key = 'victimcard',
-	loc_txt = {
-		name = 'Victim Card',
-		text = {
-			"This Joker gains {X:mult,C:white}X#1#{} Mult if",
-			"played hand does {C:attention}not beat{} the",
-			"blind, this Joker is {C:attention}destroyed{}",
-			"after reaching {X:mult,C:white}X#2#{} Mult",
-			"{C:inactive}(Currently{} {X:mult,C:white}X#3#{} {C:inactive}Mult){}",
-		}
-	},
 	pronouns = 'he_him',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
@@ -18,7 +8,7 @@ SMODS.Joker { --Victim Card
 	cost = 7,
 	discovered = true,
 	blueprint_compat = true,
-	perishable_compat = false,
+	perishable_compat = true,
 	eternal_compat = false,
 	config = { extra = { Xmult_mod = 0.2, Xmult_cap = 4, Xmult = 2 } },
 	pools = { ["Meme"] = true },

@@ -1,29 +1,40 @@
+local function create_random_consumable(card, context, edition)
+    if edition == 'e_negative' 
+    or #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+        if edition ~= 'e_negative' then 
+            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1 
+        end
+        G.E_MANAGER:add_event(Event({
+            trigger = 'before',
+            delay = 0.0,
+            func = (function()
+                SMODS.add_card({ set = 'Consumeables', edition = edition or nil, immediate = true, allow_duplicates = false, soulable = false })
+                if edition ~= 'e_negative' then G.GAME.consumeable_buffer = 0 end
+                return true
+            end)
+        }))
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_picubeds_pride"), colour = G.C.PURPLE})
+    end
+end
+
 SMODS.Joker { --Bisexual Flag
     key = 'bisexualflag',
-    loc_txt = {
-        name = 'Bisexual Flag',
-        text = {
-            "If {C:attention}played hand{} contains a",
-            "{C:attention}Straight{} and {C:attention}four suits{},",
-            "create #1# {C:dark_edition}Negative {C:purple}Tarot{} cards",
-        }
-    },
     pronouns = 'it_its',
     rarity = 3,
     atlas = 'PiCubedsJokers',
     pos = { x = 7, y = 2 },
-    cost = 8,
-    config = { extra = { tarots = 3 } },
+    cost = 7,
+    config = { extra = { r_consumables = 2, n_consumables = 1 } },
     discovered = true,
     blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = true,
-    attributes = { 'hand_type', 'generation', 'tarot' },
+    attributes = { 'hand_type', 'generation', 'edition' },
     demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
             info_queue[#info_queue + 1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}}
         return {
-            vars = { card.ability.extra.tarots }
+            vars = { card.ability.extra.r_consumables, card.ability.extra.n_consumables }
         }
     end,
     --[[in_pool = function(self, args)
@@ -67,41 +78,20 @@ SMODS.Joker { --Bisexual Flag
             end 
             if string.find(context.scoring_name, "Straight Spectrum") or (next(context.poker_hands["Straight"]) or next(context.poker_hands["Straight Flush"])) and 
             suit_count >= 4 then
-                local card_type = 'Tarot'
-                for i=1,card.ability.extra.tarots do
-                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'before',
-                        delay = 0.0,
-                        func = (function()
-                            local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
-                            card:set_edition('e_negative', true)
-                            card:add_to_deck()
-                            G.consumeables:emplace(card)
-                            G.GAME.consumeable_buffer = 0
-                            return true
-                        end
-                    )}))
-                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize("k_picubeds_pride"), colour = G.C.PURPLE})
+                for i=1,card.ability.extra.r_consumables do
+                    create_random_consumable(card, context, nil)
+                end
+                for i=1,card.ability.extra.n_consumables do
+                    create_random_consumable(card, context, 'e_negative')
                 end
             end
         end
         if context.forcetrigger then
-            for i=1,card.ability.extra.tarots do
-                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'before',
-                    delay = 0.0,
-                    func = (function()
-                        local card = create_card(card_type,G.consumeables, nil, nil, nil, nil, nil, 'sup')
-                        card:set_edition('e_negative', true)
-                        card:add_to_deck()
-                        G.consumeables:emplace(card)
-                        G.GAME.consumeable_buffer = 0
-                        return true
-                    end
-                )}))
-                card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize("k_picubeds_pride"), colour = G.C.PURPLE})
+            for i=1,card.ability.extra.r_consumables do
+                create_random_consumable(card, context, nil)
+            end
+            for i=1,card.ability.extra.n_consumables do
+                create_random_consumable(card, context, 'e_negative')
             end
         end
     end

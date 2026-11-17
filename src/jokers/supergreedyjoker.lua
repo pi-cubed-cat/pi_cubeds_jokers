@@ -1,14 +1,45 @@
-local picubeds_supergreedyjoker_emptyslots = 0
+local function list_valid_joker_tags()
+	local valid_tags = {}
+	for k,v in pairs(G.P_TAGS) do
+		local tag = G.P_TAGS[k]
+		if tag.attributes and tag.attributes.joker and (tag.attributes.editions or tag.attributes.rarity) 
+		and k ~= 'tag_top_up' then
+			valid_tags[#valid_tags+1] = k
+		end
+	end
+	
+	return valid_tags
+end
+
+local function create_random_joker_tag(obj, other_card)
+	local valid_tags = list_valid_joker_tags()
+	if #valid_tags > 0 and (#G.GAME.tags + (G.GAME.tag_count_buffer or 0)) < (G.GAME.dollars + (G.GAME.dollar_buffer or 0)) then
+		G.GAME.tag_count_buffer = (G.GAME.tag_count_buffer or 0) + 1
+		return {
+			message = localize("k_picubeds_diamond"),
+			message_card = obj,
+			no_juice = true,
+			colour = G.C.SUITS["Diamonds"],
+			func = function()
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						add_tag({ key = pseudorandom_element(valid_tags, 'picubed_supergreedyjoker') })
+						play_sound('generic1', 0.9 + math.random() * 0.1, 0.8)
+						play_sound('holo1', 1.2 + math.random() * 0.1, 0.4)
+						if other_card then other_card:juice_up() end
+						G.GAME.tag_count_buffer = 0
+						return true
+					end
+				}))
+			end,
+		}
+	else
+		return {}
+	end
+end
+
 SMODS.Joker { --Super Greedy Joker
 	key = 'supergreedyjoker',
-	loc_txt = {
-		name = 'Super Greedy Joker',
-		text = {
-			"Create a random {C:attention}Editioned {}Joker",
-			"when a {C:diamonds}Diamond {}card scores",
-			"{C:inactive}(Must have room?)"
-		}
-	},
 	pronouns = 'they_them',
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
@@ -18,92 +49,20 @@ SMODS.Joker { --Super Greedy Joker
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	attributes = { 'joker', 'generation', 'edition', 'suit', 'diamonds' },
+	attributes = { 'tag', 'generation', 'suit', 'diamonds' },
 	demicoloncompat = true,
+	loc_vars = function(self, info_queue, card)
+        local valid_tags = list_valid_joker_tags()
+		for i=1,#valid_tags do
+			info_queue[#info_queue + 1] = { key = valid_tags[i], set = 'Tag' }
+		end
+    end,
 	calculate = function(self, card, context)
-		if context.end_of_round or context.before then
-			picubeds_supergreedyjoker_emptyslots = G.jokers.config.card_limit - #G.jokers.cards
+		if context.individual and context.cardarea == G.play and context.other_card:is_suit("Diamonds") then
+			return create_random_joker_tag(context.blueprint_card or card, context.other_card)
 		end
-		
-		if context.final_scoring_step and not context.blueprint and not context.joker_retrigger then
-			G.E_MANAGER:add_event(Event({
-				trigger = 'after',
-				func = function()
-					for k,v in ipairs(G.jokers.cards) do
-						if v.picubed_supergreedyjoker_created then
-							v:flip()
-							v.picubed_supergreedyjoker_created = nil
-						end
-					end
-					return true;
-				end
-			}))
-		elseif context.cardarea == G.play then
-			if context.individual then
-				if context.other_card:is_suit("Diamonds") and #G.jokers.cards < G.jokers.config.card_limit and picubeds_supergreedyjoker_emptyslots > 0 then
-					SMODS.calculate_effect({ message = localize('k_picubeds_diamond'), colour = G.C.SUITS["Diamonds"] },
-							context.blueprint_card or card)
-					picubeds_supergreedyjoker_emptyslots = picubeds_supergreedyjoker_emptyslots - 1
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							has_diamond = true
-							local mpcard = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'pri')
-							local edition = poll_edition('edi'..G.GAME.round_resets.ante, 1, true, true)
-							mpcard.picubed_supergreedyjoker_created = true
-							mpcard:set_edition(edition, false, true)
-							mpcard:add_to_deck()
-							G.jokers:emplace(mpcard)
-							mpcard:start_materialize()
-							card:juice_up()
-							--mpcard.facing = 'back'
-							mpcard:flip()
-							return true;
-						end
-					}))
-					
-				elseif context.other_card:is_suit("Diamonds") and pseudorandom('supergreedyjoker'..G.GAME.round_resets.ante) < 1/30 then 
-					SMODS.calculate_effect({ message = localize('k_picubeds_diamond'), colour = G.C.SUITS["Diamonds"] },
-							context.blueprint_card or card)
-					G.E_MANAGER:add_event(Event({
-						func = function()
-							local mpcard = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'pri')
-							local edition = "e_negative"
-							mpcard.picubed_supergreedyjoker_created = true
-							mpcard:set_edition(edition, false, true)
-							mpcard:add_to_deck()
-							G.jokers:emplace(mpcard)
-							mpcard:start_materialize()
-							card:juice_up()
-							--mpcard.facing = 'back'
-							mpcard:flip()
-							return true;
-						end
-					}))
-					return {
-                        message = localize("k_picubeds_diamond"),
-                        card = card,
-                        colour = G.C.SUITS["Diamonds"]
-					}
-				end
-			end
-		end
-
 		if context.forcetrigger then
-			G.E_MANAGER:add_event(Event({
-				func = function()
-					local mpcard = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'pri')
-					local edition = poll_edition('edi'..G.GAME.round_resets.ante, 1, true, true)
-					mpcard.picubed_supergreedyjoker_created = true
-					mpcard:set_edition(edition, false, true)
-					mpcard:add_to_deck()
-					G.jokers:emplace(mpcard)
-					mpcard:start_materialize()
-					card:juice_up()
-					--mpcard.facing = 'back'
-					mpcard:flip()
-					return true;
-				end
-			}))
+			return create_random_joker_tag(card)
 		end
 	end
 }

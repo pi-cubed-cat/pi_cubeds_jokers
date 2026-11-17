@@ -1,20 +1,12 @@
 SMODS.Joker { --Big Two
 	key = 'bigtwo',
-	loc_txt = {
-		name = 'Big Two',
-		text = {
-			"Each played {C:attention}2{} has a ", 
-			"{C:green}#2# in #3#{} chance to give",
-            "{X:mult,C:white}X#1#{} Mult when scored",
-		}
-	},
 	pronouns = 'they_them',
 	config = { extra = { Xmult = 2, odds = 2 } },
-	rarity = 3,
+	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 1, y = 9 },
 	soul_pos = { x = 1, y = 11 },
-	cost = 8,
+	cost = 6,
 	discovered = true,
 	blueprint_compat = true,
 	attributes = { 'xmult', 'rank', 'two', 'chance' },

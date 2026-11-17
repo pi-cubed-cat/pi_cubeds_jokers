@@ -5,20 +5,6 @@ SMODS.PokerHandPart:take_ownership('_straight', {
 
 SMODS.Joker { --Round-a-bout
 	key = 'roundabout',
-	loc_txt = {
-		name = 'Round-a-bout',
-		text = {
-			{
-				"Allows {C:attention}Straights{} to be made",
-				"using {C:attention}Wrap-around Straights{}",
-			},
-			{
-				"This Joker gains {X:mult,C:white}X#1#{} Mult per",
-				"played {C:attention}Wrap-around Straight{}",
-				"{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
-			}
-		}
-	},
 	pronouns = 'she_her',
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
@@ -28,7 +14,7 @@ SMODS.Joker { --Round-a-bout
 	blueprint_compat = true,
 	perishable_compat = false,
 	eternal_compat = true,
-	config = { extra = { xmult = 1, xmult_mod = 0.25 }},
+	config = { extra = { xmult = 1, xmult_mod = 0.2 }},
 	attributes = { 'hand_type', 'scaling', 'xmult', 'passive' },
 	demicoloncompat = true,
 	in_pool = function(self, args)

@@ -313,7 +313,7 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
         },
         calc_function = function(card)
           local is_spot = 1
-          if G.jokers.cards[1] == card then is_spot = card.ability.extra.Xmult or 1 end
+          if picubed_arrogant_positioned(card) then is_spot = card.ability.extra.xmult or 1 end
           card.joker_display_values.x_mult = is_spot
         end,
 		}
@@ -373,7 +373,7 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
         text_config = { colour = G.C.MULT },
         calc_function = function(card)
           local is_spot = 0
-          if G.jokers.cards[#G.jokers.cards] == card then is_spot = card.ability.extra.mult or 0 end
+          if picubed_timid_positioned(card) then is_spot = card.ability.extra.mult or 0 end
           card.joker_display_values.mult = is_spot
         end,
 		}
@@ -591,16 +591,40 @@ if SMODS.find_mod("JokerDisplay") and SMODS.Mods["JokerDisplay"].can_load then
     }
     jd_def["j_picubed_wahooworld"] = { -- Wahoo World
         text = {
-            { text = "(", colour = G.C.UI.TEXT_INACTIVE },
-            { ref_table = "card.joker_display_values", ref_value = "sprinkler_card_suit" },
-            { text = ")", colour = G.C.UI.TEXT_INACTIVE }
+            { text = "+" },
+            { ref_table = "card.joker_display_values", ref_value = "scoring", retrigger_type = "mult" },
+        },
+        text_config = { colour = G.C.CHIPS },
+        reminder_text = {
+            { text = "(" },
+            { ref_table = "card.joker_display_values", ref_value = "wahoo_suit" },
+            { text = ")" }
         },
         calc_function = function(card)
-            card.joker_display_values.sprinkler_card_suit = localize(G.GAME.current_round.wahoo_world_card.suit or "Spades", 'suits_singular')
+            card.joker_display_values.score_mode = card.ability.extra.score_mode
+            card.joker_display_values.scoring = card.ability.extra[card.ability.extra.score_mode]
+            
+            local count = 0
+            local text, _, scoring_hand = JokerDisplay.evaluate_hand()
+            if text ~= 'Unknown' then
+                for _, scoring_card in pairs(scoring_hand) do
+                    if scoring_card:is_suit((G.GAME.current_round.wahoo_world_card or {}).suit or 'Spades') then
+                        count = count +
+                            JokerDisplay.calculate_card_triggers(scoring_card, scoring_hand)
+                    end
+                end
+            end
+            card.joker_display_values.scoring = card.joker_display_values.scoring * count
+            card.joker_display_values.wahoo_suit = localize((G.GAME.current_round.wahoo_world_card or {}).suit or 'Spades',
+                'suits_singular')
         end,
         style_function = function(card, text, reminder_text, extra)
             if text and text.children[2] then
-                text.children[2].config.colour = lighten(G.C.SUITS[G.GAME.current_round.wahoo_world_card.suit or "Spades"], 0.35) 
+                text.children[1].config.colour = (card.joker_display_values.score_mode == 'chips' and G.C.CHIPS) or G.C.MULT
+                text.children[2].config.colour = (card.joker_display_values.score_mode == 'chips' and G.C.CHIPS) or G.C.MULT
+            end
+            if reminder_text and reminder_text.children[2] then
+                reminder_text.children[2].config.colour = lighten(G.C.SUITS[(G.GAME.current_round.wahoo_world_card or {}).suit or 'Spades'], 0.35)
             end
             return false
         end,

@@ -1,18 +1,11 @@
 SMODS.Joker { --Runner-up
     key = 'runnerup',
-    loc_txt = {
-        name = 'Runner-up',
-        text = {
-            "{X:mult,C:white}X#1#{} Mult on {C:attention}second{}",
-            "hand of round"
-        }
-    },
     pronouns = 'he_they',
     config = { extra = { Xmult = 2 } },
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 0 },
     cost = 5,
-    rarity = 2,
+    rarity = 1,
     discovered = true,
     blueprint_compat = true,
     perishable_compat = true,

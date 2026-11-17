@@ -13,19 +13,21 @@ local function reset_wahoo_world_card()
     end
 end
 
+local function swap_wahoo_scoring(card, context)
+    if card.ability.extra.score_mode == 'mult' then
+        card.ability.extra.score_mode = 'chips'
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_picubeds_chips'), colour = G.C.CHIPS})
+    elseif card.ability.extra.score_mode == 'chips' then
+        card.ability.extra.score_mode = 'mult'
+        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_mult'), colour = G.C.MULT})
+    end
+end
+
 SMODS.Joker { --Wahoo World
     key = 'wahooworld',
-    loc_txt = {
-        name = 'Wahoo World',
-        text = {
-            "Played {V:1}#1#{} cards give {C:mult}+#3#{} Mult",
-            "or {C:chips}+#2#{} Chips when scored",
-            "{s:0.8}suit changes at end of {s:0.8,C:attention}Ante{}",
-        }
-    },
     pronouns = 'they_them',
     rarity = 1,
-    config = { extra = { chips = 30, mult = 4 } },
+    config = { extra = { chips = 40, mult = 5, score_mode = 'mult' } },
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 11 },
     cost = 5,
@@ -37,19 +39,36 @@ SMODS.Joker { --Wahoo World
     demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
         local suit = (G.GAME.current_round.wahoo_world_card or {}).suit or 'Spades'
-		return { vars = { localize(suit, 'suits_singular'), card.ability.extra.chips, card.ability.extra.mult,  colours = { G.C.SUITS[suit] } } 
+		local key = self.key
+        if card.ability.extra.score_mode == 'chips' then 
+            key = key..'_chips' 
+        end
+        return { key = key, vars = { localize(suit, 'suits_singular'), card.ability.extra.chips, card.ability.extra.mult,  colours = { G.C.SUITS[suit] } } 
 		}
+	end,
+    set_ability = function(self, card, initial, delay_sprites)
+        card.ability.extra.score_mode = pseudorandom_element({'mult', 'chips'}, 'picubed_wahooworld')
+    end,
+    update = function(self, card, dt)
+		if card and card.ability and card.ability.extra and card.ability.extra.score_mode then
+			if card.ability.extra.score_mode == 'chips' then
+				card.children.center:set_sprite_pos({x = 9, y = 11})
+			else
+				card.children.center:set_sprite_pos({x = 9, y = 12})
+			end
+		else
+			card.children.center:set_sprite_pos({x = 9, y = 11})
+		end
 	end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             if context.other_card:is_suit(G.GAME.current_round.wahoo_world_card.suit) and not context.other_card.debuff then
-                local give_chips = pseudorandom('picubed_wahooworld', 0, 1)
-                if give_chips > 0.5 then
+                if card.ability.extra.score_mode == 'chips' then
                     return {
                         chips = card.ability.extra.chips,
                         card = card
                     }
-                else
+                elseif card.ability.extra.score_mode == 'mult' then
                     return {
                         mult = card.ability.extra.mult,
                         card = card
@@ -57,14 +76,18 @@ SMODS.Joker { --Wahoo World
                 end
             end
         end
+
+        if context.skip_blind and not context.blueprint then
+            swap_wahoo_scoring(card, context)
+        end
+
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint and not context.retrigger_joker then
+            swap_wahoo_scoring(card, context)
+            
             if context.beat_boss then
                 reset_wahoo_world_card()
                 local suit = (G.GAME.current_round.wahoo_world_card or {}).suit or 'Spades'
-                return {
-                    message = localize(suit, 'suits_plural'),
-                    colour = G.C.SUITS[suit],
-                }
+                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize(suit, 'suits_plural'), colour = G.C.SUITS[suit]})
             end
         end 
 

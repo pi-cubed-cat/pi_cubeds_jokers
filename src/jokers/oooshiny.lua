@@ -1,18 +1,11 @@
 SMODS.Joker { --Ooo! Shiny!
     key = 'oooshiny',
-    loc_txt = {
-        name = 'Ooo! Shiny!',
-        text = {
-            "{C:dark_edition}Polychrome{} cards",
-            "give {C:money}$#1#{} when scored"
-        }
-    },
     pronouns = 'they_them',
-    config = { extra = { money = 7 } },
+    config = { extra = { money = 6 } },
     atlas = 'PiCubedsJokers',
     pos = { x = 0, y = 1 },
     cost = 7,
-    rarity = 2,
+    rarity = 3,
     discovered = true,
     blueprint_compat = true,
     perishable_compat = true,

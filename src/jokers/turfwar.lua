@@ -10,19 +10,9 @@ end
 
 SMODS.Joker { --Turf War
 	key = 'turfwar',
-	loc_txt = {
-		name = 'Turf War',
-		text = {
-			"Gains {X:mult,C:white}X#1#{} Mult for every", 
-			"{C:attention}#2#{} {V:1}#4#{} cards in {C:attention}full deck{}",
-            "when Boss Blind is defeated",
-            "{s:0.8,C:attention}Suit {}{s:0.8}changes afterwards too{}",
-            "{C:inactive}(Currently {X:mult,C:white}X#3#{}{C:inactive} Mult){}",
-		}
-	},
 	pronouns = 'she_her',
 	rarity = 2,
-    config = { extra = { Xmult = 1, Xmult_mod = 0.1, num_card = 2 } },
+    config = { extra = { Xmult = 1, Xmult_mod = 0.05, num_card = 1 } },
 	atlas = 'PiCubedsJokers',
 	pos = { x = 1, y = 10 },
 	cost = 7,

@@ -163,17 +163,9 @@ SMODS.Sound({
 
 SMODS.Joker { --Talking Flower
 	key = 'talkingflower',
-	loc_txt = {
-		name = 'Talking Flower',
-		text = {
-			"{C:dark_edition}+#1#{} Joker Slot,",
-			"{C:mult}+#2#{} Mult"
-			
-		}
-	},
 	pronouns = 'he_they',
 	config = { extra = { slots = 1, mult = 4 } },
-	rarity = 1,
+	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 0, y = 7 },
 	cost = 4,

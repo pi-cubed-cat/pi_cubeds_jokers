@@ -1,18 +1,5 @@
 SMODS.Joker { --Stonemason
     key = 'stonemason',     
-    loc_txt = {
-        name = 'Stonemason',
-        text = {
-            {
-                "{C:attention}Stone{} cards permanently",
-                "gain {X:mult,C:white}X#1#{} Mult when scored",
-            },
-            {
-                "Stone cards have a {C:green}#2# in #3#{} chance",
-                "to be {C:attention}destroyed{} after scoring"
-            }
-        }
-    },
     pronouns = 'she_they',
     config = { extra = { Xmult_bonus = 0.25, odds = 6 } },
     rarity = 3,
@@ -52,7 +39,7 @@ SMODS.Joker { --Stonemason
             end
         end
         if context.destroying_card and context.cardarea == G.play and not context.blueprint and not context.retrigger_joker then
-            local contextother_card = context.other_card
+            local contextother_card = context.destroy_card
             if picubed_is_stonelike(contextother_card) then
                 if SMODS.pseudorandom_probability(card, 'picubed_stonemason', 1, card.ability.extra.odds) then
                     return {

@@ -1,13 +1,5 @@
 SMODS.Joker { --Super Gluttonous Joker
 	key = 'supergluttonousjoker',
-	loc_txt = {
-		name = 'Super Gluttonous Joker',
-		text = {
-			"When a {C:clubs}Club{} card is",
-			"drawn to hand, draw an",
-			"{C:attention}additional{} card to hand"
-		}
-	},
 	pronouns = 'he_they',
 	rarity = 3,
 	atlas = 'PiCubedsJokers',
@@ -20,18 +12,19 @@ SMODS.Joker { --Super Gluttonous Joker
 	attributes = { 'passive', 'suit', 'clubs', 'booster' },
 	demicoloncompat = false,
 	calculate = function(self, card, context)
-		if (context.hand_drawn or context.other_drawn) and not context.blueprint and not context.joker_retrigger then
+		if (context.hand_drawn) and not context.blueprint and not context.joker_retrigger then
 			local club_count = 0
-			for k,v in ipairs(context.hand_drawn or context.other_drawn or {}) do
+			for k,v in ipairs(context.hand_drawn or {}) do
 				if v:is_suit("Clubs") then
 					club_count = club_count + 1
 				end
 			end
 			if club_count > 0 and #G.deck.cards > 0 then
 				G.E_MANAGER:add_event(Event({
+					blocking = true,
 					func = function()
 						SMODS.draw_cards(club_count)
-				return true end 
+					return true end 
 				}))	
 				return {
 					message = localize("k_picubeds_club"),

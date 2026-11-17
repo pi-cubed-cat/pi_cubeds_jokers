@@ -111,9 +111,31 @@ local joker_list = {
     'hidenseek',
     'athrowawayjoker',
     'parallellines',
+    ---- page 8 (wave 8)
+    'schrodingerequation',
+    'lasso',
+    'towercontroltower',
+    'rainmaker',
+    'lancer',
+    'accountant',
+    'pyramidscheme',
+    'thedraw',
+    'clambasket',
+    'sevenseas',
+    'thalassophobia',
+    'magiciansessentials',
+    'bluebanana',
+    'jackboxgames',
+    'underscore',
+    ---- page 9 pt 1 (wave 8)
+    'groovyjoker',
+    'sun',
+    'moon',
+    'jessie',
+    'maggie',
     ---- bonus content??? (unfinished lol)
     --'tableexpectedgotnil',
-    --'switchingteams',
+    'switchingteams',
     --'room',
 }
 

@@ -392,3 +392,40 @@ if can_do_pokerhand_changer_jokers() then
         return results
     end
 end
+
+SMODS.current_mod.calculate = function(self, context) 
+    -- track all cards that have been played or discarded during the round (including during the following shop)
+    -- (mainly for Lasso)
+    if context.before then 
+        for k, v in ipairs(context.scoring_hand) do
+            v.played_this_round = true
+        end
+    end
+    if context.discard and context.other_card then
+        context.other_card.discarded_this_round = true
+    end
+    if context.setting_blind then
+        for k, v in ipairs(G.playing_cards) do
+            v.played_this_round = nil
+            v.discarded_this_round = nil
+        end
+    end
+end
+
+-- add card to pack 'order' 
+-- (for synergy with Illusion of Choice)
+function picubed_get_added_booster_cards_positions(joker, context)
+    local positions = {}
+    local offset = 0
+    for i=1,#G.jokers.cards do
+        if G.jokers.cards[i] ~= joker and G.jokers.cards[i].ability.add_booster_cards then
+            offset = offset + G.jokers.cards[i].ability.add_booster_cards
+        elseif G.jokers.cards[i] == joker and joker.ability.add_booster_cards then
+            for j=1, joker.ability.add_booster_cards do
+                positions[#positions+1] = context.booster.ability.extra + (G.GAME.modifiers.booster_size_mod or 0) - (offset + j) + 1
+            end
+            return positions
+        end
+    end
+    return {}
+end

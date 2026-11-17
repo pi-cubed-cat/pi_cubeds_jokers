@@ -1,26 +1,13 @@
 SMODS.Consumable { --Commander (Spectral card)
     set = "Spectral",
     key = "commander",
-    loc_txt = {
-        name = 'Commander',
-        text = {
-            "{C:attention}Destroy{} 1 random",
-            "Consumable if slots are",
-            "filled, add {C:dark_edition}Negative{}",
-            "to all others"
-        }
-    },
     discovered = true,
-    config = { 
-        extra = { num = 1 }
-    },
     atlas = 'PiCubedsJokers',
     pos = { x = 9, y = 3 },
     cost = 4,
-    attributes = { 'modify_card', 'editions', 'destroy_card' },
+    attributes = { 'modify_card', 'editions', },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = G.P_CENTERS['e_negative'].config.card_limit} }
-        return { vars = { card.ability.extra.num } }
     end,
     can_use = function(self, card)
         return #G.consumeables.cards >= 1
@@ -29,25 +16,6 @@ SMODS.Consumable { --Commander (Spectral card)
         return #G.consumeables.cards >= 1
     end,
     use = function(self, card, area, copier)
-        if (#G.consumeables.cards >= G.consumeables.config.card_limit) or (card.edition and card.edition.key == 'e_negative' and #G.consumeables.cards + 1 >= G.consumeables.config.card_limit) then
-            local rndcard = pseudorandom_element(G.consumeables.cards, pseudoseed('Commander'..G.GAME.round_resets.ante))
-            if rndcard ~= nil then
-                --This event bit taken from Extra Credit's Toby the Corgi
-                G.E_MANAGER:add_event(Event({
-                    func = function()
-                        play_sound('tarot1')
-                        rndcard.T.r = -0.2
-                        rndcard:juice_up(0.3, 0.4)
-                        rndcard.states.drag.is = true
-                        rndcard.children.center.pinch.x = true
-                        rndcard:start_dissolve()
-                        rndcard = nil
-                        delay(0.3)
-                        return true
-                    end
-                }))
-            end
-        end
         for k, v in ipairs(G.consumeables.cards) do
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',

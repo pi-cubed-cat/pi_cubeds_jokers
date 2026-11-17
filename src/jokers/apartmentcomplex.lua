@@ -1,13 +1,5 @@
 SMODS.Joker { --Apartment Complex
     key = 'apartmentcomplex',
-    loc_txt = {
-        name = 'Apartment Complex',
-        text = {
-            "This Joker gains {X:mult,C:white}X#1#{} Mult if",
-            "{C:attention}played hand{} is a {C:attention}Flush House{}",
-            "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)"
-        }
-    },
     pronouns = 'he_they',
     rarity = 3,
     atlas = 'PiCubedsJokers',
@@ -27,10 +19,10 @@ SMODS.Joker { --Apartment Complex
         end
         return false
     end,
-    config = { extra = { Xmult_mod = 0.75, Xmult = 1 } },
+    config = { extra = { xmult_mod = 1, xmult = 1, xmult_floor = 2, xmult_loss = 0.4 } },
     attributes = { 'xmult', 'scaling', 'hand_type' },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.Xmult_mod, card.ability.extra.Xmult } }
+        return { vars = { card.ability.extra.xmult_mod, card.ability.extra.xmult, card.ability.extra.xmult_floor, card.ability.extra.xmult_loss } }
     end,
     calculate = function(self, card, context)
         if context.before and not context.blueprint and not context.retrigger_joker then
@@ -40,23 +32,44 @@ SMODS.Joker { --Apartment Complex
                     func = function()
                         SMODS.scale_card(card, {
                             ref_table = card.ability.extra,
-                            ref_value = "Xmult",
-                            scalar_value = "Xmult_mod",
+                            ref_value = "xmult",
+                            scalar_value = "xmult_mod",
                             scaling_message = {
                                 message = localize('k_upgrade_ex'),
-                                colour = G.C.MULT
+                                colour = G.C.MULT,
                             }
                         })
                     end
                 }
             end
         end
-        if (context.joker_main and card.ability.extra.Xmult > 1)
+        if (context.joker_main and card.ability.extra.xmult > 1)
         or context.forcetrigger then
             return {
-				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
-				Xmult_mod = card.ability.extra.Xmult
+				xmult = card.ability.extra.xmult
 			}
+        end
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+            if card.ability.extra.xmult > 1 then
+                local loss = math.min(card.ability.extra.xmult_loss, card.ability.extra.xmult - card.ability.extra.xmult_floor)
+                if loss > 0 then
+                    return {
+                        card = card,
+                        func = function()
+                            SMODS.scale_card(card, {
+                                ref_table = card.ability.extra,
+                                ref_value = "xmult",
+                                scalar_table = { -loss },
+                                scalar_value = 1,
+                                scaling_message = {
+                                    message = localize { type = 'variable', key = 'a_xmult_minus', vars = { loss } },
+                                    colour = G.C.MULT
+                                }
+                            })
+                        end
+                    }
+                end
+            end
         end
     end
 }

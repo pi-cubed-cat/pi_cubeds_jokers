@@ -238,10 +238,16 @@ return {
             j_picubed_prime7 = {
                 name = "Prime 7",
                 text = {
-                    "Once per round, if hand is",
-                    "a single {C:attention}7{}, add {C:dark_edition}Negative{}",
-                    "edition to the card",
-                    "{C:inactive}(Currently #1#){}",
+                    {
+                        "Once per round, if hand is a single {C:attention}7{},",
+                        "add {C:dark_edition}Negative{} edition to the card",
+                        "{C:inactive}(Currently #1#){}",
+                    },
+                    {
+                        "When this Joker is {C:attention}sold{}, all {C:dark_edition}Negative{}",
+                        "cards in full deck {C:attention}lose{} their edition,",
+                        "and earn {C:money}$#2#{} for each card affected",
+                    },
                 }
             },
             j_picubed_landslide = {
@@ -409,9 +415,11 @@ return {
             j_picubed_bisexualflag = {
                 name = 'Bisexual Flag',
                 text = {
-                   "If {C:attention}played hand{} contains a",
-                   "{C:attention}Straight{} and {C:attention}four suits{},",
-                   "create #1# {C:dark_edition}Negative {C:purple}Tarot{} cards",
+                   "If {C:attention}played hand{} contains a {C:attention}Straight{}",
+                   "and {C:attention}4{} cards of {C:attention}unique suits{},",
+                   "create {C:attention}#1#{} random consumables",
+                   "and {C:attention}#2#{} random {C:dark_edition}Negative{} consumable",
+                   "{C:inactive}(Must have room){}",
                 }
             },
             j_picubed_tradein = {
@@ -426,8 +434,10 @@ return {
                 name = 'Apartment Complex',
                 text = {
                    "This Joker gains {X:mult,C:white}X#1#{} Mult if",
-                   "{C:attention}played hand{} is a {C:attention}Flush House{}",
-                   "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)"
+                   "{C:attention}played hand{} is a {C:attention}Flush House{},",
+                   "loses {X:mult,C:white}X#4#{} Mult at end of round",
+                   "{s:0.8}(Cannot decrease below {X:mult,C:white,s:0.8}X#3#{s:0.8} Mult)",
+                   "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)",
                 }
             },
             j_picubed_incompletesurvey = {
@@ -533,8 +543,8 @@ return {
             j_picubed_arrogantjoker = {
                 name = 'Arrogant Joker',
                 text = {
-                   "{X:mult,C:white}X#1#{} Mult if this Joker",
-                   "is the {C:attention}left-most {}Joker"
+                   "{X:mult,C:white}X#1#{} Mult if there are {C:attention}#2#{} or",
+                   "more Jokers to the {C:attention}right{}",
                 }
             },
             j_picubed_fusionmagic = {
@@ -548,9 +558,10 @@ return {
             j_picubed_supergreedyjoker = {
                 name = 'Super Greedy Joker',
                 text = {
-                   "Create a random {C:dark_edition}Editioned{} Joker",
-                   "when a {C:diamonds}Diamond {}card scores",
-                   "{C:inactive}(Must have room?)"
+                   "Each played {C:diamonds}Diamond{} card",
+                    "creates a random {C:attention}Rarity{} or",
+                   "{C:dark_edition}Edition{} {C:attention}Joker Tag{} when scored",
+                   "{C:inactive,s:0.8}(Number of Tags capped at current {C:money,s:0.8}${C:inactive,s:0.8})"
                 }
             },
             j_picubed_pi = {
@@ -606,8 +617,8 @@ return {
                 name = 'Super Gluttonous Joker',
                 text = {
                    "When a {C:clubs}Club{} card is",
-                   "drawn to hand, draw an",
-                   "{C:attention}additional{} card to hand"
+                   "drawn to hand in a Blind, draw",
+                   "an {C:attention}additional{} card to hand"
                 }
             },
             j_picubed_mountjoker = {
@@ -654,8 +665,8 @@ return {
             j_picubed_timidjoker = {
                 name = 'Timid Joker',
                 text = {
-                   "{C:mult}+#1#{} Mult if this Joker",
-                   "is the {C:attention}right-most{} Joker"
+                   "{C:mult}+#1#{} Mult if there are {C:attention}#2#{} or",
+                   "more Jokers to the {C:attention}left{}"
                 }
             },
             j_picubed_rushedjoker = {
@@ -722,17 +733,17 @@ return {
             j_picubed_chickenjoker = {
                 name = 'Chicken Joker!',
                 text = {
-                   "If scoring hand contains",
-                   "a {C:attention}Stone{} card or a {C:attention}Steel{}",
-                   "card, {C:attention}fill{} empty Joker",
-                   "slots with {C:dark_edition}Editioned{} {C:attention}Popcorn{}"
+                   "All Booster Packs additionally",
+                   "contain a {C:attention}Stone{} card,",
+                   "a {C:attention}Steel{} card, and {C:attention}Popcorn{}",
                 }
             },
             j_picubed_shrapnel = {
                 name = 'Shrapnel',
                 text = {
-                   "When a {C:attention}Consumable card{} is",
-                   "used, all playing cards in hand",
+                   "When a {C:attention}consumable card{} is",
+                   "used, all cards held in hand",
+                   "each have a {C:green}#2# in #3#{} chance to",
                    "receive a {C:attention}permanent{} {C:mult}+#1#{} Mult",
                 }
             },
@@ -928,8 +939,8 @@ return {
             j_picubed_turfwar = {
                 name = 'Turf War',
                 text = {
-                    "Gains {X:mult,C:white}X#1#{} Mult for every", 
-                    "{C:attention}#2#{} {V:1}#4#{} cards in {C:attention}full deck{}",
+                    "Gains {X:mult,C:white}X#1#{} Mult for each", 
+                    "{V:1}#4#{} card in {C:attention}full deck{}",
                     "when Boss Blind is defeated",
                     "{s:0.8,C:attention}Suit {}{s:0.8}changes afterwards too{}",
                     "{C:inactive}(Currently {X:mult,C:white}X#3#{}{C:inactive} Mult){}",
@@ -975,9 +986,8 @@ return {
 				name = 'Illusion of Choice',
                 text = {
                      {
-                        "Choose #1# additional card",
-                        "in {C:attention}Booster Packs{}",
-                        "to obtain or use",
+                        "Use or select {C:attention}unlimited{}",
+                        "cards from {C:attention}Booster Packs{}",
                     },
                     {
                         "All cards in a Booster",
@@ -1031,9 +1041,19 @@ return {
             j_picubed_wahooworld = {
 				name = 'Wahoo World',
                 text = {
-                    "Played {V:1}#1#{} cards give {C:mult}+#3#{} Mult",
-                    "or {C:chips}+#2#{} Chips when scored",
-                    "{s:0.8}suit changes at end of {s:0.8,C:attention}Ante{}",
+                    "Played {V:1}#1#{} cards give {C:mult}+#3#{} Mult{C:inactive}/+#2# Chips",
+                    "when scored, swaps to {C:chips}Chips{} at",
+                    "end of round or when a Blind is {C:attention}skipped",
+                    "{s:0.8,C:attention}suit{s:0.8} also changes at end of {s:0.8,C:attention}Ante",
+                },
+			},
+            j_picubed_wahooworld_chips = {
+				name = 'Wahoo World',
+                text = {
+                    "Played {V:1}#1#{} cards give {C:inactive}+#3# Mult/{C:chips}+#2#{} Chips",
+                    "when scored, swaps to {C:mult}Mult{} at",
+                    "end of round or when a Blind is {C:attention}skipped",
+                    "{s:0.8,C:attention}suit{s:0.8} also changes at end of {s:0.8,C:attention}Ante",
                 },
 			},
             j_picubed_scarletforest = {
@@ -1096,7 +1116,7 @@ return {
                 },
 			},
             j_picubed_parallellines = {
-				 name = 'Parallel Lines',
+                name = 'Parallel Lines',
                 text = {
                     "This Joker gains {X:mult,C:white}X#1#{} Mult",
                     "per {C:attention}consecutive{} hand",
@@ -1104,15 +1124,207 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)",
                 },
 			},
+            j_picubed_schrodingerequation = {
+                name = "Schrödinger Equation",
+                text = {
+                    "When Blind is selected, upgrade",
+                    "{C:attention}#1#{}, poker hand",
+                    "changes at end of round"
+                },
+            },
+            j_picubed_lasso = {
+                name = "Lasso",
+                text = {
+                    "When this Joker is {C:attention}sold{},",
+                    "{C:attention}redraw{} all cards",
+                    "played or discarded",
+                    "{C:attention}this round{} to hand",
+                },
+            },
+            j_picubed_towercontroltower = {
+                name = "Tower Control Tower",
+                text = {
+                    "After {C:attention}Boss Blind{} is defeated",
+                    "with {C:attention}0 hands{} remaining, this Joker",
+                    "permanently gives {C:mult}+#1#{} Mult",
+                    "{C:inactive}(Currently #2#)",
+                },
+            },
+            j_picubed_rainmaker = {
+                name = "Rainmaker",
+                text = {
+                    {
+                        "{C:chips}+#1#{} Chips, loses Chips equal",
+                        "to {C:attention}rank{} when cards score,",
+                        "resets at end of round",
+                    },
+                    {
+                        "When this Joker reaches",
+                        "{C:chips}#2#{} Chips, earn {C:money}$#3#",
+                        "{S:1.1,C:red,E:2}self destructs{}",
+                    },
+                },
+            },
+            j_picubed_lancer = {
+                name = "Lancer",
+                text = {
+                    "When a {C:attention}Jack{} card or",
+                    "a {C:spades}Spade{} card is added",
+                    "to deck, it gains a random",
+                    "{C:attention}Enhancement{}, {C:dark_edition}Edition{}, and {C:attention}Seal",
+                },
+            },
+            j_picubed_accountant = {
+                name = "Accountant",
+                text = {
+                    "This Joker gains {C:chips}+#1#{} Chips",
+                    "per unique {C:attention}rank{}",
+                    "scored this round",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                },
+            },
+            j_picubed_pyramidscheme = {
+                name = "Pyramid Scheme",
+                text = {
+                    "After {C:attention}#1#{} {C:inactive}[#5#]{} played cards score,",
+                    "this Joker gains {C:mult}+#2#{} Mult and", 
+                    "{C:attention}requirement{} increases by {C:attention}#3#{}, {C:red}resets{}",
+                    "if {C:attention}not upgraded{} by end of round",
+                    "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+                },
+            },
+            j_picubed_thedraw = {
+                name = "The Draw",
+                text = {
+                    "When a {C:tarot}Tarot{} card is used,",
+                    "draw {C:attention}#1#{} playing cards to hand",
+                },
+            },
+            j_picubed_clambasket = {
+                name = "Clam Basket",
+                text = {
+                    {
+                        "Each played {C:attention}8{} gives",
+                        "{X:mult,C:white}X#1#{} Mult when scored",
+                    },
+                    {
+                        "After an {C:attention}8{} has scored this round,",
+                        "each played {C:attention}Ace{}, {C:attention}2{}, {C:attention}3{}, {C:attention}4{}, {C:attention}5{}, {C:attention}6{},",
+                        "and {C:attention}7{} gives {C:mult}+#2#{} Mult when scored",
+                        "{C:inactive}(Currently #3#)",
+                    }
+                },
+            },
+            j_picubed_sevenseas = {
+                name = "Seven Seas",
+                text = {
+                    "Each played {C:attention}7{} of {C:clubs}Clubs{} card",
+                    "gives {X:mult,C:white}X#1#{} Mult when scored, ",
+                    "each played {C:attention}7{} of a different",
+                    "suit gives {X:mult,C:white}X#2#{} Mult when scored",
+                },
+            },
+            j_picubed_thalassophobia = {
+                name = "Thalassophobia",
+                text = {
+                    "On {C:attention}final{} hand, a random",
+                    "scoring {C:attention}face{} card gives",
+                    "{C:mult}+#1#{} Mult, and is {C:attention}destroyed{}",
+                },
+            },
+            j_picubed_magiciansessentials = {
+                name = "Magician's Essentials",
+                text = {
+                    "In all {C:attention}Booster Packs{},",
+                    "add an additional {C:tarot}Tarot{} card",
+                    "and {C:attention}always{} draw cards",
+                },
+            },
+            j_picubed_bluebanana = {
+                name = "Blue Banana",
+                text = {
+                    "{X:chips,C:white}X#1#{} Chips for each",
+                    "Joker to the {C:attention}right{}",
+                    "{C:inactive}(Currently {X:chips,C:white}X#2#{} {C:inactive}Chips)",
+                },
+            },
+            j_picubed_jackboxgames = {
+                name = "Jackbox Games",
+                text = {
+                    "After Blind is defeated, add a free",
+                    "{C:attention}Jackbox Party Pack{} to shop",
+                },
+            },
+            j_picubed_underscore = {
+                name = "Underscore",
+                text = {
+                    {
+                        "Played and {C:attention}unscoring{} cards",
+                        "become {C:attention}Stone Cards{}",  
+                    },
+                    {
+                        "This Joker gains {X:chips,C:white}X#1#{} Chips",
+                        "when a {C:attention}Stone Card{} is scored",
+                        "{C:inactive}(Currently {X:chips,C:white}X#2#{} {C:inactive}Chips)",
+                    },
+                },
+            },
+            j_picubed_groovyjoker = {
+                name = "Groovy Joker",
+                text = {
+                    "{C:attention}5th{} scoring card",
+                    "gives {C:mult}+#1#{} Mult and {C:money}$#2#{}",
+                },
+            },
+            j_picubed_sun = {
+                name = "Sun",
+                text = {
+                    "This Joker gains {C:mult}+#1#{} Mult if",
+                    "scoring hand has {C:attention}#3#{} or more",
+                    "cards of {C:attention}unique suits{}",
+                    "{C:inactive}(Currently {C:mult}+#2#{} {C:inactive}Mult)",
+                },
+            },
+            j_picubed_moon = {
+                name = "Moon",
+                text = {
+                    "This Joker gains {C:chips}+#1#{} Chips if",
+                    "scoring hand has {C:attention}#3#{} or more",
+                    "cards of {C:attention}unique suits{}",
+                    "{C:inactive}(Currently {C:chips}+#2#{} {C:inactive}Chips)",
+                },
+            },
+            j_picubed_jessie = {
+                name = "Jessie",
+                text = {
+                    "This Joker gains {X:mult,C:white}X#1#{} Mult when",
+                    "a {C:attention}Booster Pack{} is opened, {C:red}resets{}",
+                    "when a Booster Pack is {C:attention}skipped{}",
+                    "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)",
+                },
+            },
+            j_picubed_maggie = {
+                name = "Maggie",
+                text = {
+                    "Earn {C:money}$#1#{} if played hand",
+                    "has {C:attention}#2#{} scoring cards",
+                    "of {C:spades}Spade{} or {C:clubs}Club{} suit",
+                },
+            },
+            j_picubed_switchingteams = {
+                name = 'Switching Teams',
+                text = {
+                    "On Play, {C:attention}swap{}", 
+                    "base {C:chips}Chips{} and {C:mult}Mult",
+                },
+            },
         },
         Spectral = {
             c_picubed_commander = {
                 name = 'Commander',
                 text = {
-                   "{C:attention}Destroy{} #1# random",
-                   "Consumable if slots are",
-                   "filled, then add {C:dark_edition}Negative{}",
-                   "to all Consumables"
+                   "Add {C:dark_edition}Negative{} edition",
+                   "to all held {C:attention}consumables{}"
                 }
             },
             c_picubed_rupture = {
@@ -1300,6 +1512,14 @@ return {
                     "from {C:purple}pi_cubed's Jokers",
                 },
             },
+            p_picubed_jackbox_party_pack = {
+                name = "Jackbox Party Pack",
+                text = {
+                    "Choose {C:attention}#1#{} of up to {C:attention}#2#{C:attention}",
+                    "Playing{} cards of rank {C:attention}Jack{}",
+                    "to add to your deck",
+                },
+            },
         },
     },
     misc = {
@@ -1432,6 +1652,8 @@ return {
             config_picubeds_pokerhandchangers = "Hand type-affecting Jokers (restart required)",
             k_picubeds_chips = "Chips",
             k_picubeds_yep = "Yep!",
+            k_picubeds_draw = "Draw!",
+            k_picubeds_stone = "Stone",
         }
     }
 }

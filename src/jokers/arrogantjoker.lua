@@ -1,12 +1,18 @@
+function picubed_arrogant_positioned(self)
+	for i=1,#G.jokers.cards do
+		if G.jokers.cards[i] == self then
+			if i <= #G.jokers.cards - self.ability.extra.right_jokers then
+				return true
+			else
+				return false
+			end
+		end
+	end
+	return false
+end
+
 SMODS.Joker { --Arrogant Joker
 	key = 'arrogantjoker',
-	loc_txt = {
-		name = 'Arrogant Joker',
-		text = {
-			"{X:mult,C:white}X#1#{} Mult if this Joker",
-			"is the {C:attention}left-most {}Joker"
-		}
-	},
 	pronouns = 'he_him',
 	rarity = 1,
 	atlas = 'PiCubedsJokers',
@@ -17,16 +23,16 @@ SMODS.Joker { --Arrogant Joker
 	blueprint_compat = true,
 	perishable_compat = true,
 	eternal_compat = true,
-	config = { extra = { Xmult = 2 } },
+	config = { extra = { xmult = 2, right_jokers = 3 } },
 	pools = { ["Meme"] = true },
 	attributes = { 'xmult', 'joker_slot', 'position' },
 	demicoloncompat = true,
 	loc_vars = function(self, info_queue, card)
-		return { vars = { card.ability.extra.Xmult } }
+		return { vars = { card.ability.extra.xmult, card.ability.extra.right_jokers } }
 	end,
 	update = function(self, card, dt)
 		if G.jokers then
-			if G.jokers.cards[1] == card then
+			if picubed_arrogant_positioned(card) then
 				card.children.center:set_sprite_pos({x = 8, y = 3})
 			else
 				card.children.center:set_sprite_pos({x = 8, y = 4})
@@ -37,16 +43,10 @@ SMODS.Joker { --Arrogant Joker
 	end,
 	
 	calculate = function(self, card, context)
-		if context.joker_main and G.jokers.cards[1] == card then
+		if (context.joker_main and picubed_arrogant_positioned(card)) 
+		or context.forcetrigger then
 			return {
-				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
-				Xmult_mod = card.ability.extra.Xmult
-			}
-		end
-		if context.forcetrigger then
-			return {
-				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
-				Xmult_mod = card.ability.extra.Xmult
+				xmult = card.ability.extra.xmult
 			}
 		end
 	end

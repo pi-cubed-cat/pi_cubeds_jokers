@@ -13,7 +13,7 @@ SMODS.Joker { --Acorn Tree
 	rarity = 2,
 	atlas = 'PiCubedsJokers',
 	pos = { x = 6, y = 6 },
-	cost = 6,
+	cost = 7,
 	discovered = true,
 	blueprint_compat = false,
 	perishable_compat = true,
