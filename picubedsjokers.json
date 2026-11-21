@@ -10,7 +10,7 @@
     "dependencies": [
         "Steamodded (>=26.1002.0)"
     ],
-    "version": "2.2.8",
+    "version": "2.2.8a",
     "allow_redistribution": true,
     "icon_path": "picubedsicon.png"
 }

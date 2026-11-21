@@ -49,7 +49,7 @@ SMODS.Joker { -- Jessie
             })
         end            
         
-        if joker_main or context.forcetrigger then
+        if context.joker_main or context.forcetrigger then
 			return {
 				xmult = card.ability.extra.xmult
 			}
